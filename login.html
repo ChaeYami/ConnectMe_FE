@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Connect ME | 로그인</title>
+</head>
+
+<body>
+
+    <!-- 헤더 -->
+
+    <!--메인 시작-->
+    <div class="login-section">
+        <div id="input-box">
+            <input type="text" id="account" placeholder="아이디를 입력해 주세요."><br>
+            <input type="password" id="password" placeholder="비밀번호를 입력해 주세요.">
+
+            <div class="alert alert-danger" style="font-size:15px;" id="alert-danger"></div>
+            <div id="buttons">
+                <button class="button login" onclick="Login()">로그인</button>
+                <br>
+                <a style="cursor: pointer;" class="button kakao" onclick="kakaoLogin()">카카오 | 이메일 동의 필수</a>
+                <br>
+                <a style="cursor: pointer;" class="button kakao" onclick="naverLogin()">네이버 | 이메일 동의 필수</a>
+                <br>
+                <a style="cursor: pointer;" class="button kakao" onclick="googleLogin()">구글 | 이메일 동의 필수</a>
+                <br>
+                <div id="find">
+                    <a style="cursor: pointer;" onclick="go_findAccount()">
+                        아이디 찾기
+                    </a>
+                    <a style="cursor: pointer;" onclick="go_findPassword()">
+                        비밀번호 찾기
+                    </a>
+                </div>
+            </div>
+            <br>
+            <a onclick="go_signup()" style="color: rgb(149, 145, 140);">
+                아직 회원이 아닌가요?
+                <span style="color:black; cursor: pointer; font-weight: 700;text-decoration: underline;">회원가입</span>
+            </a>
+        </div>
+    </div>
+    <!--메인 끝-->
+</body>
+<script src="static/js/base_api.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="static/js/login_api.js"></script>
+
+</html>

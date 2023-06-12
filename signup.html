@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Connect ME | 회원가입</title>
+</head>
+
+<body>
+
+    <!-- 헤더 -->
+
+    <!--메인 시작-->
+
+    <div class="login-section">
+        <div id="input-box">
+            <input type="text" id="account" placeholder="아이디"><br>
+            <input type="password" id="password" placeholder="비밀번호"><br>
+            <input type="email" id="email" placeholder="이메일"><br>
+            <div style="display:flex;">
+                <select id="phone-front">
+                    <option value="">-----</option>
+                    <option value="010">010</option>
+                    <option value="011">011</option>
+                    <option value="016">016</option>
+                    <option value="017">017</option>
+                    <option value="019">019</option>
+                </select>
+                    <input type="tel" maxlength="4" id="phone-1" placeholder="3~4자리">
+                    <input type="tel" maxlength="4" id="phone-2" placeholder="4자리"></div>
+            <input type="text" id="nickname" placeholder="닉네임"><br>
+
+
+            <div class="alert alert-danger" style="font-size:15px;" id="alert-danger"></div>
+            <div id="buttons">
+                <button class="button login" onclick="signup()">회원가입</button>
+                
+            </div>
+            <br>
+            <a onclick="go_login()" style="color: rgb(149, 145, 140);">
+                회원이신가요?
+                <span style="color:black; cursor: pointer; font-weight: 700;text-decoration: underline;">로그인</span>
+            </a>
+        </div>
+    </div>
+
+    <!--메인 끝-->
+</body>
+<script src="static/js/base_api.js"></script>
+
+</html>
