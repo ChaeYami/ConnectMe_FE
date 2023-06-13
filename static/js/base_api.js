@@ -46,7 +46,7 @@ function go_myProfile() {
 }
 
 // 다른 유저의 프로필로 가기
-function go_profile(user_id){
+function go_profile(user_id) {
     location.href = `profile.html?user_id=${user_id}`
 }
 
