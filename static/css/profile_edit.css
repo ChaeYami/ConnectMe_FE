@@ -1,0 +1,73 @@
+.main {
+    display: grid;
+    padding: 0 30px;
+}
+
+.profile-section {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 0 10px;
+
+}
+
+#nickname {
+    width: 100px;
+    height: 20px;
+}
+
+
+.profile-img {
+    width: 200px;
+    height: 200px;
+}
+
+.profile-img img {
+    width: 200px;
+}
+
+.info-section {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+}
+
+.info-section div {
+    padding: 0 10px;
+}
+
+.ect div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+}
+
+#intro {
+    width: 80%;
+}
+
+#intro textarea {
+    min-height: 50px;
+    width: 100%;
+}
+
+#age {
+    height: 20px;
+    width: 100%;
+}
+#mbti{
+    width: 100%;
+}
+
+.update-button {
+    display: flex;
+    margin-top: 20px;
+    flex-direction: row-reverse;
+}
+
+.update-button button {
+    width: 100px;
+    height: 30px;
+
+}

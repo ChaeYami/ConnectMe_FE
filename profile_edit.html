@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
-    <link rel="stylesheet" href="static/css/profile.css">
+    <link rel="stylesheet" href="static/css/profile_edit.css">
 
     <title>Connect ME | 프로필</title>
 </head>
@@ -35,6 +35,9 @@
     <!--위, 아래 네비바 끝-->
 
     <div class="main">
+        <div class="update-button">
+            <button type="button"  onclick="editProfile()">수정완료</button>
+        </div>
         <div class="profile-section">
             <div id="profile-img" class="profile-img">
 
@@ -48,11 +51,9 @@
 
             </div>
             <div class="profile">
-                <div class="nickname-section">
                     <div class="nickname">
                         <label for="nickname">닉네임</label>
                         <input type="text" id="nickname" name="nickname">
-                    </div>
                 </div>
             </div>
         </div>
@@ -89,13 +90,11 @@
                 </div>
             </div>
             <div id="intro">
-                <label for="introduce">자기소개</label>
+                <label for="introduce">자기소개</label><br>
                 <textarea id="introduce" name="introduce"></textarea>
             </div>
         </div>
-        <div>
-            <button type="button" class="update-button" onclick="editProfile()">수정</button>
-        </div>
+        
     </div>
 
 
