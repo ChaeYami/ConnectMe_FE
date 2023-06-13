@@ -5,13 +5,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/base.css">
 
     <title>Connect ME | 로그인</title>
 </head>
 
 <body>
 
-    <!-- 헤더 -->
+    <!--위, 아래 네비바 시작-->
+    <div class="top-nav">
+        <a onclick="go_home()">홈</a>
+        <a href="">친구찾기</a>
+        <a onclick="go_placeView()">장소추천</a>
+        <a href="">고민상담</a>
+        <a onclick="go_meetingList()">만남의 광장</a>
+        <a href="">알림</a>
+        <div class="login-logout">
+            <a onclick="go_login()">로그인</a>
+        </div>
+    </div>
+
+    <div class="bot-nav">
+        <a href="javascript:location.href = document.referrer;">뒤로가기</a>
+        <a href="">내글</a>
+        <a href="">북마크</a>
+        <a onclick="go_profile()">프로필</a>
+    </div>
+    <!--위, 아래 네비바 끝-->
+
 
     <!--메인 시작-->
     <div class="login-section">
@@ -47,6 +69,8 @@
     </div>
     <!--메인 끝-->
 </body>
+
+<!-- js -->
 <script src="static/js/base_api.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="static/js/login_api.js"></script>

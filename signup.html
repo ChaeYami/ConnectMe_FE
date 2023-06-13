@@ -5,17 +5,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/signup.css">
 
     <title>Connect ME | 회원가입</title>
 </head>
 
 <body>
 
-    <!-- 헤더 -->
+    <!--위, 아래 네비바 시작-->
+    <div class="top-nav">
+        <a onclick="go_home()">홈</a>
+        <a href="">친구찾기</a>
+        <a onclick="go_placeView()">장소추천</a>
+        <a href="">고민상담</a>
+        <a onclick="go_meetingList()">만남의 광장</a>
+        <a href="">알림</a>
+        <div class="login-logout">
+            <a onclick="go_login()">로그인</a>
+        </div>
+    </div>
+
+    <div class="bot-nav">
+        <a href="javascript:location.href = document.referrer;">뒤로가기</a>
+        <a href="">내글</a>
+        <a href="">북마크</a>
+        <a onclick="go_profile()">프로필</a>
+    </div>
+    <!--위, 아래 네비바 끝-->
+
 
     <!--메인 시작-->
 
-    <div class="login-section">
+    <div class="signup-section">
         <div id="input-box">
             <input type="text" id="account" placeholder="아이디"><br>
             <input type="password" id="password" placeholder="비밀번호"><br>
@@ -29,15 +51,22 @@
                     <option value="017">017</option>
                     <option value="019">019</option>
                 </select>
-                    <input type="tel" maxlength="4" id="phone-1" placeholder="3~4자리">
-                    <input type="tel" maxlength="4" id="phone-2" placeholder="4자리"></div>
+                <input type="tel" maxlength="4" id="phone-1" placeholder="3~4자리">
+                <input type="tel" maxlength="4" id="phone-2" placeholder="4자리">
+            </div>
             <input type="text" id="nickname" placeholder="닉네임"><br>
 
 
             <div class="alert alert-danger" style="font-size:15px;" id="alert-danger"></div>
             <div id="buttons">
-                <button class="button login" onclick="signup()">회원가입</button>
-                
+                <button class="button login" onclick="signupButton()">회원가입</button>
+                <br>
+                <a style="cursor: pointer;" class="button kakao" onclick="kakaoLogin()">카카오 | 이메일 동의 필수</a>
+                <br>
+                <a style="cursor: pointer;" class="button kakao" onclick="naverLogin()">네이버 | 이메일 동의 필수</a>
+                <br>
+                <a style="cursor: pointer;" class="button kakao" onclick="googleLogin()">구글 | 이메일 동의 필수</a>
+                <br>
             </div>
             <br>
             <a onclick="go_login()" style="color: rgb(149, 145, 140);">
@@ -48,7 +77,10 @@
     </div>
 
     <!--메인 끝-->
+
+
 </body>
 <script src="static/js/base_api.js"></script>
+<script src="static/js/signup_api.js"></script>
 
 </html>
