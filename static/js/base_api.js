@@ -2,14 +2,12 @@ const BACKEND_BASE_URL = "http://127.0.0.1:8000"
 const FRONTEND_BASE_URL = "http://127.0.0.1:5500"
 
 const payload = localStorage.getItem("payload");
-const payload_parse = JSON.parse(payload);
-const logined_user_id = parseInt(payload_parse.user_id);
+const payload_parse = payload ? JSON.parse(payload) : null;
+const logined_user_id = payload_parse ? parseInt(payload_parse.user_id) : null;
 
 document.addEventListener("DOMContentLoaded", function () {
-    const payload = localStorage.getItem("payload");
     const bot_nav = document.querySelector('.bot-nav');
     const loginLogout = document.querySelector('.login-logout');
-
     if (payload) {
         bot_nav.style.display = 'grid'; // bot-nav 표시
         loginLogout.innerHTML = '<a onclick="logoutButton()">로그아웃</a>';

@@ -20,7 +20,7 @@ a{
     display: grid;
     background-color: rgb(231, 251, 255);
     height: 48px;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     align-content: center;
     justify-items: center;
 }
@@ -30,7 +30,6 @@ a{
     position: fixed;
     bottom: 0;
     z-index: 1;
-    display: grid;
     background-color: rgb(231, 251, 255);
     height: 48px;
     grid-template-columns: repeat(4, 1fr);
