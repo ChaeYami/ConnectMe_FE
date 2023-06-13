@@ -1,2 +1,66 @@
-const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "http://127.0.0.1:5500"
+const BACKEND_BASE_URL = "http://127.0.0.1:8000"
+const FRONTEND_BASE_URL = "http://127.0.0.1:5500"
+
+document.addEventListener("DOMContentLoaded", function () {
+    const payload = localStorage.getItem("payload");
+    const bot_nav = document.querySelector('.bot-nav');
+    const loginLogout = document.querySelector('.login-logout');
+
+    if (payload) {
+        bot_nav.style.display = 'grid'; // bot-nav 표시
+        loginLogout.innerHTML = '<a onclick="logoutButton()">로그아웃</a>';
+    } else {
+        bot_nav.style.display = 'none'; // bot-nav 숨김
+        loginLogout.innerHTML = '<a onclick="go_login()">로그인</a>'; 
+    }
+}) 
+
+
+function go_home() {
+    location.href = "index.html"
+
+}
+function go_login() {
+    location.href = "login.html"
+}
+
+function go_signup() {
+    location.href = "signup.html"
+}
+
+function go_findAccount() {
+    location.href = "find_account.html"
+}
+
+function go_findPassword() {
+    location.href = "find_password.html"
+}
+
+function go_profile() {
+    location.href = "profile.html"
+}
+
+function go_placeView() {
+    location.href = "place_view.html"
+
+}
+
+function go_meetingList() {
+    location.href = "meeting_list.html"
+}
+
+
+
+//로그아웃
+function logoutButton() {
+    if (confirm("로그아웃하시겠습니까?")) {
+        handleLogout();
+    }
+}
+async function handleLogout() {
+    localStorage.removeItem("access")
+    localStorage.removeItem("refresh")
+    localStorage.removeItem("payload")
+    location.replace('/index.html')
+    alert("로그아웃되었습니다.")
+}

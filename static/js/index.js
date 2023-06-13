@@ -38,13 +38,13 @@ function setLocalStorage(response){
     }else{
         console.log(response)
         alert("으에에에엥");
-        // window.location.replace('login.html')
+        window.location.replace('login.html')
     }
 }
 
 
 async function getKakaoToken(kakao_code){
-    const response = await fetch(`${backend_base_url}/user/login/kakao/`, {
+    const response = await fetch(`${BACKEND_BASE_URL}/user/login/kakao/`, {
         method : "POST",
         headers : {
             'content-type': 'application/json'
@@ -58,7 +58,7 @@ async function getKakaoToken(kakao_code){
 }
 
 async function getGoogleToken(google_token){
-    const response = await fetch(`${backend_base_url}/user/login/google/`, {
+    const response = await fetch(`${BACKEND_BASE_URL}/user/login/google/`, {
         method : "POST",
         headers : {
             'content-type': 'application/json'
@@ -72,7 +72,7 @@ async function getGoogleToken(google_token){
 }
 
 async function getNaverToken(naver_code, state){
-    const response = await fetch(`${backend_base_url}/user/login/naver/`, {
+    const response = await fetch(`${BACKEND_BASE_URL}/user/login/naver/`, {
         method : "POST",
         headers : {
             'content-type': 'application/json'

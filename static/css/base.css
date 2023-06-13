@@ -1,0 +1,48 @@
+body {
+    width: 70vw;
+    margin: 0 auto;
+    padding-top: 48px;
+    max-width: 900px;
+}
+
+a{
+    cursor: pointer;
+}
+
+.top-nav {
+    width: 70vw;
+    max-width: 900px;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    display: grid;
+    background-color: white;
+    height: 48px;
+    grid-template-columns: repeat(7, 1fr);
+    align-content: center;
+    justify-items: center;
+}
+.bot-nav {
+    width: 70vw;
+    max-width: 900px;
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    display: grid;
+    background-color: white;
+    height: 48px;
+    grid-template-columns: repeat(4, 1fr);
+    align-content: center;
+    justify-items: center;
+}
+
+@media screen and (max-width: 700px) {
+    body {
+        width: 100%;
+    }
+
+    .top-nav {
+        width: 100%;
+        font-size: smaller;
+    }
+}
