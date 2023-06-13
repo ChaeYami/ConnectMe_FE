@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form>
+        <div>
+            제목 : <input id="name" />
+        </div>
+        <div>
+            카테고리 : <input id="category" />
+        </div>
+        <div>
+            내용 : <input id="content" />
+        </div>
+        <div>
+            주소 : <input id="address" />
+        </div>
+        <div>
+            별점 : <input id="score" />
+        </div>
+        <div>
+            가격 : <input id="price" />
+        </div>
+        <div>
+            영업시간 : <input id="hour" />
+        </div>
+        <div>
+            휴일 : <input id="holiday" />
+        </div>
+        <br />
+        <div>
+            <input type="file" id="images" multiple>
+        </div>
+        <br />
+        <button type="button" onclick="CreatePlace()">확인</button>
+
+    </form>
+
+    <script src="static/js/base_api.js"></script>
+    <script src="static/js/place_api.js"></script>
+</body>
+
+</html>
