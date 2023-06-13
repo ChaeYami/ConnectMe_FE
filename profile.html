@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/profile.css">
 
     <title>Connect ME | 프로필</title>
 </head>
@@ -20,9 +21,7 @@
         <a href="">고민상담</a>
         <a onclick="go_meetingList()">만남의 광장</a>
         <a href="">알림</a>
-        <div class="login-logout">
-            <a onclick="go_login()">로그인</a>
-        </div>
+        <div class="login-logout"></div>
     </div>
 
     <div class="bot-nav">
@@ -33,15 +32,39 @@
     </div>
     <!--위, 아래 네비바 끝-->
 
-<div class="main">
-
-
-</div>
+    <div class="main">
+        <div class="profile-section">
+            <div id="profile-img" class="profile-img">
+            </div>
+            <div class="profile">
+                <div class="nickname-section">
+                    <div id="nickname" class="nickname">
+                        닉네임
+                    </div>
+                    <div><button>내정보수정</button><button>프로필수정</button></div>
+                </div>
+                <div class="buttons">
+                    <div><button onclick="addFriend()">친구신청</button></div>
+                    <div><button>채팅하기</button></div>
+                    <div><button>사진첩</button></div>
+                </div>
+            </div>
+        </div>
+        <div class="info-section">
+            <div class="ect">
+                <div id="region">지역</div>
+                <div id="age">나이대</div>
+                <div id="mbti">mbti</div>
+            </div>
+            <div id="intro">자기소개</div>
+        </div>
+    </div>
 
 
 </body>
 
 <!-- js -->
 <script src="static/js/base_api.js"></script>
+<script src="static/js/profile.js"></script>
 
 </html>

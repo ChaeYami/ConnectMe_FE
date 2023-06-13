@@ -1,6 +1,10 @@
 const BACKEND_BASE_URL = "http://127.0.0.1:8000"
 const FRONTEND_BASE_URL = "http://127.0.0.1:5500"
 
+const payload = localStorage.getItem("payload");
+const payload_parse = JSON.parse(payload);
+const logined_user_id = parseInt(payload_parse.user_id);
+
 document.addEventListener("DOMContentLoaded", function () {
     const payload = localStorage.getItem("payload");
     const bot_nav = document.querySelector('.bot-nav');
@@ -11,9 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
         loginLogout.innerHTML = '<a onclick="logoutButton()">로그아웃</a>';
     } else {
         bot_nav.style.display = 'none'; // bot-nav 숨김
-        loginLogout.innerHTML = '<a onclick="go_login()">로그인</a>'; 
+        loginLogout.innerHTML = '<a onclick="go_login()">로그인</a>';
     }
-}) 
+})
 
 
 function go_home() {
@@ -36,8 +40,14 @@ function go_findPassword() {
     location.href = "find_password.html"
 }
 
-function go_profile() {
-    location.href = "profile.html"
+// 내 프로필로 가기
+function go_myProfile() {
+    location.href = `profile.html?user_id=${logined_user_id}`
+}
+
+// 다른 유저의 프로필로 가기
+function go_profile(user_id){
+    location.href = `profile.html?user_id=${user_id}`
 }
 
 function go_placeView() {

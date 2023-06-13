@@ -1,0 +1,42 @@
+.main{
+    display: grid;
+}
+.profile-section{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+.profile{
+    display: grid;
+}
+.nickname-section{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+}
+.nickname-section button{
+    margin: 10px;
+}
+.profile .buttons{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+}
+.profile-img{
+    width: 200px;
+    height: 200px;
+}
+.profile-img img{
+    width: 200px;
+}
+
+.info-section{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    justify-items: center;
+    align-items: center;
+
+}
