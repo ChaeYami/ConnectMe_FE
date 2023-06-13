@@ -46,3 +46,7 @@ async function addFriend(){
         alert(errorArray[0][1]);
     }
 }
+
+function go_profileEdit(){
+    location.href = `profile_edit.html?user_id=${logined_user_id}`
+}

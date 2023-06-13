@@ -21,14 +21,16 @@
         <a href="">고민상담</a>
         <a onclick="go_meetingList()">만남의 광장</a>
         <a href="">알림</a>
-        <div class="login-logout"></div>
+        <div class="login-logout">
+            <a onclick="go_login()">로그인</a>
+        </div>
     </div>
 
     <div class="bot-nav">
         <a href="javascript:location.href = document.referrer;">뒤로가기</a>
         <a href="">내글</a>
         <a href="">북마크</a>
-        <a onclick="go_profile()">프로필</a>
+        <a onclick="go_myProfile()">내프로필</a>
     </div>
     <!--위, 아래 네비바 끝-->
 
@@ -41,7 +43,7 @@
                     <div id="nickname" class="nickname">
                         닉네임
                     </div>
-                    <div><button>내정보수정</button><button>프로필수정</button></div>
+                    <div><button >내정보수정</button><button onclick="go_profileEdit()">프로필수정</button></div>
                 </div>
                 <div class="buttons">
                     <div><button onclick="addFriend()">친구신청</button></div>
@@ -65,6 +67,6 @@
 
 <!-- js -->
 <script src="static/js/base_api.js"></script>
-<script src="static/js/profile.js"></script>
+<script src="static/js/profile_api.js"></script>
 
 </html>

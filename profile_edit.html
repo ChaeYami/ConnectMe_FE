@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/profile.css">
+
+    <title>Connect ME | 프로필</title>
+</head>
+
+<body>
+
+    <!--위, 아래 네비바 시작-->
+    <div class="top-nav">
+        <a onclick="go_home()">홈</a>
+        <a href="">친구찾기</a>
+        <a onclick="go_placeView()">장소추천</a>
+        <a href="">고민상담</a>
+        <a onclick="go_meetingList()">만남의 광장</a>
+        <a href="">알림</a>
+        <div class="login-logout">
+            <a onclick="go_login()">로그인</a>
+        </div>
+    </div>
+
+    <div class="bot-nav">
+        <a href="javascript:location.href = document.referrer;">뒤로가기</a>
+        <a href="">내글</a>
+        <a href="">북마크</a>
+        <a onclick="go_myProfile()">내프로필</a>
+    </div>
+    <!--위, 아래 네비바 끝-->
+
+    <div class="main">
+        <div class="profile-section">
+            <div id="profile-img" class="profile-img">
+
+                <img id="profile_preview" src="" alt="프로필 이미지 미리보기">
+                <div class="button-container">
+                    <button type="button" class="link-style" onclick="toggleFileInput()">프로필 사진 바꾸기</button>
+                    <input type="file" id="profile_img" name="profile_img" style="display: none;"
+                        onchange="previewImage()">
+                </div>
+                <button type="button" class="delete-image-button" onclick="deleteProfileImage()">사진 삭제</button>
+
+            </div>
+            <div class="profile">
+                <div class="nickname-section">
+                    <div class="nickname">
+                        <label for="nickname">닉네임</label>
+                        <input type="text" id="nickname" name="nickname">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="info-section">
+            <div class="ect">
+                <div id="region">
+                    --지역수정 만들어야됨--
+                </div>
+                <div>
+                    <label for="age">나이</label>
+                    <input type="number" id="age" name="age">
+                </div>
+                <div>
+                    <label for="mbti">MBTI</label>
+                    <select name="mbti" id="mbti">
+                        <option value="" selected disabled>--선택하기--</option>
+                        <option value="ENFJ">ENFJ</option>
+                        <option value="ENFP">ENFP</option>
+                        <option value="ENTJ">ENTJ</option>
+                        <option value="ENTP">ENTP</option>
+                        <option value="ESFJ">ESFJ</option>
+                        <option value="ESFP">ESFP</option>
+                        <option value="ESTJ">ESTJ</option>
+                        <option value="ESTP">ESTP</option>
+                        <option value="INFJ">INFJ</option>
+                        <option value="INFP">INFP</option>
+                        <option value="INTJ">INTJ</option>
+                        <option value="INTP">INTP</option>
+                        <option value="ISFJ">ISFJ</option>
+                        <option value="ISFP">ISFP</option>
+                        <option value="ISTJ">ISTJ</option>
+                        <option value="ISTP">ISTP</option>
+                    </select>
+                </div>
+            </div>
+            <div id="intro">
+                <label for="introduce">자기소개</label>
+                <textarea id="introduce" name="introduce"></textarea>
+            </div>
+        </div>
+        <div>
+            <button type="button" class="update-button" onclick="editProfile()">수정</button>
+        </div>
+    </div>
+
+
+</body>
+
+<!-- js -->
+<script src="static/js/base_api.js"></script>
+<script src="static/js/profile_edit_api.js"></script>
+
+</html>
