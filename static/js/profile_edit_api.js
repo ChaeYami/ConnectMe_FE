@@ -22,6 +22,8 @@ async function existingProfile(user_id) {
     document.getElementById('introduce').value = response_json.introduce
     document.getElementById('age').value = response_json.age
     document.getElementById('mbti').value = response_json.mbti
+    // 기존에 있던 프로필 이미지 불러오기
+
 
     // 프로필 이미지 미리보기
     const profile_img = document.getElementById('profile_img');
@@ -73,8 +75,6 @@ async function updateProfile() {
 
     if (file) {
         formData.append('profile_img', file);
-    } else {
-        formData.set('profile_img', '');
     }
 
 
