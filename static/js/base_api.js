@@ -48,6 +48,12 @@ function go_profile(user_id) {
     location.href = `profile.html?user_id=${user_id}`
 }
 
+// 친구찾기 페이지로 가기
+function go_recommend() {
+    location.href = "recommend.html"
+
+}
+
 // 장소추천 페이지로 가기
 function go_placeView() {
     location.href = "place_view.html"
