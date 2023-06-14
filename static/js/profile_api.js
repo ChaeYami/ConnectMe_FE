@@ -16,7 +16,7 @@ async function Profile(user_id){
     const profile_img_url = `${BACKEND_BASE_URL}${response_json.profile_img}`;
     const profile_img_element = document.getElementById("profile-img")
     if (response_json.profile_img === null) {
-        profile_img_element.innerHTML=`<img src="static/image/heart (2).png">`
+        profile_img_element.innerHTML=`<img src="static/image/user.png">`
     
     }else{
         profile_img_element.innerHTML=`<img src="${profile_img_url}">`

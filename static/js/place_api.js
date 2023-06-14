@@ -373,8 +373,8 @@ async function PlaceUpdate(place_id) {
             holiday: holiday.value,
         })
     })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+        .then((response) => response.json());
+        // .then((data) => console.log(data));
 
     window.location.href = `place_view.html?id=${place_id}`;
 }

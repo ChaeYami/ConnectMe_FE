@@ -5,8 +5,6 @@ if (localStorage.getItem("payload")){
     let state = new URLSearchParams(window.location.search).get("state");
     let hashParams = new URLSearchParams(window.location.hash.substring(1));
     let google_token = hashParams.get("access_token");
-    console.log(code)
-    console.log(state)
 
     if(code){
         if (state){
@@ -36,7 +34,6 @@ function setLocalStorage(response){
         localStorage.setItem("payload", jsonPayload);
         window.location.replace('index.html')
     }else{
-        console.log(response)
         alert("으에에에엥");
         window.location.replace('login.html')
     }
