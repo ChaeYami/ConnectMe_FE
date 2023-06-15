@@ -12,7 +12,7 @@
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
 
-    <title>Connect ME | 친구신청목록</title>
+    <title>Connect ME | 친구목록</title>
 </head>
 
 <body>
@@ -40,10 +40,6 @@
     <!--위, 아래 네비바 끝-->
 
     <div class="main">
-        <div class="buttons">
-            <div><button onclick="go_requestList('to')">받은친구신청목록</button></div>
-            <div><button onclick="go_requestList('from')">보낸친구신청목록</button></div>
-        </div>
 
         <div class="list-section">
 
@@ -57,15 +53,16 @@
                 <button onclick="acceptRequest(${request_id})">수락</button>
                 <button onclick="rejectRequest(${request_id})">거절</button>
             </div> -->
-            
-        </div>
-    </div>
 
+        </div>
+        <a onclick="history.back()">뒤로가기</a>
+
+    </div>
 
 </body>
 
 <!-- js -->
 <script src="static/js/base_api.js"></script>
-<script src="static/js/request_list.js"></script>
+<script src="static/js/friends_list.js"></script>
 
 </html>

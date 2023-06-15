@@ -1,11 +1,29 @@
 const user_id = parseInt(new URLSearchParams(window.location.search).get('user_id'));
+const logined_token = localStorage.getItem("access");
+const logined_account = payload_parse.account;
+console.log(payload_parse.user_id)
+
+
 
 window.onload = () => {
     Profile(user_id);
+    if (payload_parse.user_id === user_id) {
+        // 받은친구신청목록과 보낸친구신청목록 , 앨범 버튼을 보이도록 설정
+        document.getElementById("requests").style.display = "block";
+        document.getElementById("friends-list").style.display = "block";
+        document.getElementById("album").style.display = "block";
+        // 채팅하기, 친구추가 숨김
+        document.getElementById("chat").style.display = "none";
+        document.getElementById("addFriend").style.display = "none";
+
+      } else {
+        // 친구신청, 채팅하기, 사진첩 버튼을 보이도록 설정
+        document.getElementById("addFriend").style.display = "block";
+        document.getElementById("chat").style.display = "block";
+        document.getElementById("album").style.display = "block";
+      }
 }
 
-const logined_token = localStorage.getItem("access");
-const logined_account = payload_parse.account;
 
 async function Profile(user_id){
     const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
@@ -57,4 +75,8 @@ function go_personal(){
 
 function go_requestList(me){
     location.href = `request_list.html?me=${me}`
+}
+
+function go_friends(){
+    location.href = 'friends_list.html'
 }
