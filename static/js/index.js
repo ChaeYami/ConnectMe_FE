@@ -19,6 +19,7 @@ if (localStorage.getItem("payload")) {
 }
 
 const logined_token = localStorage.getItem("access");
+
 $(document).ready(function () {
     recommend('all')
 });
@@ -115,7 +116,7 @@ async function recommend(filter) {
 
                 let temp_html = `<a onclick="go_profile(${user_pk})"><div class="card">
                     <div class="image_box">
-                        <img class="image" src="${BACKEND_BASE_URL}${user_profile_img}" style = "width : 200px;"alt="">
+                        <img class="image" src="${BACKEND_BASE_URL}${user_profile_img}"alt="">
                     </div>
                     <div class="user_info">
                         <div class="user_nickname">

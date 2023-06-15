@@ -1,0 +1,17 @@
+#list-section {
+    display: flex;
+    align-items: center;
+    font-size: smaller;
+}
+
+#list-section .card{
+    padding: 15px;
+}
+
+.image_box{
+    width: 70px;
+}
+
+#list-section img{
+    width: 70px;
+}
