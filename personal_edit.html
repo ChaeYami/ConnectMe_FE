@@ -3,10 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/base.css">
+    <!-- <link rel="stylesheet" href="static/css/personal.css"> -->
 
-    <title>Connect ME | 아이디 찾기</title>
+    <title>Connect ME | 내정보수정</title>
 </head>
 
 <body>
@@ -33,10 +35,21 @@
     </div>
     <!--위, 아래 네비바 끝-->
 
-    <!--메인 시작-->
-    
-    <!--메인 끝-->
+    <div class="personal-main">
+       <div class="email"></div>
+       <div class="edit-password">
+        <a onclick="go_password_change()">비밀번호 변경</a>
+       </div>
+       <div class="name"></div>
+
+
+    </div>
+
+
 </body>
+
+<!-- js -->
 <script src="static/js/base_api.js"></script>
+<script src="static/js/personal_api.js"></script>
 
 </html>

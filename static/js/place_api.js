@@ -1,7 +1,4 @@
-const PLACE = document.querySelector('#place')
-
-const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2NzQ1NzExLCJpYXQiOjE2ODY2NTkzMTEsImp0aSI6Ijc5YzUyNTNkNTM4ZTRmODdhOTFiZGI4NmE4YjE2ZDJjIiwidXNlcl9pZCI6MiwiZW1haWwiOiJhQGEuY29tIiwiYWNjb3VudCI6ImFhYWEiLCJwaG9uZSI6IjAwMDAwMDAwMDAiLCJuaWNrbmFtZSI6IiJ9.EZ_TR4UIfgUhUpIS0i7pUrXwwB7wqma2nRVjB1amJRg'
-
+const logined_token = localStorage.getItem("access");
 
 window.onload = function () {
     const urlParams = new URLSearchParams(window.location.search).get("id");
@@ -25,6 +22,8 @@ async function CreatePlace() {
     let hour = document.querySelector('#hour')
     let holiday = document.querySelector('#holiday')
 
+
+
     const formdata = new FormData();
     formdata.append("title", name.value);
     formdata.append("category", category.value);
@@ -42,7 +41,7 @@ async function CreatePlace() {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -77,7 +76,7 @@ async function CreatePlace() {
 async function PlaceView() {
     const response = await fetch(`${BACKEND_BASE_URL}/place/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -86,6 +85,7 @@ async function PlaceView() {
     });
 
     const response_json = await response.json();
+    let place = document.querySelector('#place')
 
     response_json.forEach((e, i) => {
         let place_id = e.id
@@ -114,7 +114,7 @@ async function PlaceView() {
         }
 
 
-        PLACE.innerHTML += `
+        place.innerHTML += `
         <div>제목 : <a href="place_view.html?id=${place_id}">${name}</a></div>
         <div>카테고리 : ${category}</div>
         <div>내용 : ${content}</div>
@@ -124,9 +124,110 @@ async function PlaceView() {
         <div>가격 : ${price}</div>
         <div>영업시간 : ${hour}</div>
         <div>휴일 : ${holiday}</div>
+        <div id="map"></div>
         <hr>
         `
     })
+}
+
+// 지도 보여주기
+async function PlaceShowMap(name, address) {
+    let mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+        };
+
+    // 지도를 생성합니다    
+    let map = new kakao.maps.Map(mapContainer, mapOption);
+
+    // 주소-좌표 변환 객체를 생성합니다
+    let geocoder = new kakao.maps.services.Geocoder();
+
+    // 주소로 좌표를 검색합니다
+    geocoder.addressSearch(address, function (result, status) {
+
+        // 정상적으로 검색이 완료됐으면 
+        if (status === kakao.maps.services.Status.OK) {
+
+            let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            let marker = new kakao.maps.Marker({
+                map: map,
+                position: coords
+            });
+
+            // 인포윈도우로 장소에 대한 설명을 표시합니다
+            let infowindow = new kakao.maps.InfoWindow({
+                content: `<div style="width:150px;text-align:center;padding:6px 0;">${name}</div>`
+            });
+            infowindow.open(map, marker);
+
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            map.setCenter(coords);
+        }
+    });
+}
+
+// 소셜 공유하기
+function SendSNS(sns) {
+    let current_url = document.location.href;
+    let title = document.querySelector('#title').innerText.substring(5)
+    let content = document.querySelector('#content').innerText.substring(5)
+
+    if (sns == 'naver') {
+        var url = "http://www.band.us/plugin/share?body=" + encodeURIComponent(title) + "&route=" + encodeURIComponent(current_url);
+        window.open(url, "shareBand", "width=400, height=500, resizable=yes");
+    } else if (sns == 'facebook') {
+        let url = "http://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(current_url);
+        window.open(url, "", "width=486, height=286");
+    } else if (sns == 'twitter') {
+        var url = "http://twitter.com/share?url=" + encodeURIComponent(title) + "&text=" + encodeURIComponent(current_url);
+        window.open(url, "tweetPop", "width=486, height=286,scrollbars=yes");
+    } else if (sns == 'kakao') {
+        Kakao.init(KAKAO_JAVASCRIPT_API);
+        Kakao.Link.createDefaultButton({
+            container: '#kakao_sns', // HTML에서 작성한 ID값
+            objectType: 'feed',
+            content: {
+                title: title,
+                description: content,
+                imageUrl: current_url,
+                link: {
+                    mobileWebUrl: current_url,
+                    webUrl: current_url
+                }
+            }
+        });
+    }
+
+}
+
+// 공유하기 닫기
+function ClosePopup() {
+    $('html, body').css({
+        'overflow': 'auto'
+    });
+    $("#popup").fadeOut(200);
+}
+
+// 공유하기 열기
+function PlaceShare(place_id) {
+    const share = document.querySelector('#modal_opne_btn')
+    const place_modal = document.querySelector('#place_modal')
+    const link_id = document.querySelector('#link_id')
+
+    link_id.value = document.location.href;
+
+    $('#popup').fadeIn(200);
+    $('.popup').scrollTop(0);
+}
+
+// 복사하기 버튼
+function CopyButton() {
+    let inputTag = document.querySelector('#link_id')
+    navigator.clipboard.writeText(inputTag.value)
 }
 
 // 장소추천 상세보기
@@ -135,7 +236,7 @@ async function PlaceDetailView(place_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -156,6 +257,7 @@ async function PlaceDetailView(place_id) {
     let hour = response_json['place'].hour
     let holiday = response_json['place'].holiday
     let place = document.querySelector('#place')
+
 
     let images = ``
 
@@ -203,20 +305,24 @@ async function PlaceDetailView(place_id) {
 
     place.innerHTML = `
     <button onclick="PlacePreUpdateView(${place_id})">수정하기</button>
-    <button onclick="PlaceDelete(${place_id})">삭제하기</button>
+    <button onclick="PlaceDelete(${place_id})">삭제하기</button>`
+
+    place.innerHTML += `
     <div>
         <img id="book${place_id}" src="static/image/bookmark-white.png" style="width: 20px;" alt="북마크" onclick="PlaceBook(${place_id})">
         <img id="like${place_id}" src="static/image/heart.png" style="width: 20px;" alt="좋아요" onclick="PlaceLike(${place_id})">
+        <img id="modal_opne_btn" src="static/image/share (1).png" style="width: 20px;" alt="공유하기" onclick="PlaceShare(${place_id})">
     </div>
-    <div>제목 : ${name}</div>
+    <div id="title">제목 : ${name}</div>
     <div>카테고리 : ${category}</div>
-    <div>내용 : ${content}</div>
+    <div id="content">내용 : ${content}</div>
     <div>주소 : ${address}</div>
     <div>이미지 : ${images}</div>
     <div>별점 : ${score}</div>
     <div>가격 : ${price}</div>
     <div>영업시간 : ${hour}</div>
     <div>휴일 : ${holiday}</div>
+    <div id="map" style="height: 350px; width: 350px;"></div>
     <hr>
     <div>
         댓글 : <input id="comments"/> <button type="button" onclick="CommentWrite(${place_id})">등록하기</button>
@@ -225,7 +331,9 @@ async function PlaceDetailView(place_id) {
     ${comment}
     <hr>
     <br>
+    
     `
+    PlaceShowMap(name, address)
 
 }
 
@@ -235,7 +343,7 @@ async function PlaceBook(place_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -260,7 +368,7 @@ async function PlaceLike(place_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/like/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -284,7 +392,7 @@ async function PlaceLike(place_id) {
 async function PlacePreUpdateView(place_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -303,23 +411,31 @@ async function PlacePreUpdateView(place_id) {
     let price = response_json['place'].price
     let hour = response_json['place'].hour
     let holiday = response_json['place'].holiday
+    let place = document.querySelector('#place')
 
     let images = ``
 
     if (image) {
         for (let i = 0; i < image.length; i++) {
             images += `
-            <img src="${image[i]['url']}">
+            <img id="image${image[i]['id']}" src="${image[i]['url']}">
             <button onclick="ImageDelete(${place_id}, ${image[i]['id']})">❌</button>
             `
         }
     }
 
 
-    PLACE.innerHTML = `
+    place.innerHTML = `
     <form>
         <div>제목 : <input id='name' value="${name}"/></div>
-        <div>카테고리 : <input id='category' value="${category}"/></div>
+        <div>
+            카테고리 : <select id="category">
+                <option value="${category}">수정안함</option>
+                <option value="밥">밥</option>
+                <option value="술">술</option>
+                <option value="카페">카페</option>
+            </select>
+        </div>
         <div>내용 : <input id='content' value="${content}"/></div>
         <div>주소 : <input id='address' value="${address}"/></div>
         <div>별점 : <input id='score' value="${score}"/></div>
@@ -338,7 +454,6 @@ async function PlacePreUpdateView(place_id) {
         <button type="button" onclick="PlaceUpdate(${place_id})">확인</button>
     </form>
     `
-
 }
 
 // 장소추천 수정하기
@@ -355,7 +470,7 @@ async function PlaceUpdate(place_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
             "content-type": "application/json",
         },
         // headers: {
@@ -373,8 +488,6 @@ async function PlaceUpdate(place_id) {
             holiday: holiday.value,
         })
     })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
 
     window.location.href = `place_view.html?id=${place_id}`;
 }
@@ -383,7 +496,7 @@ async function PlaceUpdate(place_id) {
 async function PlaceDelete(place_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -410,7 +523,7 @@ async function ImageAdd(place_id, place_image_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/image/${place_image_id}/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -431,16 +544,17 @@ async function ImageDelete(place_id, place_image_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/image/${place_image_id}/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
+            'content-type': 'application/json'
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
         // },
         method: "DELETE",
+
     })
 
     window.location.href = `place_view.html?id=${place_id}`;
-
 }
 
 // 댓글 작성하기
@@ -454,7 +568,7 @@ async function CommentWrite(place_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -496,7 +610,7 @@ async function ReplyWrite(place_id, place_comment_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/${place_comment_id}/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -525,7 +639,7 @@ async function CommentUpdate(place_id, place_comment_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/${place_comment_id}/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
             "content-type": "application/json",
         },
         // headers: {
@@ -544,7 +658,7 @@ async function CommentUpdate(place_id, place_comment_id) {
 async function CommentDelete(place_id, place_comment_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/${place_comment_id}/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),

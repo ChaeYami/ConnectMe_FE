@@ -31,7 +31,6 @@ async function signup() {
     });
 
     const result = await response.json()
-    console.log(result)
 
     if (response.status === 201) {
         return response

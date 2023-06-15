@@ -16,7 +16,7 @@ async function Profile(user_id){
     const profile_img_url = `${BACKEND_BASE_URL}${response_json.profile_img}`;
     const profile_img_element = document.getElementById("profile-img")
     if (response_json.profile_img === null) {
-        profile_img_element.innerHTML=`<img src="static/image/heart (2).png">`
+        profile_img_element.innerHTML=`<img src="static/image/user.png">`
     
     }else{
         profile_img_element.innerHTML=`<img src="${profile_img_url}">`
@@ -49,4 +49,12 @@ async function addFriend(){
 
 function go_profileEdit(){
     location.href = `profile_edit.html?user_id=${logined_user_id}`
+}
+
+function go_personal(){
+    location.href = 'personal.html'
+}
+
+function go_requestList(me){
+    location.href = `request_list.html?me=${me}`
 }

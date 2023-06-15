@@ -4,14 +4,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+    <title>Connect ME | 장소추천</title>
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/place.css">
+    <!-- kakao map -->
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61771f77ccf8e5fb8aed8a7b26e8cfb1&libraries=services"></script>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 
 <body>
+
+
+    <!--위, 아래 네비바 시작-->
+    <div class="top-nav">
+        <a onclick="go_home()">홈</a>
+        <a onclick="go_recommend()">친구찾기</a>
+        <a onclick="go_placeView()">장소추천</a>
+        <a href="">고민상담</a>
+        <a onclick="go_meetingList()">만남의 광장</a>
+
+        <div class="login-logout">
+            <a onclick="go_login()">로그인</a>
+        </div>
+    </div>
+
+    <div class="bot-nav">
+
+        <a href="">내글</a>
+        <a href="">북마크</a>
+        <a onclick="go_myProfile()">내프로필</a>
+        <a href="">알림</a>
+    </div>
+    <!--위, 아래 네비바 끝-->
+
+
     <div style="height: 50px; text-align:center;">
         <a href="place_view.html">새로고침</a>
     </div>
+    <!--공유하기 모달-->
+    <div class="popup-wrap" id="popup">
+        <div class="popup">
+            <div class="popup-body">
+                <div>
+                    <div>
+                        <img src="static/image/BAND_Icon.png" onclick="SendSNS('naver')" style="width: 80px;">
+                        <img src="static/image/facebook.png" onclick="SendSNS('facebook')" style="width: 80px;">
+                        <img id="kakao_sns" src="static/image/kakao-talk (1).png" onclick="SendSNS('kakao')"
+                            style="width: 80px;">
+                        <img src="static/image/twitter (1).png" onclick="SendSNS('twitter')" style="width: 80px;">
+                    </div>
+                    <div>
+                        <input id="link_id" type="text" readonly />
+                        <button onclick="CopyButton()">복사하기</button>
+                    </div>
+                </div>
+                <button class="close_popup_btn" onclick="ClosePopup()"></button>
+            </div>
+        </div>
+    </div>
+    <!--공유하기 모달-->
     <div id="place"></div>
+
     <script src="static/js/base_api.js"></script>
     <script src="static/js/place_api.js"></script>
 </body>

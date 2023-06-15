@@ -4,17 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
-    <link rel="stylesheet" href="static/css/index.css">
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
 
-    <title>Connect ME</title>
+    <title>Connect ME | 친구목록</title>
 </head>
 
 <body>
@@ -26,7 +24,7 @@
         <a onclick="go_placeView()">장소추천</a>
         <a href="">고민상담</a>
         <a onclick="go_meetingList()">만남의 광장</a>
-        
+
         <div class="login-logout">
             <a onclick="go_login()">로그인</a>
         </div>
@@ -41,41 +39,33 @@
     </div>
     <!--위, 아래 네비바 끝-->
 
-    <!-- 메인 -->
+    <div class="main">
+        <div class="buttons">
+            <div><button onclick="go_requestList('to')">받은친구신청목록</button></div>
+            <div><button onclick="go_requestList('from')">보낸친구신청목록</button></div>
+        </div>
 
-    자 여기는 메인화면이라는 곳이다
-    <!-- 친구추천 -->
-    <div class="list-section" id="list-section">
+        <div class="list-section">
 
-        <!-- <div class="card">
-            <div class="image_box">
-                <img class="image" src="${BACKEND_BASE_URL}${user_profile_img}" style = "width : 200px;" alt="">
+            <!-- <div class="info-box">
+                <a onclick="go_profile(${user_id})">
+                    <div class="nickname">${user_nickname}</div>
+                    <div class="account">${user_account}</div>
+                </a>
             </div>
-            <div class="user_info">
-                <div class="user_nickname">
-                    ${user_nickname}
-                </div>
-                <div class="ect">
-                    ${user_region}
-                    ${user_age}
-                    ${user_mbti}
-                </div>
-                <div class = "intro">
-                    ${user_introduce}
-                </div>
-            </div>
-        </div> -->
+            <div class="buttons">
+                <button onclick="acceptRequest(${request_id})">수락</button>
+                <button onclick="rejectRequest(${request_id})">거절</button>
+            </div> -->
+            
+        </div>
     </div>
 
 
-    <!-- 장소추천 -->
-    <div>
-
-    </div>
 </body>
 
 <!-- js -->
-<script src="/static/js/base_api.js"></script>
-<script src="/static/js/index.js"></script>
+<script src="static/js/base_api.js"></script>
+<script src="static/js/request_list.js"></script>
 
 </html>
