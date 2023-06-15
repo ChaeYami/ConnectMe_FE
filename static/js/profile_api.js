@@ -54,3 +54,7 @@ function go_profileEdit(){
 function go_personal(){
     location.href = 'personal.html'
 }
+
+function go_requestList(me){
+    location.href = `request_list.html?me=${me}`
+}
