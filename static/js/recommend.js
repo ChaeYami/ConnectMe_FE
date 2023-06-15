@@ -19,7 +19,7 @@ async function recommend(filter) {
         success: function (response) {
             const rows = response;
             if (rows[0] == undefined) {
-                if (filter == 'age') {
+                if (filter == 'age_range') {
                     filter = '나이가'
                 } else if (filter == 'mbti') {
                     filter = 'MBTI가'
@@ -31,7 +31,7 @@ async function recommend(filter) {
 
             } else {
                 let filter_ =''
-                if (filter == 'age') {
+                if (filter == 'age_range') {
                     filter_ = '나이'
                 } else if (filter == 'mbti') {
                     filter_ = 'MBTI'
@@ -47,7 +47,7 @@ async function recommend(filter) {
                     let user_pk = rows[i]['id']
                     let user_nickname = rows[i]['nickname']
                     let user_region = rows[i]['prefer_region']
-                    let user_age = rows[i]['age']
+                    let user_age_range = rows[i]['age_range']
                     let user_mbti = rows[i]['mbti']
                     let user_introduce = rows[i]['introduce']
                     let user_profile_img = rows[i]['profile_img']
@@ -64,7 +64,7 @@ async function recommend(filter) {
                         </div>
                         <div class="ect">
                             ${user_region}
-                            ${user_age}
+                            ${user_age_range}
                             ${user_mbti}
                         </div>
                         <div class = "intro">

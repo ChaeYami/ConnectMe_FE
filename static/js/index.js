@@ -104,11 +104,12 @@ async function recommend(filter) {
         },
         success: function (response) {
             const rows = response;
+            console.log(rows)
 
             for (let i = 0; i < rows.length; i++) {
                 let user_pk = rows[i]['id']
                 let user_nickname = rows[i]['nickname']
-                let user_age = rows[i]['age']
+                let user_age_range = rows[i]['age_range']
                 let user_profile_img = rows[i]['profile_img']
                 if (user_profile_img==null){
                     user_profile_img = '/media/user.png'
@@ -123,7 +124,7 @@ async function recommend(filter) {
                             ${user_nickname}
                         </div>
                         <div class="ect">
-                            ${user_age}
+                            ${user_age_range}
                         </div>
 
                     </div>
