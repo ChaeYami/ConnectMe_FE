@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>모임 글 상세보기</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="static/js/base_api.js"></script>
+    <script src="static/js/meeting_detail.js"></script>
+</head>
+<body>
+    <h1>글 상세보기</h1>
+    <button id="bookmarkbtn" onclick="handleBookmark()">📖</button>
+    <div id="meeting_detail_card">
+        <h2>글 제목</h2>
+        <p>작성일</p>
+        <img src="" alt="">
+        <p>글 내용</p>
+    </div>
+    <div>
+        <button onclick="meetingUpdateMove()">수정하기</button>
+        <button onclick="meetingDelete()">삭제하기</button>
+    </div>
+    <hr>
+    <div>
+        <p><input id="inputComment" type="text" placeholder="댓글 입력하기"></p>
+        <button onclick="meetingCommentCreate()">댓글 남기기</button>
+    </div>
+    <hr>
+    <div id="comment_card">
+    </div>
+    <div id="reply_card">
+    </div>
+</body>
+
+</html>

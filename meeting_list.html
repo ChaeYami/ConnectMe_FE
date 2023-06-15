@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미팅 글 목록</title>
+    <link rel="shortcut icon" href="#">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="static/js/base_api.js"></script>
+    <script src="static/js/meeting_list.js"></script>
+   
+</head>
+
+<body>
+    <select id="search_select">
+        <option value="title">제목</option>
+        <option value="content">내용</option>
+        <option value="user">작성자</option>
+    </select>
+    <input id="meeting_search" type="text" placeholder="모임 글 검색">
+    <button onclick="meetingSearch()">검색하기</button>
+    <button onclick="meetingBookmarkList()">북마크 한 글</button>
+    <h1>모임 글 목록</h1>
+    <a href="/meeting_create.html">모임 작성하기</a>
+    <div id="meeting_card">
+
+
+
+    </div>
+</body>
+
+</html>
