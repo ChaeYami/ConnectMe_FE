@@ -1,6 +1,6 @@
 네비바 복붙하려고 만든 text
 
-<!--위, 아래 네비바 시작-->
+ <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <a onclick="go_home()">홈</a>
         <a onclick="go_recommend()">친구찾기</a>
