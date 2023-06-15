@@ -44,14 +44,15 @@
                     <div id="nickname" class="nickname">
                         닉네임
                     </div>
-                    <div><button onclick="go_personal()" >내정보보기</button><button onclick="go_profileEdit()">프로필수정</button></div>
+                    <div><button onclick="go_personal()">내정보보기</button><button onclick="go_profileEdit()">프로필수정</button>
+                    </div>
                 </div>
                 <div class="buttons">
-                    <div><button onclick="addFriend()">친구신청</button></div>
-                    <div><button>채팅하기</button></div>
-                    <div><button>사진첩</button></div>
-                    <div><button onclick="go_requestList('to')">받은친구신청목록</button></div>
-                    <div><button onclick="go_requestList('from')">보낸친구신청목록</button></div>
+                    <div id="addFriend"><button onclick="addFriend()">친구신청</button></div>
+                    <div id="chat"><button>채팅하기</button></div>
+                    <div id="album"><button>사진첩</button></div>
+                    <div id="requests" style="display: none;"><button onclick="go_requestList('to')">친구신청목록</button></div>
+                    <div id="friends-list" style="display: none;"><button onclick="go_friends()">친구목록</button></div>
                 </div>
             </div>
         </div>
