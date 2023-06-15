@@ -43,7 +43,6 @@ async function recommend(filter) {
                 let condition = `${filter_} : ${rows[0][filter]}`
                 $('.condition').append(condition)
 
-                console.log(rows[0])
                 for (let i = 0; i < rows.length; i++) {
                     let user_pk = rows[i]['id']
                     let user_nickname = rows[i]['nickname']

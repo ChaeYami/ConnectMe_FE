@@ -50,3 +50,7 @@ async function addFriend(){
 function go_profileEdit(){
     location.href = `profile_edit.html?user_id=${logined_user_id}`
 }
+
+function go_personalEdit(){
+    location.href = 'personal_edit.html'
+}

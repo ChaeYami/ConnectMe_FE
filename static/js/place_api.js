@@ -1,7 +1,6 @@
 const PLACE = document.querySelector('#place')
 
-const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2NzQ1NzExLCJpYXQiOjE2ODY2NTkzMTEsImp0aSI6Ijc5YzUyNTNkNTM4ZTRmODdhOTFiZGI4NmE4YjE2ZDJjIiwidXNlcl9pZCI6MiwiZW1haWwiOiJhQGEuY29tIiwiYWNjb3VudCI6ImFhYWEiLCJwaG9uZSI6IjAwMDAwMDAwMDAiLCJuaWNrbmFtZSI6IiJ9.EZ_TR4UIfgUhUpIS0i7pUrXwwB7wqma2nRVjB1amJRg'
-
+const logined_token = localStorage.getItem("access");
 
 window.onload = function () {
     const urlParams = new URLSearchParams(window.location.search).get("id");
@@ -42,7 +41,7 @@ async function CreatePlace() {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -77,7 +76,7 @@ async function CreatePlace() {
 async function PlaceView() {
     const response = await fetch(`${BACKEND_BASE_URL}/place/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -135,7 +134,7 @@ async function PlaceDetailView(place_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -235,7 +234,7 @@ async function PlaceBook(place_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -260,7 +259,7 @@ async function PlaceLike(place_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/like/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -284,7 +283,7 @@ async function PlaceLike(place_id) {
 async function PlacePreUpdateView(place_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -355,7 +354,7 @@ async function PlaceUpdate(place_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
             "content-type": "application/json",
         },
         // headers: {
@@ -383,7 +382,7 @@ async function PlaceUpdate(place_id) {
 async function PlaceDelete(place_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -410,7 +409,7 @@ async function ImageAdd(place_id, place_image_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/image/${place_image_id}/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -431,7 +430,7 @@ async function ImageDelete(place_id, place_image_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/image/${place_image_id}/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -454,7 +453,7 @@ async function CommentWrite(place_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -496,7 +495,7 @@ async function ReplyWrite(place_id, place_comment_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/${place_comment_id}/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),
@@ -525,7 +524,7 @@ async function CommentUpdate(place_id, place_comment_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/${place_comment_id}/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
             "content-type": "application/json",
         },
         // headers: {
@@ -544,7 +543,7 @@ async function CommentUpdate(place_id, place_comment_id) {
 async function CommentDelete(place_id, place_comment_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/${place_comment_id}/`, {
         headers: {
-            Authorization: "Bearer " + TOKEN,
+            Authorization: "Bearer " + logined_token,
         },
         // headers: {
         //     Authorization: "Bearer " + localStorage.getItem("access"),

@@ -4,19 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
+    <!-- <link rel="stylesheet" href="static/css/personal_edit.css"> -->
 
-    <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-        
-    <title>Connect ME | 장소추천</title>
+    <title>Connect ME | 내정보수정</title>
 </head>
 
 <body>
-
 
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
@@ -40,13 +35,21 @@
     </div>
     <!--위, 아래 네비바 끝-->
 
+    <div class="personal-main">
+       <div class="email"></div>
+       <div class="edit-password">
+        <a onclick="go_password_change()">비밀번호 변경</a>
+       </div>
+       <div class="name"></div>
 
-    <div style="height: 50px; text-align:center;">
-        <a href="place_view.html">새로고침</a>
+
     </div>
-    <div id="place"></div>
-    <script src="static/js/base_api.js"></script>
-    <script src="static/js/place_api.js"></script>
+
+
 </body>
+
+<!-- js -->
+<script src="static/js/base_api.js"></script>
+<script src="static/js/personal_edit_api.js"></script>
 
 </html>
