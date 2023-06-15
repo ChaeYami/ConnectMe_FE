@@ -13,7 +13,7 @@ async function requestList(me) {
     $('.list-section').empty()
 
     $.ajax({
-        url: `${BACKEND_BASE_URL}/user/friend/list/`,
+        url: `${BACKEND_BASE_URL}/user/friend/request-list/`,
         type: "GET",
         dataType: "json",
         headers: {
@@ -86,7 +86,6 @@ async function requestList(me) {
 
 // 수락 user/friend/<int:friend_request_id>/accept/
 function acceptRequest(request_id) {
-    console.log('tlqkf')
 
     $.ajax({
         url : `${BACKEND_BASE_URL}/user/friend/${request_id}/accept/`, 
@@ -97,6 +96,7 @@ function acceptRequest(request_id) {
         },
         success: function(response){
             alert(response['message'])
+            location.reload()
         },
         error : function(response){
             alert(response['responseJSON']['message'])
@@ -110,4 +110,20 @@ function acceptRequest(request_id) {
 // 거절 user/friend/<int:friend_request_id>/reject/
 async function rejectRequest(request_id) {
 
+    $.ajax({
+        url : `${BACKEND_BASE_URL}/user/friend/${request_id}/reject/`, 
+        type : "POST",
+        dataType:"json",
+        headers:{
+            "Authorization": "Bearer " + logined_token
+        },
+        success: function(response){
+            alert(response['message'])
+            location.reload()
+        },
+        error : function(response){
+            alert(response['responseJSON']['message'])
+        }
+
+    })
 }
