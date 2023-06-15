@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>모임 글 작성하기</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="static/js/base_api.js"></script>
+    <script src="static/js/meeting_create.js"></script>
+</head>
+<body>
+    <h1>모임 글 작성하기</h1>
+    <p>제목 : <input id="meeting_title" name="title" type="text"></p>
+    <p>내용 : <textarea id="meeting_content" name="content" cols="30" rows="10"></textarea>
+    <p>이미지 : <input id="meeting_image" name="image" type="file" multiple></p>
+    <div id="image_box">
+        <img src="" alt="">
+    </div>
+
+    <button id="create_btn" onclick="createMeeting()">작성완료</button>
+</body>
+
+</html>
