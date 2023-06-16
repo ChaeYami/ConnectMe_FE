@@ -1,5 +1,3 @@
-const logined_token = localStorage.getItem("access");
-
 window.onload = function () {
     const urlParams = new URLSearchParams(window.location.search).get("id");
     if (urlParams) {
@@ -43,9 +41,6 @@ async function CreatePlace() {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "POST",
         body: formdata,
     });
@@ -78,14 +73,12 @@ async function PlaceView() {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "GET",
     });
 
     const response_json = await response.json();
     let place = document.querySelector('#place')
+    let place_create = document.querySelector('#place_create')
 
     response_json.forEach((e, i) => {
         let place_id = e.id
@@ -113,9 +106,23 @@ async function PlaceView() {
             img = ''
         }
 
+        place.innerHTML += `
+        <div>제목 : <a href="place_view.html?id=${place_id}">${name}</a>
+        </div>`
+
+        if (JSON.parse(payload)['is_staff']) {
+            place.innerHTML += `
+            <a href="place_edit.html">
+                <img src="static/image/add.png" style="width:20px">
+            </a>
+            <a>
+                <img src="static/image/edit.png" style="width:20px" onclick="PlacePreUpdateView(${place_id})">
+            </a>
+            `
+        }
+
 
         place.innerHTML += `
-        <div>제목 : <a href="place_view.html?id=${place_id}">${name}</a></div>
         <div>카테고리 : ${category}</div>
         <div>내용 : ${content}</div>
         <div>주소 : ${address}</div>
@@ -175,6 +182,7 @@ function SendSNS(sns) {
     let current_url = document.location.href;
     let title = document.querySelector('#title').innerText.substring(5)
     let content = document.querySelector('#content').innerText.substring(5)
+    let image = document.querySelector('#image').src
 
     if (sns == 'naver') {
         var url = "http://www.band.us/plugin/share?body=" + encodeURIComponent(title) + "&route=" + encodeURIComponent(current_url);
@@ -193,7 +201,7 @@ function SendSNS(sns) {
             content: {
                 title: title,
                 description: content,
-                imageUrl: current_url,
+                imageUrl: image,
                 link: {
                     mobileWebUrl: current_url,
                     webUrl: current_url
@@ -232,15 +240,10 @@ function CopyButton() {
 
 // 장소추천 상세보기
 async function PlaceDetailView(place_id) {
-
-
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "GET",
     });
 
@@ -257,14 +260,15 @@ async function PlaceDetailView(place_id) {
     let hour = response_json['place'].hour
     let holiday = response_json['place'].holiday
     let place = document.querySelector('#place')
-
+    let like = response_json['place'].like
+    let bookmark = response_json['place'].bookmark
 
     let images = ``
 
     if (image) {
         for (let i = 0; i < image.length; i++) {
             images += `
-            <img src="${image[i]['url']}">
+            <img id="image" src="${image[i]['url']}">
             `
         }
     }
@@ -275,16 +279,24 @@ async function PlaceDetailView(place_id) {
         if (comments[i]['reply'].length > 0) {
             comment +=
                 `<div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} 
-                <button onclick="CommentPreUpdate(${place_id}, ${comments[i]['id']})">✔️</button> 
-                <button onclick="CommentDelete(${place_id}, ${comments[i]['id']})">❌</button>
+                <a>
+                    <img src="static/image/comment_edit.png" style="width:20px" onclick="CommentPreUpdate(${place_id}, ${comments[i]['id']})">
+                </a>
+                <a>
+                    <img src="static/image/comment_delete.png" style="width:20px" onclick="CommentDelete(${place_id}, ${comments[i]['id']})">
+                </a>
                 <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
             for (let j = 0; j < comments[i]['reply'].length; j++) {
                 comment +=
                     `
                         <div id='comment${comments[i]['reply'][j]['id']}' style="margin-left:20px;">
                             ${comments[i]['reply'][j]['user_name']} : ${comments[i]['reply'][j]['content']} 
-                            <button onclick="CommentPreUpdate(${place_id}, ${comments[i]['reply'][j]['id']})">✔️</button> 
-                            <button onclick="CommentDelete(${place_id}, ${comments[i]['reply'][j]['id']})">❌</button>
+                            <a>
+                                <img src="static/image/comment_edit.png" style="width:20px" onclick="CommentPreUpdate(${place_id}, ${comments[i]['reply'][j]['id']})">
+                            </a>
+                            <a>
+                                <img src="static/image/comment_delete.png" style="width:20px" onclick="CommentDelete(${place_id}, ${comments[i]['reply'][j]['id']})">
+                            </a>
                         </div>
                         `
             }
@@ -294,26 +306,36 @@ async function PlaceDetailView(place_id) {
             comment +=
                 `<div id='comment${comments[i]['id']}'>
                     ${comments[i]['user_name']} : ${comments[i]['content']} 
-                    <button onclick="CommentPreUpdate(${place_id}, ${comments[i]['id']})">✔️</button> 
-                    <button onclick="CommentDelete(${place_id}, ${comments[i]['id']})">❌</button>
+                    <a>
+                        <img src="static/image/comment_edit.png" style="width:20px" onclick="CommentPreUpdate(${place_id}, ${comments[i]['id']})">
+                    </a>
+                    <a>
+                        <img src="static/image/comment_delete.png" style="width:20px" onclick="CommentDelete(${place_id}, ${comments[i]['id']})">
+                    </a>
                     <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>
                 </div>
                 `
         }
 
     }
-
     place.innerHTML = `
-    <button onclick="PlacePreUpdateView(${place_id})">수정하기</button>
-    <button onclick="PlaceDelete(${place_id})">삭제하기</button>`
+    <div id="title">제목 : ${name}</div>
+    `
+
+    const id_title = document.querySelector('#title')
+
+    if (JSON.parse(payload)['is_staff']) {
+        id_title.innerHTML += `
+        <a>
+            <img src="static/image/edit.png" style="width:20px" onclick="PlacePreUpdateView(${place_id})">
+        </a>
+        <a>
+            <img src="static/image/delete.png" style="width:20px" onclick="PlaceDelete(${place_id})">
+        </a>`
+
+    }
 
     place.innerHTML += `
-    <div>
-        <img id="book${place_id}" src="static/image/bookmark-white.png" style="width: 20px;" alt="북마크" onclick="PlaceBook(${place_id})">
-        <img id="like${place_id}" src="static/image/heart.png" style="width: 20px;" alt="좋아요" onclick="PlaceLike(${place_id})">
-        <img id="modal_opne_btn" src="static/image/share (1).png" style="width: 20px;" alt="공유하기" onclick="PlaceShare(${place_id})">
-    </div>
-    <div id="title">제목 : ${name}</div>
     <div>카테고리 : ${category}</div>
     <div id="content">내용 : ${content}</div>
     <div>주소 : ${address}</div>
@@ -322,7 +344,41 @@ async function PlaceDetailView(place_id) {
     <div>가격 : ${price}</div>
     <div>영업시간 : ${hour}</div>
     <div>휴일 : ${holiday}</div>
-    <div id="map" style="height: 350px; width: 350px;"></div>
+    <div id="map" style="height: 350px; width: 350px; z-index: 1;"></div>
+    <div style="margin-top:10px">`
+
+    if (bookmark.includes(logined_user_id)) {
+        place.innerHTML += `
+        <a>
+            <img id="book${place_id}" src="static/image/bookmark (1).png" style="width: 20px;" alt="북마크" onclick="PlaceBook(${place_id})">
+        </a>`
+    } else {
+        place.innerHTML += `
+        <a>
+            <img id="book${place_id}" src="static/image/bookmark.png" style="width: 20px;" alt="북마크" onclick="PlaceBook(${place_id})">
+        </a>`
+    }
+
+    if (like.includes(logined_user_id)) {
+        place.innerHTML += `
+        <a>
+            <img id="like${place_id}" src="static/image/heart (1).png" style="width: 20px;" alt="좋아요" onclick="PlaceLike(${place_id})">
+        </a>`
+    } else {
+        place.innerHTML += `
+        <a>
+            <img id="like${place_id}" src="static/image/heart.png" style="width: 20px;" alt="좋아요" onclick="PlaceLike(${place_id})">
+        </a>`
+    }
+
+    place.innerHTML += `
+        <a>
+            <img id="modal_opne_btn" src="static/image/share.png" style="width: 20px;" alt="공유하기" onclick="PlaceShare(${place_id})">
+        </a>
+        <a href="meeting_create.html">
+            <img src="static/image/workgroup.png" style="width: 30px;">
+        </a>
+    </div>
     <hr>
     <div>
         댓글 : <input id="comments"/> <button type="button" onclick="CommentWrite(${place_id})">등록하기</button>
@@ -345,19 +401,16 @@ async function PlaceBook(place_id) {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "POST",
     });
 
     const response_json = await response.json();
 
     if (response_json["message"] == "북마크") {
-        book['src'] = "static/image/bookmark.png"
+        book['src'] = "static/image/bookmark (1).png"
         alert("북마크가 추가되었습니다.");
     } else {
-        book['src'] = "static/image/bookmark-white.png"
+        book['src'] = "static/image/bookmark.png"
         alert("북마크가 취소되었습니다.");
     }
 }
@@ -370,16 +423,13 @@ async function PlaceLike(place_id) {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "POST",
     });
 
     const response_json = await response.json();
 
     if (response_json["message"] == "좋아요") {
-        like['src'] = "static/image/heart (2).png"
+        like['src'] = "static/image/heart (1).png"
         alert("좋아요.");
     } else {
         like['src'] = "static/image/heart.png"
@@ -394,9 +444,6 @@ async function PlacePreUpdateView(place_id) {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "GET",
     });
 
@@ -419,7 +466,7 @@ async function PlacePreUpdateView(place_id) {
         for (let i = 0; i < image.length; i++) {
             images += `
             <img id="image${image[i]['id']}" src="${image[i]['url']}">
-            <button onclick="ImageDelete(${place_id}, ${image[i]['id']})">❌</button>
+            <button type="button" onclick="ImageDelete(${place_id}, ${image[i]['id']})">❌</button>
             `
         }
     }
@@ -473,9 +520,6 @@ async function PlaceUpdate(place_id) {
             Authorization: "Bearer " + logined_token,
             "content-type": "application/json",
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "PATCH",
         body: JSON.stringify({
             title: name.value,
@@ -498,9 +542,6 @@ async function PlaceDelete(place_id) {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "DELETE",
     });
 
@@ -525,9 +566,6 @@ async function ImageAdd(place_id, place_image_id) {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "POST",
         body: formdata,
     });
@@ -547,9 +585,6 @@ async function ImageDelete(place_id, place_image_id) {
             Authorization: "Bearer " + logined_token,
             'content-type': 'application/json'
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "DELETE",
 
     })
@@ -570,9 +605,6 @@ async function CommentWrite(place_id) {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "POST",
         body: formdata,
     });
@@ -612,9 +644,6 @@ async function ReplyWrite(place_id, place_comment_id) {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "POST",
         body: formdata,
     });
@@ -642,9 +671,6 @@ async function CommentUpdate(place_id, place_comment_id) {
             Authorization: "Bearer " + logined_token,
             "content-type": "application/json",
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "PUT",
         body: JSON.stringify({
             content: comment_update.value,
@@ -660,9 +686,6 @@ async function CommentDelete(place_id, place_comment_id) {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
-        // headers: {
-        //     Authorization: "Bearer " + localStorage.getItem("access"),
-        // },
         method: "DELETE",
     });
     window.location.href = `place_view.html?id=${place_id}`;

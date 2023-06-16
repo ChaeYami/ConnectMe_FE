@@ -63,3 +63,52 @@
 .close_popup_btn:after {
     transform: translate(-50%, -50%) rotate(-45deg);
 }
+
+/* dropdown css 시작 */
+.menu:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+.menu>li {
+    position: relative;
+    float: left;
+    margin-right: 5px;
+}
+
+.menu>li>a {
+    display: block;
+    padding: 0 15px;
+    background: #333;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+}
+
+.menu>li:hover .depth_1 {
+    display: block;
+}
+
+.menu .depth_1 {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.menu .depth_1 a {
+    display: block;
+    padding: 5px;
+    background: #666;
+    color: #fff;
+}
+
+/* dropdown css 끝 */
+
+/* place css 시작 */
+.place_category {
+    display: flex;
+    height: 100px;
+}
