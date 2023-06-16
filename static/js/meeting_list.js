@@ -9,12 +9,12 @@ fetch(`${BACKEND_BASE_URL}/meeting/`).then(res => res.json()).then(meetings => {
             let comment_count = meeting['comment_count']
             let meeting_image = meeting['meeting_image'][0]['image']
             let temp_html = `
-                        <div  OnClick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
+                        <button onclick="meetingBookmark(${id})">📖</button>
+                        <div class="meeting_img_test" onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
                         <h2>${title}</h2>
                         <img src="${BACKEND_BASE_URL}${meeting_image}" alt="">
                         <p>${user} 📄${comment_count} ${created_at}</p>
                         </div>
-                        <button onclick="meetingBookmark(${id})">📖</button>
                         `
             $('#meeting_card').append(temp_html)
         } else {
@@ -25,12 +25,12 @@ fetch(`${BACKEND_BASE_URL}/meeting/`).then(res => res.json()).then(meetings => {
             let comment_count = meeting['comment_count']
             let content = meeting['content']
             let temp_html = `
-                        <div  OnClick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
+                        <div class="meeting_img_test" onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
                         <h2>${title}</h2>
                         <p>${content}</p>
                         <p>${user} 📄${comment_count} ${created_at}</p>
-                        </div>
                         <button onclick="meetingBookmark(${id})">📖</button>
+                        </div>
                         `
             $('#meeting_card').append(temp_html)
         }
@@ -85,33 +85,39 @@ function meetingSearch() {
 //================================ 모임 글 검색 API 끝 ================================ 
 //================================ 모임 글 목록에서 북마크 하기 API 시작 ================================ 
 async function meetingBookmark(id) {
+    let token = localStorage.getItem("access")
     let response = await fetch(`${BACKEND_BASE_URL}/meeting/${id}/bookmark/`, {
         method: 'POST',
         headers: {
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2ODc3Mjg5LCJpYXQiOjE2ODY3OTA4ODksImp0aSI6IjJmYzA3YjBjYjUzNzRkNWM5MWRlNWM1YTQyZGQ2ODAwIiwidXNlcl9pZCI6MSwiZW1haWwiOiJuYnYxNDQzQGdtYWlsLmNvbSIsImFjY291bnQiOiJuYnYxNDQzIiwicGhvbmUiOiIwMDAwMDAwMDAwMCIsIm5pY2tuYW1lIjoiXHVhYzAwXHViY2Y0XHVjNzkwXHVhY2UwIn0.g0dN8h-FxNCsEw-zwXHGN-Df6R4zq7jy8t2rWHDs9Hk"
-            // Authorization: localStorage.getItem('access_token'),
+            Authorization: `Bearer ${token}`,
         },
     })
-    if (response.status === 200) {
+    if(token){if (response.status === 200) {
         alert("북마크 취소")
         // location.reload();
     } else {
         alert("북마크")
         // location.reload();
+    }}else{
+        alert("로그인 해주세요")
     }
+    
 }
 //================================ 모임 글 목록에서 북마크 하기 API 끝 ================================ 
 
 //================================ 북마크 한 모임 글 목록 보기 API 시작 ================================ 
 function meetingBookmarkList() {
+    let token = localStorage.getItem("access")
+    if (token){
     $('#meeting_card').empty()
     fetch(`${BACKEND_BASE_URL}/meeting/bookmark_list`, {
         method: 'GET',
         headers: {
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2ODc3Mjg5LCJpYXQiOjE2ODY3OTA4ODksImp0aSI6IjJmYzA3YjBjYjUzNzRkNWM5MWRlNWM1YTQyZGQ2ODAwIiwidXNlcl9pZCI6MSwiZW1haWwiOiJuYnYxNDQzQGdtYWlsLmNvbSIsImFjY291bnQiOiJuYnYxNDQzIiwicGhvbmUiOiIwMDAwMDAwMDAwMCIsIm5pY2tuYW1lIjoiXHVhYzAwXHViY2Y0XHVjNzkwXHVhY2UwIn0.g0dN8h-FxNCsEw-zwXHGN-Df6R4zq7jy8t2rWHDs9Hk"
-            // Authorization: localStorage.getItem('access_token'),
+            Authorization: `Bearer ${token}`,
+
         },
     })
+    
         .then(res => res.json()).then(meetings => {
             meetings.forEach((meeting) => {
 
@@ -139,7 +145,7 @@ function meetingBookmarkList() {
                     let comment_count = meeting['comment_count']
                     let content = meeting['content']
                     let temp_html = `
-                        <div  OnClick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
+                        <div  onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
                         <h2>${title}</h2>
                         <p>${content}</p>
                         <p>${user} ${comment_count} ${created_at}</p>
@@ -150,5 +156,17 @@ function meetingBookmarkList() {
                 }
             })
         })
-}
+}else{alert("로그인 해주세요")}}
 //================================ 북마크 한 모임 글 목록 보기 API 끝 ================================ 
+
+//================================ 로그인 상태 확인 시작 ================================ 
+
+function go_meetingCreate() {
+    let token = localStorage.getItem("access")
+
+    if
+        (token) { window.location.href = "/meeting_create.html" }
+    else { alert("로그인 해주세요.") }
+}
+
+//================================ 로그인 상태 확인 끝 ================================ 
