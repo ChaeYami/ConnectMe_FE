@@ -4,30 +4,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>미팅 글 목록</title>
-    <link rel="shortcut icon" href="#">
+
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/index.css">
+
+    <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="static/js/base_api.js"></script>
-    <script src="static/js/meeting_list.js"></script>
-   
+
+    <title>미팅 글 목록</title>
+
+    <style>
+        .meeting_card_class {
+            width: 70vw;
+            max-width: 900px;
+
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .meeting_img_test>img {
+            width: 270px;
+            height: 300px;
+            
+            object-fit: cover;
+        }
+
+        .meeting_img_test {
+            width: 30%;
+            margin-bottom: 10px;
+        }
+
+        .meeting_list_box {
+            width: 70vw;
+            max-width: 900px;
+        }
+    </style>
+
 </head>
 
 <body>
-    <select id="search_select">
-        <option value="title">제목</option>
-        <option value="content">내용</option>
-        <option value="user">작성자</option>
-    </select>
-    <input id="meeting_search" type="text" placeholder="모임 글 검색">
-    <button onclick="meetingSearch()">검색하기</button>
-    <button onclick="meetingBookmarkList()">북마크 한 글</button>
-    <h1>모임 글 목록</h1>
-    <a href="/meeting_create.html">모임 작성하기</a>
-    <div id="meeting_card">
 
+    <!--위, 아래 네비바 시작-->
+    <div class="top-nav">
+        <a onclick="go_home()">홈</a>
+        <a onclick="go_recommend()">친구찾기</a>
+        <a onclick="go_placeView()">장소추천</a>
+        <a href="">고민상담</a>
+        <a onclick="go_meetingList()">만남의 광장</a>
 
-
+        <div class="login-logout">
+            <a onclick="go_login()">로그인</a>
+        </div>
     </div>
+
+    <div class="bot-nav">
+
+        <a href="">내글</a>
+        <a href="">북마크</a>
+        <a onclick="go_myProfile()">내프로필</a>
+        <a href="">알림</a>
+    </div>
+    <!--위, 아래 네비바 끝-->
+
+    <!-- 모임 글 목록과 검색과 북마크, 북마크 목록 시작 -->
+
+    <!-- 검색 옵션 드롭다운 -->
+    <div class="meeting_list_box">
+        <select id="search_select">
+            <option value="title">제목</option>
+            <option value="content">내용</option>
+            <option value="user">작성자</option>
+        </select>
+        <!-- 검색 옵션 드롭다운 끝 -->
+
+        <!-- 검색 기능 시작 -->
+        <input id="meeting_search" type="text" placeholder="모임 글 검색">
+        <button onclick="meetingSearch()">검색하기</button>
+        <!-- 검색 기능 끝 -->
+
+        <!-- 북마크 한 글 시작 -->
+        <button onclick="meetingBookmarkList()">북마크 한 글</button>
+        <!-- 북마크 한 글 끝 -->
+
+        <!-- 모임 글 목록 시작 -->
+        <button onclick="go_meetingCreate()">모임 작성하기</button>
+        <h1>모임 글 목록</h1>
+        <div id="meeting_card" class="meeting_card_class">
+        </div>
+    </div>
+    <!-- 모임 글 목록 끝 -->
+
+    <!-- 모임 글 목록과 검색과 북마크, 북마크 목록 끝 -->
 </body>
+
+<!-- js -->
+<script src="static/js/base_api.js"></script>
+<script src="static/js/meeting_list.js"></script>
 
 </html>

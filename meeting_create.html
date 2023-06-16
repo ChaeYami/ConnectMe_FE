@@ -1,14 +1,48 @@
 <!DOCTYPE html>
 <html lang="kr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>모임 글 작성하기</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/index.css">
+
+    <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="static/js/base_api.js"></script>
     <script src="static/js/meeting_create.js"></script>
+
+    <title>모임 글 작성하기</title>
+
+    
 </head>
+
 <body>
+    <!--위, 아래 네비바 시작-->
+    <div class="top-nav">
+        <a onclick="go_home()">홈</a>
+        <a onclick="go_recommend()">친구찾기</a>
+        <a onclick="go_placeView()">장소추천</a>
+        <a href="">고민상담</a>
+        <a onclick="go_meetingList()">만남의 광장</a>
+
+        <div class="login-logout">
+            <a onclick="go_login()">로그인</a>
+        </div>
+    </div>
+
+    <div class="bot-nav">
+
+        <a href="">내글</a>
+        <a href="">북마크</a>
+        <a onclick="go_myProfile()">내프로필</a>
+        <a href="">알림</a>
+    </div>
+    <!--위, 아래 네비바 끝-->
+
+    <!-- 모임 글 작성 시작 -->
     <h1>모임 글 작성하기</h1>
     <p>제목 : <input id="meeting_title" name="title" type="text"></p>
     <p>내용 : <textarea id="meeting_content" name="content" cols="30" rows="10"></textarea>
@@ -16,8 +50,9 @@
     <div id="image_box">
         <img src="" alt="">
     </div>
-
     <button id="create_btn" onclick="createMeeting()">작성완료</button>
+    <!-- 모임 글 작성 끝 -->
+
 </body>
 
 </html>
