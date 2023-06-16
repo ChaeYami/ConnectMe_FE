@@ -43,21 +43,17 @@
     </div>
     <!--위, 아래 네비바 끝-->
 
-
-    <div style="height: 50px; text-align:center;">
-        <a href="place_view.html">새로고침</a>
-    </div>
-    <!--공유하기 모달-->
+    <!--공유하기 모달 시작-->
     <div class="popup-wrap" id="popup">
         <div class="popup">
             <div class="popup-body">
                 <div>
                     <div>
-                        <img src="static/image/BAND_Icon.png" onclick="SendSNS('naver')" style="width: 80px;">
-                        <img src="static/image/facebook.png" onclick="SendSNS('facebook')" style="width: 80px;">
-                        <img id="kakao_sns" src="static/image/kakao-talk (1).png" onclick="SendSNS('kakao')"
+                        <img src="static/image/SNS_BAND.png" onclick="SendSNS('naver')" style="width: 80px;">
+                        <img src="static/image/SNS_FACEBOOK.png" onclick="SendSNS('facebook')" style="width: 80px;">
+                        <img id="kakao_sns" src="static/image/SNS_KAKAO_TALK.png" onclick="SendSNS('kakao')"
                             style="width: 80px;">
-                        <img src="static/image/twitter (1).png" onclick="SendSNS('twitter')" style="width: 80px;">
+                        <img src="static/image/SNS_TWITTER.png" onclick="SendSNS('twitter')" style="width: 80px;">
                     </div>
                     <div>
                         <input id="link_id" type="text" readonly />
@@ -68,7 +64,23 @@
             </div>
         </div>
     </div>
-    <!--공유하기 모달-->
+    <!--공유하기 모달 끝-->
+    <div class="place_category" id="place_category">
+        <div>
+            <ul class="menu">
+                <li>
+                    <a href="#">MENU 1</a>
+                    <ul class="depth_1">
+                        <li><a href="#">MENU 1_1</a></li>
+                        <li><a href="#">MENU 1_2</a></li>
+                        <li><a href="#">MENU 1_3</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <input id="place_search" /><button>검색하기</button>
+        </div>
+    </div>
+
     <div id="place"></div>
 
     <script src="static/js/base_api.js"></script>

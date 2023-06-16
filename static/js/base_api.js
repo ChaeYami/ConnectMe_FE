@@ -2,8 +2,8 @@ const BACKEND_BASE_URL = "http://127.0.0.1:8000"
 const FRONTEND_BASE_URL = "http://127.0.0.1:5500"
 const KAKAO_API = '3611a3327df6a2e923777b26800f369d'
 const KAKAO_JAVASCRIPT_API = '61771f77ccf8e5fb8aed8a7b26e8cfb1'
-const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2ODk3OTQwLCJpYXQiOjE2ODY4MTE1NDAsImp0aSI6IjFlYzEzNTYyOTg2MjQ3Y2E5M2YwODRhNGY2YmZmZGI0IiwidXNlcl9pZCI6MSwiZW1haWwiOiJhQGEuY29tIiwiYWNjb3VudCI6ImFhYWEiLCJwaG9uZSI6IjAwMDAwMDAwMDAwIiwibmlja25hbWUiOiIifQ.nLQKzTmMbb7oi3P9JYNfIyme96qe8XGTnBMNtBBQkyI'
 
+const logined_token = localStorage.getItem("access");
 const payload = localStorage.getItem("payload");
 const payload_parse = payload ? JSON.parse(payload) : null;
 const logined_user_id = payload_parse ? parseInt(payload_parse.user_id) : null;
@@ -90,7 +90,7 @@ function SuccessLocation(data) {
     $.ajax({
         url: `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}`,
         type: 'GET',
-        headers: { 'Authorization': `KakaoAK ` + process.env.KAKAO_API },
+        headers: { 'Authorization': `KakaoAK ` + KAKAO_API },
         success: function (position) {
             let full_address = position['documents'][0]['address'];
             let address = full_address['address_name'];
@@ -110,11 +110,8 @@ function SuccessLocation(data) {
 
             const response = fetch(BACKEND_BASE_URL + `/user/region/`, {
                 headers: {
-                    Authorization: "Bearer " + TOKEN,
+                    Authorization: "Bearer " + logined_token,
                 },
-                // headers: {
-                //     Authorization: "Bearer " + localStorage.getItem("access"),
-                // },
                 method: "PATCH",
                 body: formdata,
             });
