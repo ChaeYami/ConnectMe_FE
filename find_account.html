@@ -6,6 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/base.css">
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
     <title>Connect ME | 아이디 찾기</title>
 </head>
 
@@ -31,12 +38,37 @@
         <a onclick="go_myProfile()">내프로필</a>
         <a href="">알림</a>
     </div>
-    <!--위, 아래 네비바 끝-->
 
     <!--메인 시작-->
-    
+
+    <div class="main">
+        <div id="input-box">
+            <div id="authentication">
+                <input type="text" id="phone" placeholder="-를 제외한 휴대폰번호를 입력해주세요">
+                <button onclick="phone_send()" class="button">인증번호 발송</button>
+            </div>
+            <div class="alert alert-danger" id="alert-danger_1"></div>
+            <input type="text" id="auth_number" placeholder="인증번호를 입력해 주세요.">
+            <div class="alert alert-danger" id="alert-danger_2"></div>
+            <div>
+                <button onclick="auth_number_confirm()" class="button login">확인</button>
+            </div>
+            <div class="alert alert-info" id="info_message"></div>
+            <div id="buttons">
+                <a onclick="go_signup()">
+                    회원가입
+                </a>
+                <a onclick="go_login()">
+                    로그인
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+
     <!--메인 끝-->
 </body>
 <script src="static/js/base_api.js"></script>
+<script src="static/js/find_account_api.js"></script>
 
 </html>
