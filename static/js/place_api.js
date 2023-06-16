@@ -1,3 +1,6 @@
+const logined_token = localStorage.getItem("access")
+
+
 window.onload = function () {
     const urlParams = new URLSearchParams(window.location.search).get("id");
     if (urlParams) {
