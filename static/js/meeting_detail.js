@@ -207,7 +207,7 @@ async function reply_update_handle(id) {
 async function replyUpdateConfrim(reply_id) {
     let reply = document.getElementById(`reply_update_input${reply_id}`).value
     let token = localStorage.getItem("access")
-    if(tokent){
+    if(token){
     let formData = new FormData();
     formData.append("content", reply);
 
