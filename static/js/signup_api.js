@@ -42,7 +42,6 @@ async function signup() {
 
     }
 
-
     // if (response.ok) {
     //     return response
     // } else {
@@ -77,3 +76,58 @@ function makeAlert(key, errorText) {
     }
 }
 
+// 인증번호 발송
+async function certifyPhoneSignup(){
+    const phone_front = document.getElementById("phone-front")
+    const phone_front_value = (phone_front.options[phone_front.selectedIndex].value)
+    const phone_1 = document.getElementById("phone-1").value
+    const phone_2 = document.getElementById("phone-2").value
+    const full_number = phone_front_value + phone_1 + phone_2
+
+    $.ajax({
+        url : `${BACKEND_BASE_URL}/user/phone/send/signup/`,
+        type :"POST",
+        dataType : "json",
+        data: {
+            "phone":full_number
+        },
+
+        success: function(response){
+            alert(response.message)
+            $("#auth-num-box").attr("style", "display:flex;");
+
+        }, error: function(response){
+            alert(response.responseJSON.message)
+        }
+    })
+}
+
+// 인증번호 확인
+async function ConfirmPhoneSignup(){
+    const phone_front = document.getElementById("phone-front")
+    const phone_front_value = (phone_front.options[phone_front.selectedIndex].value)
+    const phone_1 = document.getElementById("phone-1").value
+    const phone_2 = document.getElementById("phone-2").value
+    const full_number = phone_front_value + phone_1 + phone_2
+    const auth_num = document.getElementById("auth-num").value
+
+    $.ajax({
+        url : `${BACKEND_BASE_URL}/user/phone/confirm/signup/`,
+        type :"POST",
+        dataType : "json",
+        data: {
+            "phone":full_number,
+            "auth_number" : auth_num
+        },
+
+        success: function(response){
+            alert(response.message)
+            $("#phone-front").prop("disabled", true);
+            $("#phone-1").prop("disabled", true);
+            $("#phone-2").prop("disabled", true);
+
+        }, error: function(response){
+            alert(response.responseJSON.message)
+        }
+    })
+}

@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="static/css/base.css">
     <link rel="stylesheet" href="static/css/signup.css">
 
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
     <title>Connect ME | 회원가입</title>
 </head>
 
@@ -34,7 +38,7 @@
         <a href="">알림</a>
     </div>
     <!--위, 아래 네비바 끝-->
-    
+
 
     <!--메인 시작-->
 
@@ -52,8 +56,13 @@
                     <option value="017">017</option>
                     <option value="019">019</option>
                 </select>
-                <input type="tel" maxlength="4" id="phone-1" placeholder="3~4자리">
-                <input type="tel" maxlength="4" id="phone-2" placeholder="4자리">
+                <input type="tel" maxlength="4" id="phone-1" pattern = "\d{3,4}" placeholder="3~4자리">
+                <input type="tel" maxlength="4" id="phone-2" pattern="\d{4}" placeholder="4자리">
+                <button onclick="certifyPhoneSignup()">인증번호 발송</button>
+            </div>
+            <div id="auth-num-box" style="display: none;">
+                <input type="text" name="auth-num" id="auth-num" placeholder="인증번호 입력">
+                <button onclick="ConfirmPhoneSignup()">인증번호 확인</button>
             </div>
             <input type="text" id="nickname" placeholder="닉네임"><br>
 
