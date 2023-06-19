@@ -67,6 +67,9 @@ function go_meetingList() {
     location.href = "meeting_list.html"
 }
 
+function go_counsel(){
+    location.href = "counsel_list.html"
+}
 
 //로그아웃
 function logoutButton() {
