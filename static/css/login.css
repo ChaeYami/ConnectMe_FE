@@ -61,8 +61,40 @@ input:not(:placeholder-shown) {
     width: 100%;
     height: 50px;
     font-size: 14pt;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 .buttons{
     margin-top: 20px;
 }
+
+.alert-danger {
+    color: #ff4a4a;
+    background-color:white ;
+    display: none;
+    margin: 10px auto;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+
+  }
+.sns-login{
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+  .button-naver img{
+    height: 45px;
+  }
+
+  .button-google img{
+    height: 45px;
+
+  }
