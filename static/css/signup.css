@@ -1,6 +1,6 @@
 .signup-section {
     width: 500px;
-    margin: 30vh auto;
+    margin: 20vh auto;
 
     @media screen and (max-width: 700px) {
         width: 400px;

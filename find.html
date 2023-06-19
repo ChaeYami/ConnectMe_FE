@@ -7,6 +7,7 @@
 
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/find.css">
 
     <title>Connect ME</title>
 </head>
@@ -35,16 +36,24 @@
     </div>
     <!--위, 아래 네비바 끝-->
 
-    
+
     <h2>계정찾기</h2>
     <hr>
-    <div>
-        <a onclick="go_findAccount()">
-            아이디 찾기
-        </a>
-        <a onclick="go_findPassword()">
-            비밀번호 찾기
-        </a>
+    <div class="main">
+        <div class="find-section">
+            <a class="find" onclick="go_findAccount()">
+                아이디 찾기
+            </a>
+            <a class="find" onclick="go_findPassword()">
+                비밀번호 찾기
+            </a>
+        </div>
+        <div class="buttons">
+            <a onclick="go_login()" style=" font-weight: 700;">로그인</a>
+            <a onclick="go_signup()" style=" font-weight: 700;">
+                회원가입
+            </a>
+        </div>
     </div>
 </body>
 

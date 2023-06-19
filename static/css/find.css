@@ -1,0 +1,30 @@
+h2 {
+    margin-top: 100px;
+}
+
+.main {
+    width: 500px;
+    margin: 100px auto;
+
+}
+
+.find-section {
+    display: grid;
+
+}
+
+.find {
+    border-radius: 5px;
+    background-color: #9bb1a1;
+    color: white;
+    padding: 20px;
+    margin: 10px;
+}
+
+.buttons {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+
+}
