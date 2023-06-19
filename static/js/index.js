@@ -41,7 +41,7 @@ function setLocalStorage(response) {
         localStorage.setItem("payload", jsonPayload);
         window.location.replace('index.html')
     } else {
-        alert("으에에에엥");
+        alert(response_json.error);
         window.location.replace('login.html')
     }
 }

@@ -10,7 +10,7 @@ async function phone_send() {
         phone: document.getElementById("phone").value,
     }
 
-    const response = await fetch(`${BACKEND_BASE_URL}/user/phone/send/`,{
+    const response = await fetch(`${BACKEND_BASE_URL}/user/phone/send/account`,{
         headers:{
             'Content-type':'application/json',
         },
@@ -40,7 +40,7 @@ async function auth_number_confirm() {
         auth_number: document.getElementById("auth_number").value,
     }
 
-    const response = await fetch(`${BACKEND_BASE_URL}/user/phone/verify/account/`,{
+    const response = await fetch(`${BACKEND_BASE_URL}/user/phone/confirm/account/`,{
         headers:{
             'Content-type':'application/json',
         },
