@@ -4,6 +4,7 @@ $(document).ready(function () {
     personal()
 });
 
+// 내정보보기 
 async function personal(){
     $.ajax({
         url : `${BACKEND_BASE_URL}/user/`,
@@ -13,7 +14,6 @@ async function personal(){
             "Authorization": "Bearer " + logined_token
         },
         success: function(response){
-            console.log(response)
             phone = response.phone
             email = response.email
             joined_at = response.joined_at
@@ -26,8 +26,9 @@ async function personal(){
     })
 }
 
-
-
+function go_editphone(){
+    window.open('edit_phone.html')
+}
 
 
 

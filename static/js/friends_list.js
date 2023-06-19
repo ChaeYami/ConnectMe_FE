@@ -17,13 +17,7 @@ async function friendsList() {
         success: function (response) {
 
             const rows = response;
-            console.log(rows)
-
-            console.log(rows)
-            console.log(rows[0]['from_nickname'])
-            console.log(rows[0]['from_account'])
-            console.log(rows[0]['from_user'])
-            console.log(rows[0]['id'])
+           
             for (let i = 0; i < rows.length; i++) {
                 let user_nickname = rows[i]['from_nickname']
                 let user_account = rows[i]['from_account']

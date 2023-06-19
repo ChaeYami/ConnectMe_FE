@@ -5,10 +5,10 @@ window.onload = () => {
     requestList(me)
 }
 
+// 친구신청목록 눌렀을 때
 function go_requestList(me) {
     location.href = `request_list.html?me=${me}`
 }
-
 async function requestList(me) {
     $('.list-section').empty()
 
@@ -25,11 +25,7 @@ async function requestList(me) {
                 let filteredResults = response.filter(item => item.to_account === logined_account);
                 const rows = filteredResults;
 
-                console.log(rows)
-                console.log(rows[0]['from_nickname'])
-                console.log(rows[0]['from_account'])
-                console.log(rows[0]['from_user'])
-                console.log(rows[0]['id'])
+                
                 for (let i = 0; i < rows.length; i++) {
                     let user_nickname = rows[i]['from_nickname']
                     let user_account = rows[i]['from_account']
@@ -56,8 +52,6 @@ async function requestList(me) {
             } else if (me === 'from') {
                 let filteredResults = response.filter(item => item.from_account === logined_account);
                 const rows = filteredResults;
-                console.log(rows)
-                console.log(rows[0]['to_nickname'])
 
                 for (let i = 0; i < rows.length; i++) {
                     let user_nickname = rows[i]['to_nickname']
