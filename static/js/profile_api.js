@@ -18,6 +18,7 @@ window.onload = () => {
         document.getElementById("addFriend").style.display = "block";
         document.getElementById("chat").style.display = "block";
         document.getElementById("album").style.display = "block";
+        document.getElementById("my-buttons").style.display="none";
       }
 }
 

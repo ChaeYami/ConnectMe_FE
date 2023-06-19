@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/base.css">
+
+    <title>Connect ME</title>
+</head>
+
+<body>
+
+    <!--위, 아래 네비바 시작-->
+    <div class="top-nav">
+        <a onclick="go_home()">홈</a>
+        <a onclick="go_recommend()">친구찾기</a>
+        <a onclick="go_placeView()">장소추천</a>
+        <a href="">고민상담</a>
+        <a onclick="go_meetingList()">만남의 광장</a>
+
+        <div class="login-logout">
+            <a onclick="go_login()">로그인</a>
+        </div>
+    </div>
+
+    <div class="bot-nav">
+
+        <a href="">내글</a>
+        <a href="">북마크</a>
+        <a onclick="go_myProfile()">내프로필</a>
+        <a href="">알림</a>
+    </div>
+    <!--위, 아래 네비바 끝-->
+
+    
+    <h2>계정찾기</h2>
+    <hr>
+    <div>
+        <a onclick="go_findAccount()">
+            아이디 찾기
+        </a>
+        <a onclick="go_findPassword()">
+            비밀번호 찾기
+        </a>
+    </div>
+</body>
+
+<!-- js -->
+<script src="static/js/base_api.js"></script>
+
+</html>
