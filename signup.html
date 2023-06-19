@@ -43,12 +43,23 @@
     <!--메인 시작-->
 
     <div class="signup-section">
-        <div id="input-box">
-            <input type="text" id="account" placeholder="아이디"><br>
-            <input type="password" id="password" placeholder="비밀번호"><br>
-            <input type="email" id="email" placeholder="이메일"><br>
-            <div style="display:flex;">
-                <select id="phone-front">
+        <div id="signup-box">
+            <div class="input-box">
+                <input type="text" id="account" placeholder="아이디">
+                <label for="account">아이디</label>
+            </div>
+            <div class="input-box">
+                <input type="password" id="password" placeholder="비밀번호">
+                <label for="password">비밀번호</label>
+            </div>
+
+            <div class="input-box">
+                <input type="email" id="email" placeholder="이메일">
+                <label for="email">이메일</label>
+            </div>
+
+            <div id = "phone-section">
+                <select class="select-box" id="phone-front">
                     <option value="">-----</option>
                     <option value="010">010</option>
                     <option value="011">011</option>
@@ -56,33 +67,49 @@
                     <option value="017">017</option>
                     <option value="019">019</option>
                 </select>
-                <input type="tel" maxlength="4" id="phone-1" pattern = "\d{3,4}" placeholder="3~4자리">
-                <input type="tel" maxlength="4" id="phone-2" pattern="\d{4}" placeholder="4자리">
-                <button onclick="certifyPhoneSignup()">인증번호 발송</button>
+                <div class="input-box" style="width: 65%;">
+
+                    <input type="tel" maxlength="8" id="phone" pattern="\d{7,8}" placeholder="7~8자리">
+                    <label for="phone">'-'을 제외한 전화번호</label>
+                </div>
+
+                <button style="height: 50px; margin-left:20px;" onclick="certifyPhoneSignup()">인증번호 발송</button>
             </div>
+
+
             <div id="auth-num-box" style="display: none;">
-                <input type="text" name="auth-num" id="auth-num" placeholder="인증번호 입력">
+                <div class="input-box">
+                    <input type="text" name="auth-num" id="auth-num" placeholder="인증번호 입력">
+                </div>
+
                 <button onclick="ConfirmPhoneSignup()">인증번호 확인</button>
             </div>
-            <input type="text" id="nickname" placeholder="닉네임"><br>
 
+            <div class="input-box">
+                <input type="text" id="nickname" placeholder="닉네임">
+                <label for="nickname">닉네임</label>
+                
+            </div>
 
             <div class="alert alert-danger" style="font-size:15px;" id="alert-danger"></div>
-            <div id="buttons">
-                <button class="button login" onclick="signupButton()">회원가입</button>
-                <br>
-                <a style="cursor: pointer;" class="button kakao" onclick="kakaoLogin()">카카오 | 이메일 동의 필수</a>
-                <br>
-                <a style="cursor: pointer;" class="button kakao" onclick="naverLogin()">네이버 | 이메일 동의 필수</a>
-                <br>
-                <a style="cursor: pointer;" class="button kakao" onclick="googleLogin()">구글 | 이메일 동의 필수</a>
-                <br>
-            </div>
-            <br>
+
+
+            <button class="button-signup" onclick="signupButton()">회원가입</button>
+            
             <a onclick="go_login()" style="color: rgb(149, 145, 140);">
                 회원이신가요?
                 <span style="color:black; cursor: pointer; font-weight: 700;text-decoration: underline;">로그인</span>
             </a>
+            <div class="sns-login">
+                <a class="button-kakao" onclick="kakaoLogin()"><img
+                        src="static/image/login/kakao_login_medium_narrow.png" alt=""></a>
+                <!-- <a class="button-naver" onclick="naverLogin()"><img src="static/image/login/btnG_완성형.png" alt=""></a>
+                 -->
+                <a class="button-google" onclick="googleLogin()"><img
+                        src="static/image/login/btn_google_signin_light_normal_web.png" alt=""></a>
+            </div>
+
+            
         </div>
     </div>
 

@@ -8,8 +8,7 @@ if (localStorage.getItem("kakao") || localStorage.getItem("google") || localStor
 async function signup() {
     const phone_front = document.getElementById("phone-front")
     const phone_front_value = (phone_front.options[phone_front.selectedIndex].value)
-    const phone_1 = document.getElementById("phone-1").value
-    const phone_2 = document.getElementById("phone-2").value
+    const phone = document.getElementById("phone").value
 
     const account = document.getElementById("account").value
     const email = document.getElementById("email").value
@@ -21,7 +20,7 @@ async function signup() {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("nickname", nickname);
-    formData.append("phone", phone_front_value + phone_1 + phone_2);
+    formData.append("phone", phone_front_value + phone);
 
     const response = await fetch(`${BACKEND_BASE_URL}/user/`, {
         headers: {
@@ -80,9 +79,8 @@ function makeAlert(key, errorText) {
 async function certifyPhoneSignup(){
     const phone_front = document.getElementById("phone-front")
     const phone_front_value = (phone_front.options[phone_front.selectedIndex].value)
-    const phone_1 = document.getElementById("phone-1").value
-    const phone_2 = document.getElementById("phone-2").value
-    const full_number = phone_front_value + phone_1 + phone_2
+    const phone = document.getElementById("phone").value
+    const full_number = phone_front_value + phone
 
     $.ajax({
         url : `${BACKEND_BASE_URL}/user/phone/send/signup/`,
@@ -106,9 +104,8 @@ async function certifyPhoneSignup(){
 async function ConfirmPhoneSignup(){
     const phone_front = document.getElementById("phone-front")
     const phone_front_value = (phone_front.options[phone_front.selectedIndex].value)
-    const phone_1 = document.getElementById("phone-1").value
-    const phone_2 = document.getElementById("phone-2").value
-    const full_number = phone_front_value + phone_1 + phone_2
+    const phone = document.getElementById("phone").value
+    const full_number = phone_front_value + phone
     const auth_num = document.getElementById("auth-num").value
 
     $.ajax({
@@ -123,8 +120,7 @@ async function ConfirmPhoneSignup(){
         success: function(response){
             alert(response.message)
             $("#phone-front").prop("disabled", true);
-            $("#phone-1").prop("disabled", true);
-            $("#phone-2").prop("disabled", true);
+            $("#phone").prop("disabled", true);
 
         }, error: function(response){
             alert(response.responseJSON.message)

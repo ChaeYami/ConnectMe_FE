@@ -1,3 +1,227 @@
-.signup-section{
+.signup-section {
+    width: 500px;
+    margin: 30vh auto;
+
+    @media screen and (max-width: 700px) {
+        width: 400px;
+
+    }
+}
+
+.input-box {
+    position: relative;
+    margin: 10px 0;
+}
+
+.input-box>input {
+    background: transparent;
+    border: none;
+    border-bottom: solid 1px #ccc;
+    padding: 20px 0px 5px 0px;
+    font-size: 14pt;
+    width: 100%;
+}
+
+input::placeholder {
+    color: transparent;
+}
+
+input:placeholder-shown+label {
+    color: #aaa;
+    font-size: 14pt;
+    top: 15px;
+}
+
+input:focus+label,
+label {
+    color: #8aa1a1;
+    font-size: 10pt;
+    pointer-events: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+}
+
+input:focus,
+input:not(:placeholder-shown) {
+    border-bottom: solid 1px #8aa1a1;
+    outline: none;
+}
+
+#phone-section{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+
+}
+.button-signup {
+    background-color: #8aa191;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    width: 100%;
+    height: 50px;
+    font-size: 14pt;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
     
+}
+
+
+.alert-danger {
+    color: #ff4a4a;
+    background-color:white ;
+    display: none;
+    margin: 10px auto;
+}
+
+
+.sns-login{
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+  .button-naver img{
+    height: 45px;
+  }
+
+  .button-google img{
+    height: 45px;
+
+  }
+
+  /* select box 시작 */
+.select-box {
+    position: relative;
+    display: block;
+    width: 100px;
+    margin: 0 auto;
+    border: 2px solid rgb(203, 203, 203);
+    font-family: "Open Sans", "Helvetica Neue", "Segoe UI", "Calibri", "Arial", sans-serif;
+    font-size: 18px;
+    color: #60666d;
+    margin-right: 10px;
+}
+
+/* @media (min-width: 768px) {
+    .select-box {
+        width: 70%;
+    }
+}
+
+@media (min-width: 992px) {
+    .select-box {
+        width: 50%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .select-box {
+        width: 30%;
+    }
+} */
+
+.select-box__current {
+    position: relative;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    outline: none;
+}
+
+.select-box__current:focus+.select-box__list {
+    opacity: 1;
+    animation-name: none;
+}
+
+.select-box__current:focus+.select-box__list .select-box__option {
+    cursor: pointer;
+}
+
+.select-box__current:focus .select-box__icon {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.select-box__icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    width: 20px;
+    opacity: 0.3;
+    transition: 0.2s ease;
+}
+
+.select-box__value {
+    display: flex;
+}
+
+.select-box__input {
+    display: none;
+}
+
+.select-box__input:checked+.select-box__input-text {
+    display: block;
+}
+
+.select-box__input-text {
+    display: none;
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    background-color: #fff;
+}
+
+.select-box__list {
+    position: absolute;
+    width: 100%;
+    padding: 0;
+    list-style: none;
+    opacity: 0;
+    animation-name: HideList;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: step-start;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+}
+
+.select-box__option {
+    display: block;
+    padding: 15px;
+    background-color: #fff;
+}
+
+.select-box__option:hover,
+.select-box__option:focus {
+    color: #546c84;
+    background-color: #fbfbfb;
+}
+
+@keyframes HideList {
+    from {
+        transform: scaleY(1);
+    }
+
+    to {
+        transform: scaleY(0);
+    }
+}
+#auth-num-box {
+    justify-content: flex-end;
+    align-items: center;
+
+}
+#auth-num-box button{
+    height: 50px;
+    margin: 0 20px;
 }
