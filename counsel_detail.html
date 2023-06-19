@@ -25,7 +25,7 @@
         <a onclick="go_placeView()">장소추천</a>
         <a href="">고민상담</a>
         <a onclick="go_meetingList()">만남의 광장</a>
-        
+
         <div class="login-logout">
             <a onclick="go_login()">로그인</a>
         </div>
@@ -41,20 +41,38 @@
     <!--위, 아래 네비바 끝-->
 
     <!-- 메인 -->
+    <div class="main">
+
+        <div class="counsel-title" id="title"></div>
+        <div class="counsel-author" id="author"></div>
+        <div class="counsel-content" id="content"></div>
+        <div class="counsel-likes_count" id="likes_count"></div>
+        <div class="like-button" id="like-button">
+            <button onclick="clickLike()">좋아요버튼</button>
+        </div>
+
+        <div class="buttons">
+            <button class="edit-botton" onclick="go_counselEdit()">수정</button>
+            <button class="delete-botton" onclick="counselDelete()">삭제</button>
+        </div>
+
+        <div>
+            <p><input id="inputComment" type="text" placeholder="댓글 입력하기"></p>
+            <button onclick="counselCommentCreate()">댓글 남기기</button>
+        </div>
+        <hr>
+        <div id="comment_card">
+        </div>
+        <div id="reply_card">
+        </div>
 
 
-
-    </div>
-
-
-    <!-- 장소추천 -->
-    <div>
 
     </div>
 </body>
 
 <!-- js -->
 <script src="/static/js/base_api.js"></script>
-<script src="/static/js/counsel_api.js"></script>
+<script src="/static/js/counsel_detail.js"></script>
 
 </html>
