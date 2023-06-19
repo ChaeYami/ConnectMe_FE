@@ -65,23 +65,19 @@
         </div>
     </div>
     <!--공유하기 모달 끝-->
-    <div class="place_category" id="place_category">
-        <div>
-            <ul class="menu">
-                <li>
-                    <a href="#">MENU 1</a>
-                    <ul class="depth_1">
-                        <li><a href="#">MENU 1_1</a></li>
-                        <li><a href="#">MENU 1_2</a></li>
-                        <li><a href="#">MENU 1_3</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <input id="place_search" /><button>검색하기</button>
-        </div>
+    <div id="place_create">
+        <a>
+            <img src="static/image/up-arrow.png" onclick="javascript:window.scrollTo(0,0)" style="width: 30px;">
+        </a>
+        <a>
+            <img src="static/image/down-arrow.png" onclick="javascript:window.scrollTo(0,document.body.scrollHeight)"
+                style="width: 30px;">
+        </a>
+
     </div>
 
     <div id="place"></div>
+
 
     <script src="static/js/base_api.js"></script>
     <script src="static/js/place_api.js"></script>

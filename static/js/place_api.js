@@ -50,23 +50,16 @@ async function CreatePlace() {
 
     const response_json = await response.json();
 
+
     if (response.status == 200) {
         alert("추천 장소가 등록되었습니다.");
         window.location.replace(`${FRONTEND_BASE_URL}/place_view.html`);
     } else if (response.status == 400) {
-        alert(response_json["message"]);
-    } else if (
-        name == "" ||
-        category == "" ||
-        content == "" ||
-        address == "" ||
-        images == "" ||
-        score == "" ||
-        price == "" ||
-        hour == "" ||
-        holiday == ""
-    ) {
-        alert("빈칸을 입력해 주세요.");
+        console.log(response_json)
+        for (let key in response_json) {
+            alert(`${response_json[key]}`);
+            break
+        }
     }
 }
 
@@ -82,6 +75,14 @@ async function PlaceView() {
     const response_json = await response.json();
     let place = document.querySelector('#place')
     let place_create = document.querySelector('#place_create')
+
+    if (JSON.parse(payload)['is_staff']) {
+        place_create.innerHTML += `
+        <a href="place_edit.html">
+            <img src="static/image/add.png" style="width:20px">
+        </a>
+        `
+    }
 
     response_json.forEach((e, i) => {
         let place_id = e.id
@@ -115,9 +116,6 @@ async function PlaceView() {
 
         if (JSON.parse(payload)['is_staff']) {
             place.innerHTML += `
-            <a href="place_edit.html">
-                <img src="static/image/add.png" style="width:20px">
-            </a>
             <a>
                 <img src="static/image/edit.png" style="width:20px" onclick="PlacePreUpdateView(${place_id})">
             </a>
@@ -235,7 +233,7 @@ function PlaceShare(place_id) {
     $('.popup').scrollTop(0);
 }
 
-// 복사하기 버튼
+// url 복사하기 버튼
 function CopyButton() {
     let inputTag = document.querySelector('#link_id')
     navigator.clipboard.writeText(inputTag.value)
@@ -469,7 +467,9 @@ async function PlacePreUpdateView(place_id) {
         for (let i = 0; i < image.length; i++) {
             images += `
             <img id="image${image[i]['id']}" src="${image[i]['url']}">
-            <button type="button" onclick="ImageDelete(${place_id}, ${image[i]['id']})">❌</button>
+            <a>
+                <img src="static/image/comment_delete.png" onclick="ImageDelete(${place_id}, ${image[i]['id']})" style="width:20px;">
+            </a>
             `
         }
     }
@@ -536,7 +536,8 @@ async function PlaceUpdate(place_id) {
         })
     })
 
-    window.location.href = `place_view.html?id=${place_id}`;
+    window.location.href = `place_view.html?id=${place_id}`
+
 }
 
 // 장소추천 삭제하기
@@ -627,14 +628,6 @@ async function CommentWrite(place_id) {
     window.location.href = `place_view.html?id=${place_id}`;
 }
 
-// 대댓글 수정 폼 띄우기
-async function ReplyPreWrite(place_id, place_comment_id) {
-
-    let reply = document.querySelector(`#reply${place_comment_id}`)
-
-    reply.innerHTML = `<input id="reply_write${place_comment_id}"/> <button type="button" onclick="ReplyWrite(${place_id}, ${place_comment_id})">등록하기</button>`
-}
-
 // 대댓글 작성하기
 async function ReplyWrite(place_id, place_comment_id) {
 
@@ -658,10 +651,23 @@ async function ReplyWrite(place_id, place_comment_id) {
 async function CommentPreUpdate(place_id, place_comment_id) {
     const comment = document.querySelector(`#comment${place_comment_id}`);
 
-    comment.innerHTML = `
-    <input id='comment_update'/>
-    <button type="button" onclick="CommentUpdate(${place_id}, ${place_comment_id})">수정하기</button>`
+    const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/${place_comment_id}/`, {
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
+        method: "GET",
+    });
 
+    const response_json = await response.json();
+
+    comment.innerHTML = `
+    <input id='comment_update' value="${response_json["content"]}"/>
+    <button type="button" onclick="CommentUpdate(${place_id}, ${place_comment_id})">수정하기</button>
+    <button type="button" onclick="GoBack()">뒤로가기</button>`
+}
+
+function GoBack() {
+    window.location.href = `place_view.html?id=${place_id}`;
 }
 
 // 댓글 수정하기
