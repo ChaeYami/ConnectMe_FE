@@ -126,9 +126,10 @@
                 <label class="create_label">Message</label>
             </div>
             <div class="file_class">
-                <input type="file" class="file_input" multiple /><span class="highlight"></span><span
-                    class="bar_input"></span>
+                <input type="file" class="file_input" onchange="setThumbnail(event);" multiple /><span
+                    class="highlight"></span><span class="bar_input"></span>
             </div>
+            <div id="image_container"></div>
             <div class="btn-box">
                 <button class="btn btn-submit" type="submit">submit</button>
                 <button class="btn btn-cancel" type="button">cancel</button>
