@@ -1,3 +1,11 @@
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+
+* {
+    font-family: 'Nanum Gothic', sans-serif;
+   }
+
+   
 body {
     width: 70vw;
     margin: 50px auto;
@@ -37,7 +45,7 @@ a {
     justify-items: center;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
     body {
         width: 100%;
     }
@@ -52,3 +60,4 @@ a {
         font-size: smaller;
     }
 }
+

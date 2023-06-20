@@ -15,10 +15,11 @@ h2 {
 
 .find {
     border-radius: 5px;
-    background-color: #9bb1a1;
-    color: white;
+    background-color: #c9dbcf;
+    color: rgb(0, 0, 0);
     padding: 20px;
     margin: 10px;
+    font-size: 14pt;
 }
 
 .buttons {

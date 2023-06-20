@@ -1,124 +1,16 @@
-.signup-section {
-    width: 500px;
-    margin: 20vh auto;
-
-    @media screen and (max-width: 800px) {
-        width: 400px;
-
-    }
-}
-
-.input-box {
-    position: relative;
-    margin: 10px 0;
-}
-
-.input-box>input {
-    background: transparent;
-    border: none;
-    border-bottom: solid 1px #ccc;
-    padding: 20px 0px 5px 0px;
-    font-size: 14pt;
-    width: 100%;
-}
-
-input::placeholder {
-    color: transparent;
-}
-
-input:placeholder-shown+label {
-    color: #aaa;
-    font-size: 14pt;
-    top: 15px;
-}
-
-input:focus+label,
-label {
-    color: #8aa1a1;
-    font-size: 10pt;
-    pointer-events: none;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    transition: all 0.2s ease;
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-}
-
-input:focus,
-input:not(:placeholder-shown) {
-    border-bottom: solid 1px #8aa1a1;
-    outline: none;
-}
-
-#phone-section{
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-}
-#phone-section button{
-    background-color: #c9dbcf;
-    border: none;
-    border-radius: 5px;
-    width: 120px;
-    cursor: pointer;
-}
-.button-signup {
-    background-color: #c9dbcf;
-    border: none;
-    color: rgb(0, 0, 0);
-    border-radius: 5px;
-    width: 100%;
-    height: 50px;
-    font-size: 14pt;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    
-}
-
-
-.alert-danger {
-    color: #ff4a4a;
-    background-color:white ;
-    display: none;
-    margin: 10px auto;
-}
-
-
-.sns-login{
-    margin-top: 50px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    justify-items: center;
-}
-
-  .button-naver img{
-    height: 45px;
-  }
-
-  .button-google img{
-    height: 45px;
-
-  }
-
-  /* select box 시작 */
+/* select box 시작 */
 .select-box {
     position: relative;
     display: block;
-    width: 100px;
+    width: 100%;
     margin: 0 auto;
     border: 2px solid rgb(203, 203, 203);
     font-family: "Open Sans", "Helvetica Neue", "Segoe UI", "Calibri", "Arial", sans-serif;
     font-size: 18px;
     color: #60666d;
-    margin-right: 10px;
 }
 
-/* @media (min-width: 768px) {
+@media (min-width: 768px) {
     .select-box {
         width: 70%;
     }
@@ -134,7 +26,7 @@ input:not(:placeholder-shown) {
     .select-box {
         width: 30%;
     }
-} */
+}
 
 .select-box__current {
     position: relative;
@@ -221,12 +113,5 @@ input:not(:placeholder-shown) {
         transform: scaleY(0);
     }
 }
-#auth-num-box {
-    justify-content: flex-end;
-    align-items: center;
 
-}
-#auth-num-box button{
-    height: 50px;
-    margin: 0 20px;
-}
+/* select box 시작 */

@@ -4,9 +4,11 @@
 
 }
 .profile-section{
-    margin-top: 30px;
+    margin: 50px 0;
     display: grid;
     grid-template-columns: 1fr 2fr;
+    justify-items: center;
+
 }
 .profile{
     display: grid;
@@ -15,20 +17,35 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    justify-items: center;
+
 }
+
 .nickname-section button{
-    margin: 10px;
+    margin: 5px;
+    background-color:  #8eadd3;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 .profile .buttons{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     justify-items: center;
+    background-color:   #EBF6FF;
+    border-radius: 10px;
+    
 }
+
+
 .profile-img{
     width: 150px;
     height: 150px;
+    padding: 0 20px;
 }
 .profile-img img{
     width: 150px;
@@ -41,4 +58,37 @@
     justify-items: center;
     align-items: center;
 
+}
+.info-section .ect{
+    height: 200px;
+    width: 100px;
+    padding: 50px 40px;
+    border-radius: 10px;
+    background-color: #EBF6FF;
+
+    @media screen and (max-width: 900px) {
+        width: 80px;
+
+    }
+    
+}
+.info-section .ect div{
+    padding: 5px 0;
+}
+
+#intro{
+    width: 300px;
+    min-height: 200px;
+    background-color: #EBF6FF;
+    padding: 50px;
+    border-radius: 10px;
+
+    @media screen and (max-width: 900px) {
+        width: 200px;
+
+    }
+    @media screen and (max-width: 700px) {
+        width: 180px;
+
+    }
 }

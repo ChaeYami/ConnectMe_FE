@@ -37,7 +37,7 @@ async function Profile(user_id){
     }else{
         profile_img_element.innerHTML=`<img src="${profile_img_url}">`
     }
-    document.getElementById('nickname').innerHTML = `${response_json.nickname}&nbsp(${response_json.account})`
+    document.getElementById('nickname').innerHTML = `${response_json.nickname}<br>(${response_json.account})`
     document.getElementById('region').innerHTML = `${response_json.prefer_region}`
     document.getElementById('age').innerHTML = `${response_json.age}`
     document.getElementById('mbti').innerHTML = `${response_json.mbti}`

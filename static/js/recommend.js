@@ -1,8 +1,16 @@
-
 const logined_token = localStorage.getItem("access");
+
 $(document).ready(function () {
     recommend('all')
+    $('#recommend-select').change(function () {
+        let recommend_value = $(this).val();
+        recommend(recommend_value);
+    });
 });
+
+
+
+
 
 // 추천 유저목록
 async function recommend(filter) {
@@ -30,14 +38,14 @@ async function recommend(filter) {
                 $('#list-section').append(temp_html)
 
             } else {
-                let filter_ =''
+                let filter_ = ''
                 if (filter == 'age_range') {
                     filter_ = '나이'
                 } else if (filter == 'mbti') {
                     filter_ = 'MBTI'
                 } else if (filter == 'prefer_region') {
                     filter_ = '지역'
-                }else if(filter == 'all'){
+                } else if (filter == 'all') {
                     filter_ = '전체'
                 }
                 let condition = `${filter_} : ${rows[0][filter]}`
