@@ -49,7 +49,7 @@
     <h1>모임 글 작성하기</h1>
     <p>제목 : <input id="meeting_title" name="title" type="text"></p>
     <p>내용 : <textarea id="meeting_content" name="content" cols="30" rows="10"></textarea>
-    <p>이미지 : <input id="meeting_image" name="image" type="file" multiple></p>
+    <p>이미지 : <input id="meeting_image" name="image" type="file" multiple onchange="setThumbnail(event)" ></p>
     <div id="image_box">
         <img src="" alt="">
     </div>

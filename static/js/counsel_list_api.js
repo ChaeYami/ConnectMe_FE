@@ -5,8 +5,6 @@ const logined_token = localStorage.getItem("access");
 $(document).ready(function () {
     getCounsels()
 })
-
-
 // 게시글 목록 가져오기
 async function getCounsels() {
     $('#list-section').empty()
@@ -45,5 +43,3 @@ async function getCounsels() {
 
     })
 }
-
-
