@@ -22,7 +22,7 @@
         <a onclick="go_home()">홈</a>
         <a onclick="go_recommend()">친구찾기</a>
         <a onclick="go_placeView()">장소추천</a>
-        <a href="">고민상담</a>
+        <a onclick="go_counsel()">고민상담</a>
         <a onclick="go_meetingList()">만남의 광장</a>
 
         <div class="login-logout">
@@ -58,7 +58,7 @@
                 <label for="email">이메일</label>
             </div>
 
-            <div id = "phone-section">
+            <div id="phone-section">
                 <select class="select-box" id="phone-front">
                     <option value="">-----</option>
                     <option value="010">010</option>
@@ -88,14 +88,14 @@
             <div class="input-box">
                 <input type="text" id="nickname" placeholder="닉네임">
                 <label for="nickname">닉네임</label>
-                
+
             </div>
 
             <div class="alert alert-danger" style="font-size:15px;" id="alert-danger"></div>
 
 
             <button class="button-signup" onclick="signupButton()">회원가입</button>
-            
+
             <a onclick="go_login()" style="color: rgb(149, 145, 140);">
                 회원이신가요?
                 <span style="color:black; font-weight: 700;text-decoration: underline;">로그인</span>
@@ -109,7 +109,7 @@
                         src="static/image/login/btn_google_signin_light_normal_web.png" alt=""></a>
             </div>
 
-            
+
         </div>
     </div>
 
