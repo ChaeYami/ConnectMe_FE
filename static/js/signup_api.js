@@ -6,10 +6,7 @@ if (localStorage.getItem("kakao") || localStorage.getItem("google") || localStor
 // 회원가입
 
 async function signup() {
-    const phone_front = document.getElementById("phone-front")
-    const phone_front_value = (phone_front.options[phone_front.selectedIndex].value)
     const phone = document.getElementById("phone").value
-    const full_phone = phone_front_value + phone
     const account = document.getElementById("account").value
     const email = document.getElementById("email").value
     const password = document.getElementById("password").value
@@ -20,9 +17,9 @@ async function signup() {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("nickname", nickname);
-    formData.append("phone", full_phone);
+    formData.append("phone", phone);
 
-    console.log(full_phone.length)
+    console.log(phone.length)
     const response = await fetch(`${BACKEND_BASE_URL}/user/`, {
         headers: {
         },
@@ -78,17 +75,14 @@ function makeAlert(key, errorText) {
 
 // 인증번호 발송
 async function certifyPhoneSignup(){
-    const phone_front = document.getElementById("phone-front")
-    const phone_front_value = (phone_front.options[phone_front.selectedIndex].value)
     const phone = document.getElementById("phone").value
-    const full_number = phone_front_value + phone
 
     $.ajax({
         url : `${BACKEND_BASE_URL}/user/phone/send/signup/`,
         type :"POST",
         dataType : "json",
         data: {
-            "phone":full_number
+            "phone":phone
         },
 
         success: function(response){
@@ -103,10 +97,7 @@ async function certifyPhoneSignup(){
 
 // 인증번호 확인
 async function ConfirmPhoneSignup(){
-    const phone_front = document.getElementById("phone-front")
-    const phone_front_value = (phone_front.options[phone_front.selectedIndex].value)
     const phone = document.getElementById("phone").value
-    const full_number = phone_front_value + phone
     const auth_num = document.getElementById("auth-num").value
 
     $.ajax({
@@ -114,7 +105,7 @@ async function ConfirmPhoneSignup(){
         type :"POST",
         dataType : "json",
         data: {
-            "phone":full_number,
+            "phone":phone,
             "auth_number" : auth_num
         },
 

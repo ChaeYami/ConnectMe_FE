@@ -7,6 +7,7 @@
 
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/personal.css">
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
@@ -38,24 +39,25 @@
         <a href="">알림</a>
     </div>
     <!--위, 아래 네비바 끝-->
-    
-    <div class="main">
-        <div class="certify-phone">
-            <div class="input-box">
-                <label for="phone">변경할 전화번호를 입력하세요</label>
-                <input type="text" id="phone" pattern="\d{10,11}" placeholder="전화번호">
-            </div>
-            <button onclick="certifyPhone()">인증번호 발송</button>
-        </div>
-        <div id="auth-num-box" style="display: none;">
-            <div class="input-box">
-                <input type="text" name="auth-num" id="auth-num" placeholder="인증번호 입력">
-            </div>
-            <button onclick="ConfirmPhone()">인증번호 확인</button>
-        </div>
-        <button onclick="editPhone()">수정완료</button>
-    </div>
 
+    <div class="main">
+        <div class="edit-phone-section">
+            <div class="certify-phone">
+                <div class="input-box">
+                    <label for="phone">변경할 전화번호를 입력하세요</label>
+                    <input type="text" id="phone" pattern="\d{10,11}" placeholder="01012345678">
+                </div>
+                <button onclick="certifyPhone()">인증번호 발송</button>
+            </div>
+            <div id="auth-num-box" style="display: none;">
+                <div class="input-box">
+                    <input type="text" name="auth-num" id="auth-num" placeholder="인증번호 입력">
+                </div>
+                <button onclick="ConfirmPhone()">인증번호 확인</button>
+            </div>
+            <button id="submit-button" class="submit-button" onclick="editPhone()" style="display: none;">수정완료</button>
+        </div>
+    </div>
 
 
 </body>

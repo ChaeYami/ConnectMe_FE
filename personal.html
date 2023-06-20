@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/personal.css">
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
@@ -39,21 +40,27 @@
     <!--위, 아래 네비바 끝-->
 
     <div class="main">
+        <h2>내 정보</h2>
+        <hr>
         <div class="personal-box">
-            <div>
+
+            <div class="box">
+
                 <div class="phone">전화번호 : <span id="phone"></span>
                     <button onclick="go_editphone()">전화번호 변경</button>
                 </div>
             </div>
-            <div>
+            <div class="box">
                 <div class="email">이메일 : <span id="email"></span></div>
             </div>
-            <div>
-                <div class="joined-at">가입일: <span id="joined-at"></span></div>
+
+            <div class="box">
+                <div class="joined-at">가입일 : <span id="joined-at"></span></div>
             </div>
-            <div>
+
+            <div class="box">
                 <div class="password" id="password"></div>
-                <a onclick="go_passwordChange()">비밀번호 변경</a>
+                <button onclick="go_passwordChange()">비밀번호 변경</button>
             </div>
 
         </div>

@@ -653,8 +653,8 @@
 /* create input 끝 */
 
 
-/* 버튼 */
-.button {
+/* 연한 초록버튼 (글자검정) */
+.button-green {
     background-color: #c9dbcf;
     border: none;
     color: rgb(0, 0, 0);
@@ -664,4 +664,16 @@
     font-size: 14pt;
     cursor: pointer;
     margin-top: 10px;
+}
+/* 파란버튼 (글자흰색) */
+.button-blue{
+    margin: 5px;
+    background-color:  #8eadd3;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    padding: 5px 10px;
+    cursor: pointer;
 }

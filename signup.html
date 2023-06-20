@@ -59,17 +59,10 @@
             </div>
 
             <div id="phone-section">
-                <select class="select-box" id="phone-front">
-                    <option value="">-----</option>
-                    <option value="010">010</option>
-                    <option value="011">011</option>
-                    <option value="016">016</option>
-                    <option value="017">017</option>
-                    <option value="019">019</option>
-                </select>
-                <div class="input-box" style="width: 65%;">
+                
+                <div class="input-box" style="width: 100%;">
 
-                    <input type="tel" maxlength="8" id="phone" pattern="\d{7,8}" placeholder="7~8자리">
+                    <input type="tel" maxlength="11" id="phone" pattern="\d{10,11}" placeholder="10~11자리">
                     <label for="phone">'-'을 제외한 전화번호</label>
                 </div>
 
@@ -78,11 +71,12 @@
 
 
             <div id="auth-num-box" style="display: none;">
-                <div class="input-box">
+                <div class="input-box" style="width: 100%;">
                     <input type="text" name="auth-num" id="auth-num" placeholder="인증번호 입력">
+                    <label for="auth-num">인증번호 (4자리)</label>
                 </div>
 
-                <button onclick="ConfirmPhoneSignup()">인증번호 확인</button>
+                <button style="height: 50px; margin-left:20px;" onclick="ConfirmPhoneSignup()">인증번호 확인</button>
             </div>
 
             <div class="input-box">

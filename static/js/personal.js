@@ -27,7 +27,7 @@ async function personal(){
 }
 
 function go_editphone(){
-    window.open('edit_phone.html')
+    location.href = 'edit_phone.html'
 }
 
 

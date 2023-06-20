@@ -41,6 +41,7 @@ async function ConfirmPhone(){
         success: function(response){
             alert(response.message)
             $("#phone").prop("disabled", true);
+            $("#submit-button").attr("style", "display:block;");
 
         }, error: function(response){
             alert(response.responseJSON.message)
