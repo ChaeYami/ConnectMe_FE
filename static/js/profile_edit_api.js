@@ -30,6 +30,8 @@ async function existingProfile(user_id) {
     if (response_json.profile_img) {
         const imageUrl = `${BACKEND_BASE_URL}${response_json.profile_img}`;
         document.getElementById('profile_preview').src = imageUrl;
+    }else{
+        document.getElementById('profile_preview').src ="/static/image/user.png"
     }
 
 }
@@ -96,5 +98,5 @@ async function updateProfile() {
 
 function deleteProfileImage() {
     $('#profile_img').val('');
-    $('#profile_preview').attr('src', "/static/image/user.jpg")
+    $('#profile_preview').attr('src', "/static/image/user.png")
 }
