@@ -1,24 +1,23 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>모임 글 상세보기</title>
+
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
-    <link rel="stylesheet" href="static/css/index.css">
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
-    <!-- JS -->
-    <script src="static/js/base_api.js"></script>
-    <script src="static/js/meeting_detail.js"></script>
+
+    <title>Connect ME</title>
 </head>
 
 <body>
+
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <a onclick="go_home()">홈</a>
@@ -40,28 +39,37 @@
         <a href="">알림</a>
     </div>
     <!--위, 아래 네비바 끝-->
-    <h1>글 상세보기</h1>
-    <button id="bookmarkbtn" onclick="handleBookmark()">📖</button>
-    <div id="meeting_detail_card">
-        <h2>글 제목</h2>
-        <p>작성일</p>
-        <img src="" alt="">
-        <p>글 내용</p>
-    </div>
-    <div>
-        <button onclick="meetingUpdateMove()">수정하기</button>
-        <button onclick="meetingDelete()">삭제하기</button>
-    </div>
-    <hr>
-    <div>
-        <p><input id="inputComment" type="text" placeholder="댓글 입력하기"></p>
-        <button onclick="meetingCommentCreate()">댓글 남기기</button>
-    </div>
-    <hr>
-    <div id="comment_card">
-    </div>
-    <div id="reply_card">
+
+    <!-- 메인 -->
+    <div class="main">
+
+        <div class="counsel-title" id="title"></div>
+        <div class="counsel-author" id="author"></div>
+        <div class="counsel-content" id="content"></div>
+        <div class="counsel-likes_count" id="likes_count"></div>
+        <div class="like-button" id="like-button">
+        </div>
+
+        <div class="buttons" id="buttons"></div>
+        <hr>
+        <h4>댓글</h4>
+        <div>
+            <p><input id="inputComment" type="text" placeholder="댓글 입력하기"></p>
+            <button onclick="counselCommentCreate()">작성</button>
+        </div>
+        <hr>
+        <div id="comment_card">
+        </div>
+        <div id="reply_card">
+        </div>
+
+
+
     </div>
 </body>
+
+<!-- js -->
+<script src="/static/js/base_api.js"></script>
+<script src="/static/js/counsel_detail.js"></script>
 
 </html>
