@@ -23,9 +23,16 @@ async function createMeeting() {
         .then((response) => {
             response.json().then((data) => {
                 let meeting_id = data.id
-                location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
+                console.log(data)
+                if (data.id) {
+                    alert("작성 되었습니다.")
+                    location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
+                } else {
+                    alert("제목과 내용을 입력해주세요.")
+                }
             }
             );
         });
 }
+
 // ================================ 모임 게시글 작성 끝 ================================

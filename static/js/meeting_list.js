@@ -9,11 +9,12 @@ fetch(`${BACKEND_BASE_URL}/meeting/`).then(res => res.json()).then(meetings => {
             let comment_count = meeting['comment_count']
             let meeting_image = meeting['meeting_image'][0]['image']
             let temp_html = `
-                        <button onclick="meetingBookmark(${id})">📖</button>
+                        
                         <div class="meeting_img_test" onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
                         <h2>${title}</h2>
                         <img src="${BACKEND_BASE_URL}${meeting_image}" alt="">
                         <p>${user} 📄${comment_count} ${created_at}</p>
+                        <button onclick="meetingBookmark(${id})">📖</button>
                         </div>
                         `
             $('#meeting_card').append(temp_html)

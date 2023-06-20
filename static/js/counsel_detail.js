@@ -53,8 +53,6 @@ async function counselDetail(counsel_id) {
                     <img id="like${counsel_id}" src="static/image/heart.png" style="width: 20px;" alt="좋아요" onclick="CounselLike(${counsel_id})">
                 </a>`
             }
-
-
         },
         error: function () {
             alert(response.status);
@@ -103,16 +101,19 @@ async function counselComments(counsel_id) {
                 content = rows[i]['content']
                 updated_at = rows[i]['updated_at']
                 user = rows[i]['user']
+                comment_likes_count = rows[i]['comment_like_count']
                 let temp_html =
                     `
                     <p id="now_comment${id}" style="display:block;">${content}</p>
                     <p id="p_comment_update_input${id}" style="display:none;"/><input id="comment_update_input${id}" type="text"/> <button  onclick="commentUpdateConfrim(${id})">완료</button></p>
                     <a>${user}</a>
                     <p>${updated_at}</p>
+                    <p>좋아요 ${comment_likes_count}</p>
                     <p id="p_reply_create_input${id}" style="display:none;"/><input id="reply_create_input${id}" type="text"/> <button  onclick="replyCreateConfrim(${id})">완료</button></p>
                     <button onclick="reply_create_handle(${id})">대댓글 작성하기</button>
                     <button onclick="comment_update_handle(${id})">수정하기</button>
                     <button onclick="commentDelete(${id})">삭제하기</button>
+                    <button onclick="clickCommentLike(${id})">좋아요버튼</button>
                     <div id="reply_card">
                     `
                 $('#comment_card').append(temp_html)
@@ -121,15 +122,17 @@ async function counselComments(counsel_id) {
                     content = each_reply['content']
                     user = each_reply['user']['nickname']
                     updated_at = each_reply['updated_at']
-
+                    reply_likes_count = each_reply['reply_like_count']
                     let temp_html = `
                         <div style="color:red;">
                         <p id="now_reply${id}" style="display:block;">${content}</p>
                         <p id="p_reply_update_input${id}" style="display:none;"/><input id="reply_update_input${id}" type="text"/> <button  onclick="replyUpdateConfrim(${id})">완료</button></p>
                         <a>${user}</a>
                         <p>${updated_at}</p>
+                        <p>좋아요 ${reply_likes_count}</p>
                         <button onclick="reply_update_handle(${id})">대댓글 수정하기</button>
                         <button onclick="replyDelete(${id})">대댓글 삭제하기</button>
+                        <button onclick="clickReplyLike(${id})">좋아요버튼</button>
                         </div>
                         `
                     $('#reply_card').append(temp_html)
@@ -258,7 +261,7 @@ async function CreateCounsel() {
     }
 }
 
-// ================================ 모임 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 시작 ================================
+// ================================ 상담 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 시작 ================================
 function reply_create_handle(id) {
     let token = localStorage.getItem("access")
     if (token) {
@@ -270,7 +273,7 @@ function reply_create_handle(id) {
         }
     } else { alert("로그인 해주세요") }
 }
-// ================================ 모임 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 끝 ================================
+// ================================ 상담 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 끝 ================================
 
 async function replyCreateConfrim(reply_id) {
     let reply = document.getElementById(`reply_create_input${reply_id}`).value
@@ -278,8 +281,6 @@ async function replyCreateConfrim(reply_id) {
     if (token) {
         let formData = new FormData();
         formData.append("content", reply);
-
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
         let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${reply_id}/reply/`, {
             method: 'POST',
             headers: {
@@ -295,7 +296,7 @@ async function replyCreateConfrim(reply_id) {
     } else { "로그인 해주세요" }
 }
 
-// ================================ 모임 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 시작 ================================
+// ================================ 상담 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 시작 ================================
 
 async function comment_update_handle(id) {
     let token = localStorage.getItem("access")
@@ -311,17 +312,15 @@ async function comment_update_handle(id) {
         }
     } else { alert("로그인 해주세요") }
 }
-// ================================ 모임 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 끝 ================================
+// ================================ 상담 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 끝 ================================
 
-// ================================ 모임 게시글 상세보기 댓글 수정 시작 ================================
+// ================================ 상담 게시글 상세보기 댓글 수정 시작 ================================
 async function commentUpdateConfrim(id) {
     let comment = document.getElementById(`comment_update_input${id}`).value
     let token = localStorage.getItem("access")
     if (token) {
         let formData = new FormData();
         formData.append("content", comment);
-
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
         let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${id}/`, {
             method: 'PUT',
             headers: {
@@ -334,9 +333,9 @@ async function commentUpdateConfrim(id) {
         else (alert("권한이 없습니다."))
     } else { alert("로그인 해주세요") }
 }
-// ================================ 모임 게시글 상세보기 댓글 수정 끝 ================================
+// ================================ 상담 게시글 상세보기 댓글 수정 끝 ================================
 
-// ================================ 모임 게시글 상세보기 댓글 삭제 시작 ================================
+// ================================ 상담 게시글 상세보기 댓글 삭제 시작 ================================
 async function commentDelete(comment_id) {
     let token = localStorage.getItem("access")
     if (token) {
@@ -350,9 +349,9 @@ async function commentDelete(comment_id) {
         else (alert("권한이 없습니다."))
     } else { alert("로그인 해주세요") }
 }
-// ================================ 모임 게시글 상세보기 댓글 삭제 끝 ================================
+// ================================ 상담 게시글 상세보기 댓글 삭제 끝 ================================
 
-// ================================ 모임 게시글 상세보기 대댓글 수정 버튼 보이고 숨기기 시작 ================================
+// ================================ 상담 게시글 상세보기 대댓글 수정 버튼 보이고 숨기기 시작 ================================
 async function reply_update_handle(id) {
     let token = localStorage.getItem("access")
     if (token) {
@@ -367,32 +366,32 @@ async function reply_update_handle(id) {
         }
     } else { alert("로그인 해주세요") }
 }
-// ================================ 모임 게시글 상세보기 대댓글 수정 버튼 보이고 숨기기 끝 ================================
+// ================================ 상담 게시글 상세보기 대댓글 수정 버튼 보이고 숨기기 끝 ================================
 
-// ================================ 모임 게시글 상세보기 대댓글 수정 시작 ================================
+// ================================ 상담 게시글 상세보기 대댓글 수정 시작 ================================
 async function replyUpdateConfrim(reply_id) {
     let reply = document.getElementById(`reply_update_input${reply_id}`).value
     let token = localStorage.getItem("access")
     if (token) {
         let formData = new FormData();
         formData.append("content", reply);
-        let response = fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}/`, {
+        let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}/`, {
             method: 'PUT',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
             body: formData
         })
-        console.log(response.status)
+        console.log(response)
         if (response.status == 200) { alert("수정 완료"), window.location.reload() }
         else if ((await response).status == 400) { alert("입력해주세요") }
         else { alert("권한이 없습니다.") }
 
     } else { alert("로그인 해주세요") }
 }
-// ================================ 모임 게시글 상세보기 대댓글 수정 끝 ================================
+// ================================ 고민 게시글 상세보기 대댓글 수정 끝 ================================
 
-// ================================ 모임 게시글 상세보기 대댓글 삭제 시작 ================================
+// ================================ 고민 게시글 상세보기 대댓글 삭제 시작 ================================
 async function replyDelete(reply_id) {
     let token = localStorage.getItem("access")
     if (token) {
@@ -402,9 +401,42 @@ async function replyDelete(reply_id) {
                 Authorization: `Bearer ${token}`,
             },
         })
-        if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
+        if (response.status == 200) { alert("삭제 완료"), window.location.reload() }
         else { alert("권한이 없습니다.") }
 
     } else { alert("로그인 해주세요") }
 }
-// ================================ 모임 게시글 상세보기 대댓글 삭제 끝 ================================
+// ================================ 고민 게시글 상세보기 대댓글 삭제 끝 ================================
+
+// ================================ 댓글 좋아요 ================================
+
+async function clickCommentLike(comment_id) {
+
+    let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${comment_id}/like/`, {
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
+        method: "POST",
+    });
+
+    console.log(response)
+    if(response.status == 200){alert("좋아요 취소")}
+    else{alert("좋아요")}
+}
+// ================================ 댓글 좋아요 끝 ================================
+
+// ================================ 대댓글 좋아요 ================================
+async function clickReplyLike(reply_id) {
+
+    let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}/like/`, {
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
+        method: "POST",
+    });
+
+    console.log(response)
+    if(response.status == 200){alert("좋아요 취소")}
+    else{alert("좋아요")}
+}
+// ================================ 대댓글 좋아요 끝 ================================
