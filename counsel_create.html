@@ -7,6 +7,7 @@
 
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/counsel.css">
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
@@ -23,9 +24,9 @@
         <a onclick="go_home()">홈</a>
         <a onclick="go_recommend()">친구찾기</a>
         <a onclick="go_placeView()">장소추천</a>
-        <a href="">고민상담</a>
+        <a onclick="go_counsel()">고민상담</a>
         <a onclick="go_meetingList()">만남의 광장</a>
-        
+
         <div class="login-logout">
             <a onclick="go_login()">로그인</a>
         </div>
@@ -41,12 +42,32 @@
     <!--위, 아래 네비바 끝-->
 
     <!-- 메인 -->
-
+    <div class="wrapper">
+        <h1 class="create_h1">Counsel Create</h1>
+        <h5 class="create_h5">고민이 있다면 이곳에 작성해주세요.</h5>
+        <form class="create_form">
+            <div class="group">
+                <input id="title" class="create_input" type="text" required="required" /><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">제목</label>
+            </div>
+            <div class="group">
+                <textarea id="content" class="create_input" type="textarea" rows="10"
+                    required="required"></textarea><span class="highlight"></span><span class="bar"></span>
+                <label class="create_label">내용</label>
+            </div>
+            <div class="btn-box">
+                <button class="btn btn-submit" type="button" onclick="CreateCounsel()">submit</button>
+                <button class="btn btn-cancel" type="button" onclick="go_counsel()">cancel</button>
+            </div>
+        </form>
+    </div>
 
 
 </body>
 
 <!-- js -->
 <script src="/static/js/base_api.js"></script>
+<script src="static/js/counsel_detail.js"></script>
 
 </html>

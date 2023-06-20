@@ -55,7 +55,6 @@ async function CreatePlace() {
         alert("추천 장소가 등록되었습니다.");
         window.location.replace(`${FRONTEND_BASE_URL}/place_view.html`);
     } else if (response.status == 400) {
-        console.log(response_json)
         for (let key in response_json) {
             alert(`${response_json[key]}`);
             break
@@ -274,12 +273,17 @@ async function PlaceDetailView(place_id) {
         }
     }
 
+
+    //상세보기 댓글 시작
+
     let comment = ``
+
 
     for (let i = 0; i < comments.length; i++) {
         if (comments[i]['reply'].length > 0) {
-            comment +=
-                `<div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} 
+            if (JSON.parse(payload)['user_id'] == comments[i]['user']) {
+                comment +=
+                    `<div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} 
                 <a>
                     <img src="static/image/comment_edit.png" style="width:20px" onclick="CommentPreUpdate(${place_id}, ${comments[i]['id']})">
                 </a>
@@ -287,9 +291,16 @@ async function PlaceDetailView(place_id) {
                     <img src="static/image/comment_delete.png" style="width:20px" onclick="CommentDelete(${place_id}, ${comments[i]['id']})">
                 </a>
                 <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
-            for (let j = 0; j < comments[i]['reply'].length; j++) {
+            } else {
                 comment +=
-                    `
+                    `<div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']}
+                <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
+            }
+
+            for (let j = 0; j < comments[i]['reply'].length; j++) {
+                if (JSON.parse(payload)['user_id'] == comments[i]['reply'][j]['user']) {
+                    comment +=
+                        `
                         <div id='comment${comments[i]['reply'][j]['id']}' style="margin-left:20px;">
                             ${comments[i]['reply'][j]['user_name']} : ${comments[i]['reply'][j]['content']} 
                             <a>
@@ -300,12 +311,22 @@ async function PlaceDetailView(place_id) {
                             </a>
                         </div>
                         `
+                } else {
+                    comment +=
+                        `
+                        <div id='comment${comments[i]['reply'][j]['id']}' style="margin-left:20px;">
+                            ${comments[i]['reply'][j]['user_name']} : ${comments[i]['reply'][j]['content']} 
+                        </div>
+                        `
+                }
+
             }
             comment +=
                 `</div>`
         } else {
-            comment +=
-                `<div id='comment${comments[i]['id']}'>
+            if (JSON.parse(payload)['user_id'] == comments[i]['user']) {
+                comment +=
+                    `<div id='comment${comments[i]['id']}'>
                     ${comments[i]['user_name']} : ${comments[i]['content']} 
                     <a>
                         <img src="static/image/comment_edit.png" style="width:20px" onclick="CommentPreUpdate(${place_id}, ${comments[i]['id']})">
@@ -316,9 +337,22 @@ async function PlaceDetailView(place_id) {
                     <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>
                 </div>
                 `
+            } else {
+                comment +=
+                    `<div id='comment${comments[i]['id']}'>
+                    ${comments[i]['user_name']} : ${comments[i]['content']}
+                    <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>
+                </div>
+                `
+            }
+
         }
 
     }
+
+
+    //상세보기 댓글 끝
+
     place.innerHTML = `
     <div id="title">제목 : ${name}</div>
     `
@@ -536,7 +570,7 @@ async function PlaceUpdate(place_id) {
         })
     })
 
-    window.location.href = `place_view.html?id=${place_id}`
+    window.location.href = `place_view.html?id=${place_id}`;
 
 }
 
@@ -647,6 +681,14 @@ async function ReplyWrite(place_id, place_comment_id) {
     window.location.href = `place_view.html?id=${place_id}`;
 }
 
+// 대댓글 작성 폼 띄우기
+async function ReplyPreWrite(place_id, place_comment_id) {
+
+    let reply = document.querySelector(`#reply${place_comment_id}`)
+
+    reply.innerHTML = `<input id="reply_write${place_comment_id}"/> <button type="button" onclick="ReplyWrite(${place_id}, ${place_comment_id})">등록하기</button>`
+}
+
 // 댓글 수정 폼 띄우기
 async function CommentPreUpdate(place_id, place_comment_id) {
     const comment = document.querySelector(`#comment${place_comment_id}`);
@@ -662,12 +704,7 @@ async function CommentPreUpdate(place_id, place_comment_id) {
 
     comment.innerHTML = `
     <input id='comment_update' value="${response_json["content"]}"/>
-    <button type="button" onclick="CommentUpdate(${place_id}, ${place_comment_id})">수정하기</button>
-    <button type="button" onclick="GoBack()">뒤로가기</button>`
-}
-
-function GoBack() {
-    window.location.href = `place_view.html?id=${place_id}`;
+    <button type="button" onclick="CommentUpdate(${place_id}, ${place_comment_id})">수정하기</button>`
 }
 
 // 댓글 수정하기
