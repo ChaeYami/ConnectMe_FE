@@ -57,7 +57,7 @@ function go_recommend() {
 
 }
 
-// 장소추천 페이지로 가기
+// 핫플레이스 페이지로 가기
 function go_placeView() {
     location.href = "place_view.html"
 }

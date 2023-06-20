@@ -7,9 +7,9 @@
 
    
 body {
-    width: 70vw;
+    /* width: 70vw; */
     margin: 50px auto;
-    max-width: 900px;
+    /* max-width: 900px; */
 }
 
 a {
@@ -19,8 +19,7 @@ a {
 }
 
 .top-nav {
-    width: 70vw;
-    max-width: 900px;
+    width: 100vw;
     position: fixed;
     top: 0;
     z-index: 2;

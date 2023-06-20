@@ -1,6 +1,8 @@
 .main{
     display: grid;
     padding: 0 30px;
+    width: 60vw;
+    margin: 100px auto;
 
 }
 .profile-section{
@@ -12,6 +14,7 @@
 }
 .profile{
     display: grid;
+    width: 100%;
 }
 .nickname-section{
     display: grid;
