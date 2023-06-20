@@ -55,7 +55,6 @@ async function CreatePlace() {
         alert("추천 장소가 등록되었습니다.");
         window.location.replace(`${FRONTEND_BASE_URL}/place_view.html`);
     } else if (response.status == 400) {
-        console.log(response_json)
         for (let key in response_json) {
             alert(`${response_json[key]}`);
             break

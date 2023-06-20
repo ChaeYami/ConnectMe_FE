@@ -42,11 +42,8 @@ async function getCounsels() {
         error: function () {
             alert(response.status);
         }
-        
+
     })
 }
 
 
-function go_counselDetail(counsel_id){
-    location.href = `counsel_detail.html?counsel_id=${counsel_id}`
-}

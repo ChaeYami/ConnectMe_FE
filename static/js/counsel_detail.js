@@ -22,11 +22,38 @@ async function counselDetail(counsel_id) {
             let author_html = `<a onclick = "go_profile(${counsel_author_id})">${counsel_author}</a>`
             let counsel_created_at = response.counsel['created_at']
             let likes_count = response.counsel['like'].length
+            let like = response.counsel['like']
+            let buttons = document.querySelector('#buttons')
+            let like_button = document.querySelector('#like-button')
 
             $('#title').append(counsel_title)
             $('#author').append(author_html)
             $('#content').append(counsel_content)
             $('#likes_count').append(likes_count)
+
+            if (JSON.parse(payload)['user_id'] == counsel_author_id) {
+                buttons.innerHTML += `
+                <a>
+                    <img src="static/image/edit.png" style="width:20px" onclick="go_counselEdit()">
+                </a>
+                <a>
+                    <img src="static/image/delete.png" style="width:20px" onclick="counselDelete()">
+                </a>`
+
+            }
+
+            if (like.includes(logined_user_id)) {
+                like_button.innerHTML += `
+                <a>
+                    <img id="like${counsel_id}" src="static/image/heart (1).png" style="width: 20px;" alt="좋아요" onclick="CounselLike(${counsel_id})">
+                </a>`
+            } else {
+                like_button.innerHTML += `
+                <a>
+                    <img id="like${counsel_id}" src="static/image/heart.png" style="width: 20px;" alt="좋아요" onclick="CounselLike(${counsel_id})">
+                </a>`
+            }
+
 
         },
         error: function () {
@@ -37,17 +64,26 @@ async function counselDetail(counsel_id) {
 }
 
 // 좋아요
-async function clickLike() {
+async function CounselLike(counsel_id) {
+    const like = document.querySelector(`#like${counsel_id}`)
+
     const response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/like/`, {
         headers: {
-            "Authorization": "Bearer " + logined_token,
-            'content-type': 'application/json',
+            Authorization: "Bearer " + logined_token,
         },
-        method: 'POST',
-    }).then((res) => res.json()).then((data) => {
-        alert(data)
-        location.reload();
+        method: "POST",
     });
+
+    const response_json = await response.json();
+
+    if (response_json["message"] == "좋아요") {
+        like['src'] = "static/image/heart (1).png"
+        alert("좋아요.");
+    } else {
+        like['src'] = "static/image/heart.png"
+        alert("좋아요 취소!");
+    }
+
 }
 
 
@@ -126,7 +162,7 @@ async function counselDelete() {
 
 // 수정페이지로 이동
 function go_counselEdit() {
-    location.href(`counsel_edit.html?counsel_id=${counsel_id}`)
+    location.href = `counsel_edit.html?counsel_id=${counsel_id}`
 }
 
 // 댓글작성
@@ -135,7 +171,7 @@ async function counselCommentCreate() {
 
     if (logined_token) {
 
-        
+
         const response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/`, {
             method: 'POST',
             headers: {
@@ -144,19 +180,231 @@ async function counselCommentCreate() {
             },
             body: JSON.stringify({
                 "content": comment,
-    
+
             })
         })
         if (response.status == 201) {
             alert("댓글 작성 완료.")
             location.reload();
-        } else  {
+        } else {
             const errorData = await response.json();
             const errorArray = Object.entries(errorData);
             alert(errorArray[0][1]);
         }
-    } else { 
-        alert("로그인해주세요") 
+    } else {
+        alert("로그인해주세요")
     }
 }
 
+// 글 수정
+async function CounselEdit() {
+    let title = document.querySelector('#title')
+    let content = document.querySelector('#content')
+
+    const response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/`, {
+        headers: {
+            Authorization: "Bearer " + logined_token,
+            "content-type": "application/json",
+        },
+        method: "PUT",
+        body: JSON.stringify({
+            title: title.value,
+            content: content.value,
+        })
+    })
+
+    const response_json = await response.json();
+
+    if (response.status == 200) {
+        alert("고민 상담이 수정되었습니다.");
+        location.href = `counsel_detail.html?counsel_id=${counsel_id}`
+    } else if (response.status == 400) {
+        for (let key in response_json) {
+            alert(`${response_json[key]}`);
+            break
+        }
+    }
+
+
+}
+
+// 글 작성
+async function CreateCounsel() {
+    let title = document.querySelector('#title');
+    let content = document.querySelector('#content');
+
+    const formdata = new FormData();
+    formdata.append("title", title.value);
+    formdata.append("content", content.value);
+
+    const response = await fetch(`${BACKEND_BASE_URL}/counsel/`, {
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
+        method: "POST",
+        body: formdata,
+    });
+
+    const response_json = await response.json();
+
+    if (response.status == 200) {
+        alert("고민 상담이 등록되었습니다.");
+        window.location.replace(`${FRONTEND_BASE_URL}/counsel_list.html`);
+    } else if (response.status == 400) {
+        for (let key in response_json) {
+            alert(`${response_json[key]}`);
+            break
+        }
+    }
+}
+
+// ================================ 모임 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 시작 ================================
+function reply_create_handle(id) {
+    let token = localStorage.getItem("access")
+    if (token) {
+        let p_reply_create_input = document.getElementById(`p_reply_create_input${id}`)
+        if (p_reply_create_input.style.display == 'none') {
+            p_reply_create_input.style.display = 'block'
+        } else {
+            p_reply_create_input.style.display = 'none';
+        }
+    } else { alert("로그인 해주세요") }
+}
+// ================================ 모임 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 끝 ================================
+
+async function replyCreateConfrim(reply_id) {
+    let reply = document.getElementById(`reply_create_input${reply_id}`).value
+    let token = localStorage.getItem("access")
+    if (token) {
+        let formData = new FormData();
+        formData.append("content", reply);
+
+        let meeting_id = new URLSearchParams(window.location.search).get('id');
+        let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${reply_id}/reply/`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formData
+        })
+        if (response.status == 400) { alert("입력해주세요") }
+        else {
+            alert("작성 완료")
+            window.location.reload()
+        }
+    } else { "로그인 해주세요" }
+}
+
+// ================================ 모임 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 시작 ================================
+
+async function comment_update_handle(id) {
+    let token = localStorage.getItem("access")
+    if (token) {
+        let comment_update_input = document.getElementById(`p_comment_update_input${id}`)
+        let now_comment = document.getElementById(`now_comment${id}`);
+        if (comment_update_input.style.display == 'none') {
+            comment_update_input.style.display = 'block'
+            now_comment.style.display = 'none';
+        } else {
+            comment_update_input.style.display = 'none';
+            now_comment.style.display = 'block';
+        }
+    } else { alert("로그인 해주세요") }
+}
+// ================================ 모임 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 끝 ================================
+
+// ================================ 모임 게시글 상세보기 댓글 수정 시작 ================================
+async function commentUpdateConfrim(id) {
+    let comment = document.getElementById(`comment_update_input${id}`).value
+    let token = localStorage.getItem("access")
+    if (token) {
+        let formData = new FormData();
+        formData.append("content", comment);
+
+        let meeting_id = new URLSearchParams(window.location.search).get('id');
+        let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${id}/`, {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formData
+        })
+        if (response.status == 200) { alert("수정 완료"), window.location.reload() }
+        else if (response.status == 400) { alert("입력 해주세요") }
+        else (alert("권한이 없습니다."))
+    } else { alert("로그인 해주세요") }
+}
+// ================================ 모임 게시글 상세보기 댓글 수정 끝 ================================
+
+// ================================ 모임 게시글 상세보기 댓글 삭제 시작 ================================
+async function commentDelete(comment_id) {
+    let token = localStorage.getItem("access")
+    if (token) {
+        let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${comment_id}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (response.status == 200) { alert("삭제 완료"), window.location.reload() }
+        else (alert("권한이 없습니다."))
+    } else { alert("로그인 해주세요") }
+}
+// ================================ 모임 게시글 상세보기 댓글 삭제 끝 ================================
+
+// ================================ 모임 게시글 상세보기 대댓글 수정 버튼 보이고 숨기기 시작 ================================
+async function reply_update_handle(id) {
+    let token = localStorage.getItem("access")
+    if (token) {
+        let reply_update_input = document.getElementById(`p_reply_update_input${id}`)
+        let now_reply = document.getElementById(`now_reply${id}`);
+        if (reply_update_input.style.display == 'none') {
+            reply_update_input.style.display = 'block'
+            now_reply.style.display = 'none';
+        } else {
+            reply_update_input.style.display = 'none';
+            now_reply.style.display = 'block';
+        }
+    } else { alert("로그인 해주세요") }
+}
+// ================================ 모임 게시글 상세보기 대댓글 수정 버튼 보이고 숨기기 끝 ================================
+
+// ================================ 모임 게시글 상세보기 대댓글 수정 시작 ================================
+async function replyUpdateConfrim(reply_id) {
+    let reply = document.getElementById(`reply_update_input${reply_id}`).value
+    let token = localStorage.getItem("access")
+    if (token) {
+        let formData = new FormData();
+        formData.append("content", reply);
+        let response = fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}/`, {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formData
+        })
+        console.log(response.status)
+        if (response.status == 200) { alert("수정 완료"), window.location.reload() }
+        else if ((await response).status == 400) { alert("입력해주세요") }
+        else { alert("권한이 없습니다.") }
+
+    } else { alert("로그인 해주세요") }
+}
+// ================================ 모임 게시글 상세보기 대댓글 수정 끝 ================================
+
+// ================================ 모임 게시글 상세보기 대댓글 삭제 시작 ================================
+async function replyDelete(reply_id) {
+    let token = localStorage.getItem("access")
+    if (token) {
+        let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
+        else { alert("권한이 없습니다.") }
+
+    } else { alert("로그인 해주세요") }
+}
+// ================================ 모임 게시글 상세보기 대댓글 삭제 끝 ================================

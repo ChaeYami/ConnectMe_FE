@@ -24,7 +24,7 @@
         <a onclick="go_home()">홈</a>
         <a onclick="go_recommend()">친구찾기</a>
         <a onclick="go_placeView()">장소추천</a>
-        <a href="">고민상담</a>
+        <a onclick="go_counsel()">고민상담</a>
         <a onclick="go_meetingList()">만남의 광장</a>
 
         <div class="login-logout">
@@ -42,11 +42,12 @@
     <!--위, 아래 네비바 끝-->
 
     <!-- 메인 -->
-
+    <div class="buttons">
+        <a href="counsel_create.html">
+            <img src="static/image/add.png" style="width:20px">
+        </a>
+    </div>
     <div class="list-section" id="list-section">
-        <div class="buttons">
-            <button onclick="작성함수">글작성</button>
-        </div>
 
         <!-- <a onclick="go_counselDetail(${counsel_id})">
             <div class="list-box">
@@ -58,6 +59,7 @@
         </a>
         <hr> -->
     </div>
+
 
 </body>
 
