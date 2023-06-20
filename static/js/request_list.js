@@ -33,15 +33,17 @@ async function requestList(me) {
                     let request_id = rows[i]['id']
 
                     let temp_html = `
-                    <div class="info-box">
-                        <a onclick="go_profile(${user_id})">
-                            <div class="nickname">${user_nickname}</div>
-                            <div class="account">${user_account}</div>
-                        </a>
-                    </div>
-                    <div class="buttons">
-                        <button onclick="acceptRequest(${request_id})">수락</button>
-                        <button onclick="rejectRequest(${request_id})">거절</button>
+                    <div class="friend-box">
+                        <div class="info-box">
+                            <a onclick="go_profile(${user_id})">
+                                <div class="nickname">${user_nickname}</div>
+                                <div class="account">${user_account}</div>
+                            </a>
+                        </div>
+                        <div class="buttons">
+                            <button onclick="acceptRequest(${request_id})">수락</button>
+                            <button onclick="rejectRequest(${request_id})">거절</button>
+                        </div>
                     </div>
                 `
 

@@ -37,11 +37,15 @@ async function Profile(user_id){
     }else{
         profile_img_element.innerHTML=`<img src="${profile_img_url}">`
     }
+    if (response_json.introduce){
+        document.getElementById('intro').innerHTML = `${response_json.introduce}`
+    }else{
+        document.getElementById('intro').innerHTML = '등록된 소개가 없습니다.'
+    }
     document.getElementById('nickname').innerHTML = `${response_json.nickname}<br>(${response_json.account})`
     document.getElementById('region').innerHTML = `${response_json.prefer_region}`
     document.getElementById('age').innerHTML = `${response_json.age}`
     document.getElementById('mbti').innerHTML = `${response_json.mbti}`
-    document.getElementById('intro').innerHTML = `${response_json.introduce}`
 }
 
 // 친구신청 버튼 눌렀을 때

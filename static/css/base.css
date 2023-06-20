@@ -3,9 +3,9 @@
 
 * {
     font-family: 'Nanum Gothic', sans-serif;
-   }
+}
 
-   
+
 body {
     /* width: 70vw; */
     margin: 50px auto;
@@ -16,6 +16,15 @@ a {
     cursor: pointer;
     text-decoration: none;
     color: black;
+}
+
+h2 {
+    margin-left: 50px;
+
+    @media screen and (max-width: 600px) {
+        margin:10px;
+        font-size:15pt
+    }
 }
 
 .top-nav {
@@ -32,8 +41,7 @@ a {
 }
 
 .bot-nav {
-    width: 70vw;
-    max-width: 900px;
+    width: 100vw;
     position: fixed;
     bottom: 0;
     z-index: 2;
@@ -59,4 +67,3 @@ a {
         font-size: smaller;
     }
 }
-

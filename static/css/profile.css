@@ -3,8 +3,13 @@
     padding: 0 30px;
     width: 60vw;
     margin: 100px auto;
+    max-width: 800px;
+    @media screen and (max-width: 800px) {
+        width: 90%;
 
+    }
 }
+
 .profile-section{
     margin: 50px 0;
     display: grid;
@@ -73,7 +78,12 @@
         width: 80px;
 
     }
-    
+    @media screen and (max-width: 700px) {
+        font-size : 11pt;
+        width: 100px;
+        padding: 40px 20px;
+
+    }
 }
 .info-section .ect div{
     padding: 5px 0;
@@ -87,11 +97,12 @@
     border-radius: 10px;
 
     @media screen and (max-width: 900px) {
-        width: 200px;
+        width: 30vw;
     }
     
     @media screen and (max-width: 700px) {
-        width: 180px;
-
+        font-size : 11pt;
+        width: 30vw;
+        padding: 40px;
     }
 }

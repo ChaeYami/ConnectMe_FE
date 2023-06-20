@@ -1,16 +1,23 @@
-h2 {
-    margin-top: 100px;
-}
+
 
 .main {
-    width: 500px;
-    margin: 100px auto;
+    width: 60vw;
 
+    margin: 100px auto;
+    @media screen and (max-width: 800px) {
+        width: 80%;
+
+    }
 }
 
 .find-section {
+    width: 500px;
     display: grid;
+    margin: 30px auto;
+    @media screen and (max-width: 800px) {
+        width: 90%;
 
+    }
 }
 
 .find {
@@ -23,9 +30,13 @@ h2 {
 }
 
 .buttons {
-    margin-top: 30px;
+    margin: 30px auto;
+    width: 500px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
+    @media screen and (max-width: 800px) {
+        width: 90%;
 
+    }
 }
