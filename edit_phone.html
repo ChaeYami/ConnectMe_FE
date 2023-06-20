@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +14,54 @@
 
     <title>Connect ME | 전화번호 변경</title>
 </head>
+
 <body>
+
+    <!--위, 아래 네비바 시작-->
+    <div class="top-nav">
+        <a onclick="go_home()">홈</a>
+        <a onclick="go_recommend()">친구찾기</a>
+        <a onclick="go_placeView()">장소추천</a>
+        <a href="">고민상담</a>
+        <a onclick="go_meetingList()">만남의 광장</a>
+
+        <div class="login-logout">
+            <a onclick="go_login()">로그인</a>
+        </div>
+    </div>
+
+    <div class="bot-nav">
+
+        <a href="">내글</a>
+        <a href="">북마크</a>
+        <a onclick="go_myProfile()">내프로필</a>
+        <a href="">알림</a>
+    </div>
+    <!--위, 아래 네비바 끝-->
     
+    <div class="main">
+        <div class="certify-phone">
+            <div class="input-box">
+                <label for="phone">변경할 전화번호를 입력하세요</label>
+                <input type="text" id="phone" pattern="\d{10,11}" placeholder="전화번호">
+            </div>
+            <button onclick="certifyPhone()">인증번호 발송</button>
+        </div>
+        <div id="auth-num-box" style="display: none;">
+            <div class="input-box">
+                <input type="text" name="auth-num" id="auth-num" placeholder="인증번호 입력">
+            </div>
+            <button onclick="ConfirmPhone()">인증번호 확인</button>
+        </div>
+        <button onclick="editPhone()">수정완료</button>
+    </div>
+
+
+
 </body>
 
 <!-- js -->
 <script src="/static/js/base_api.js"></script>
+<script src="/static/js/edit_phone.js"></script>
 
 </html>

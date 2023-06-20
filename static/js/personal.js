@@ -32,13 +32,6 @@ function go_editphone(){
 
 
 
-
-
-
-
-
-
-
 function go_passwordChange(){
     location.href = "password_change.html"
 

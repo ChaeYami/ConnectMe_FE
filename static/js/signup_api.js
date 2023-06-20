@@ -9,7 +9,7 @@ async function signup() {
     const phone_front = document.getElementById("phone-front")
     const phone_front_value = (phone_front.options[phone_front.selectedIndex].value)
     const phone = document.getElementById("phone").value
-
+    const full_phone = phone_front_value + phone
     const account = document.getElementById("account").value
     const email = document.getElementById("email").value
     const password = document.getElementById("password").value
@@ -20,8 +20,9 @@ async function signup() {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("nickname", nickname);
-    formData.append("phone", phone_front_value + phone);
+    formData.append("phone", full_phone);
 
+    console.log(full_phone.length)
     const response = await fetch(`${BACKEND_BASE_URL}/user/`, {
         headers: {
         },
