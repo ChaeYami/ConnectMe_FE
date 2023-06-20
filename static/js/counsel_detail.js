@@ -74,9 +74,9 @@ async function CounselLike(counsel_id) {
 
     const response_json = await response.json();
 
-    if (response_json["message"] == "좋아요") {
+    if (response_json == "좋아요") {
         like['src'] = "static/image/heart (1).png"
-        alert("좋아요.");
+        alert("좋아요");
     } else {
         like['src'] = "static/image/heart.png"
         alert("좋아요 취소!");
