@@ -25,12 +25,16 @@ async function friendsList() {
                 let request_id = rows[i]['id']
 
                 let temp_html = `
-                <div class="info-box">
-                    <a onclick="go_profile(${user_id})">
-                        <div class="nickname">${user_nickname}</div>
-                        <div class="account">${user_account}</div>
-                    </a>
-                    <button onclick="deleteFriendButton(${request_id})">친구끊기</button>
+                <div class="friend-box">
+                    <div class="info-box">
+                        <a onclick="go_profile(${user_id})">
+                            <div class="nickname">${user_nickname}</div>
+                            <div class="account">${user_account}</div>
+                        </a>
+                    </div>
+                    <div class = "buttons">
+                        <button onclick="deleteFriendButton(${request_id})">친구끊기</button>
+                    </div>
                 </div>
                 `
 
