@@ -1,14 +1,14 @@
 /* main */
-.main{
+.main {
     width: 60vw;
     margin: 100px auto;
     max-width: 800px;
+
     @media screen and (max-width: 800px) {
         width: 90%;
 
     }
 }
-
 
 
 /* select box 시작 */
@@ -127,6 +127,40 @@
     }
 }
 
-/* select box 시작 */
+/* select box 끝 */
 
+.condition {
+    margin: 20px;
+}
+.list-section {
+    display: grid;
+}
+.list-section a{
+    margin: 15px;
+}
 
+.card {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+
+}
+.card div{
+    margin: 5px;
+}
+.card > .image_box > .image{
+    width: 150px;
+}
+
+.user_info{
+    display: grid;
+}
+.user_nickname{
+    font-size: 14pt;
+    font-weight: bold;
+}
+.user_info .intro{
+    background-color: rgb(240, 255, 249);
+    min-height: 70px;
+    margin: 10px 0px;
+}

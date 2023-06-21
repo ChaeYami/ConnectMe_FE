@@ -9,9 +9,6 @@ $(document).ready(function () {
 });
 
 
-
-
-
 // 추천 유저목록
 async function recommend(filter) {
     $('#list-section').empty()
@@ -48,8 +45,11 @@ async function recommend(filter) {
                 } else if (filter == 'all') {
                     filter_ = '전체'
                 }
-                let condition = `${filter_} : ${rows[0][filter]}`
-                $('.condition').append(condition)
+                if (rows[0][filter]){
+                    let condition = `${filter_} : ${rows[0][filter]}`
+                    $('.condition').append(condition)
+                }
+                
                 for (let i = 0; i < rows.length; i++) {
                     let user_pk = rows[i]['id']
                     let user_nickname = rows[i]['nickname']
@@ -63,16 +63,16 @@ async function recommend(filter) {
                     }
                     let temp_html = `<a onclick="go_profile(${user_pk})"><div class="card">
                     <div class="image_box">
-                        <img class="image" src="${BACKEND_BASE_URL}${user_profile_img}" style = "width : 200px;"alt="">
+                        <img class="image" src="${BACKEND_BASE_URL}${user_profile_img}" alt="">
                     </div>
                     <div class="user_info">
                         <div class="user_nickname">
                             ${user_nickname}
                         </div>
                         <div class="ect">
-                            ${user_region}
-                            ${user_age_range}
-                            ${user_mbti}
+                            지역 : ${user_region} | 
+                            나이대 : ${user_age_range} | 
+                            MBTI : ${user_mbti}
                         </div>
                         <div class = "intro">
                             ${user_introduce}
