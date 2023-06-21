@@ -33,6 +33,7 @@ h2 {
     top: 0;
     z-index: 2;
     background-color: #BDEFCB;
+    height: 60px;
 
 }
 
@@ -60,10 +61,33 @@ h2 {
     left: 50px;
     z-index: 2;
     background-color: #D3EAFB;
-    height: 48px;
-    grid-template-columns: repeat(4, 1fr);
-    align-content: center;
-    justify-items: center;
+    height: auto;
+    border-radius: 10px;
+}
+
+.bot-nav a {
+    padding: 5px;
+}
+
+.bot-nav-content {
+    display: none;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+.bot-nav-content a {
+    display: block;
+}
+
+.bot-nav:hover .bot-nav-content {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+
+}
+.bot-nav-content a:hover{
+    background-color: #7d9fc9;
+    color:white;
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 800px) {
