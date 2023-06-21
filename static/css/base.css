@@ -22,8 +22,8 @@ h2 {
     margin-left: 50px;
 
     @media screen and (max-width: 600px) {
-        margin:10px;
-        font-size:15pt
+        margin: 10px;
+        font-size: 15pt
     }
 }
 
@@ -32,24 +32,62 @@ h2 {
     position: fixed;
     top: 0;
     z-index: 2;
-    display: grid;
     background-color: #BDEFCB;
-    height: 48px;
+    height: 60px;
+
+}
+
+.top-nav .items {
+    max-width: 900px;
+    height: 60px;
+    display: grid;
     grid-template-columns: repeat(6, 1fr);
-    align-content: center;
     justify-items: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.top-nav .login-logout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
 }
 
 .bot-nav {
-    width: 100vw;
+    padding: 15px;
+    width: auto;
     position: fixed;
-    bottom: 0;
+    bottom: 50px;
+    left: 50px;
     z-index: 2;
     background-color: #D3EAFB;
-    height: 48px;
-    grid-template-columns: repeat(4, 1fr);
-    align-content: center;
-    justify-items: center;
+    height: auto;
+    border-radius: 10px;
+}
+
+.bot-nav a {
+    padding: 5px;
+}
+
+.bot-nav-content {
+    display: none;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+.bot-nav-content a {
+    display: block;
+}
+
+.bot-nav:hover .bot-nav-content {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+
+}
+.bot-nav-content a:hover{
+    background-color: #7d9fc9;
+    color:white;
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 800px) {
