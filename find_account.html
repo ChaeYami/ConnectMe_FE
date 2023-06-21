@@ -8,6 +8,7 @@
 
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/find.css">
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
@@ -18,7 +19,7 @@
 
 <body>
 
-    
+
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
@@ -47,33 +48,42 @@
     <!--위, 아래 네비바 끝-->
 
 
-    
+
 
     <!--메인 시작-->
 
     <div class="main">
-        <div id="input-box">
-            <div id="authentication">
-                <input type="text" id="phone" placeholder="-를 제외한 휴대폰번호를 입력해주세요">
+        <h2>아이디찾기</h2>
+        <hr>
+        <div class="find-section">
+            <div class="authentication">
+                <div class="input-box">
+                    <input type="text" id="phone" placeholder="-를 제외한 휴대폰번호를 입력해주세요">
+                    <label for="phone">-를 제외한 휴대폰번호</label>
+                </div>
                 <button onclick="phone_send()" class="button">인증번호 발송</button>
             </div>
+
             <div class="alert alert-danger" id="alert-danger_1"></div>
-            <input type="text" id="auth_number" placeholder="인증번호를 입력해 주세요.">
-            <div class="alert alert-danger" id="alert-danger_2"></div>
-            <div>
+
+            <div class="authentication">
+                <div class="input-box">
+                    <input type="text" id="auth_number" placeholder="인증번호">
+                    <label for="auth_number">인증번호</label>
+                </div>
                 <button onclick="auth_number_confirm()" class="button login">확인</button>
             </div>
-            <div class="alert alert-info" id="info_message"></div>
-            <div id="buttons">
-                <a onclick="go_signup()">
+
+            <div class="alert alert-danger" id="alert-danger_2"></div>
+           <div class="alert alert-info" id="info_message" style="display: none;"></div>
+
+            <div class="buttons">
+                <a onclick="go_login()" style=" font-weight: 700;">로그인</a>
+                <a onclick="go_signup()" style=" font-weight: 700;">
                     회원가입
-                </a>
-                <a onclick="go_login()">
-                    로그인
                 </a>
             </div>
         </div>
-    </div>
     </div>
 
     <!--메인 끝-->
