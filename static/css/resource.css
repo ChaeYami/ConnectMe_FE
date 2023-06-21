@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /* main */
 .main{
     width: 60vw;
@@ -11,6 +12,9 @@
 
 
 /* select box 시작 */
+=======
+/********* select box 시작 **********/
+>>>>>>> Stashed changes
 .select-box {
     position: relative;
     display: block;
@@ -126,10 +130,9 @@
     }
 }
 
-/* select box 시작 */
+/********* select box 끝 **********/
 
-
-/* search 시작*/
+/********* search 시작 **********/
 
 .search-class {
     height: 100px;
@@ -266,10 +269,9 @@
     }
 }
 
-/* search 끝*/
+/********* search 끝 **********/
+/********* category 시작 **********/
 
-
-/* category 시작 */
 
 .search-select {
     margin: 30px auto;
@@ -436,10 +438,10 @@
     src: url(https://s.cdpn.io/999/fontawesome-webfont.ttf) format("truetype"), url(https://s.cdpn.io/999/FontAwesome.otf) format("opentype");
 }
 
-/* category 끝 */
+/********* category 끝 **********/
 
 
-/* create input 시작 */
+/********* create input 시작 **********/
 .create_h1 {
     font-size: 3em;
     font-weight: 300;
@@ -662,6 +664,7 @@
     margin: 50px 0;
 }
 
+<<<<<<< Updated upstream
 /* create input 끝 */
 
 
@@ -689,3 +692,34 @@
     padding: 5px 10px;
     cursor: pointer;
 }
+=======
+
+/********* create input 끝 **********/
+/********* 이미지 미리보기 시작 **********/
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.image_container {
+    width: 100%;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+}
+
+.img_container {
+    width: 100%;
+}
+
+.img_preview {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/********* 이미지 미리보기 끝 **********/
+>>>>>>> Stashed changes

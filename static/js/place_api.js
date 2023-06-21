@@ -23,6 +23,15 @@ async function CreatePlace() {
     let hour = document.querySelector('#hour')
     let holiday = document.querySelector('#holiday')
 
+    console.log(name.value,
+        category.value,
+        content.value,
+        address.value,
+        score.value,
+        price.value,
+        hour.value,
+        holiday.value,)
+
 
 
     const formdata = new FormData();
@@ -72,12 +81,12 @@ async function PlaceView() {
     });
 
     const response_json = await response.json();
-    let place = document.querySelector('#place')
+    let container = document.querySelector('#place')
     let place_create = document.querySelector('#place_create')
 
     if (JSON.parse(payload)['is_staff']) {
         place_create.innerHTML += `
-        <a href="place_edit.html">
+        <a href="place_create.html">
             <img src="static/image/add.png" style="width:20px">
         </a>
         `
@@ -91,49 +100,88 @@ async function PlaceView() {
         let address = e.address
         let image = e.image
         let score = e.score
-        let price = e.price
-        let hour = e.hour
-        let holiday = e.holiday
+        let bookmark = e.bookmark
 
+        container.innerHTML += `
+        <div id="place${place_id}" class="place-container"></div>`
 
-        img = ``
+        let place = document.querySelector(`#place${place_id}`)
 
+        // 이미지 시작
         if (image) {
-            img = `
-            이미지 : ${img}
-            <a href="place_view.html?id=${place_id}">
-                <img src="${image['url']}"></img>
-            </a>
+            place.innerHTML += `
+            <div>
+                <a href="place_view.html?id=${place_id}">
+                    <img class="place-container-img" src="${image['url']}" onclick="PlacePreUpdateView()">
+                </a>
+            </div>
             `
         } else {
-            img = ''
+            place.innerHTML += `
+            <div style="width:230px; height:230px;">
+            </div>`
         }
+        // 이미지 끝
+        // 북마크 시작
+        let place_book = ``
 
-        place.innerHTML += `
-        <div>제목 : <a href="place_view.html?id=${place_id}">${name}</a>
-        </div>`
+        if (bookmark.includes(logined_user_id)) {
+
+            place_book = `
+            <a>
+                <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="PlaceBook(${place_id})">
+            </a>`
+        } else {
+            place_book = `
+            <a>
+                <img id="book${place_id}" src="static/image/bookmark.png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="PlaceBook(${place_id})">
+            </a>`
+        }
+        // 북마크 끝
+        // edit 버튼 시작
+        let place_edit = ``
+        console.log(JSON.parse(payload)['is_staff'])
 
         if (JSON.parse(payload)['is_staff']) {
-            place.innerHTML += `
+            place_edit = `
             <a>
-                <img src="static/image/edit.png" style="width:20px" onclick="PlacePreUpdateView(${place_id})">
+                <img src="static/image/edit.png" style="margin-top:10px; width:20px;"
+                    onclick="PlacePreUpdateView(${place_id})">
             </a>
             `
         }
-
-
+        // edit 버튼 끝
+        // container html 시작
         place.innerHTML += `
-        <div>카테고리 : ${category}</div>
-        <div>내용 : ${content}</div>
-        <div>주소 : ${address}</div>
-        <div>${img}</div>
-        <div>별점 : ${score}</div>
-        <div>가격 : ${price}</div>
-        <div>영업시간 : ${hour}</div>
-        <div>휴일 : ${holiday}</div>
-        <div id="map"></div>
-        <hr>
+        <div class="place-container-text">
+            <div class="place-container-main">
+                <div class="place-container-title">
+                    <div>
+                        <h2><a class="place-container-title-a" href="place_view.html?id=${place_id}">${name}</a></h2>
+                    </div>
+                    <div>
+                        <div class="place-container-score">
+                            <h2>${score}</h2>
+                        </div>
+                    </div>
+                    <div id="place_edit">
+                    ${place_edit}
+                    </div>
+                </div>
+                <div class="place-container-book" id="place-container-book">
+                ${place_book}
+                </div>
+            </div>
+            <div class="place-container-address">${address}</div>
+            <div class="place-container-content">${content}</div>
+            <div id="map"></div>
+            
+        </div>
+        <div class="place-container-hr">
+            <hr>
+        </div>
         `
+        // container html 끝
     })
 }
 
@@ -274,16 +322,35 @@ async function PlaceDetailView(place_id) {
     }
 
 
-    //상세보기 댓글 시작
+    // ================================ 상세보기 댓글 시작 ================================
 
     let comment = ``
 
 
     for (let i = 0; i < comments.length; i++) {
+        // 시간 form 수정 시작
+        let createdAt = comments[i]['created_at'];
+        let date = new Date(createdAt);
+        var formattedDate = date.toLocaleDateString('en-US', {
+            year: '2-digit',
+            month: '2-digit',
+            day: '2-digit'
+        }).split('/').reverse().join('/');
+
+        var formattedTime = date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        var formattedDateTime = `${formattedDate}, ${formattedTime}`;
+        // 시간 form 수정 끝
+
+        // 댓글에 reply가 있을 때
         if (comments[i]['reply'].length > 0) {
             if (JSON.parse(payload)['user_id'] == comments[i]['user']) {
                 comment +=
                     `<div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} 
+                ${formattedDateTime}
                 <a>
                     <img src="static/image/comment_edit.png" style="width:20px" onclick="CommentPreUpdate(${place_id}, ${comments[i]['id']})">
                 </a>
@@ -293,16 +360,33 @@ async function PlaceDetailView(place_id) {
                 <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
             } else {
                 comment +=
-                    `<div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']}
+                    `<div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDate}
                 <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
             }
 
             for (let j = 0; j < comments[i]['reply'].length; j++) {
+                // 시간 form 수정 시작
+                let createdAt = comments[i]['reply'][j]['created_at'];
+                let date = new Date(createdAt);
+                var formattedDate = date.toLocaleDateString('en-US', {
+                    year: '2-digit',
+                    month: '2-digit',
+                    day: '2-digit'
+                }).split('/').reverse().join('/');
+
+                var formattedTime = date.toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                var formattedDateTime = `${formattedDate}, ${formattedTime}`;
+                // 시간 form 수정 끝
+
                 if (JSON.parse(payload)['user_id'] == comments[i]['reply'][j]['user']) {
                     comment +=
                         `
                         <div id='comment${comments[i]['reply'][j]['id']}' style="margin-left:20px;">
-                            ${comments[i]['reply'][j]['user_name']} : ${comments[i]['reply'][j]['content']} 
+                            ${comments[i]['reply'][j]['user_name']} : ${comments[i]['reply'][j]['content']} ${formattedDateTime}
                             <a>
                                 <img src="static/image/comment_edit.png" style="width:20px" onclick="CommentPreUpdate(${place_id}, ${comments[i]['reply'][j]['id']})">
                             </a>
@@ -314,7 +398,7 @@ async function PlaceDetailView(place_id) {
                 } else {
                     comment +=
                         `
-                        <div id='comment${comments[i]['reply'][j]['id']}' style="margin-left:20px;">
+                        <div id='comment${comments[i]['reply'][j]['id']}' style="margin-left:20px;"> ${formattedDateTime}
                             ${comments[i]['reply'][j]['user_name']} : ${comments[i]['reply'][j]['content']} 
                         </div>
                         `
@@ -323,11 +407,13 @@ async function PlaceDetailView(place_id) {
             }
             comment +=
                 `</div>`
-        } else {
+        }
+        // 댓글에 reply가 없을 때
+        else {
             if (JSON.parse(payload)['user_id'] == comments[i]['user']) {
                 comment +=
                     `<div id='comment${comments[i]['id']}'>
-                    ${comments[i]['user_name']} : ${comments[i]['content']} 
+                    ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDateTime}
                     <a>
                         <img src="static/image/comment_edit.png" style="width:20px" onclick="CommentPreUpdate(${place_id}, ${comments[i]['id']})">
                     </a>
@@ -340,7 +426,7 @@ async function PlaceDetailView(place_id) {
             } else {
                 comment +=
                     `<div id='comment${comments[i]['id']}'>
-                    ${comments[i]['user_name']} : ${comments[i]['content']}
+                    ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDateTime}
                     <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>
                 </div>
                 `
@@ -351,7 +437,7 @@ async function PlaceDetailView(place_id) {
     }
 
 
-    //상세보기 댓글 끝
+    // ================================ 상세보기 댓글 끝 ================================
 
     place.innerHTML = `
     <div id="title">제목 : ${name}</div>
