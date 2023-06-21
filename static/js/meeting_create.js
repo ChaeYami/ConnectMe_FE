@@ -34,5 +34,18 @@ async function createMeeting() {
             );
         });
 }
+function setThumbnail(event) {
+    for (var image of event.target.files) {
+        var reader = new FileReader();
 
+        reader.onload = function (event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            document.querySelector("div#image_box").appendChild(img);
+        };
+
+        console.log(image);
+        reader.readAsDataURL(image);
+    }
+}
 // ================================ 모임 게시글 작성 끝 ================================
