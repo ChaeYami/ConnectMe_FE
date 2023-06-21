@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
-    <link rel="stylesheet" href="static/css/profile.css">
+    <link rel="stylesheet" href="static/css/profile_album.css">
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
@@ -46,47 +46,29 @@
     <!--위, 아래 네비바 끝-->
 
 
-    
-
     <div class="main">
-        <div class="profile-section">
-            <div id="profile-img" class="profile-img">
+            <h2>앨범</h2>
+            <hr>
+            <div class="file_class">
+                <input type="file" class="file_input" id ="album_image" onchange="setThumbnail(event);" multiple /><span
+                    class="highlight"></span><span class="bar_input"></span>
             </div>
-            <div class="profile">
-                <div class="nickname-section">
-                    <div id="nickname" class="nickname">
-                        닉네임
-                    </div>
-                    <div id="my-buttons">
-                        <button onclick="go_personal()">내정보보기</button>
-                        <button onclick="go_profileEdit()">프로필수정</button>
-                    </div>
-                </div>
-                <div class="buttons">
-                    <div id="addFriend"><a onclick="addFriend()">친구신청</a></div>
-                    <div id="chat"><a>채팅하기</a></div>
-                    <div id="album"><a onclick="go_album()">사진첩</a></div>
-                    <div id="requests" style="display: none;"><a onclick="go_requestList('to')">친구신청목록</a>
-                    </div>
-                    <div id="friends-list" style="display: none;"><a onclick="go_friends()">친구목록</a></div>
-                </div>
+            <div id="image_container"></div>
+            <div class="btn-box">
+                <button class="btn btn-submit" type="button" onclick="uploadPhoto()">submit</button>
+                <button class="btn btn-cancel" type="button" onclick="">cancel</button>
             </div>
-        </div>
-        <div class="info-section">
-            <div class="ect">
-                <div>지역 : <span id="region"></span></div>
-                <div>나이 : <span id="age"></span></div>
-                <div>MBTI : <span id="mbti"></span></div>
-            </div>
-            <div id="intro">자기소개</div>
         </div>
     </div>
+
+
+
 
 
 </body>
 
 <!-- js -->
 <script src="static/js/base_api.js"></script>
-<script src="static/js/profile_api.js"></script>
+<script src="static/js/upload_photo.js"></script>
 
 </html>

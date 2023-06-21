@@ -14,6 +14,7 @@
     width: 500px;
     display: grid;
     margin: 30px auto;
+    
     @media screen and (max-width: 800px) {
         width: 90%;
 
@@ -39,4 +40,99 @@
         width: 90%;
 
     }
+}
+
+button{
+    margin: 5px;
+    background-color:  #8eadd3;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+    width: 100px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+/* find_account.html */
+
+.authentication{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-box {
+    position: relative;
+    margin: 10px 0;
+    width: 70%;
+}
+
+.input-box>input {
+    background: transparent;
+    border: none;
+    border-bottom: solid 1px #ccc;
+    padding: 20px 0px 5px 0px;
+    font-size: 14pt;
+    width: 100%;
+}
+
+input::placeholder {
+    color: transparent;
+}
+
+input:placeholder-shown+label {
+    color: #aaa;
+    font-size: 14pt;
+    top: 15px;
+}
+
+input:focus+label,
+label {
+    color: #8aa1a1;
+    font-size: 10pt;
+    pointer-events: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+}
+
+input:focus,
+input:not(:placeholder-shown) {
+    border-bottom: solid 1px #8aa1a1;
+    outline: none;
+}
+
+
+.alert-danger {
+    color: #ff4a4a;
+    background-color: white;
+    display: none;
+}
+
+#info_message{
+    margin-top: 20px;
+    padding: 30px;
+    justify-content: center;
+    font-size: 14pt;
+    font-weight: bold;
+    border: 1px solid #8aa1a1;
+    border-radius: 10px;
+}
+
+
+/* find_password.html */
+
+.inputEmailForm{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
 }

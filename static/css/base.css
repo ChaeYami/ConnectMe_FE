@@ -77,16 +77,18 @@ h2 {
 
 .bot-nav-content a {
     display: block;
+    grid-template-rows: repeat(4, 1fr);
+
 }
 
 .bot-nav:hover .bot-nav-content {
     display: grid;
-    grid-template-rows: repeat(4, 1fr);
 
 }
-.bot-nav-content a:hover{
+
+.bot-nav-content a:hover {
     background-color: #7d9fc9;
-    color:white;
+    color: white;
     border-radius: 5px;
 }
 
@@ -101,7 +103,14 @@ h2 {
     }
 
     .bot-nav {
-        width: 100%;
         font-size: smaller;
+        bottom: 30px;
+        left: 30px;
+    }
+
+    .bot-nav:hover .bot-nav-content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-items: center;
     }
 }

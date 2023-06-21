@@ -14,7 +14,6 @@
     margin: 50px 0;
     display: grid;
     grid-template-columns: 1fr 2fr;
-    justify-items: center;
 
 }
 .profile{
@@ -53,7 +52,6 @@
 .profile-img{
     width: 150px;
     height: 150px;
-    padding: 0 20px;
 }
 .profile-img img{
     width: 150px;

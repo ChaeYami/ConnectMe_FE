@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
     <link rel="stylesheet" href="static/css/profile_edit.css">
@@ -42,7 +43,7 @@
     <!--위, 아래 네비바 끝-->
 
 
-    
+
 
     <div class="main">
         <div class="update-button">
@@ -65,20 +66,16 @@
                     <label for="nickname">닉네임</label>
                     <input type="text" id="nickname" name="nickname">
                 </div>
-            </div>
-        </div>
-        <div class="info-section">
-            <div class="ect">
                 <div id="region">
                     --지역수정 만들어야됨--
                 </div>
-                <div>
+                <div class="age">
                     <label for="age">나이</label>
                     <input type="number" id="age" name="age">
                 </div>
-                <div>
+                <div class="mbti">
                     <label for="mbti">MBTI</label>
-                    <select name="mbti" id="mbti">
+                    <select class="select-box" name="mbti" id="mbti">
                         <option value="" selected disabled>--선택하기--</option>
                         <option value="ENFJ">ENFJ</option>
                         <option value="ENFP">ENFP</option>
@@ -99,11 +96,15 @@
                     </select>
                 </div>
             </div>
-            <div id="intro">
-                <label for="introduce">자기소개</label><br>
-                <textarea id="introduce" name="introduce"></textarea>
-            </div>
+
         </div>
+
+
+        <div id="intro">
+            <label for="introduce">자기소개</label><br>
+            <textarea id="introduce" name="introduce" placeholder="자기소개를 입력하세요"></textarea>
+        </div>
+
 
     </div>
 

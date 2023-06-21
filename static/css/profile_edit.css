@@ -1,7 +1,7 @@
 .main {
     display: grid;
     padding: 0 30px;
-    width: 500px;
+    width: 700px;
     margin: 100px auto;
     @media screen and (max-width: 800px) {
         width: 80%;
@@ -14,9 +14,20 @@
     display: grid;
     grid-template-columns: 1fr 2fr;
     padding: 0 10px;
-
+    justify-items: center;
+}
+input{
+    background: transparent;
+    border: none;
+    border-bottom: solid 1px #ccc;
+    padding: 10px;
+    font-size: 12pt;
 }
 
+.profile{
+    display: grid;
+
+}
 #nickname {
     width: 100px;
     height: 20px;
@@ -32,39 +43,23 @@
     width: 200px;
 }
 
-.info-section {
-    margin-top: 100px;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
 
-}
-
-.info-section div {
-    padding: 0 10px;
-}
-
-.ect div {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-}
 
 #intro {
     width: 80%;
+    margin-top: 150px;
 }
 
-#intro textarea {
+#intro textarea{
+    background: transparent;
+    border: solid 1px #ccc;
+    padding: 10px;
+    font-size: 12pt;
+    margin: 15px 0;
     min-height: 50px;
     width: 100%;
 }
 
-#age {
-    height: 20px;
-    width: 100%;
-}
-#mbti{
-    width: 100%;
-}
 
 .update-button {
     display: flex;
@@ -74,6 +69,117 @@
 
 .update-button button {
     width: 100px;
-    height: 30px;
+    height: 40px;
 
 }
+button{
+    margin: 5px;
+    background-color:  #8eadd3;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+/* select box 시작 */
+.select-box {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    border: 2px solid rgb(203, 203, 203);
+    font-family: "Open Sans", "Helvetica Neue", "Segoe UI", "Calibri", "Arial", sans-serif;
+    font-size: 12pt;
+    color: #60666d;
+}
+
+.select-box__current {
+    position: relative;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    outline: none;
+}
+
+.select-box__current:focus+.select-box__list {
+    opacity: 1;
+    animation-name: none;
+}
+
+.select-box__current:focus+.select-box__list .select-box__option {
+    cursor: pointer;
+}
+
+.select-box__current:focus .select-box__icon {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.select-box__icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    width: 20px;
+    opacity: 0.3;
+    transition: 0.2s ease;
+}
+
+.select-box__value {
+    display: flex;
+}
+
+.select-box__input {
+    display: none;
+}
+
+.select-box__input:checked+.select-box__input-text {
+    display: block;
+}
+
+.select-box__input-text {
+    display: none;
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    background-color: #fff;
+}
+
+.select-box__list {
+    position: absolute;
+    width: 100%;
+    padding: 0;
+    list-style: none;
+    opacity: 0;
+    animation-name: HideList;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: step-start;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+}
+
+.select-box__option {
+    display: block;
+    padding: 15px;
+    background-color: #fff;
+}
+
+.select-box__option:hover,
+.select-box__option:focus {
+    color: #546c84;
+    background-color: #fbfbfb;
+}
+
+@keyframes HideList {
+    from {
+        transform: scaleY(1);
+    }
+
+    to {
+        transform: scaleY(0);
+    }
+}
+
+/* select box 시작 */

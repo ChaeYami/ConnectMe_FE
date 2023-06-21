@@ -51,7 +51,7 @@ async function auth_number_confirm() {
     const result = await response.json()
     
     if (response.status === 200) {
-        document.getElementById('info_message').style.display ="block"
+        document.getElementById('info_message').style.display ="flex"
         const alert_danger_2 = document.getElementById('info_message')
         alert_danger_2.innerText = `${result['message']}`
         
