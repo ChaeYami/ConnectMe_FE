@@ -12,6 +12,12 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
+    <style>
+        .image_box_class {
+            background-color: green;
+            
+        }
+    </style>
 
     <title>Connect ME</title>
 </head>
@@ -41,21 +47,14 @@
     <!--위, 아래 네비바 끝-->
 
     <!-- 메인 -->
-    <div class="main">
-
-        <div class="counsel-title" id="title"></div>
-        <div class="counsel-author" id="author"></div>
-        <div class="counsel-content" id="content"></div>
-        <div class="counsel-likes_count" id="likes_count"></div>
-        <div class="like-button" id="like-button">
+        <div id="meeting_detail_card">
         </div>
-
         <div class="buttons" id="buttons"></div>
         <hr>
         <h4>댓글</h4>
         <div>
             <p><input id="inputComment" type="text" placeholder="댓글 입력하기"></p>
-            <button onclick="counselCommentCreate()">작성</button>
+            <button onclick="meetingCommentCreate()">작성</button>
         </div>
         <hr>
         <div id="comment_card">
@@ -70,6 +69,6 @@
 
 <!-- js -->
 <script src="/static/js/base_api.js"></script>
-<script src="/static/js/counsel_detail.js"></script>
+<script src="/static/js/meeting_detail.js"></script>
 
 </html>

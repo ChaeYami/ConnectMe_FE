@@ -16,10 +16,11 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     updated_at = data['updated_at']
     content = data['content']
     let temp_html =
-        `<h2>${title}</h2>
+                        `<h2>${title}</h2>
                         <p>생성일 ${created_at}</p>
                         <p>수정일 ${updated_at}</p>
-                        <div id=image_box>
+                        <p>작성자 ${user}</p>
+                        <div id=image_box class=image_box_class>
                         </div>
                         <p>${content}</p>`
     $('#meeting_detail_card').append(temp_html)
@@ -51,7 +52,14 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         content = each_comment['content']
         updated_at = each_comment['updated_at']
         user = each_comment['user']
-
+        if(content == '삭제된 댓글 입니다.'){
+            let temp_html = `
+            <p id="now_comment${id}" style="display:block;">${content}</p>
+            <div id="reply_card">
+            `
+            $('#comment_card').append(temp_html)
+        }
+        else{
         let temp_html =
             `
                     <p id="now_comment${id}" style="display:block;">${content}</p>
@@ -64,14 +72,15 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
                     <button onclick="commentDelete(${id})">삭제하기</button>
                     <div id="reply_card">
                     `
+                    
         $('#comment_card').append(temp_html)
+        }
         $(`#comment_update_input${id}`).val(content)
         each_comment.reply.forEach((each_reply => {
             id = each_reply['id']
             content = each_reply['content']
             user = each_reply['user']
             updated_at = each_reply['updated_at']
-
             let temp_html = `
             <div style="color:red;">
             <p id="now_reply${id}" style="display:block;">${content}</p>
@@ -162,7 +171,6 @@ async function commentDelete(comment_id) {
                 Authorization: `Bearer ${token}`,
             },
         })
-        console.log(response)
         if (response.status == 204) {alert("삭제 완료"), window.location.reload()}
         else (alert("권한이 없습니다."))
     } else { alert("로그인 해주세요")}
@@ -236,7 +244,7 @@ async function replyUpdateConfrim(reply_id) {
         formData.append("content", reply);
 
         let meeting_id = new URLSearchParams(window.location.search).get('id');
-        let response = fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/reply/${reply_id}/`, {
+        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/reply/${reply_id}/`, {
             method: 'PUT',
             headers: {
                 Authorization: `Bearer ${token}`,
