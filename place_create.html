@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect ME | 장소추천</title>
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/place.css">
+</head>
+
+<body>
+
+    <!--위, 아래 네비바 시작-->
+    <div class="top-nav">
+        <a onclick="go_home()">홈</a>
+        <a onclick="go_recommend()">친구찾기</a>
+        <a onclick="go_placeView()">장소추천</a>
+        <a onclick="go_counsel()">고민상담</a>
+        <a onclick="go_meetingList()">만남의 광장</a>
+
+        <div class="login-logout">
+            <a onclick="go_login()">로그인</a>
+        </div>
+    </div>
+
+    <div class="bot-nav">
+
+        <a href="">내글</a>
+        <a href="">북마크</a>
+        <a onclick="go_myProfile()">내프로필</a>
+        <a href="">알림</a>
+    </div>
+    <!--위, 아래 네비바 끝-->
+
+    <!-- create input 시작 -->
+    <div class="wrapper">
+        <h1 class="create_h1">Place Create</h1>
+        <h5 class="create_h5">추천할 맛집이 있다면 이곳에 작성해주세요.</h5>
+        <form class="create_form">
+            <div class="group">
+                <input id="name" class="create_input" type="text" required="required" /><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">제목</label>
+            </div>
+            <div class="group">
+                <select id="category" class="create_input" type="text" required="required">
+                    <option value="밥">밥</option>
+                    <option value="술">술</option>
+                    <option value="카페">카페</option>
+                </select><span class="highlight"></span><span class="bar"></span>
+                <label class="create_label">카테고리</label>
+            </div>
+            <div class="group">
+                <textarea id="content" class="create_input" type="textarea" rows="10"
+                    required="required"></textarea><span class="highlight"></span><span class="bar"></span>
+                <label class="create_label">내용</label>
+            </div>
+            <div class="group">
+                <input id="address" class="create_input" type="text" required="required" /><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">주소</label>
+            </div>
+            <div class="group">
+                <input id="score" class="create_input" type="number" step="0.1" required="required" /><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">별점</label>
+            </div>
+            <div class="group">
+                <input id="price" class="create_input" type="text" required="required" /><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">가격</label>
+            </div>
+            <div class="group">
+                <input id="hour" class="create_input" type="text" required="required" /><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">영업시간</label>
+            </div>
+            <div class="group">
+                <input id="holiday" class="create_input" type="text" required="required" /><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">휴일</label>
+            </div>
+            <div class="file_class">
+                <input id="images" type="file" class="file_input" onchange="setThumbnail(event);" multiple /><span
+                    class="highlight"></span><span class="bar_input"></span>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div id="image_container" class="image_container">
+        </div>
+    </div>
+    <div class="btn-box">
+        <button class="btn btn-submit" type="button" onclick="CreatePlace()">submit</button>
+        <button class="btn btn-cancel" type="button" onclick="go_placeView()">cancel</button>
+    </div>
+
+
+    <!-- creaet input 끝 -->
+
+    <script src="static/js/base_api.js"></script>
+    <script src="static/js/place_api.js"></script>
+    <script src="static/js/resource.js"></script>
+</body>
+
+</html>

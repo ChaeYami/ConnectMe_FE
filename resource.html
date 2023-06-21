@@ -97,34 +97,51 @@
     <!-- category 끝 -->
     <!-- create input 시작 -->
     <div class="wrapper">
-        <h1 class="create_h1">Counsel Create</h1>
-        <h5 class="create_h5">고민이 있다면 이곳에 작성해주세요.</h5>
+        <h1 class="create_h1">Place Create</h1>
+        <h5 class="create_h5">추천할 맛집이 있다면 이곳에 작성해주세요.</h5>
         <form class="create_form">
             <div class="group">
                 <input class="create_input" type="text" required="required" /><span class="highlight"></span><span
                     class="bar"></span>
-                <label class="create_label">Name</label>
+                <label class="create_label">제목</label>
+            </div>
+            <div class="group">
+                <textarea class="create_input" type="textarea" rows="10" required="required"></textarea><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">내용</label>
             </div>
             <div class="group">
                 <input class="create_input" type="text" required="required" /><span class="highlight"></span><span
                     class="bar"></span>
-                <label class="create_label">Email</label>
+                <label class="create_label">주소</label>
+            </div>
+            <div class="group">
+                <input class="create_input" type="number" step="0.1" required="required" /><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">별점</label>
+            </div>
+            <div class="group">
+                <input class="create_input" type="text" required="required" /><span class="highlight"></span><span
+                    class="bar"></span>
+                <label class="create_label">가격</label>
+            </div>
+            <div class="group">
+                <input class="create_input" type="text" required="required" /><span class="highlight"></span><span
+                    class="bar"></span>
+                <label class="create_label">영업시간</label>
+            </div>
+            <div class="group">
+                <input class="create_input" type="text" required="required" /><span class="highlight"></span><span
+                    class="bar"></span>
+                <label class="create_label">휴일</label>
             </div>
             <div class="group">
                 <input class="create_input" type="password" required="required" /><span class="highlight"></span><span
                     class="bar"></span>
                 <label class="create_label">Password</label>
             </div>
-            <div class="group">
-                <input class="create_input" type="number" step="0.1" required="required" /><span
-                    class="highlight"></span><span class="bar"></span>
-                <label class="create_label">Number</label>
-            </div>
-            <div class="group">
-                <textarea class="create_input" type="textarea" rows="10" required="required"></textarea><span
-                    class="highlight"></span><span class="bar"></span>
-                <label class="create_label">Message</label>
-            </div>
+
+
             <div class="file_class">
                 <input type="file" class="file_input" onchange="setThumbnail(event);" multiple /><span
                     class="highlight"></span><span class="bar_input"></span>

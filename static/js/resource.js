@@ -21,16 +21,28 @@ $(document).ready(function () {
 
 //이미지 미리보기
 function setThumbnail(event) {
-    document.querySelector("#image_container").innerHTML = ``
+    var container = document.querySelector("#image_container");
+    container.innerHTML = '';
 
-    for (var image of event.target.files) {
+    var images = event.target.files;
+
+    for (var i = 0; i < images.length; i++) {
         var reader = new FileReader();
+        var image = images[i];
 
-        reader.onload = function (event) {
-            var img = document.createElement("img");
-            img.setAttribute("src", event.target.result);
-            document.querySelector("#image_container").appendChild(img);
-        };
+        reader.onload = (function (file) {
+            return function (event) {
+                var img = document.createElement("img");
+                img.setAttribute("src", event.target.result);
+                img.setAttribute("class", "img_preview");
+
+                var imgContainer = document.createElement("div");
+                imgContainer.setAttribute("class", "img_container");
+                imgContainer.appendChild(img);
+
+                container.appendChild(imgContainer);
+            };
+        })(image);
 
         reader.readAsDataURL(image);
     }
