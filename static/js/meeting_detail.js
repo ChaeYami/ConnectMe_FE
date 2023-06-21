@@ -16,17 +16,20 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     updated_at = data['updated_at']
     content = data['content']
     let temp_html =
-                        `<h2>${title}</h2>
+        `
+            <h2>${title}</h2>
                         <p>생성일 ${created_at}</p>
                         <p>수정일 ${updated_at}</p>
                         <p>작성자 ${user}</p>
                         <div id=image_box class=image_box_class>
                         </div>
-                        <p>${content}</p>`
+                        <p class=meeting_detail_content>${content}</p>
+                        `
     $('#meeting_detail_card').append(temp_html)
     data.meeting_image.forEach((each_image => {
         image = each_image['image']
-        temp_html = `<img src="${BACKEND_BASE_URL}${image}" alt="">`
+        temp_html = `
+        <img class=detail_image src="${BACKEND_BASE_URL}${image}" alt="">`
         $('#image_box').append(temp_html)
     }))
 })
@@ -35,8 +38,8 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
 function meetingUpdateMove() {
     fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(data => {
         let payloadObj = JSON.parse(payload)
-        let account = payloadObj.account
-        if (account == data.user) { location.replace(`${FRONTEND_BASE_URL}/meeting_update.html?id=` + meeting_id) }
+        let nickname = payloadObj.nickname
+        if (nickname == data.user) { location.replace(`${FRONTEND_BASE_URL}/meeting_update.html?id=` + meeting_id) }
         else { alert("권한이 없습니다.") }
     })
 }
@@ -52,16 +55,16 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         content = each_comment['content']
         updated_at = each_comment['updated_at']
         user = each_comment['user']
-        if(content == '삭제된 댓글 입니다.'){
+        if (content == '삭제된 댓글 입니다.') {
             let temp_html = `
             <p id="now_comment${id}" style="display:block;">${content}</p>
             <div id="reply_card">
             `
             $('#comment_card').append(temp_html)
         }
-        else{
-        let temp_html =
-            `
+        else {
+            let temp_html =
+                `
                     <p id="now_comment${id}" style="display:block;">${content}</p>
                     <p id="p_comment_update_input${id}" style="display:none;"/><input id="comment_update_input${id}" type="text"/> <button  onclick="commentUpdateConfrim(${id})">완료</button></p>
                     <a>${user}</a>
@@ -72,8 +75,8 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
                     <button onclick="commentDelete(${id})">삭제하기</button>
                     <div id="reply_card">
                     `
-                    
-        $('#comment_card').append(temp_html)
+
+            $('#comment_card').append(temp_html)
         }
         $(`#comment_update_input${id}`).val(content)
         each_comment.reply.forEach((each_reply => {
@@ -171,9 +174,9 @@ async function commentDelete(comment_id) {
                 Authorization: `Bearer ${token}`,
             },
         })
-        if (response.status == 204) {alert("삭제 완료"), window.location.reload()}
+        if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
         else (alert("권한이 없습니다."))
-    } else { alert("로그인 해주세요")}
+    } else { alert("로그인 해주세요") }
 }
 // ================================ 모임 게시글 상세보기 댓글 삭제 끝 ================================
 
