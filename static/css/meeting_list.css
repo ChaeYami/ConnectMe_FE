@@ -1,0 +1,41 @@
+        .meeting_card_class {
+            width: 70vw;
+            max-width: 900px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .meeting_list_image {
+            width: 270px;
+            height: 300px;
+
+            object-fit: cover;
+        }
+
+        .meeting_img_list {
+            width: 30%;
+            margin-bottom: 10px;
+        }
+
+        .meeting_card {
+            margin-top: 10px;
+        }
+        .meeting_list_content {
+            width: 270px;
+            height: 300px;
+            white-space: pre-line;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .option_box {
+           margin-top: 70px;
+           margin-left: 10px;
+        }
+        .meeting_create_btn{
+            
+            margin-left: 90%;
+        }

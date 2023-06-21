@@ -12,13 +12,40 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
+    <style>
+        .image_box_class {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail_image {
+            width: 290px;
+            margin-left: 10px;
+        }
+
+        .meeting_detail_content {
+            white-space: pre-line;
+        }
+
+        .meeting_detail_card_class {
+            width: 800px;
+            margin: 70px auto 10px auto;
+        }
+
+        .meeting_detail_warp {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
 
     <title>Connect ME</title>
 </head>
 
 <body>
 
-   
+
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
@@ -47,30 +74,28 @@
     <!--위, 아래 네비바 끝-->
 
 
-    
+
 
     <!-- 메인 -->
-    <div class="main">
-
-        <div class="counsel-title" id="title"></div>
-        <div class="counsel-author" id="author"></div>
-        <div class="counsel-content" id="content"></div>
-        <div class="counsel-likes_count" id="likes_count"></div>
-        <div class="like-button" id="like-button">
+    <div class="meeting_detail_warp">
+        <div id="meeting_detail_card" class="meeting_detail_card_class">
         </div>
-
-        <div class="buttons" id="buttons"></div>
+        <div class="buttons_class" id="buttons">
+            <button onclick="meetingUpdateMove()">수정하기</button>
+            <button onclick="meetingDelete()">삭제하기</button>
+        </div>
         <hr>
         <h4>댓글</h4>
         <div>
             <p><input id="inputComment" type="text" placeholder="댓글 입력하기"></p>
-            <button onclick="counselCommentCreate()">작성</button>
+            <button onclick="meetingCommentCreate()">작성</button>
         </div>
         <hr>
         <div id="comment_card">
         </div>
         <div id="reply_card">
         </div>
+    </div>
 
 
 
@@ -79,6 +104,6 @@
 
 <!-- js -->
 <script src="/static/js/base_api.js"></script>
-<script src="/static/js/counsel_detail.js"></script>
+<script src="/static/js/meeting_detail.js"></script>
 
 </html>
