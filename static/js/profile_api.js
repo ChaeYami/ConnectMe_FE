@@ -82,3 +82,8 @@ function go_requestList(me){
 function go_friends(){
     location.href = 'friends_list.html'
 }
+
+function go_album(){
+    location.href = `profile_album.html?user_id=${user_id}`
+
+}
