@@ -52,19 +52,21 @@ input:not(:placeholder-shown) {
     outline: none;
 }
 
-#phone-section{
+#phone-section {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: space-between;
 }
-#phone-section button{
+
+#phone-section button {
     background-color: #c9dbcf;
     border: none;
     border-radius: 5px;
     width: 120px;
     cursor: pointer;
 }
+
 .button-signup {
     background-color: #c9dbcf;
     border: none;
@@ -76,19 +78,19 @@ input:not(:placeholder-shown) {
     cursor: pointer;
     margin-top: 10px;
     margin-bottom: 10px;
-    
+
 }
 
 
 .alert-danger {
     color: #ff4a4a;
-    background-color:white ;
+    background-color: white;
     display: none;
     margin: 10px auto;
 }
 
 
-.sns-login{
+.sns-login {
     margin-top: 50px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -96,24 +98,26 @@ input:not(:placeholder-shown) {
     justify-items: center;
 }
 
-  .button-naver img{
+.button-naver img {
     height: 45px;
-  }
+}
 
-  .button-google img{
+.button-google img {
     height: 45px;
 
-  }
+}
 
- 
+
 #auth-num-box {
     justify-content: flex-end;
     align-items: center;
 
 }
-#auth-num-box button{
+
+#auth-num-box button {
     background-color: #c9dbcf;
     border: none;
     border-radius: 5px;
     width: 120px;
     cursor: pointer;
+}
