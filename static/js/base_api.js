@@ -16,7 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
         loginLogout.innerHTML = '<a onclick="logoutButton()">로그아웃</a>';
     } else {
         bot_nav.style.display = 'none'; // bot-nav 숨김
-        loginLogout.innerHTML = '<a onclick="go_login()">로그인</a>';
+        loginLogout.innerHTML = `
+            <a onclick="go_login()">로그인</a>
+            <a onclick="go_signup()">회원가입</a>
+        `;
     }
 })
 

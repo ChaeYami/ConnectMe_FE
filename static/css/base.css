@@ -32,47 +32,65 @@ h2 {
     position: fixed;
     top: 0;
     z-index: 2;
-    display: grid;
     background-color: #BDEFCB;
-    height: 48px;
+    height: 60px;
+
+}
+
+.top-nav .items {
+    max-width: 900px;
+    height: 60px;
+    display: grid;
     grid-template-columns: repeat(6, 1fr);
-    align-content: center;
     justify-items: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.top-nav .login-logout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
 }
 
 .bot-nav {
-    width: 70vw;
-    max-width: 900px;
-    height: 48px;
+    padding: 15px;
+    width: auto;
     position: fixed;
-    bottom: 0;
+    bottom: 50px;
+    left: 50px;
     z-index: 2;
     background-color: #D3EAFB;
-    height: 48px;
-    grid-template-columns: repeat(4, 1fr);
-    align-content: center;
-    justify-items: center;
+    height: auto;
+    border-radius: 10px;
 }
 
-.side-nav {
-    width: 75vw;
-    max-width: 1000px;
-    height: 100vh;
-    z-index: -1;
+.bot-nav a {
+    padding: 5px;
+}
+
+.bot-nav-content {
+    display: none;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+.bot-nav-content a {
+    display: block;
+}
+
+.bot-nav:hover .bot-nav-content {
     display: grid;
-    position: fixed;
-    grid-template-columns: 900px 1fr;
-    align-content: center;
-    justify-items: center;
+    grid-template-rows: repeat(4, 1fr);
 
 }
-
-.side-nav-img {
-    display: flex;
-    flex-direction: column;
+.bot-nav-content a:hover{
+    background-color: #7d9fc9;
+    color:white;
+    border-radius: 5px;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
     body {
         width: 100%;
     }
