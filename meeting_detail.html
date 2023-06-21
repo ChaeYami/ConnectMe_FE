@@ -14,8 +14,29 @@
 
     <style>
         .image_box_class {
-            background-color: green;
-            
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail_image {
+            width: 290px;
+            margin-left: 10px;
+        }
+
+        .meeting_detail_content {
+            white-space: pre-line;
+        }
+
+        .meeting_detail_card_class {
+            width: 800px;
+            margin: 70px auto 10px auto;
+        }
+
+        .meeting_detail_warp {
+            width: 800px;
+            margin: auto;
         }
     </style>
 
@@ -24,7 +45,7 @@
 
 <body>
 
-   
+
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
@@ -53,12 +74,16 @@
     <!--위, 아래 네비바 끝-->
 
 
-    
+
 
     <!-- 메인 -->
-        <div id="meeting_detail_card">
+    <div class="meeting_detail_warp">
+        <div id="meeting_detail_card" class="meeting_detail_card_class">
         </div>
-        <div class="buttons" id="buttons"></div>
+        <div class="buttons_class" id="buttons">
+            <button onclick="meetingUpdateMove()">수정하기</button>
+            <button onclick="meetingDelete()">삭제하기</button>
+        </div>
         <hr>
         <h4>댓글</h4>
         <div>
@@ -70,6 +95,7 @@
         </div>
         <div id="reply_card">
         </div>
+    </div>
 
 
 

@@ -19,11 +19,19 @@
 
     <title>모임 글 작성하기</title>
 
-
+    <style>
+        .meeting_create_warp{
+            width: 800px;
+            margin: 70px auto 10px auto;
+        }
+        .image_box {
+           background-color: green;
+        }
+    </style>
 </head>
 
 <body>
-    
+
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
@@ -52,16 +60,18 @@
     <!--위, 아래 네비바 끝-->
 
 
-    
+
     <!-- 모임 글 작성 시작 -->
-    <h1>모임 글 작성하기</h1>
-    <p>제목 : <input id="meeting_title" name="title" type="text"></p>
-    <p>내용 : <textarea id="meeting_content" name="content" cols="30" rows="10"></textarea>
-    <p>이미지 : <input id="meeting_image" name="image" type="file" multiple onchange="setThumbnail(event)" ></p>
-    <div id="image_box">
-        <img src="" alt="">
+    <div class="meeting_create_warp">
+        <h1>모임 글 작성하기</h1>
+        <p>제목 : <input id="meeting_title" name="title" type="text"></p>
+        <p>내용 : <textarea id="meeting_content" name="content" cols="30" rows="10"></textarea>
+        <p>이미지 : <input id="meeting_image" name="image" type="file" multiple onchange="setThumbnail(event)"></p>
+        <div id="image_box">
+            <img src="" alt="">
+        </div>
+        <button id="create_btn" onclick="createMeeting()">작성완료</button>
     </div>
-    <button id="create_btn" onclick="createMeeting()">작성완료</button>
     <!-- 모임 글 작성 끝 -->
 
 </body>
