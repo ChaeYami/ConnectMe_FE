@@ -34,6 +34,19 @@
         </div>
     </div>
 
+    <div class="side-nav">
+        <div></div>
+        <div class="side-nav-img">
+            <a>
+                <img src="static/image/up-arrow.png" onclick="javascript:window.scrollTo(0,0)" style="width: 30px;">
+            </a>
+            <a>
+                <img src="static/image/down-arrow.png"
+                    onclick="javascript:window.scrollTo(0,document.body.scrollHeight)" style="width: 30px;">
+            </a>
+        </div>
+    </div>
+
     <div class="bot-nav">
 
         <a href="">내글</a>
@@ -65,19 +78,80 @@
         </div>
     </div>
     <!--공유하기 모달 끝-->
-    <div id="place_create">
-        <a>
-            <img src="static/image/up-arrow.png" onclick="javascript:window.scrollTo(0,0)" style="width: 30px;">
-        </a>
-        <a>
-            <img src="static/image/down-arrow.png" onclick="javascript:window.scrollTo(0,document.body.scrollHeight)"
-                style="width: 30px;">
-        </a>
+    <main>
+        <div class="place-category">
+            <div id="place_create"></div>
+            <div class="place-search">
+                <div>
+                    <!-- select box 시작 -->
+                    <div class="select-box">
+                        <div class="select-box__current" tabindex="1">
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="0" value="1" name="Ben"
+                                    checked="checked" />
+                                <p class="select-box__input-text">Select box</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="1" value="2" name="Ben" />
+                                <p class="select-box__input-text">인기순</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="2" value="3" name="Ben" />
+                                <p class="select-box__input-text">좋아요순</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="3" value="4" name="Ben" />
+                                <p class="select-box__input-text">Honey</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="4" value="5" name="Ben" />
+                                <p class="select-box__input-text">Toast</p>
+                            </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg"
+                                alt="Arrow Icon" aria-hidden="true" />
+                        </div>
+                        <ul class="select-box__list">
+                            <li>
+                                <label class="select-box__option" for="1" aria-hidden="aria-hidden">인기순</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="2" aria-hidden="aria-hidden">좋아요순</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="3" aria-hidden="aria-hidden">Honey</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="4" aria-hidden="aria-hidden">Toast</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- select box 끝 -->
 
-    </div>
+                </div>
+                <div>
+                    <!-- search 시작 -->
+                    <div class="search-div">
+                        <form class="search-form">
+                            <input type="search" value="" placeholder="Search" class="search-input">
+                            <button type="submit" class="search-button">
+                                <svg class="submit-button">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+                                </svg>
+                            </button>
+                        </form>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
+                            <symbol id="search" viewBox="0 0 32 32">
+                                <path
+                                    d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z" />
+                            </symbol>
+                        </svg>
+                    </div>
+                    <!-- search 끝 -->
+                </div>
+            </div>
+        </div>
 
-    <div id="place"></div>
-
+        <div id="place"></div>
+    </main>
 
     <script src="static/js/base_api.js"></script>
     <script src="static/js/place_api.js"></script>
