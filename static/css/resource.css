@@ -440,7 +440,7 @@
 }
 
 .create_form {
-    width: 320px;
+    width: 500px;
     margin: 45px auto;
 }
 
@@ -465,6 +465,7 @@
 
 .group>textarea {
     resize: none;
+    width: 500px;
 }
 
 .create_input {
@@ -473,7 +474,7 @@
     font-size: 18px;
     padding: 10px 10px 10px 5px;
     display: block;
-    width: 320px;
+    width: 500px;
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #c6c6c6;

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/personal_book.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--위, 아래 네비바 시작-->
+    <div class="top-nav">
+        <div class="items">
+            <a onclick="go_home()">홈</a>
+            <a onclick="go_recommend()">친구찾기</a>
+            <a onclick="go_placeView()">핫플레이스</a>
+            <a onclick="go_counsel()">고민상담</a>
+            <a onclick="go_meetingList()">만남의 광장</a>
+
+            <div class="login-logout">
+                <a onclick="go_login()">로그인</a>
+                <a onclick="go_signup()">회원가입</a>
+            </div>
+        </div>
+    </div>
+    <div class="bot-nav">
+        <div class="bot-nav-content">
+            <a href="">내글</a>
+            <a onclick="go_placeBook()">북마크</a>
+            <a onclick="go_myProfile()">내프로필</a>
+            <a href="">알림</a>
+        </div>
+        <span class="dropbtn">프로필 메뉴</span>
+    </div>
+    <!--위, 아래 네비바 끝-->
+    <main>
+        <div class="hotplace-book-container">
+            <div>
+                핫 플레이스
+            </div>
+            <div>
+                <hr>
+            </div>
+            <div class="hotplace-book-cards" id="hotplace-book-cards">
+            </div>
+        </div>
+        </div>
+        <hr>
+    </main>
+    <script src="static/js/base_api.js"></script>
+    <script src="static/js/personal_book.js"></script>
+</body>
+
+</html>

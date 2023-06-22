@@ -1,0 +1,71 @@
+/* 북마크 핫 플레이스 시작 */
+
+main {
+    width: 70vw;
+    margin: 75px auto 0px auto;
+    max-width: 1200px;
+}
+
+.hotplace-book-container {
+    display: grid;
+    grid-template-rows: 40px 10px 1fr;
+    margin-top: 80px;
+    height: 430px;
+}
+
+.hotplace-book-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+
+.hotplace-card {
+    display: grid;
+    grid-template-rows: 230px 1fr;
+}
+
+.hotplace-image {
+    position: relative;
+    width: 250px;
+    margin: 10px 5px;
+}
+
+.hotplace-image>img:first-child {
+    width: 250px;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hotplace-image>a>img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    z-index: 1;
+}
+
+.hotplace-content {
+    display: grid;
+    grid-template-rows: 40px 25px 1fr 1fr;
+}
+
+.hotplace-title {
+    display: flex;
+    align-items: center;
+}
+
+.hotplace-score {
+    display: flex;
+    align-items: center;
+    color: rgb(155, 155, 155);
+    display: flex;
+    gap: 15px;
+}
+
+.hotplace-content>:nth-child(3) {
+    display: flex;
+    align-items: center;
+}
+
+/* 북마크 핫 플레이스 끝 */
