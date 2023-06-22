@@ -1,0 +1,22 @@
+name: React build
+on: 
+  push: # main Branch에서 push 이벤트가 일어났을 때만 실행
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code. # 레포지토리 체크아웃
+        uses: actions/checkout@main
+
+      - name: Deploy # S3에 배포하기
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 cp \
+            --recursive \
+            --region ap-northeast-2 \
+            build s3://connectme.co.kr # 본인의 bucket 이름으로 변경, build가 된 경로로 설정
