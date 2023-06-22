@@ -1,4 +1,4 @@
-.main{
+.main {
     width: 60vw;
     margin: 100px auto;
     max-width: 800px;
@@ -14,14 +14,102 @@
     font-size: smaller;
 }
 
-#list-section .card{
+#list-section .card {
     padding: 15px;
 }
 
-.image_box{
+.image_box {
     width: 70px;
 }
 
-#list-section img{
+#list-section img {
     width: 70px;
 }
+
+/********* place-contariner 시작 **********/
+main {
+    width: 70vw;
+    margin: 50px auto;
+    max-width: 900px;
+}
+
+
+.place-container {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+}
+
+.place-container-text {
+    margin-left: 30px;
+}
+
+.place-container-img {
+    width: 230px;
+    height: 230px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.place-container-main {
+    display: grid;
+    grid-template-columns: 550px 1fr;
+}
+
+.place-container-title {
+    display: flex;
+    align-items: center;
+}
+
+.place-container-title0 {
+    margin-right: 10px;
+}
+
+.place-container-title1 {
+    margin-right: 20px;
+}
+
+.place-container-title2 {
+    margin-right: 10px;
+}
+
+.place-container-title-a {
+    text-decoration: none;
+    color: black;
+}
+
+.place-container-score {
+    color: rgb(155, 155, 155);
+}
+
+.place-container-book {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-right: 10px;
+}
+
+.place-container-address {
+    color: rgb(155, 155, 155);
+    font-weight: 600;
+}
+
+.place-container-content {
+    width: 580px;
+    line-height: 1.2em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    /* 원하는 줄 수로 변경 가능 */
+    -webkit-box-orient: vertical;
+    margin: 20px 0px 10px 60px;
+    text-indent: 1em;
+    white-space: normal;
+    text-overflow: ellipsis;
+}
+
+.place-container-hr {
+    grid-column: 1/-1;
+    margin: 20px 0px;
+}
+
+/********* place-contariner 끝 **********/

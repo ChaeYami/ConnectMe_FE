@@ -1,20 +1,4 @@
-<<<<<<< Updated upstream
-/* main */
-.main{
-    width: 60vw;
-    margin: 100px auto;
-    max-width: 800px;
-    @media screen and (max-width: 800px) {
-        width: 90%;
-
-    }
-}
-
-
-/* select box 시작 */
-=======
 /********* select box 시작 **********/
->>>>>>> Stashed changes
 .select-box {
     position: relative;
     display: block;
@@ -499,6 +483,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 135%;
     box-sizing: border-box;
 }
 
@@ -659,12 +644,23 @@
     color: #8b8b8b;
 }
 
+.btn.btn-add {
+    width: 250px;
+    background: #ffffff;
+    color: #2b8bda;
+    font-weight: 600;
+}
+
+.btn.btn-add:hover {
+    background: #b9b4b4;
+}
+
+
 .btn-box {
     text-align: center;
     margin: 50px 0;
 }
 
-<<<<<<< Updated upstream
 /* create input 끝 */
 
 
@@ -680,10 +676,11 @@
     cursor: pointer;
     margin-top: 10px;
 }
+
 /* 파란버튼 (글자흰색) */
-.button-blue{
+.button-blue {
     margin: 5px;
-    background-color:  #8eadd3;
+    background-color: #8eadd3;
     color: white;
     font-weight: bold;
     border: none;
@@ -692,7 +689,7 @@
     padding: 5px 10px;
     cursor: pointer;
 }
-=======
+
 
 /********* create input 끝 **********/
 /********* 이미지 미리보기 시작 **********/
@@ -722,4 +719,3 @@
 }
 
 /********* 이미지 미리보기 끝 **********/
->>>>>>> Stashed changes

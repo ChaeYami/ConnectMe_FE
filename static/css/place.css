@@ -124,8 +124,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
+    width: 135%;
     margin: 30px 0;
+    box-sizing: border-box;
 }
 
 .file_input[type="file"] {
@@ -285,6 +286,17 @@
     color: #8b8b8b;
 }
 
+.btn.btn-add {
+    width: 250px;
+    background: #ffffff;
+    color: #2b8bda;
+    font-weight: 600;
+}
+
+.btn.btn-add:hover {
+    background: #b9b4b4;
+}
+
 .btn-box {
     text-align: center;
     margin: 50px 0;
@@ -295,23 +307,24 @@
 .row {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 1rem;
 }
 
 .image_container {
-    width: 100%;
-    max-width: 100%;
+    width: 800px;
+    max-width: 70vw;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 1rem;
 }
 
 .img_container {
-    width: 100%;
+    width: 250px;
 }
 
 .img_preview {
-    width: 100%;
+    width: 250px;
     height: 250px;
     object-fit: cover;
     object-position: center;
@@ -589,7 +602,7 @@ main {
 }
 
 .place-container-text {
-    margin-left: 20px;
+    margin-left: 30px;
 }
 
 .place-container-img {
@@ -601,7 +614,7 @@ main {
 
 .place-container-main {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 550px 1fr;
 }
 
 .place-container-title {
@@ -609,13 +622,21 @@ main {
     align-items: center;
 }
 
+.place-container-title0 {
+    margin-right: 10px;
+}
+
+.place-container-title1 {
+    margin-right: 20px;
+}
+
+.place-container-title2 {
+    margin-right: 10px;
+}
+
 .place-container-title-a {
     text-decoration: none;
     color: black;
-}
-
-.place-container-title>div {
-    margin-right: 10px;
 }
 
 .place-container-score {
@@ -635,9 +656,17 @@ main {
 }
 
 .place-container-content {
-    display: flex;
+    width: 580px;
+    line-height: 1.2em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    /* 원하는 줄 수로 변경 가능 */
+    -webkit-box-orient: vertical;
+    margin: 20px 0px 10px 60px;
     text-indent: 1em;
-    margin: 10px 0px 10px 60px;
+    white-space: normal;
+    text-overflow: ellipsis;
 }
 
 .place-container-hr {
@@ -646,3 +675,197 @@ main {
 }
 
 /********* place-contariner 끝 **********/
+/********* 이미지 슬라이더 시작 **********/
+.place-detail-imagebox {
+    width: 1040px;
+    margin: 80px auto 0px auto;
+    /**중앙 정렬한다.**/
+}
+
+/**사진**/
+.slide {
+    /**이만큼의 크기로 보이겠다는 의미**/
+    width: 1040px;
+    height: 250px;
+    /**사진보다 크면 다음 사진까지 표시되어 img와 slide크기를 맞춘다.**/
+    overflow: hidden;
+    /**이미지는 내장이라 overflow:hidden을 사용해 넘친 사진들을 안보이게 한다.**/
+}
+
+.images {
+    display: flex;
+    /**좌우 슬라이드를 위해 flex로 사진을 가로정렬한다.**/
+    height: 250px;
+    /**slide와 images의 높이가 다르면 부자연스럽게 표시돼 slide의 높이에 맞게 높이를 바꾼다.**/
+    transition: transform 0.5s;
+    /**어떤 속성에 대해 애니메이션 효과를 주는 속성이다. 
+  tranform속성에 0.5초의 듀레이션(동작의 시작해서 끝나는 시간)을 준다.**/
+}
+
+.images>img {
+    width: 250px;
+    height: 250px;
+    margin: 0px 5px;
+    object-fit: cover;
+    object-position: center;
+
+    /**slide 크기에 맞춘다.**/
+}
+
+/**버튼위치**/
+.back {
+    position: relative;
+    bottom: 170px;
+    right: 35px;
+}
+
+.next {
+    position: relative;
+    bottom: 170px;
+    left: 1010px;
+}
+
+/**버튼디자인**/
+.next,
+.back {
+    width: 30px;
+    height: 30px;
+    color: white;
+    background: #646464;
+}
+
+.next:active,
+.back:active {
+    /**버튼을 클릭하는 동안 색을 바꾼다.**/
+    background: #3e3e3e;
+}
+
+.next:disabled,
+.back:disabled {
+    display: none;
+}
+
+/********* 이미지 슬라이더 끝 **********/
+/********* place-detail 시작 **********/
+
+.place-detail-container {
+    margin-top: -50px;
+    width: 100%;
+    height: 100vw;
+}
+
+.place-detail-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 50px;
+}
+
+.place-detail-top {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+}
+
+.place-detail-title {
+    margin-right: 15px;
+}
+
+.place-detail-score {
+    color: rgb(155, 155, 155);
+}
+
+.place-detail-edit {
+    width: 20px;
+    height: auto;
+    object-fit: contain;
+    margin: 30px 5px 0px 15px;
+}
+
+.place-detail-delete {
+    width: 20px;
+    height: auto;
+    object-fit: contain;
+    margin-top: 30px;
+}
+
+.place-detail-category {
+    display: flex;
+    height: 50px;
+    margin-bottom: 10px;
+    align-items: end;
+    color: rgb(155, 155, 155);
+    font-weight: 500;
+}
+
+.place-detail-feed {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+}
+
+.place-detail-book {
+    width: 30px;
+    height: auto;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.place-detail-like {
+    width: 30px;
+    height: auto;
+    object-fit: contain;
+    margin-right: 15px;
+}
+
+.place-detail-share {
+    width: 30px;
+    height: auto;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.place-detail-content {
+    margin: 30px 0px;
+    height: auto;
+}
+
+.place-detail-content-grid {
+    display: grid;
+    grid-template-columns: 120px 400px 1fr;
+}
+
+.place-detail-font-gray {
+    color: #aeaeae;
+    font-weight: 510;
+    margin-bottom: 10px;
+}
+
+.place-detail-font-content {
+    margin-top: 20px;
+    text-indent: 0.5em;
+    white-space: pre-line;
+}
+
+.place-detail-map {
+    margin: 0px 0px 0px 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-blue {
+    margin: 5px;
+    background-color: #8eadd3;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.button-blue:hover {
+    background: #b9b4b4;
+}
+
+/********* place-detail 끝 **********/
