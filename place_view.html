@@ -20,8 +20,6 @@
 
 <body>
 
-
-
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
@@ -37,20 +35,6 @@
             </div>
         </div>
     </div>
-
-    <div class="side-nav">
-        <div></div>
-        <div class="side-nav-img">
-            <a>
-                <img src="static/image/up-arrow.png" onclick="javascript:window.scrollTo(0,0)" style="width: 30px;">
-            </a>
-            <a>
-                <img src="static/image/down-arrow.png"
-                    onclick="javascript:window.scrollTo(0,document.body.scrollHeight)" style="width: 30px;">
-            </a>
-        </div>
-    </div>
-
     <div class="bot-nav">
         <div class="bot-nav-content">
             <a href="">내글</a>
@@ -63,7 +47,7 @@
     <!--위, 아래 네비바 끝-->
 
 
-    
+
 
     <!--공유하기 모달 시작-->
     <div class="popup-wrap" id="popup">
@@ -71,27 +55,42 @@
             <div class="popup-body">
                 <div>
                     <div>
-                        <img src="static/image/SNS_BAND.png" onclick="SendSNS('naver')" style="width: 80px;">
-                        <img src="static/image/SNS_FACEBOOK.png" onclick="SendSNS('facebook')" style="width: 80px;">
-                        <img id="kakao_sns" src="static/image/SNS_KAKAO_TALK.png" onclick="SendSNS('kakao')"
+                        <img src="static/image/SNS_BAND.png" onclick="sendSNS('naver')" style="width: 80px;">
+                        <img src="static/image/SNS_FACEBOOK.png" onclick="sendSNS('facebook')" style="width: 80px;">
+                        <img id="kakao_sns" src="static/image/SNS_KAKAO_TALK.png" onclick="sendSNS('kakao')"
                             style="width: 80px;">
-                        <img src="static/image/SNS_TWITTER.png" onclick="SendSNS('twitter')" style="width: 80px;">
+                        <img src="static/image/SNS_TWITTER.png" onclick="sendSNS('twitter')" style="width: 80px;">
                     </div>
                     <div>
                         <input id="link_id" type="text" readonly />
-                        <button onclick="CopyButton()">복사하기</button>
+                        <button onclick="copyButton()">복사하기</button>
                     </div>
                 </div>
-                <button class="close_popup_btn" onclick="ClosePopup()"></button>
+                <button class="close_popup_btn" onclick="closePopup()"></button>
             </div>
         </div>
     </div>
     <!--공유하기 모달 끝-->
+    <aside>
+        <div class="side-nav">
+            <div class="side-null-page"></div>
+            <div class="side-nav-img">
+                <a>
+                    <img src="static/image/up-arrow.png" onclick="javascript:window.scrollTo(0,0)" style="width: 30px;">
+                </a>
+                <a>
+                    <img src="static/image/down-arrow.png"
+                        onclick="javascript:window.scrollTo(0,document.body.scrollHeight)" style="width: 30px;">
+                </a>
+            </div>
+        </div>
+    </aside>
+    <div id="place-image-slide"></div>
     <main>
-        <div class="place-category">
+        <div class="place-category" id="place-category">
             <div id="place_create"></div>
             <div class="place-search">
-                <div>
+                <div id="select-box">
                     <!-- select box 시작 -->
                     <div class="select-box">
                         <div class="select-box__current" tabindex="1">
@@ -136,7 +135,7 @@
                     <!-- select box 끝 -->
 
                 </div>
-                <div>
+                <div id="search-div">
                     <!-- search 시작 -->
                     <div class="search-div">
                         <form class="search-form">
@@ -164,6 +163,7 @@
 
     <script src="static/js/base_api.js"></script>
     <script src="static/js/place_api.js"></script>
+    <script src="static/js/resource.js"></script>
 </body>
 
 </html>

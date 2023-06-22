@@ -19,7 +19,6 @@ a {
 }
 
 h2 {
-    margin-left: 50px;
 
     @media screen and (max-width: 600px) {
         margin: 10px;
@@ -34,7 +33,6 @@ h2 {
     z-index: 2;
     background-color: #BDEFCB;
     height: 60px;
-
 }
 
 .top-nav .items {
@@ -81,9 +79,21 @@ h2 {
 
 }
 
+aside {
+    height: 100vh;
+    position: fixed;
+    left: 80%;
+    top: 50%;
+}
+
+.side-nav-img {
+    display: flex;
+    z-index: 2;
+    flex-direction: column;
+}
+
 .bot-nav:hover .bot-nav-content {
     display: grid;
-
 }
 
 .bot-nav-content a:hover {
