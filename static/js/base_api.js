@@ -60,9 +60,19 @@ function go_recommend() {
 
 }
 
-// 핫플레이스 페이지로 가기
+// 핫플레이스 전체 페이지로 가기
 function go_placeView() {
     location.href = "place_view.html"
+}
+
+// 핫플레이스 상세페이지로 가기
+function go_placeDetailView(place_id) {
+    location.href = `place_view.html?id=${place_id}`
+}
+
+// 핫플레이스 북마크
+function go_placeBook() {
+    location.href = `personal_book.html?id=${logined_user_id}`
 }
 
 // 모임 페이지로 가기
