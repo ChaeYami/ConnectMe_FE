@@ -298,6 +298,7 @@ async function placeDetailView(place_id) {
     let comments = response_json['comment']
     let name = response_json['place'].title
     let category = response_json['place'].category
+    let sort = response_json['place'].sort
     let content = response_json['place'].content
     let address = response_json['place'].address
     let image = response_json['place'].image
@@ -308,7 +309,11 @@ async function placeDetailView(place_id) {
     let place = document.querySelector('#place')
     let like = response_json['place'].like
     let bookmark = response_json['place'].bookmark
-    let slide = document.querySelector('#place-image-slide')
+    let slide_container = document.querySelector('#place-image-slide')
+    let slide = document.querySelector('#place-detail-slide-images')
+
+    slide_container.style.display = ""
+
 
     // 이미지 슬라이더 시작
     let images = ``
@@ -316,22 +321,12 @@ async function placeDetailView(place_id) {
     if (image) {
         for (let i = 0; i < image.length; i++) {
             images += `
-            <img id="image" src="${image[i]['url']}">
+            <img src="${image[i]['url']}">
             `
         }
     }
 
-    slide.innerHTML = `
-    <div class="place-detail-imagebox">
-        <div class="slide">
-            <div class="images">
-                ${images}
-            </div>
-        </div>
-        <button class="back">❮</button>
-        <button class="next">❯</button>
-    </div>
-    `
+    slide.innerHTML = `${images}`
     // 이미지 슬라이더 끝
 
     // ================================ 상세보기 댓글 시작 ================================
@@ -357,25 +352,28 @@ async function placeDetailView(place_id) {
         var formattedDateTime = `${formattedDate}, ${formattedTime}`;
         // 시간 form 수정 끝
 
+        // 댓글 추가하기 시작
+        if (JSON.parse(payload)['user_id'] == comments[i]['user']) {
+            comment += `
+            <div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDateTime}
+                <a>
+                    <img src="static/image/comment_edit.png" class="comment_edit_icon" onclick="commentPreUpdate(${place_id}, ${comments[i]['id']})">
+                </a>
+                <a>
+                    <img src="static/image/comment_delete.png" class="comment_delete_icon" onclick="commentDelete(${place_id}, ${comments[i]['id']})">
+                </a>
+            </div>
+            <div style="display:none;" id="edit_comment${comments[i]['id']}"></div>
+            <div id="reply${comments[i]['id']}"><a href="javascript:replyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
+        } else {
+            comment += `
+            <div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDate}</div>
+            <div style="display:none;" id="edit_comment${comments[i]['id']}"></div>
+            <div id="reply${comments[i]['id']}"><a href="javascript:replyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
+        }
+
         // 댓글에 reply가 있을 때
         if (comments[i]['reply'].length > 0) {
-            if (JSON.parse(payload)['user_id'] == comments[i]['user']) {
-                comment +=
-                    `<div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} 
-                ${formattedDateTime}
-                <a>
-                    <img src="static/image/comment_edit.png" style="width:20px" onclick="commentPreUpdate(${place_id}, ${comments[i]['id']})">
-                </a>
-                <a>
-                    <img src="static/image/comment_delete.png" style="width:20px" onclick="commentDelete(${place_id}, ${comments[i]['id']})">
-                </a>
-                <div id="reply${comments[i]['id']}"><a href="javascript:replyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
-            } else {
-                comment +=
-                    `<div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDate}
-                <div id="reply${comments[i]['id']}"><a href="javascript:replyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
-            }
-
             for (let j = 0; j < comments[i]['reply'].length; j++) {
                 // 시간 form 수정 시작
                 let createdAt = comments[i]['reply'][j]['created_at'];
@@ -400,12 +398,13 @@ async function placeDetailView(place_id) {
                         <div id='comment${comments[i]['reply'][j]['id']}' style="margin-left:20px;">
                             ${comments[i]['reply'][j]['user_name']} : ${comments[i]['reply'][j]['content']} ${formattedDateTime}
                             <a>
-                                <img src="static/image/comment_edit.png" style="width:20px" onclick="commentPreUpdate(${place_id}, ${comments[i]['reply'][j]['id']})">
+                                <img src="static/image/comment_edit.png" class="comment_edit_icon" onclick="commentPreUpdate(${place_id}, ${comments[i]['reply'][j]['id']})">
                             </a>
                             <a>
-                                <img src="static/image/comment_delete.png" style="width:20px" onclick="commentDelete(${place_id}, ${comments[i]['reply'][j]['id']})">
+                                <img src="static/image/comment_delete.png" class="comment_delete_icon" onclick="commentDelete(${place_id}, ${comments[i]['reply'][j]['id']})">
                             </a>
                         </div>
+                        <div style="display:none;" id="edit_comment${comments[i]['reply'][j]['id']}"></div>
                         `
                 } else {
                     comment +=
@@ -413,39 +412,12 @@ async function placeDetailView(place_id) {
                         <div id='comment${comments[i]['reply'][j]['id']}' style="margin-left:20px;"> ${formattedDateTime}
                             ${comments[i]['reply'][j]['user_name']} : ${comments[i]['reply'][j]['content']} 
                         </div>
+                        <div style="display:none;" id="edit_comment${comments[i]['reply'][j]['id']}"></div>
                         `
                 }
-
             }
-            comment +=
-                `</div>`
         }
-        // 댓글에 reply가 없을 때
-        else {
-            if (JSON.parse(payload)['user_id'] == comments[i]['user']) {
-                comment +=
-                    `<div id='comment${comments[i]['id']}'>
-                    ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDateTime}
-                    <a>
-                        <img src="static/image/comment_edit.png" style="width:20px" onclick="commentPreUpdate(${place_id}, ${comments[i]['id']})">
-                    </a>
-                    <a>
-                        <img src="static/image/comment_delete.png" style="width:20px" onclick="commentDelete(${place_id}, ${comments[i]['id']})">
-                    </a>
-                    <div id="reply${comments[i]['id']}"><a href="javascript:replyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>
-                </div>
-                `
-            } else {
-                comment +=
-                    `<div id='comment${comments[i]['id']}'>
-                    ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDateTime}
-                    <div id="reply${comments[i]['id']}"><a href="javascript:replyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>
-                </div>
-                `
-            }
-
-        }
-
+        // 댓글 추가하기 끝
     }
 
 
@@ -492,6 +464,17 @@ async function placeDetailView(place_id) {
 
     // ================================ 북마크, 좋아요 및 권한설정 끝 ================================
 
+    let detail_category = ``
+
+    if (sort) {
+        if (sort.includes('카페/주점')) {
+            if (sort.includes('-주점')) {
+                detail_category = '/주점';
+            } else { }
+        } else {
+            detail_category = `/${sort}`;
+        }
+    }
 
     place.innerHTML = `
     <div class="place-detail-container">
@@ -517,7 +500,7 @@ async function placeDetailView(place_id) {
                 </div>
             </div>
             <div class="place-detail-category">
-                <div>${category}/</div>
+                <div>${category}${detail_category}</div>
             </div>
             <hr>
             <div class="place-detail-content">
@@ -525,14 +508,15 @@ async function placeDetailView(place_id) {
                     <div>
                         <div class="place-detail-font-gray">주소</div>
                         <div class="place-detail-font-gray">가격대</div>
+                        <div class="place-detail-font-gray">영업시간</div>
                         <div class="place-detail-font-gray">휴일</div>
                         <div class="place-detail-font-gray" style="margin-top: 20px;">내용</div>
                     </div>
                     <div>
-                        <div>${address}</div>
-                        <div>${price}</div>
-                        <div>${hour}</div>
-                        <div>${holiday}</div>
+                        <div style="margin-bottom:10px">${address}</div>
+                        <div style="margin-bottom:10px">${price}</div>
+                        <div style="margin-bottom:10px">${hour}</div>
+                        <div style="margin-bottom:10px">${holiday}</div>
                         <div class="place-detail-font-content">${content}</div>
                     </div>
                     <div class="place-detail-map" id="map">
@@ -540,7 +524,7 @@ async function placeDetailView(place_id) {
                 </div>
             </div>
             <hr>
-            <div>
+            <div style="margin: 10px 0px 20px 0px;">
                 댓글 : <input id="comments" /> <button type="button" class="button-blue"
                     onclick="commentWrite(${place_id})">등록하기</button>
             </div>
@@ -549,6 +533,7 @@ async function placeDetailView(place_id) {
     
     `
     placeShowMap(name, address)
+    imageSlider()
 
 }
 
@@ -618,17 +603,24 @@ async function placePreUpdateView(place_id) {
     let price = response_json['place'].price
     let hour = response_json['place'].hour
     let holiday = response_json['place'].holiday
+
     let place = document.querySelector('#place')
+    let slide = document.querySelector('#place-image-slide')
+    slide.style.display = "none";
 
     let images = ``
 
     if (image) {
         for (let i = 0; i < image.length; i++) {
             images += `
-            <img id="image${image[i]['id']}" src="${image[i]['url']}">
-            <a>
-                <img src="static/image/comment_delete.png" onclick="imageDelete(${place_id}, ${image[i]['id']})" style="width:20px;">
-            </a>
+            <div class="img_container">
+                <div class="image-wrapper">
+                    <img id="image${image[i]['id']}" class="image_preview" src="${image[i]['url']}"></img>
+                    <a>
+                        <img src="static/image/comment_delete.png" class="image-button" onclick="imageDelete(${place_id}, ${image[i]['id']})">
+                    </a>
+                </div>
+            </div>
             `
         }
     }
@@ -701,9 +693,10 @@ async function placePreUpdateView(place_id) {
     </div>
     <div class="btn-box">
         <button class="btn btn-submit" type="button" onclick="placeUpdate(${place_id})">submit</button>
-        <button class="btn btn-cancel" type="button" onclick="go_placeView()">cancel</button>
+        <button class="btn btn-cancel" type="button" onclick="go_placeDetailView(${place_id})">cancel</button>
     </div>
     `
+
 }
 
 // 장소추천 수정하기
@@ -852,12 +845,16 @@ async function replyPreWrite(place_id, place_comment_id) {
 
     let reply = document.querySelector(`#reply${place_comment_id}`)
 
-    reply.innerHTML = `<input id="reply_write${place_comment_id}"/> <button type="button" onclick="replyWrite(${place_id}, ${place_comment_id})">등록하기</button>`
+    reply.innerHTML = `
+    <input id="reply_write${place_comment_id}"/> 
+    <button type="button" style="margin-top:10px" class="button-blue" onclick="replyWrite(${place_id}, ${place_comment_id})">등록하기</button>
+    `
 }
 
 // 댓글 수정 폼 띄우기
 async function commentPreUpdate(place_id, place_comment_id) {
-    const comment = document.querySelector(`#comment${place_comment_id}`);
+    let comment = document.querySelector(`#comment${place_comment_id}`);
+    let edit = document.querySelector(`#edit_comment${place_comment_id}`);
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/${place_comment_id}/`, {
         headers: {
@@ -868,9 +865,23 @@ async function commentPreUpdate(place_id, place_comment_id) {
 
     const response_json = await response.json();
 
-    comment.innerHTML = `
+    comment.style.display = 'none';
+    edit.style.display = '';
+
+    edit.innerHTML = `
     <input id='comment_update' value="${response_json["content"]}"/>
-    <button type="button" onclick="commentUpdate(${place_id}, ${place_comment_id})">수정하기</button>`
+    <button type="button" class="button-blue" onclick="commentUpdate(${place_id}, ${place_comment_id})">수정하기</button>
+    <button type="button" class="button-white" onclick="commentCancel(${place_id}, ${place_comment_id})">취소하기</button>
+    `
+}
+
+// 댓글 수정하기 취소
+function commentCancel(place_id, place_comment_id) {
+    let comment = document.querySelector(`#comment${place_comment_id}`);
+    let edit = document.querySelector(`#edit_comment${place_comment_id}`);
+
+    comment.style.display = '';
+    edit.style.display = 'none';
 }
 
 // 댓글 수정하기
@@ -900,6 +911,88 @@ async function commentDelete(place_id, place_comment_id) {
         },
         method: "DELETE",
     });
+    alert('댓글이 삭제되었습니다.')
+
     window.location.href = `place_view.html?id=${place_id}`;
 }
 
+// 이미지 슬라이더 시작
+function imageSlider() {
+    let pages = 0;//현재 인덱스 번호
+    let positionValue = 0;//images 위치값
+    const IMAGE_WIDTH = 260;//한번 이동 시 IMAGE_WIDTH만큼 이동한다.
+    //DOM
+    const backBtn = document.querySelector(".back")
+    const nextBtn = document.querySelector(".next")
+    let image_container = document.querySelector('#place-image-slide');
+    let images_tag = image_container.getElementsByTagName('img');
+    let image_count = images_tag.length - 4
+    let detail_images = document.querySelector('#place-detail-slide-images')
+
+    if (image_count < 0) {
+        nextBtn.setAttribute('disabled', 'true')
+    }
+
+    function next() {
+        if (pages < image_count) {
+            backBtn.removeAttribute('disabled')//뒤로 이동해 더이상 disabled가 아니여서 속성을 삭제한다.
+            positionValue -= IMAGE_WIDTH;//IMAGE_WIDTH의 증감을 positionValue에 저장한다.
+            detail_images.style.transform = `translateX(${positionValue}px)`;
+            //x축으로 positionValue만큼의 px을 이동한다.
+            pages += 1; //다음 페이지로 이동해서 pages를 1증가 시킨다.
+        }
+        if (pages === image_count) { //
+            nextBtn.setAttribute('disabled', 'true')//마지막 장일 때 next버튼이 disabled된다.
+        }
+    }
+
+    function back() {
+        if (pages > 0) {
+            nextBtn.removeAttribute('disabled')
+            positionValue += IMAGE_WIDTH;
+            detail_images.style.transform = `translateX(${positionValue}px)`;
+            pages -= 1; //이전 페이지로 이동해서 pages를 1감소 시킨다.
+        }
+        if (pages === 0) {
+            backBtn.setAttribute('disabled', 'true')//마지막 장일 때 back버튼이 disabled된다.
+        }
+    }
+
+    function init() {  //초기 화면 상태
+        backBtn.setAttribute('disabled', 'true'); //속성이 disabled가 된다.
+        backBtn.addEventListener("click", back); //클릭시 다음으로 이동한다.
+        nextBtn.addEventListener("click", next);//클릭시 이전으로 이동한다.
+    }
+
+    init();
+
+}
+
+// 이미지 미리보기
+function setThumbnail(event) {
+    var container = document.querySelector("#image_container");
+    container.innerHTML = '';
+
+    var images = event.target.files;
+
+    for (var i = 0; i < images.length; i++) {
+        var reader = new FileReader();
+        var image = images[i];
+
+        reader.onload = (function (file) {
+            return function (event) {
+                var img = document.createElement("img");
+                img.setAttribute("src", event.target.result);
+                img.setAttribute("class", "img_preview");
+
+                var imgContainer = document.createElement("div");
+                imgContainer.setAttribute("class", "img_container");
+                imgContainer.appendChild(img);
+
+                container.appendChild(imgContainer);
+            };
+        })(image);
+
+        reader.readAsDataURL(image);
+    }
+}

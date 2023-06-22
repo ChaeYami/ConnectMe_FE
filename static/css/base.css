@@ -80,9 +80,10 @@ h2 {
 }
 
 aside {
+    padding: 15px;
     height: 100vh;
     position: fixed;
-    left: 80%;
+    right: 10%;
     top: 50%;
 }
 

@@ -38,7 +38,7 @@
     <div class="bot-nav">
         <div class="bot-nav-content">
             <a href="">내글</a>
-            <a href="">북마크</a>
+            <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
             <a href="">알림</a>
         </div>
@@ -53,17 +53,34 @@
     <div class="popup-wrap" id="popup">
         <div class="popup">
             <div class="popup-body">
-                <div>
-                    <div>
-                        <img src="static/image/SNS_BAND.png" onclick="sendSNS('naver')" style="width: 80px;">
-                        <img src="static/image/SNS_FACEBOOK.png" onclick="sendSNS('facebook')" style="width: 80px;">
-                        <img id="kakao_sns" src="static/image/SNS_KAKAO_TALK.png" onclick="sendSNS('kakao')"
-                            style="width: 80px;">
-                        <img src="static/image/SNS_TWITTER.png" onclick="sendSNS('twitter')" style="width: 80px;">
+                <div class="popup-body-wrap">
+                    <div class="popup-title">
+                        공유하기
                     </div>
-                    <div>
+                    <div class="popup-sns">
+                        <a>
+                            <img src="static/image/SNS_BAND.png" onclick="sendSNS('naver')" style="width: 80px;">
+                        </a>
+                        <a>
+                            <img src="static/image/SNS_FACEBOOK.png" onclick="sendSNS('facebook')" style="width: 80px;">
+                        </a>
+                        <a>
+                            <img id="kakao_sns" src="static/image/SNS_KAKAO_TALK.png" onclick="sendSNS('kakao')"
+                                style="width: 80px;">
+                        </a>
+                        <a>
+                            <img src="static/image/SNS_TWITTER.png" onclick="sendSNS('twitter')" style="width: 80px;">
+                        </a>
+                    </div>
+                    <div class="popup-sns-text">
+                        <div>band</div>
+                        <div>facebook</div>
+                        <div>kakao</div>
+                        <div>twitter</div>
+                    </div>
+                    <div class="popup-text">
                         <input id="link_id" type="text" readonly />
-                        <button onclick="copyButton()">복사하기</button>
+                        <button class="button-blue" style="margin-left:15px;" onclick="copyButton()">복사하기</button>
                     </div>
                 </div>
                 <button class="close_popup_btn" onclick="closePopup()"></button>
@@ -71,6 +88,7 @@
         </div>
     </div>
     <!--공유하기 모달 끝-->
+    <!--사이드 네비 시작-->
     <aside>
         <div class="side-nav">
             <div class="side-null-page"></div>
@@ -85,7 +103,15 @@
             </div>
         </div>
     </aside>
-    <div id="place-image-slide"></div>
+    <!--사이드 네비 끝-->
+    <div id="place-image-slide" class="place-detail-imagebox" style="display: none;">
+        <div class="slide">
+            <div class="images" id="place-detail-slide-images">
+            </div>
+        </div>
+        <button class="back">❮</button>
+        <button class="next">❯</button>
+    </div>
     <main>
         <div class="place-category" id="place-category">
             <div id="place_create"></div>
@@ -101,34 +127,34 @@
                             </div>
                             <div class="select-box__value">
                                 <input class="select-box__input" type="radio" id="1" value="2" name="Ben" />
-                                <p class="select-box__input-text">인기순</p>
+                                <p class="select-box__input-text">A</p>
                             </div>
                             <div class="select-box__value">
                                 <input class="select-box__input" type="radio" id="2" value="3" name="Ben" />
-                                <p class="select-box__input-text">좋아요순</p>
+                                <p class="select-box__input-text">B</p>
                             </div>
                             <div class="select-box__value">
                                 <input class="select-box__input" type="radio" id="3" value="4" name="Ben" />
-                                <p class="select-box__input-text">Honey</p>
+                                <p class="select-box__input-text">C</p>
                             </div>
                             <div class="select-box__value">
                                 <input class="select-box__input" type="radio" id="4" value="5" name="Ben" />
-                                <p class="select-box__input-text">Toast</p>
+                                <p class="select-box__input-text">D</p>
                             </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg"
                                 alt="Arrow Icon" aria-hidden="true" />
                         </div>
                         <ul class="select-box__list">
                             <li>
-                                <label class="select-box__option" for="1" aria-hidden="aria-hidden">인기순</label>
+                                <label class="select-box__option" for="1" aria-hidden="aria-hidden">최신순</label>
                             </li>
                             <li>
-                                <label class="select-box__option" for="2" aria-hidden="aria-hidden">좋아요순</label>
+                                <label class="select-box__option" for="2" aria-hidden="aria-hidden">댓글순</label>
                             </li>
                             <li>
-                                <label class="select-box__option" for="3" aria-hidden="aria-hidden">Honey</label>
+                                <label class="select-box__option" for="3" aria-hidden="aria-hidden">좋아요순</label>
                             </li>
                             <li>
-                                <label class="select-box__option" for="4" aria-hidden="aria-hidden">Toast</label>
+                                <label class="select-box__option" for="4" aria-hidden="aria-hidden">북마크순</label>
                             </li>
                         </ul>
                     </div>
@@ -163,7 +189,7 @@
 
     <script src="static/js/base_api.js"></script>
     <script src="static/js/place_api.js"></script>
-    <script src="static/js/resource.js"></script>
+    <script src="static/js/place_image.js"></script>
 </body>
 
 </html>
