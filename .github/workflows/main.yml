@@ -1,4 +1,4 @@
-name: React build
+name: ConnectME_FE
 on: 
   push: # main Branch에서 push 이벤트가 일어났을 때만 실행
     branches:
