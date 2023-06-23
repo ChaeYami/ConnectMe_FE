@@ -26,11 +26,13 @@
     </div>
 
     <div class="bot-nav">
-
-        <a href="">내글</a>
-        <a href="">북마크</a>
-        <a onclick="go_myProfile()">내프로필</a>
-        <a href="">알림</a>
+        <div class="bot-nav-content">
+            <a href="">내글</a>
+            <a onclick="go_placeBook()">북마크</a>
+            <a onclick="go_myProfile()">내프로필</a>
+            <a href="">알림</a>
+        </div>
+        <span class="dropbtn">프로필 메뉴</span>
     </div>
     <!--위, 아래 네비바 끝-->
 
@@ -46,8 +48,8 @@
             </div>
             <div class="group">
                 <select id="category" class="create_input" type="text" required="required">
-                    <option value="밥">밥</option>
-                    <option value="술">술</option>
+                    <option value="식사">식사</option>
+                    <option value="주점">주점</option>
                     <option value="카페">카페</option>
                 </select><span class="highlight"></span><span class="bar"></span>
                 <label class="create_label">카테고리</label>

@@ -345,6 +345,140 @@
 }
 
 /********* create input 끝 **********/
+/********* category 시작 **********/
+
+.search-select {
+    margin: auto 0px;
+    width: 150px;
+    user-select: none;
+}
+
+.search-select .field {
+    border: 1px solid #cbbeb9;
+    box-shadow: 0 1px 0px #f1efee;
+    height: 20px;
+    width: 150px;
+    line-height: 20px;
+    padding: 15px 0px;
+    display: inline-block;
+    background-image: linear-gradient(#fafafa, #fdfbfa);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-select input {
+    display: none;
+}
+
+.search-select input:checked+.select {
+    opacity: 1;
+    top: 15px;
+}
+
+.search-select ul.select {
+    transition-property: opacity, top;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    border-radius: 4px;
+    width: 150px;
+    position: relative;
+    top: 10px;
+    left: 1px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.search-select ul.select li {
+    z-index: 1;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    height: 20px;
+    width: 150px;
+    line-height: 20px;
+    padding: 15px 0px;
+    text-transform: uppercase;
+    color: #a79b97;
+    font-family: "PT Sans Caption";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 18px;
+    width: 150px;
+    color: #c0b7b4;
+    border-bottom: 1px solid #ddd8d7;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.search-select ul.select li:hover {
+    margin-top: -1px;
+    background-color: #e38461;
+    width: 140px;
+    color: white;
+    border-top: 1px solid #df6e52;
+    border-bottom: 1px solid #df6e52;
+}
+
+.search-select ul.select li:hover i:after {
+    color: white;
+}
+
+.search-select ul.select li:last-child {
+    border: none;
+}
+
+.search-select ul.select li i:after {
+    color: #c0b7b4;
+}
+
+.search-select ul.select li.arrow {
+    display: inline;
+    position: absolute;
+    top: -20px;
+    left: 270px;
+    width: 20px;
+    height: 20px;
+    z-index: 0;
+    border: none;
+}
+
+.search-select ul.select li.arrow:after {
+    font-size: 40px;
+    color: white;
+    opacity: 1;
+}
+
+.search-select ul.select li:nth-child(2) {
+    border-radius: 4px 4px 0 0;
+}
+
+.search-select ul.select li:last-child {
+    border-radius: 0 0 4px 4px;
+}
+
+.search-select label {
+    cursor: pointer;
+    height: 20px;
+    width: 150px;
+    line-height: 20px;
+    padding: 15px 10px;
+    text-transform: uppercase;
+    color: #a79b97;
+    font-family: "PT Sans Caption";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 18px;
+}
+
+@font-face {
+    font-family: "FontA";
+    src: url(https://s.cdpn.io/999/fontawesome-webfont.ttf) format("truetype"), url(https://s.cdpn.io/999/FontAwesome.otf) format("opentype");
+}
+
+/********* category 끝 **********/
 /********* 이미지 미리보기 시작 **********/
 .row {
     display: flex;
@@ -399,7 +533,7 @@
 /********* place 카테고리 시작 **********/
 .place-category {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 160px 1fr 1fr;
     height: 60px;
 }
 
@@ -407,7 +541,7 @@
     display: grid;
     grid-template-columns: 120px 1fr;
     justify-content: center;
-    align-items: center;
+    align-items: start;
 }
 
 /********* place 카테고리 끝 **********/
@@ -416,6 +550,7 @@
 .select-box {
     position: relative;
     width: 100%;
+    margin-top: 5px;
     justify-content: center;
     align-items: center;
     border: 0.8px solid rgb(203, 203, 203);
@@ -725,13 +860,33 @@ main {
     line-height: 1.2em;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     /* 원하는 줄 수로 변경 가능 */
     -webkit-box-orient: vertical;
     margin: 20px 0px 10px 60px;
     text-indent: 1em;
     white-space: normal;
     text-overflow: ellipsis;
+}
+
+.place-container-count {
+    height: 55px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.place-container-count-img {
+    margin-left: 15px;
+    color: rgb(190, 190, 190);
+    font-weight: 600;
+    gap: 5px;
+    display: flex;
+}
+
+.place-container-count-img>img {
+    width: 20px;
+    filter: grayscale(100%);
 }
 
 .place-container-hr {
@@ -761,6 +916,7 @@ main {
 .images {
     display: flex;
     /**좌우 슬라이드를 위해 flex로 사진을 가로정렬한다.**/
+    /* width: 1040px; */
     height: 250px;
     /**slide와 images의 높이가 다르면 부자연스럽게 표시돼 slide의 높이에 맞게 높이를 바꾼다.**/
     transition: transform 0.5s;
@@ -768,13 +924,17 @@ main {
   tranform속성에 0.5초의 듀레이션(동작의 시작해서 끝나는 시간)을 준다.**/
 }
 
-.images>img {
-    width: 250px;
+.slider-img-size {
+    width: 250px !important;
     height: 250px;
     margin: 0px 5px;
+}
+
+.slider-img-size>img {
+    width: 250px !important;
+    height: 250px;
     object-fit: cover;
     object-position: center;
-
     /**slide 크기에 맞춘다.**/
 }
 
@@ -856,7 +1016,7 @@ main {
 .place-detail-category {
     display: flex;
     height: 50px;
-    margin-bottom: 10px;
+    margin-right: 35px;
     align-items: end;
     color: rgb(155, 155, 155);
     font-weight: 500;
@@ -958,4 +1118,70 @@ main {
     width: 20px;
 }
 
+
 /********* place-detail 끝 **********/
+/********* place-detail 댓글 시작 **********/
+
+
+.comment_card_class {
+    width: 800px;
+    margin: 20px auto 10px auto;
+    border: 1px solid rgb(165, 165, 165);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.create_comment_box {
+    width: 800px;
+    margin: 20px auto 10px auto;
+    border: 1px solid rgb(165, 165, 165);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.comment-text {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.textareaCommentclass {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.commentbtn {
+    border: 1px solid rgb(114, 114, 114);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: transparent;
+    margin-top: 10px;
+}
+
+.commentbtn:hover {
+    border: 1px solid rgb(114, 114, 114);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #b9b4b4;
+    color: white;
+    margin-top: 10px;
+}
+
+
+.comment_btns {
+    display: flex;
+    align-items: center;
+}
+
+.replybtns {
+    display: flex;
+    align-items: center;
+}
+
+.reply-input {
+    border-radius: 10px;
+    width: 500px;
+    height: 30px
+}
+
+/********* place-detail 댓글 끝 **********/

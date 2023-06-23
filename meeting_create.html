@@ -21,7 +21,7 @@
 
     <title>모임 글 작성하기</title>
 
- 
+
 </head>
 
 <body>
@@ -44,6 +44,8 @@
 
     <div class="bot-nav">
         <div class="bot-nav-content">
+            <a href="">내글</a>
+            <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
             <a href="">알림</a>
         </div>
@@ -67,8 +69,8 @@
                 <label class="create_label">내용</label>
             </div>
             <div class="file_class">
-                <input id="meeting_image" type="file" class="file_input" onchange="setThumbnail(event);" multiple /><span
-                    class="highlight"></span><span class="bar_input"></span>
+                <input id="meeting_image" type="file" class="file_input" onchange="setThumbnail(event);"
+                    multiple /><span class="highlight"></span><span class="bar_input"></span>
             </div>
         </form>
     </div>

@@ -114,7 +114,25 @@
     </div>
     <main>
         <div class="place-category" id="place-category">
-            <div id="place_create"></div>
+            <!-- category 시작 -->
+            <div class="search-select" id="category-box">
+                <span class="field"><label class="seltext" for="opened">카테고리</label><i></i></span><input id="opened"
+                    type="checkbox" />
+                <ul style="z-index:-1;" class="select" id="category-select">
+                    <li class="icon arrow"></li>
+                    <li class="sel">
+                        식사 <i class="icon list"></i>
+                    </li>
+                    <li>
+                        주점 <i class="icon stat"></i>
+                    </li>
+                    <li>
+                        카페 <i class="icon accs"></i>
+                    </li>
+                </ul>
+            </div>
+            <!-- category 끝 -->
+            <div id="place_create" style="margin-top: 15px;"></div>
             <div class="place-search">
                 <div id="select-box">
                     <!-- select box 시작 -->
@@ -127,19 +145,19 @@
                             </div>
                             <div class="select-box__value">
                                 <input class="select-box__input" type="radio" id="1" value="2" name="Ben" />
-                                <p class="select-box__input-text">A</p>
+                                <p class="select-box__input-text">최신순</p>
                             </div>
                             <div class="select-box__value">
                                 <input class="select-box__input" type="radio" id="2" value="3" name="Ben" />
-                                <p class="select-box__input-text">B</p>
+                                <p class="select-box__input-text">댓글순</p>
                             </div>
                             <div class="select-box__value">
                                 <input class="select-box__input" type="radio" id="3" value="4" name="Ben" />
-                                <p class="select-box__input-text">C</p>
+                                <p class="select-box__input-text">좋아요순</p>
                             </div>
                             <div class="select-box__value">
                                 <input class="select-box__input" type="radio" id="4" value="5" name="Ben" />
-                                <p class="select-box__input-text">D</p>
+                                <p class="select-box__input-text">북마크순</p>
                             </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg"
                                 alt="Arrow Icon" aria-hidden="true" />
                         </div>
@@ -159,7 +177,6 @@
                         </ul>
                     </div>
                     <!-- select box 끝 -->
-
                 </div>
                 <div id="search-div">
                     <!-- search 시작 -->
@@ -179,8 +196,8 @@
                             </symbol>
                         </svg>
                     </div>
-                    <!-- search 끝 -->
                 </div>
+                <!-- search 끝 -->
             </div>
         </div>
 
@@ -189,7 +206,6 @@
 
     <script src="static/js/base_api.js"></script>
     <script src="static/js/place_api.js"></script>
-    <script src="static/js/place_image.js"></script>
 </body>
 
 </html>
