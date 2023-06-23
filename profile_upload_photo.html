@@ -37,7 +37,7 @@
     <div class="bot-nav">
         <div class="bot-nav-content">
             <a href="">내글</a>
-            <a href="">북마크</a>
+            <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
             <a href="">알림</a>
         </div>
@@ -47,18 +47,18 @@
 
 
     <div class="main">
-            <h2>앨범</h2>
-            <hr>
-            <div class="file_class">
-                <input type="file" class="file_input" id ="album_image" onchange="setThumbnail(event);" multiple /><span
-                    class="highlight"></span><span class="bar_input"></span>
-            </div>
-            <div id="image_container"></div>
-            <div class="btn-box">
-                <button class="btn btn-submit" type="button" onclick="uploadPhoto()">submit</button>
-                <button class="btn btn-cancel" type="button" onclick="">cancel</button>
-            </div>
+        <h2>앨범</h2>
+        <hr>
+        <div class="file_class">
+            <input type="file" class="file_input" id="album_image" onchange="setThumbnail(event);" multiple /><span
+                class="highlight"></span><span class="bar_input"></span>
         </div>
+        <div id="image_container"></div>
+        <div class="btn-box">
+            <button class="btn btn-submit" type="button" onclick="uploadPhoto()">submit</button>
+            <button class="btn btn-cancel" type="button" onclick="">cancel</button>
+        </div>
+    </div>
     </div>
 
 

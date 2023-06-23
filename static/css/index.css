@@ -29,7 +29,7 @@
 /********* place-contariner 시작 **********/
 main {
     width: 70vw;
-    margin: 50px auto;
+    margin: 75px auto;
     max-width: 900px;
 }
 
@@ -98,13 +98,33 @@ main {
     line-height: 1.2em;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     /* 원하는 줄 수로 변경 가능 */
     -webkit-box-orient: vertical;
     margin: 20px 0px 10px 60px;
     text-indent: 1em;
     white-space: normal;
     text-overflow: ellipsis;
+}
+
+.place-container-count {
+    height: 55px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.place-container-count-img {
+    margin-left: 15px;
+    color: rgb(190, 190, 190);
+    font-weight: 600;
+    gap: 5px;
+    display: flex;
+}
+
+.place-container-count-img>img {
+    width: 20px;
+    filter: grayscale(100%);
 }
 
 .place-container-hr {

@@ -75,6 +75,12 @@ function go_placeBook() {
     location.href = `personal_book.html?id=${logined_user_id}`
 }
 
+// 홈으로 보내고 api 실행
+function go_api() {
+    const redirectUrl = "index.html?showAPI=true";
+    location.href = redirectUrl;
+}
+
 // 모임 페이지로 가기
 function go_meetingList() {
     location.href = "meeting_list.html"
@@ -98,6 +104,7 @@ function logoutButton() {
         handleLogout();
     }
 }
+
 async function handleLogout() {
     localStorage.removeItem("access")
     localStorage.removeItem("refresh")
@@ -106,7 +113,6 @@ async function handleLogout() {
     alert("로그아웃되었습니다.")
 }
 
-// navigator.geolocation.getCurrentPosition(SuccessLocation, onGeoError);
 function SuccessLocation(data) {
     const lat = data['coords'].latitude;
     const lon = data['coords'].longitude;
@@ -140,6 +146,8 @@ function SuccessLocation(data) {
                 body: formdata,
             });
 
+            go_home()
+
         },
         error: function (e) {
             console.log(e);
@@ -148,5 +156,4 @@ function SuccessLocation(data) {
 }
 
 function onGeoError() {
-    alert("위치권한을 확인해주세요");
 }

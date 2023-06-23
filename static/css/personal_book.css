@@ -30,14 +30,14 @@ main {
     margin: 10px 5px;
 }
 
-.hotplace-image>img:first-child {
+.hotplace-image>a:nth-child(1)>img {
     width: 250px;
     height: 220px;
     object-fit: cover;
     object-position: center;
 }
 
-.hotplace-image>a>img {
+.hotplace-image>a:nth-child(2)>img {
     position: absolute;
     top: 10px;
     right: 10px;

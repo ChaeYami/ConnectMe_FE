@@ -1,5 +1,4 @@
 if (localStorage.getItem("payload")) {
-
 } else if (location.href.split("=")[1]) {
     let code = new URLSearchParams(window.location.search).get("code");
     let state = new URLSearchParams(window.location.search).get("state");
@@ -23,7 +22,16 @@ const logined_token = localStorage.getItem("access");
 $(document).ready(function () {
     recommend('all');
     recommendHotPlace();
+    const params = new URLSearchParams(window.location.search).get('showAPI');
+    if (params) {
+        if (confirm("위치권한에 동의하시겠습니까?")) {
+            navigator.geolocation.getCurrentPosition(SuccessLocation, null);
+        } else {
+            navigator.geolocation.getCurrentPosition(null, onGeoError);
+        }
+    }
 });
+
 
 
 function setLocalStorage(response) {
@@ -163,6 +171,10 @@ async function recommendHotPlace() {
         let image = e.image
         let score = e.score
         let bookmark = e.bookmark
+        let book_count = e.bookmark_count
+        let comment_count = e.comment_count
+        let like_count = e.like_count
+
 
         container.innerHTML += `
         <div id="place${place_id}" class="place-container"></div>`
@@ -235,15 +247,29 @@ async function recommendHotPlace() {
                 <div class="place-container-book" id="place-container-book">
                 ${place_book}
                 </div>
+                </div>
+                <div class="place-container-address">${address}</div>
+                <div class="place-container-content">${content}</div>
+                <div class="place-container-count">
+                    <div class="place-container-count-img">
+                        <img src="static/image/chat.png">
+                        ${comment_count}
+                    </div>
+                    <div class="place-container-count-img">
+                        <img src="static/image/heart (2).png">
+                        ${like_count}
+                    </div>
+                    <div class="place-container-count-img">
+                        <img src="static/image/bookmark (2).png">
+                        ${book_count}
+                    </div>
+                </div>
+                <div id="map"></div>
+                
             </div>
-            <div class="place-container-address">${address}</div>
-            <div class="place-container-content">${content}</div>
-            <div id="map"></div>
-            
-        </div>
-        <div class="place-container-hr">
-            <hr>
-        </div>
+            <div class="place-container-hr">
+                <hr>
+            </div>
         `
         // container html 끝
     })

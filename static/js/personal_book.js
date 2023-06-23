@@ -42,7 +42,9 @@ async function placeBookList(user_id) {
         cards.innerHTML += `
         <div class="hotplace-card">
             <div class="hotplace-image">
-                <img src="${image}">
+                <a>
+                    <img src="${image}" onclick="go_placeDetailView(${place_id})">
+                </a>
                 <a>
                     <img id="hotplace-img${place_id}" src="static/image/bookmark (1).png" onclick="placeBook(${place_id})">
                 </a>
