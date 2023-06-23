@@ -40,11 +40,10 @@ function setThumbnail(event) {
 
         reader.onload = function (event) {
             var img = document.createElement("img");
+            img.className = 'show_img';
             img.setAttribute("src", event.target.result);
-            document.querySelector("div#image_box").appendChild(img);
+            document.querySelector("div#image_container").appendChild(img);
         };
-
-        console.log(image);
         reader.readAsDataURL(image);
     }
 }

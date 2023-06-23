@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>모임 글 수정하기</title>
     <link rel="shortcut icon" href="#">
-
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/meeting_update.css">
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
@@ -15,20 +18,67 @@
 
     <script src="static/js/base_api.js"></script>
     <script src="static/js/meeting_update.js"></script>
-    
+
 </head>
 
 <body>
-    <h1>모임 글 수정하기</h1>
-    <p>제목 : <input id="meeting_title" name="title" type="text"></p>
-    <p>내용 : <textarea id="meeting_content" name="content" cols="30" rows="10"></textarea>
-    <p>이미지 : <input id="meeting_image" name="image" type="file" multiple></p>
-    <div id="image_box">
-        <img src="" alt="">
+    <!--위, 아래 네비바 시작-->
+    <div class="top-nav">
+        <div class="items">
+            <a onclick="go_home()">홈</a>
+            <a onclick="go_recommend()">친구찾기</a>
+            <a onclick="go_placeView()">핫플레이스</a>
+            <a onclick="go_counsel()">고민상담</a>
+            <a onclick="go_meetingList()">만남의 광장</a>
+
+            <div class="login-logout">
+                <a onclick="go_login()">로그인</a>
+                <a onclick="go_signup()">회원가입</a>
+            </div>
+        </div>
     </div>
 
-    <button id="create_btn" onclick="updateMeeting()">작성완료</button>
+    <div class="bot-nav">
+        <div class="bot-nav-content">
+            <a onclick="go_myProfile()">내프로필</a>
+            <a href="">알림</a>
+        </div>
+        <span class="dropbtn">프로필 메뉴</span>
+    </div>
+    <!--위, 아래 네비바 끝-->
 
+
+    <div class="wrapper">
+        <h1 class="create_h1">Meeting Update</h1>
+        <h5 class="create_h5">모임 약속 글을 수정해주세요.</h5>
+        <form class="create_form">
+            <div class="group">
+                <input id="meeting_title" class="create_input" type="text" required="required" /><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">제목</label>
+            </div>
+            <div class="group">
+                <textarea id="meeting_content" class="create_input" type="textarea" rows="10"
+                    required="required"></textarea><span class="highlight"></span><span class="bar"></span>
+                <label class="create_label">내용</label>
+            </div>
+            <div class="file_class">
+                <input id="meeting_image" type="file" class="file_input" onchange="setThumbnail(event);"
+                    multiple /><span class="highlight"></span><span class="bar_input"></span>
+            </div>
+        </form>
+    </div>
+    <div id="update_image_container" class="update_image_container_class">
+    </div>
+    <hr>
+    <div class="row">
+        <div id="image_container" class="image_container">
+        </div>
+    </div>
+    <div class="btn-box">
+        <button class="btn btn-submit" type="button" onclick="updateMeeting()">submit</button>
+        <button class="btn btn-cancel" type="button" onclick="go_meetingList()">cancel</button>
+    </div>
 </body>
 
 </html>
