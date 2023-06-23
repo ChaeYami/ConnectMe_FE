@@ -9,23 +9,45 @@ else { delete_btn.hide() }
 // ================================ 모임 게시글 상세보기 API 시작 ================================
 
 fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(data => {
-    $('#meeting_detail_card').empty()
+    let payloadObj = JSON.parse(payload)
+    let user_id = payloadObj.user_id
+    id = data['id']
     user = data['user']
     title = data['title']
     created_at = data['created_at']
     updated_at = data['updated_at']
     content = data['content']
+    bookmark = data['bookmark']
+    let meeting_book = ``
+    if (bookmark.includes(user_id)) {
+        meeting_book = `
+        <a>
+            <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+        </a>`
+    } else {
+        meeting_book = `
+        <a>
+            <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+        </a>`
+    }
+
     let temp_html =
-        `
-            <h2>${title}</h2>
-                        <p>생성일 ${created_at}</p>
-                        <p>수정일 ${updated_at}</p>
-                        <p>작성자 ${user}</p>
-                        <div id=image_box class=image_box_class>
-                        </div>
-                        <p class=meeting_detail_content>${content}</p>
-                        `
+                    `
+                    <h2>${title}</h2>
+                    <hr>
+                    <p>생성일 : ${created_at}</p>
+                    <p>수정일 : ${updated_at}</p>
+                    <p>작성자 : ${user}</p>
+                    <a> <img src="static/image/edit.png" style="margin-top:10px; width: 30px;" onclick="meetingUpdateMove()"> </a>
+                    <a> <img src="static/image/delete.png" style="margin-top:10px; width: 30px;" onclick="meetingDelete()"> </a>
+                    <a>${meeting_book}</a>
+                    <hr>
+                    <p class=meeting_detail_content>${content}</p>
+                    <div id=image_box class=image_box_class>
+                    </div>
+                    `
     $('#meeting_detail_card').append(temp_html)
+
     data.meeting_image.forEach((each_image => {
         image = each_image['image']
         temp_html = `
@@ -59,6 +81,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
             let temp_html = `
             <p id="now_comment${id}" style="display:block;">${content}</p>
             <div id="reply_card">
+            <hr>
             `
             $('#comment_card').append(temp_html)
         }
@@ -66,14 +89,17 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
             let temp_html =
                 `
                     <p id="now_comment${id}" style="display:block;">${content}</p>
-                    <p id="p_comment_update_input${id}" style="display:none;"/><input id="comment_update_input${id}" type="text"/> <button  onclick="commentUpdateConfrim(${id})">완료</button></p>
-                    <a>${user}</a>
-                    <p>${updated_at}</p>
-                    <p id="p_reply_create_input${id}" style="display:none;"/><input id="reply_create_input${id}" type="text"/> <button  onclick="replyCreateConfrim(${id})">완료</button></p>
-                    <button onclick="reply_create_handle(${id})">대댓글 작성하기</button>
-                    <button onclick="comment_update_handle(${id})">수정하기</button>
-                    <button onclick="commentDelete(${id})">삭제하기</button>
+                    <p id="p_comment_update_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 700px;" id="comment_update_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="commentUpdateConfrim(${id})">완료</button></p>
+                    <p> <small> ${user} ${updated_at}</p>
+                    
+                    <p id="p_reply_create_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 700px;" id="reply_create_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyCreateConfrim(${id})">완료</button></p>
+                    <div class=comment_btns>
+                    <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="reply_create_handle(${id})">대댓글 작성하기</button>
+                    <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="comment_update_handle(${id})"> </a>
+                    <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="commentDelete(${id})"> </a>
+                    </div>
                     <div id="reply_card">
+                    <hr>
                     `
 
             $('#comment_card').append(temp_html)
@@ -85,14 +111,16 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
             user = each_reply['user']
             updated_at = each_reply['updated_at']
             let temp_html = `
-            <div style="color:red;">
+            <div style="margin-left: 50px;">
             <p id="now_reply${id}" style="display:block;">${content}</p>
-            <p id="p_reply_update_input${id}" style="display:none;"/><input id="reply_update_input${id}" type="text"/> <button  onclick="replyUpdateConfrim(${id})">완료</button></p>
-            <a>${user}</a>
-            <p>${updated_at}</p>
-            <button onclick="reply_update_handle(${id})">대댓글 수정하기</button>
-            <button onclick="replyDelete(${id})">대댓글 삭제하기</button>
+            <p id="p_reply_update_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 600px;" id="reply_update_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyUpdateConfrim(${id})">완료</button></p>
+            <div class=replybtns>
+            <p> <small> ${user} ${updated_at}</p>
+            <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="reply_update_handle(${id})"> </a>
+            <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="replyDelete(${id})"> </a>
             </div>
+            </div>
+            <hr>
             `
             $('#reply_card').append(temp_html)
             $(`#reply_update_input${id}`).val(content)
@@ -131,10 +159,10 @@ async function handleBookmark() {
         })
         if (response.status === 200) {
             alert("북마크 취소")
-
+            location.reload()
         } else {
             alert("북마크")
-
+            location.reload()
         }
     } else { alert("로그인 해주세요") }
 }
@@ -142,7 +170,7 @@ async function handleBookmark() {
 
 // ================================ 모임 게시글 상세보기 댓글 작성 시작 ================================
 async function meetingCommentCreate() {
-    let comment = document.getElementById("inputComment").value
+    let comment = document.getElementById("textareaComment").value
     let token = localStorage.getItem("access")
     if (token) {
         let formData = new FormData();
