@@ -8,6 +8,8 @@
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
     <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/meeting_create.css">
+
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
@@ -19,15 +21,7 @@
 
     <title>모임 글 작성하기</title>
 
-    <style>
-        .meeting_create_warp{
-            width: 800px;
-            margin: 70px auto 10px auto;
-        }
-        .image_box {
-           background-color: green;
-        }
-    </style>
+ 
 </head>
 
 <body>
@@ -50,8 +44,6 @@
 
     <div class="bot-nav">
         <div class="bot-nav-content">
-            <a href="">내글</a>
-            <a href="">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
             <a href="">알림</a>
         </div>
@@ -59,21 +51,36 @@
     </div>
     <!--위, 아래 네비바 끝-->
 
-
-
     <!-- 모임 글 작성 시작 -->
-    <div class="meeting_create_warp">
-        <h1>모임 글 작성하기</h1>
-        <p>제목 : <input id="meeting_title" name="title" type="text"></p>
-        <p>내용 : <textarea id="meeting_content" name="content" cols="30" rows="10"></textarea>
-        <p>이미지 : <input id="meeting_image" name="image" type="file" multiple onchange="setThumbnail(event)"></p>
-        <div id="image_box">
-            <img src="" alt="">
+    <div class="wrapper">
+        <h1 class="create_h1">Meeting Create</h1>
+        <h5 class="create_h5">모임 약속 글을 작성해주세요.</h5>
+        <form class="create_form">
+            <div class="group">
+                <input id="meeting_title" class="create_input" type="text" required="required" /><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">제목</label>
+            </div>
+            <div class="group">
+                <textarea id="meeting_content" class="create_input" type="textarea" rows="10"
+                    required="required"></textarea><span class="highlight"></span><span class="bar"></span>
+                <label class="create_label">내용</label>
+            </div>
+            <div class="file_class">
+                <input id="meeting_image" type="file" class="file_input" onchange="setThumbnail(event);" multiple /><span
+                    class="highlight"></span><span class="bar_input"></span>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div id="image_container" class="image_container">
         </div>
-        <button id="create_btn" onclick="createMeeting()">작성완료</button>
+    </div>
+    <div class="btn-box">
+        <button class="btn btn-submit" type="button" onclick="createMeeting()">submit</button>
+        <button class="btn btn-cancel" type="button" onclick="go_meetingList()">cancel</button>
     </div>
     <!-- 모임 글 작성 끝 -->
-
 </body>
 
 </html>

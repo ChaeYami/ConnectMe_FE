@@ -1,0 +1,67 @@
+.image_box_class {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+}
+
+.detail_image {
+    width: 250px;
+    height: 250px;
+
+}
+
+.meeting_detail_content {
+    white-space: pre-line;
+}
+
+.meeting_detail_card_class {
+    width: 800px;
+    margin: 70px auto auto;
+    border: 1px solid rgb(165, 165, 165);
+    padding: 10px;
+    border-radius: 10px;
+
+}
+
+.meeting_detail_warp {
+    width: 70vw;
+    margin: auto;
+}
+
+.comment_card_class {
+    width: 800px;
+    margin: 20px auto 10px auto;
+    border: 1px solid rgb(165, 165, 165);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.create_comment_box {
+    width: 800px;
+    margin: 20px auto 10px auto;
+    border: 1px solid rgb(165, 165, 165);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.textareaCommentclass {
+    border-radius: 10px;
+}
+
+.commentbtn {
+    border: 1px solid rgb(114, 114, 114);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: transparent;
+    margin-top: 10px;
+}
+
+.comment_btns {
+    display: flex;
+    align-items: center;
+}
+.replybtns {
+    display: flex;
+    align-items: center;
+}

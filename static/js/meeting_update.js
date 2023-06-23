@@ -11,9 +11,13 @@ fetch(`${BACKEND_BASE_URL}/meeting/` + meeting_id).then(res => res.json()).then(
     images.forEach((each_image) => {
         let image = each_image['image']
         let id = each_image['id']
-        let temp_html = `<img src="${BACKEND_BASE_URL}${image}" alt="">
-                <button onclick="deleteImage(${id})">삭제</button>`
-        $('#image_box').append(temp_html)
+        let temp_html = `
+                        <div class=update_image_box>
+                        <img class=update_image src="${BACKEND_BASE_URL}${image}" alt="">
+                        <a class=image_delete_btn> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="deleteImage(${id})"> </a>
+                        </div>
+                        `
+        $('#update_image_container').append(temp_html)
     }
     )
 })
@@ -57,3 +61,16 @@ async function updateMeeting() {
     await location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
 }
 //================================ 모임 게시글 수정 API 끝 ================================ 
+function setThumbnail(event) {
+    for (var image of event.target.files) {
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+            var img = document.createElement("img");
+            img.className = 'show_img';
+            img.setAttribute("src", event.target.result);
+            document.querySelector("div#image_container").appendChild(img);
+        };
+        reader.readAsDataURL(image);
+    }
+}

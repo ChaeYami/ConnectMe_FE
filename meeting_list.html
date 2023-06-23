@@ -39,29 +39,85 @@
 
     <div class="bot-nav">
         <div class="bot-nav-content">
-            <a href="">내글</a>
-            <a href="">북마크</a>
+            <a onclick="myCreateMeeting()">내글</a>
+            <a onclick="meetingBookmarkList()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
             <a href="">알림</a>
         </div>
         <span class="dropbtn">프로필 메뉴</span>
     </div>
 
-    <div class="option_box">
-        <select id="search_select" class="search_select_class">
-            <option value="title">제목</option>
-            <option value="content">내용</option>
-            <option value="user">작성자</option>
-        </select>
-        <input id="meeting_search" type="text" placeholder="모임 글 검색">
-        <button onclick="meetingSearch()">검색하기</button>
-        <button onclick="meetingBookmarkList()">북마크 한 글</button>
-        <a class="meeting_create_btn" onclick="go_meetingCreate()"><img src="static/image/add.png" style="width:30px"></a> 
     </div>
+    <!-- 선택 검색 컨테이너 시작 -->
+    <div class="meeting_search_box">
+        <!-- select box 시작 -->
+        <div class="select-box">
+            <div class="select-box__current" tabindex="1">
+                <div class="select-box__value">
+                    <input class="select-box__input" type="radio" id="0" value="1" name="Ben" checked="checked" />
+                    <p class="select-box__input-text">선택</p>
+                </div>
+                <div class="select-box__value">
+                    <input class="select-box__input" type="radio" id="1" value="title" name="Ben" />
+                    <p class="select-box__input-text">제목</p>
+                </div>
+                <div class="select-box__value">
+                    <input class="select-box__input" type="radio" id="2" value="content" name="Ben"/>
+                    <p class="select-box__input-text">내용</p>
+                </div>
+                <div class="select-box__value">
+                    <input class="select-box__input" type="radio" id="3" value="user" name="Ben"/>
+                    <p class="select-box__input-text">작성자</p>
+                </div>
+                <div class="select-box__value">
+                </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg"
+                    alt="Arrow Icon" aria-hidden="true" />
+            </div>
+            <ul class="select-box__list" id="search_select">
+                <li>
+                    <label class="select-box__option" for="1" aria-hidden="aria-hidden">제목</label>
+                </li>
+                <li>
+                    <label class="select-box__option" for="2" aria-hidden="aria-hidden">내용</label>
+                </li>
+                <li>
+                    <label class="select-box__option" for="3" aria-hidden="aria-hidden">작성자</label>
+                </li>
 
+            </ul>
+        </div>
+        <!-- select box 끝 -->
+        <!-- 검색 시작 -->
+
+        <div class="search-div">
+
+            <div class="search-form">
+                <input id="meeting_search" type="text" value="" placeholder="Search" class="search-input">
+                <button class="search-button" onclick="meetingSearch()">
+                    <svg class="submit-button">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+                    </svg>
+                </button>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
+                <symbol id="search" viewBox="0 0 32 32">
+                    <path
+                        d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z" />
+                </symbol>
+            </svg>
+        </div>
+        <!-- 검색 끝 -->
+    </div>
+    
+    <!-- 선택, 검색 컨테이너 끝 -->
     <!-- 모임 글 목록 시작 -->
 
-    <h1 style="margin-left: 100px;">모임 글 목록</h1>
+    
+    <div>
+        <h1 style="margin-left: 100px;">만남의 광장</h1>
+        <a class="meeting_create_btn" onclick="go_meetingCreate()"><img src="static/image/add.png"
+                style="width:30px"></a>
+    </div>
     <div id="meeting_card" class="meeting_card_class">
     </div>
 

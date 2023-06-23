@@ -7,45 +7,19 @@
 
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/meeting_detail.css">
+
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
-    <style>
-        .image_box_class {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .detail_image {
-            width: 290px;
-            margin-left: 10px;
-        }
-
-        .meeting_detail_content {
-            white-space: pre-line;
-        }
-
-        .meeting_detail_card_class {
-            width: 800px;
-            margin: 70px auto 10px auto;
-        }
-
-        .meeting_detail_warp {
-            width: 800px;
-            margin: auto;
-        }
-    </style>
+ 
 
     <title>Connect ME</title>
 </head>
 
 <body>
-
-
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
@@ -64,8 +38,6 @@
 
     <div class="bot-nav">
         <div class="bot-nav-content">
-            <a href="">내글</a>
-            <a href="">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
             <a href="">알림</a>
         </div>
@@ -80,25 +52,22 @@
     <div class="meeting_detail_warp">
         <div id="meeting_detail_card" class="meeting_detail_card_class">
         </div>
-        <div class="buttons_class" id="buttons">
-            <button onclick="meetingUpdateMove()">수정하기</button>
-            <button onclick="meetingDelete()">삭제하기</button>
+        <div class="create_comment_box">
+            <div>
+                <textarea name="" id="textareaComment" class="textareaCommentclass" placeholder="댓글을 입력해주세요" cols="110"
+                    rows="4"></textarea>
+            </div>
+            <button class="commentbtn" onclick="meetingCommentCreate()">작성완료</button>
         </div>
-        <hr>
-        <h4>댓글</h4>
-        <div>
-            <p><input id="inputComment" type="text" placeholder="댓글 입력하기"></p>
-            <button onclick="meetingCommentCreate()">작성</button>
-        </div>
-        <hr>
-        <div id="comment_card">
-        </div>
-        <div id="reply_card">
-        </div>
-    </div>
 
-
-
+        <div class="comment_card_class">
+            <h4>댓글</h4>
+            <hr>
+            <div id="comment_card">
+            </div>
+            <div id="reply_card">
+            </div>
+        </div>
     </div>
 </body>
 
