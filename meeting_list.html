@@ -39,13 +39,14 @@
 
     <div class="bot-nav">
         <div class="bot-nav-content">
-            <a onclick="myCreateMeeting()">내글</a>
-            <a onclick="meetingBookmarkList()">북마크</a>
+            <a href="">내글</a>
+            <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
             <a href="">알림</a>
         </div>
         <span class="dropbtn">프로필 메뉴</span>
     </div>
+    <!--위, 아래 네비바 끝-->
 
     </div>
     <!-- 선택 검색 컨테이너 시작 -->
@@ -62,11 +63,11 @@
                     <p class="select-box__input-text">제목</p>
                 </div>
                 <div class="select-box__value">
-                    <input class="select-box__input" type="radio" id="2" value="content" name="Ben"/>
+                    <input class="select-box__input" type="radio" id="2" value="content" name="Ben" />
                     <p class="select-box__input-text">내용</p>
                 </div>
                 <div class="select-box__value">
-                    <input class="select-box__input" type="radio" id="3" value="user" name="Ben"/>
+                    <input class="select-box__input" type="radio" id="3" value="user" name="Ben" />
                     <p class="select-box__input-text">작성자</p>
                 </div>
                 <div class="select-box__value">
@@ -108,11 +109,11 @@
         </div>
         <!-- 검색 끝 -->
     </div>
-    
+
     <!-- 선택, 검색 컨테이너 끝 -->
     <!-- 모임 글 목록 시작 -->
 
-    
+
     <div>
         <h1 style="margin-left: 100px;">만남의 광장</h1>
         <a class="meeting_create_btn" onclick="go_meetingCreate()"><img src="static/image/add.png"

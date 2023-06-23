@@ -40,7 +40,7 @@
     <div class="bot-nav">
         <div class="bot-nav-content">
             <a href="">내글</a>
-            <a href="">북마크</a>
+            <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
             <a href="">알림</a>
         </div>
@@ -49,7 +49,7 @@
     <!--위, 아래 네비바 끝-->
 
 
-    
+
 
     <!-- 메인 시작 -->
 
@@ -57,14 +57,14 @@
 
         <!-- /user/recommend/<str:filter>/ , 함수이름 recommend(filter) -->
         <div class="filter-section">
-            
+
             <select class="select-box" id="recommend-select">
                 <option value="all">전체</option>
                 <option value="age_range">나이로 추천받기</option>
                 <option value="mbti">MBTI로 추천받기</option>
                 <option value="prefer_region">지역으로 추천받기</option>
-              </select>
-              
+            </select>
+
         </div>
         <div class=condition></div>
 
