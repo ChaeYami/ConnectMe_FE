@@ -1,4 +1,4 @@
-const BACKEND_BASE_URL = "https://louisn.shop"
+const BACKEND_BASE_URL = "https://api.connectme.co.kr"
 const FRONTEND_BASE_URL = "https://connectme.co.kr"
 
 const KAKAO_API = '3611a3327df6a2e923777b26800f369d'
