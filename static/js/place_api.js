@@ -4,15 +4,15 @@ const logined_token = localStorage.getItem("access")
 window.onload = function () {
     const urlParams = new URLSearchParams(window.location.search).get("id");
     if (urlParams) {
-        PlaceDetailView(urlParams);
+        placeDetailView(urlParams);
     } else {
-        PlaceView()
+        placeView()
     }
 
 };
 
 // 장소추천 게시글 생성
-async function CreatePlace() {
+async function createPlace() {
     let name = document.querySelector('#name')
     let category = document.querySelector('#category')
     let content = document.querySelector('#content')
@@ -22,15 +22,6 @@ async function CreatePlace() {
     let price = document.querySelector('#price')
     let hour = document.querySelector('#hour')
     let holiday = document.querySelector('#holiday')
-
-    console.log(name.value,
-        category.value,
-        content.value,
-        address.value,
-        score.value,
-        price.value,
-        hour.value,
-        holiday.value,)
 
 
 
@@ -72,7 +63,7 @@ async function CreatePlace() {
 }
 
 // 장소추천 전체보기
-async function PlaceView() {
+async function placeView() {
     const response = await fetch(`${BACKEND_BASE_URL}/place/`, {
         headers: {
             Authorization: "Bearer " + logined_token,
@@ -112,7 +103,7 @@ async function PlaceView() {
             place.innerHTML += `
             <div>
                 <a href="place_view.html?id=${place_id}">
-                    <img class="place-container-img" src="${image['url']}" onclick="PlacePreUpdateView()">
+                    <img class="place-container-img" src="${image['url']}" onclick="placePreUpdateView()">
                 </a>
             </div>
             `
@@ -129,24 +120,23 @@ async function PlaceView() {
 
             place_book = `
             <a>
-                <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="PlaceBook(${place_id})">
+                <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
             </a>`
         } else {
             place_book = `
             <a>
-                <img id="book${place_id}" src="static/image/bookmark.png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="PlaceBook(${place_id})">
+                <img id="book${place_id}" src="static/image/bookmark.png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
             </a>`
         }
         // 북마크 끝
         // edit 버튼 시작
         let place_edit = ``
-        console.log(JSON.parse(payload)['is_staff'])
 
         if (JSON.parse(payload)['is_staff']) {
             place_edit = `
             <a>
                 <img src="static/image/edit.png" style="margin-top:10px; width:20px;"
-                    onclick="PlacePreUpdateView(${place_id})">
+                    onclick="placePreUpdateView(${place_id})">
             </a>
             `
         }
@@ -156,10 +146,13 @@ async function PlaceView() {
         <div class="place-container-text">
             <div class="place-container-main">
                 <div class="place-container-title">
-                    <div>
+                    <div class="place-container-title0">
+                        <h2>${i + 1}.</h2>
+                    </div>
+                    <div class="place-container-title1">
                         <h2><a class="place-container-title-a" href="place_view.html?id=${place_id}">${name}</a></h2>
                     </div>
-                    <div>
+                    <div class="place-container-title2">
                         <div class="place-container-score">
                             <h2>${score}</h2>
                         </div>
@@ -186,7 +179,7 @@ async function PlaceView() {
 }
 
 // 지도 보여주기
-async function PlaceShowMap(name, address) {
+async function placeShowMap(name, address) {
     let mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapOption = {
             center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -226,7 +219,7 @@ async function PlaceShowMap(name, address) {
 }
 
 // 소셜 공유하기
-function SendSNS(sns) {
+function sendSNS(sns) {
     let current_url = document.location.href;
     let title = document.querySelector('#title').innerText.substring(5)
     let content = document.querySelector('#content').innerText.substring(5)
@@ -261,7 +254,7 @@ function SendSNS(sns) {
 }
 
 // 공유하기 닫기
-function ClosePopup() {
+function closePopup() {
     $('html, body').css({
         'overflow': 'auto'
     });
@@ -269,7 +262,7 @@ function ClosePopup() {
 }
 
 // 공유하기 열기
-function PlaceShare(place_id) {
+function placeShare(place_id) {
     const share = document.querySelector('#modal_opne_btn')
     const place_modal = document.querySelector('#place_modal')
     const link_id = document.querySelector('#link_id')
@@ -281,13 +274,13 @@ function PlaceShare(place_id) {
 }
 
 // url 복사하기 버튼
-function CopyButton() {
+function copyButton() {
     let inputTag = document.querySelector('#link_id')
     navigator.clipboard.writeText(inputTag.value)
 }
 
 // 장소추천 상세보기
-async function PlaceDetailView(place_id) {
+async function placeDetailView(place_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
             Authorization: "Bearer " + logined_token,
@@ -297,9 +290,15 @@ async function PlaceDetailView(place_id) {
 
     const response_json = await response.json();
 
+    // 검색, select 숨기기 시작
+    let place_category = document.querySelector('#place-category')
+    place_category.style.display = 'none';
+    // 검색, select 숨기기 끝
+
     let comments = response_json['comment']
     let name = response_json['place'].title
     let category = response_json['place'].category
+    let sort = response_json['place'].sort
     let content = response_json['place'].content
     let address = response_json['place'].address
     let image = response_json['place'].image
@@ -310,17 +309,25 @@ async function PlaceDetailView(place_id) {
     let place = document.querySelector('#place')
     let like = response_json['place'].like
     let bookmark = response_json['place'].bookmark
+    let slide_container = document.querySelector('#place-image-slide')
+    let slide = document.querySelector('#place-detail-slide-images')
 
+    slide_container.style.display = ""
+
+
+    // 이미지 슬라이더 시작
     let images = ``
 
     if (image) {
         for (let i = 0; i < image.length; i++) {
             images += `
-            <img id="image" src="${image[i]['url']}">
+            <img src="${image[i]['url']}">
             `
         }
     }
 
+    slide.innerHTML = `${images}`
+    // 이미지 슬라이더 끝
 
     // ================================ 상세보기 댓글 시작 ================================
 
@@ -345,25 +352,28 @@ async function PlaceDetailView(place_id) {
         var formattedDateTime = `${formattedDate}, ${formattedTime}`;
         // 시간 form 수정 끝
 
+        // 댓글 추가하기 시작
+        if (JSON.parse(payload)['user_id'] == comments[i]['user']) {
+            comment += `
+            <div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDateTime}
+                <a>
+                    <img src="static/image/comment_edit.png" class="comment_edit_icon" onclick="commentPreUpdate(${place_id}, ${comments[i]['id']})">
+                </a>
+                <a>
+                    <img src="static/image/comment_delete.png" class="comment_delete_icon" onclick="commentDelete(${place_id}, ${comments[i]['id']})">
+                </a>
+            </div>
+            <div style="display:none;" id="edit_comment${comments[i]['id']}"></div>
+            <div id="reply${comments[i]['id']}"><a href="javascript:replyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
+        } else {
+            comment += `
+            <div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDate}</div>
+            <div style="display:none;" id="edit_comment${comments[i]['id']}"></div>
+            <div id="reply${comments[i]['id']}"><a href="javascript:replyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
+        }
+
         // 댓글에 reply가 있을 때
         if (comments[i]['reply'].length > 0) {
-            if (JSON.parse(payload)['user_id'] == comments[i]['user']) {
-                comment +=
-                    `<div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} 
-                ${formattedDateTime}
-                <a>
-                    <img src="static/image/comment_edit.png" style="width:20px" onclick="CommentPreUpdate(${place_id}, ${comments[i]['id']})">
-                </a>
-                <a>
-                    <img src="static/image/comment_delete.png" style="width:20px" onclick="CommentDelete(${place_id}, ${comments[i]['id']})">
-                </a>
-                <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
-            } else {
-                comment +=
-                    `<div id='comment${comments[i]['id']}'> ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDate}
-                <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>`
-            }
-
             for (let j = 0; j < comments[i]['reply'].length; j++) {
                 // 시간 form 수정 시작
                 let createdAt = comments[i]['reply'][j]['created_at'];
@@ -388,12 +398,13 @@ async function PlaceDetailView(place_id) {
                         <div id='comment${comments[i]['reply'][j]['id']}' style="margin-left:20px;">
                             ${comments[i]['reply'][j]['user_name']} : ${comments[i]['reply'][j]['content']} ${formattedDateTime}
                             <a>
-                                <img src="static/image/comment_edit.png" style="width:20px" onclick="CommentPreUpdate(${place_id}, ${comments[i]['reply'][j]['id']})">
+                                <img src="static/image/comment_edit.png" class="comment_edit_icon" onclick="commentPreUpdate(${place_id}, ${comments[i]['reply'][j]['id']})">
                             </a>
                             <a>
-                                <img src="static/image/comment_delete.png" style="width:20px" onclick="CommentDelete(${place_id}, ${comments[i]['reply'][j]['id']})">
+                                <img src="static/image/comment_delete.png" class="comment_delete_icon" onclick="commentDelete(${place_id}, ${comments[i]['reply'][j]['id']})">
                             </a>
                         </div>
+                        <div style="display:none;" id="edit_comment${comments[i]['reply'][j]['id']}"></div>
                         `
                 } else {
                     comment +=
@@ -401,121 +412,133 @@ async function PlaceDetailView(place_id) {
                         <div id='comment${comments[i]['reply'][j]['id']}' style="margin-left:20px;"> ${formattedDateTime}
                             ${comments[i]['reply'][j]['user_name']} : ${comments[i]['reply'][j]['content']} 
                         </div>
+                        <div style="display:none;" id="edit_comment${comments[i]['reply'][j]['id']}"></div>
                         `
                 }
-
             }
-            comment +=
-                `</div>`
         }
-        // 댓글에 reply가 없을 때
-        else {
-            if (JSON.parse(payload)['user_id'] == comments[i]['user']) {
-                comment +=
-                    `<div id='comment${comments[i]['id']}'>
-                    ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDateTime}
-                    <a>
-                        <img src="static/image/comment_edit.png" style="width:20px" onclick="CommentPreUpdate(${place_id}, ${comments[i]['id']})">
-                    </a>
-                    <a>
-                        <img src="static/image/comment_delete.png" style="width:20px" onclick="CommentDelete(${place_id}, ${comments[i]['id']})">
-                    </a>
-                    <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>
-                </div>
-                `
-            } else {
-                comment +=
-                    `<div id='comment${comments[i]['id']}'>
-                    ${comments[i]['user_name']} : ${comments[i]['content']} ${formattedDateTime}
-                    <div id="reply${comments[i]['id']}"><a href="javascript:ReplyPreWrite(${place_id}, ${comments[i]['id']})">답글</a></div>
-                </div>
-                `
-            }
-
-        }
-
+        // 댓글 추가하기 끝
     }
 
 
     // ================================ 상세보기 댓글 끝 ================================
+    // ================================ 북마크, 좋아요 및 권한설정 시작 ================================
 
-    place.innerHTML = `
-    <div id="title">제목 : ${name}</div>
-    `
-
-    const id_title = document.querySelector('#title')
-
-    if (JSON.parse(payload)['is_staff']) {
-        id_title.innerHTML += `
-        <a>
-            <img src="static/image/edit.png" style="width:20px" onclick="PlacePreUpdateView(${place_id})">
-        </a>
-        <a>
-            <img src="static/image/delete.png" style="width:20px" onclick="PlaceDelete(${place_id})">
-        </a>`
-
-    }
-
-    place.innerHTML += `
-    <div>카테고리 : ${category}</div>
-    <div id="content">내용 : ${content}</div>
-    <div>주소 : ${address}</div>
-    <div>이미지 : ${images}</div>
-    <div>별점 : ${score}</div>
-    <div>가격 : ${price}</div>
-    <div>영업시간 : ${hour}</div>
-    <div>휴일 : ${holiday}</div>
-    <div id="map" style="height: 350px; width: 350px; z-index: 1;"></div>
-    <div style="margin-top:10px">`
+    let book_html = ``
+    let like_html = ``
+    let auth_html = ``
 
     if (bookmark.includes(logined_user_id)) {
-        place.innerHTML += `
+        book_html = `
         <a>
-            <img id="book${place_id}" src="static/image/bookmark (1).png" style="width: 20px;" alt="북마크" onclick="PlaceBook(${place_id})">
+            <img id="book${place_id}" src="static/image/bookmark (1).png" class="place-detail-book" alt="북마크" onclick="placeBook(${place_id})">
         </a>`
     } else {
-        place.innerHTML += `
+        book_html = `
         <a>
-            <img id="book${place_id}" src="static/image/bookmark.png" style="width: 20px;" alt="북마크" onclick="PlaceBook(${place_id})">
+            <img id="book${place_id}" src="static/image/bookmark.png" class="place-detail-book" alt="북마크" onclick="placeBook(${place_id})">
         </a>`
     }
 
     if (like.includes(logined_user_id)) {
-        place.innerHTML += `
+        like_html = `
         <a>
-            <img id="like${place_id}" src="static/image/heart (1).png" style="width: 20px;" alt="좋아요" onclick="PlaceLike(${place_id})">
+            <img id="like${place_id}" src="static/image/heart (1).png" class="place-detail-like" alt="좋아요" onclick="placeLike(${place_id})">
         </a>`
     } else {
-        place.innerHTML += `
+        like_html = `
         <a>
-            <img id="like${place_id}" src="static/image/heart.png" style="width: 20px;" alt="좋아요" onclick="PlaceLike(${place_id})">
+            <img id="like${place_id}" src="static/image/heart.png" class="place-detail-like" alt="좋아요" onclick="placeLike(${place_id})">
         </a>`
     }
 
-    place.innerHTML += `
+    if (JSON.parse(payload)['is_staff']) {
+        auth_html = `
         <a>
-            <img id="modal_opne_btn" src="static/image/share.png" style="width: 20px;" alt="공유하기" onclick="PlaceShare(${place_id})">
+            <img src="static/image/edit.png" class="place-detail-edit" onclick="placePreUpdateView(${place_id})">
         </a>
-        <a href="meeting_create.html">
-            <img src="static/image/workgroup.png" style="width: 30px;">
-        </a>
-    </div>
-    <hr>
-    <div>
-        댓글 : <input id="comments"/> <button type="button" onclick="CommentWrite(${place_id})">등록하기</button>
-    </div>
-    
-    ${comment}
-    <hr>
-    <br>
+        <a>
+            <img src="static/image/delete.png" class="place-detail-delete" onclick="placeDelete(${place_id})">
+        </a>`
+    }
+
+    // ================================ 북마크, 좋아요 및 권한설정 끝 ================================
+
+    let detail_category = ``
+
+    if (sort) {
+        if (sort.includes('카페/주점')) {
+            if (sort.includes('-주점')) {
+                detail_category = '/주점';
+            } else { }
+        } else {
+            detail_category = `/${sort}`;
+        }
+    }
+
+    place.innerHTML = `
+    <div class="place-detail-container">
+            <div class="place-detail-text">
+                <div class="place-detail-top">
+                    <div class="place-detail-title">
+                        <h2>${name}</h2>
+                    </div>
+                    <div class="place-detail-score">
+                        <h2>${score}</h2>
+                    </div>
+                    <div id="place-detail-auth">
+                        ${auth_html}
+                    </div>
+                </div>
+                <div class="place-detail-feed">
+                    ${book_html}
+                    ${like_html}
+                    <a>
+                        <img id="modal_opne_btn" src="static/image/share.png" class="place-detail-share" alt="공유하기"
+                            onclick="placeShare(${place_id})">
+                    </a>
+                </div>
+            </div>
+            <div class="place-detail-category">
+                <div>${category}${detail_category}</div>
+            </div>
+            <hr>
+            <div class="place-detail-content">
+                <div class="place-detail-content-grid">
+                    <div>
+                        <div class="place-detail-font-gray">주소</div>
+                        <div class="place-detail-font-gray">가격대</div>
+                        <div class="place-detail-font-gray">영업시간</div>
+                        <div class="place-detail-font-gray">휴일</div>
+                        <div class="place-detail-font-gray" style="margin-top: 20px;">내용</div>
+                    </div>
+                    <div>
+                        <div style="margin-bottom:10px">${address}</div>
+                        <div style="margin-bottom:10px">${price}</div>
+                        <div style="margin-bottom:10px">${hour}</div>
+                        <div style="margin-bottom:10px">${holiday}</div>
+                        <div class="place-detail-font-content">${content}</div>
+                    </div>
+                    <div class="place-detail-map" id="map">
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div style="margin: 10px 0px 20px 0px;">
+                댓글 : <input id="comments" /> <button type="button" class="button-blue"
+                    onclick="commentWrite(${place_id})">등록하기</button>
+            </div>
+            ${comment}
+        </div>
     
     `
-    PlaceShowMap(name, address)
+    placeShowMap(name, address)
+    imageSlider()
 
 }
 
 // 장소 북마크
-async function PlaceBook(place_id) {
+async function placeBook(place_id) {
     const book = document.querySelector(`#book${place_id}`)
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
@@ -537,7 +560,7 @@ async function PlaceBook(place_id) {
 }
 
 // 장소 좋아요
-async function PlaceLike(place_id) {
+async function placeLike(place_id) {
     const like = document.querySelector(`#like${place_id}`)
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/like/`, {
@@ -560,7 +583,7 @@ async function PlaceLike(place_id) {
 }
 
 // 장소추천 수정전 html 띄워주기
-async function PlacePreUpdateView(place_id) {
+async function placePreUpdateView(place_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
             Authorization: "Bearer " + logined_token,
@@ -569,6 +592,7 @@ async function PlacePreUpdateView(place_id) {
     });
 
     const response_json = await response.json();
+
 
     let name = response_json['place'].title
     let category = response_json['place'].category
@@ -579,55 +603,104 @@ async function PlacePreUpdateView(place_id) {
     let price = response_json['place'].price
     let hour = response_json['place'].hour
     let holiday = response_json['place'].holiday
+
     let place = document.querySelector('#place')
+    let slide = document.querySelector('#place-image-slide')
+    slide.style.display = "none";
 
     let images = ``
 
     if (image) {
         for (let i = 0; i < image.length; i++) {
             images += `
-            <img id="image${image[i]['id']}" src="${image[i]['url']}">
-            <a>
-                <img src="static/image/comment_delete.png" onclick="ImageDelete(${place_id}, ${image[i]['id']})" style="width:20px;">
-            </a>
+            <div class="img_container">
+                <div class="image-wrapper">
+                    <img id="image${image[i]['id']}" class="image_preview" src="${image[i]['url']}"></img>
+                    <a>
+                        <img src="static/image/comment_delete.png" class="image-button" onclick="imageDelete(${place_id}, ${image[i]['id']})">
+                    </a>
+                </div>
+            </div>
             `
         }
     }
 
-
     place.innerHTML = `
-    <form>
-        <div>제목 : <input id='name' value="${name}"/></div>
-        <div>
-            카테고리 : <select id="category">
-                <option value="${category}">수정안함</option>
-                <option value="밥">밥</option>
-                <option value="술">술</option>
-                <option value="카페">카페</option>
-            </select>
+    <div class="wrapper">
+        <h1 class="create_h1">Place Eidt</h1>
+        <h5 class="create_h5">추천할 맛집을 수정합니다.</h5>
+        <form class="create_form">
+            <div class="group">
+                <input id="name" class="create_input" type="text" required="required" value="${name}"/><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">제목</label>
+            </div>
+            <div class="group">
+                <select id="category" class="create_input" type="text" required="required">
+                    <option value="${category}">수정안함</option>
+                    <option value="밥">밥</option>
+                    <option value="술">술</option>
+                    <option value="카페">카페</option>
+                </select><span class="highlight"></span><span class="bar"></span>
+                <label class="create_label">카테고리</label>
+            </div>
+            <div class="group">
+                <textarea id="content" class="create_input" type="textarea" rows="10"
+                    required="required" >${content}</textarea><span class="highlight"></span><span class="bar"></span>
+                <label class="create_label">내용</label>
+            </div>
+            <div class="group">
+                <input id="address" class="create_input" type="text" required="required" value="${address}"/><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">주소</label>
+            </div>
+            <div class="group">
+                <input id="score" class="create_input" type="number" step="0.1" required="required" value="${score}"/><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">별점</label>
+            </div>
+            <div class="group">
+                <input id="price" class="create_input" type="text" required="required" value="${price}"/><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">가격</label>
+            </div>
+            <div class="group">
+                <input id="hour" class="create_input" type="text" required="required" value="${hour}"/><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">영업시간</label>
+            </div>
+            <div class="group">
+                <input id="holiday" class="create_input" type="text" required="required" value="${holiday}"/><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">휴일</label>
+            </div>
+            <div class="row">
+                <div id="get_image_container" class="image_container">
+                ${images}
+                </div>
+            </div>
+            <div class="file_class">
+                <input id="images" type="file" class="file_input" onchange="setThumbnail(event);" multiple /><span
+                    class="highlight"></span><span class="bar_input"></span>
+                <label class="create_label">업로드 된 파일</label>
+                <button class="btn btn-add" type="button" onclick="imageAdd(${place_id}, 1)">추가하기</button>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div id="image_container" class="image_container">
         </div>
-        <div>내용 : <input id='content' value="${content}"/></div>
-        <div>주소 : <input id='address' value="${address}"/></div>
-        <div>별점 : <input id='score' value="${score}"/></div>
-        <div>가격 : <input id='price' value="${price}"/></div>
-        <div>영업시간 : <input id='hour' value="${hour}"/></div>
-        <div>휴일 : <input id='holiday' value="${holiday}"/></div>
-        
-        <div>이미지 : ${images}</div>
-
-        <br />
-        <div>
-            <input type="file" id="images" multiple>
-            <button type="button" onclick="ImageAdd(${place_id}, 1)">추가하기</button>
-        </div>
-        <br />
-        <button type="button" onclick="PlaceUpdate(${place_id})">확인</button>
-    </form>
+    </div>
+    <div class="btn-box">
+        <button class="btn btn-submit" type="button" onclick="placeUpdate(${place_id})">submit</button>
+        <button class="btn btn-cancel" type="button" onclick="go_placeDetailView(${place_id})">cancel</button>
+    </div>
     `
+
 }
 
 // 장소추천 수정하기
-async function PlaceUpdate(place_id) {
+async function placeUpdate(place_id) {
     let name = document.querySelector('#name')
     let category = document.querySelector('#category')
     let content = document.querySelector('#content')
@@ -638,7 +711,7 @@ async function PlaceUpdate(place_id) {
     let holiday = document.querySelector('#holiday')
 
 
-    const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
+    const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id} `, {
         headers: {
             Authorization: "Bearer " + logined_token,
             "content-type": "application/json",
@@ -656,13 +729,13 @@ async function PlaceUpdate(place_id) {
         })
     })
 
-    window.location.href = `place_view.html?id=${place_id}`;
+    window.location.href = `place_view.html?id=${place_id} `;
 
 }
 
 // 장소추천 삭제하기
-async function PlaceDelete(place_id) {
-    const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
+async function placeDelete(place_id) {
+    const response = await fetch(`${BACKEND_BASE_URL} /place/${place_id} `, {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
@@ -673,11 +746,11 @@ async function PlaceDelete(place_id) {
         alert("삭제가 완료되었습니다.");
     }
 
-    window.location.replace(`${FRONTEND_BASE_URL}/place_view.html`);
+    window.location.replace(`${FRONTEND_BASE_URL} /place_view.html`);
 }
 
 // 이미지 추가하기
-async function ImageAdd(place_id, place_image_id) {
+async function imageAdd(place_id, place_image_id) {
     let images = document.querySelector('#images')
 
     const formdata = new FormData();
@@ -702,7 +775,7 @@ async function ImageAdd(place_id, place_image_id) {
 }
 
 // 이미지 삭제하기
-async function ImageDelete(place_id, place_image_id) {
+async function imageDelete(place_id, place_image_id) {
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/image/${place_image_id}/`, {
         headers: {
@@ -717,7 +790,7 @@ async function ImageDelete(place_id, place_image_id) {
 }
 
 // 댓글 작성하기
-async function CommentWrite(place_id) {
+async function commentWrite(place_id) {
 
     const comment = document.querySelector('#comments')
 
@@ -749,7 +822,7 @@ async function CommentWrite(place_id) {
 }
 
 // 대댓글 작성하기
-async function ReplyWrite(place_id, place_comment_id) {
+async function replyWrite(place_id, place_comment_id) {
 
     let reply = document.querySelector(`#reply_write${place_comment_id}`)
 
@@ -768,16 +841,20 @@ async function ReplyWrite(place_id, place_comment_id) {
 }
 
 // 대댓글 작성 폼 띄우기
-async function ReplyPreWrite(place_id, place_comment_id) {
+async function replyPreWrite(place_id, place_comment_id) {
 
     let reply = document.querySelector(`#reply${place_comment_id}`)
 
-    reply.innerHTML = `<input id="reply_write${place_comment_id}"/> <button type="button" onclick="ReplyWrite(${place_id}, ${place_comment_id})">등록하기</button>`
+    reply.innerHTML = `
+    <input id="reply_write${place_comment_id}"/> 
+    <button type="button" style="margin-top:10px" class="button-blue" onclick="replyWrite(${place_id}, ${place_comment_id})">등록하기</button>
+    `
 }
 
 // 댓글 수정 폼 띄우기
-async function CommentPreUpdate(place_id, place_comment_id) {
-    const comment = document.querySelector(`#comment${place_comment_id}`);
+async function commentPreUpdate(place_id, place_comment_id) {
+    let comment = document.querySelector(`#comment${place_comment_id}`);
+    let edit = document.querySelector(`#edit_comment${place_comment_id}`);
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/${place_comment_id}/`, {
         headers: {
@@ -788,13 +865,27 @@ async function CommentPreUpdate(place_id, place_comment_id) {
 
     const response_json = await response.json();
 
-    comment.innerHTML = `
+    comment.style.display = 'none';
+    edit.style.display = '';
+
+    edit.innerHTML = `
     <input id='comment_update' value="${response_json["content"]}"/>
-    <button type="button" onclick="CommentUpdate(${place_id}, ${place_comment_id})">수정하기</button>`
+    <button type="button" class="button-blue" onclick="commentUpdate(${place_id}, ${place_comment_id})">수정하기</button>
+    <button type="button" class="button-white" onclick="commentCancel(${place_id}, ${place_comment_id})">취소하기</button>
+    `
+}
+
+// 댓글 수정하기 취소
+function commentCancel(place_id, place_comment_id) {
+    let comment = document.querySelector(`#comment${place_comment_id}`);
+    let edit = document.querySelector(`#edit_comment${place_comment_id}`);
+
+    comment.style.display = '';
+    edit.style.display = 'none';
 }
 
 // 댓글 수정하기
-async function CommentUpdate(place_id, place_comment_id) {
+async function commentUpdate(place_id, place_comment_id) {
 
     const comment_update = document.querySelector('#comment_update')
 
@@ -813,13 +904,95 @@ async function CommentUpdate(place_id, place_comment_id) {
 }
 
 // 댓글 삭제하기
-async function CommentDelete(place_id, place_comment_id) {
+async function commentDelete(place_id, place_comment_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/comment/${place_comment_id}/`, {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
         method: "DELETE",
     });
+    alert('댓글이 삭제되었습니다.')
+
     window.location.href = `place_view.html?id=${place_id}`;
 }
 
+// 이미지 슬라이더 시작
+function imageSlider() {
+    let pages = 0;//현재 인덱스 번호
+    let positionValue = 0;//images 위치값
+    const IMAGE_WIDTH = 260;//한번 이동 시 IMAGE_WIDTH만큼 이동한다.
+    //DOM
+    const backBtn = document.querySelector(".back")
+    const nextBtn = document.querySelector(".next")
+    let image_container = document.querySelector('#place-image-slide');
+    let images_tag = image_container.getElementsByTagName('img');
+    let image_count = images_tag.length - 4
+    let detail_images = document.querySelector('#place-detail-slide-images')
+
+    if (image_count < 0) {
+        nextBtn.setAttribute('disabled', 'true')
+    }
+
+    function next() {
+        if (pages < image_count) {
+            backBtn.removeAttribute('disabled')//뒤로 이동해 더이상 disabled가 아니여서 속성을 삭제한다.
+            positionValue -= IMAGE_WIDTH;//IMAGE_WIDTH의 증감을 positionValue에 저장한다.
+            detail_images.style.transform = `translateX(${positionValue}px)`;
+            //x축으로 positionValue만큼의 px을 이동한다.
+            pages += 1; //다음 페이지로 이동해서 pages를 1증가 시킨다.
+        }
+        if (pages === image_count) { //
+            nextBtn.setAttribute('disabled', 'true')//마지막 장일 때 next버튼이 disabled된다.
+        }
+    }
+
+    function back() {
+        if (pages > 0) {
+            nextBtn.removeAttribute('disabled')
+            positionValue += IMAGE_WIDTH;
+            detail_images.style.transform = `translateX(${positionValue}px)`;
+            pages -= 1; //이전 페이지로 이동해서 pages를 1감소 시킨다.
+        }
+        if (pages === 0) {
+            backBtn.setAttribute('disabled', 'true')//마지막 장일 때 back버튼이 disabled된다.
+        }
+    }
+
+    function init() {  //초기 화면 상태
+        backBtn.setAttribute('disabled', 'true'); //속성이 disabled가 된다.
+        backBtn.addEventListener("click", back); //클릭시 다음으로 이동한다.
+        nextBtn.addEventListener("click", next);//클릭시 이전으로 이동한다.
+    }
+
+    init();
+
+}
+
+// 이미지 미리보기
+function setThumbnail(event) {
+    var container = document.querySelector("#image_container");
+    container.innerHTML = '';
+
+    var images = event.target.files;
+
+    for (var i = 0; i < images.length; i++) {
+        var reader = new FileReader();
+        var image = images[i];
+
+        reader.onload = (function (file) {
+            return function (event) {
+                var img = document.createElement("img");
+                img.setAttribute("src", event.target.result);
+                img.setAttribute("class", "img_preview");
+
+                var imgContainer = document.createElement("div");
+                imgContainer.setAttribute("class", "img_container");
+                imgContainer.appendChild(img);
+
+                container.appendChild(imgContainer);
+            };
+        })(image);
+
+        reader.readAsDataURL(image);
+    }
+}

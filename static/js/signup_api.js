@@ -39,14 +39,6 @@ async function signup() {
 
     }
 
-    // if (response.ok) {
-    //     return response
-    // } else {
-    //     // 에러 처리
-    //     const errorData = await response.json();
-    //     const errorArray = Object.entries(errorData);
-    //     alert(errorArray[0][1]);
-    // }
 }
 
 async function signupButton() {
