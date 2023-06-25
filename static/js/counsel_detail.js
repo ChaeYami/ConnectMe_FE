@@ -17,7 +17,7 @@ async function counselDetail(counsel_id) {
             let counsel_id = response.counsel['id']
             let counsel_title = response.counsel['title']
             let counsel_content = response.counsel['content']
-            let counsel_author = response.counsel['user']['account']
+            let counsel_author = response.counsel['user']['nickname']
             let counsel_author_id = response.counsel['user']['pk']
             let author_html = `<a onclick = "go_profile(${counsel_author_id})">${counsel_author}</a>`
             let counsel_created_at = response.counsel['created_at']
