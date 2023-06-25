@@ -49,28 +49,28 @@
 
 
     <!-- 메인 -->
-    <div class="wrapper">
-        <h1 class="create_h1">Counsel Create</h1>
-        <h5 class="create_h5">고민이 있다면 이곳에 작성해주세요.</h5>
-        <form class="create_form">
-            <div class="group">
-                <input id="title" class="create_input" type="text" required="required" /><span
-                    class="highlight"></span><span class="bar"></span>
-                <label class="create_label">제목</label>
-            </div>
-            <div class="group">
-                <textarea id="content" class="create_input" type="textarea" rows="10"
-                    required="required"></textarea><span class="highlight"></span><span class="bar"></span>
-                <label class="create_label">내용</label>
-            </div>
-            <div class="btn-box">
-                <button class="btn btn-submit" type="button" onclick="CreateCounsel()">submit</button>
-                <button class="btn btn-cancel" type="button" onclick="go_counsel()">cancel</button>
-            </div>
-        </form>
-    </div>
-
-
+    <main>
+        <div class="wrapper">
+            <h1 class="create_h1">Counsel Create</h1>
+            <h5 class="create_h5">고민이 있다면 이곳에 작성해주세요.</h5>
+            <form class="create_form">
+                <div class="group">
+                    <input id="title" class="create_input" type="text" required="required" /><span
+                        class="highlight"></span><span class="bar"></span>
+                    <label class="create_label">제목</label>
+                </div>
+                <div class="group">
+                    <textarea id="content" class="create_input" type="textarea" rows="10"
+                        required="required"></textarea><span class="highlight"></span><span class="bar"></span>
+                    <label class="create_label">내용</label>
+                </div>
+                <div class="btn-box">
+                    <button class="btn btn-submit" type="button" onclick="CreateCounsel()">submit</button>
+                    <button class="btn btn-cancel" type="button" onclick="go_counsel()">cancel</button>
+                </div>
+            </form>
+        </div>
+    </main>
 </body>
 
 <!-- js -->

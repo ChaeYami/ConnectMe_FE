@@ -26,6 +26,8 @@ $(document).ready(function () {
         $f.find('label').text(text);
         $f.find('i').attr('class', icon);
         $('#category-select').css('z-index', '');
+        $('#category-select').css('display', '');
+        placeView($f.find('label').text(text)[0].innerText)
     });
 
     $('.field').click(function (e) {
@@ -36,6 +38,7 @@ $(document).ready(function () {
     $(document).click(function () {
         $('#opened').prop('checked', false);
         $('#category-select').css('z-index', '-1');
+        $('#category-select').css('display', 'none');
     });
 });
 
@@ -44,19 +47,11 @@ function hoverCategory(input) {
 
     if (input) {
         select.style.zIndex = '2';
+        select.style.display = '';
     } else {
         select.style.zIndex = '-1';
-    }
-}
+        select.style.display = 'none';
 
-function hoverCategory(input) {
-    let select = document.querySelector('#category-select');
-
-    if (input) {
-        select.style.zIndex = '2';
-        console.log(select);
-    } else {
-        select.style.zIndex = '-1';
     }
 }
 
@@ -111,18 +106,28 @@ async function createPlace() {
     }
 }
 
-// 장소추천 전체보기
-async function placeView() {
-    const response = await fetch(`${BACKEND_BASE_URL}/place/`, {
+// 장소추천 전체보기 (카테고리)
+async function placeView(category_select) {
+    let container = document.querySelector('#place')
+    let place_create = document.querySelector('#place_create')
+
+    container.innerHTML = ``
+    place_create.innerHTML = ``
+
+    let place_category_input = `?search=`
+
+    if (category_select === '식사' || category_select === '주점' || category_select === '카페') {
+        place_category_input = `?search=${category_select}`
+    }
+
+    const response = await fetch(`${BACKEND_BASE_URL}/place/category/${place_category_input}`, {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
         method: "GET",
     });
 
-    const response_json = await response.json();
-    let container = document.querySelector('#place')
-    let place_create = document.querySelector('#place_create')
+    let response_json = await response.json();
 
     if (JSON.parse(payload)['is_staff']) {
         place_create.innerHTML += `
@@ -132,7 +137,7 @@ async function placeView() {
         `
     }
 
-    response_json.forEach((e, i) => {
+    response_json['results'].forEach((e, i) => {
         let place_id = e.id
         let name = e.title
         let category = e.category
@@ -243,6 +248,197 @@ async function placeView() {
         // container html 끝
     })
 }
+
+// 장소추천 검색하기
+async function placeSearchView(event) {
+    event.preventDefault();
+
+    let container = document.querySelector('#place')
+    let place_create = document.querySelector('#place_create')
+
+    container.innerHTML = ``
+    place_create.innerHTML = ``
+
+    let place_category_input = ``
+
+
+    // Select box
+    let selectBox = document.querySelector('.select-box__current');
+    let selectedValue = selectBox.querySelector('.select-box__input:checked').value;
+
+    switch (parseInt(selectedValue)) {
+        case 1:
+            place_category_input = `?`
+            break;
+
+        case 2:
+            place_category_input = `?`
+            break;
+
+        case 3:
+            place_category_input = `?ordering=-comment_count&`
+            break;
+
+        case 4:
+            place_category_input = `?ordering=-like&`
+            break;
+
+        case 5:
+            place_category_input = `?ordering=-bookmark&`
+            break;
+    }
+
+
+    // 검색 input
+    let searchInput = document.querySelector('#place-search-input');
+    let searchValue = searchInput.value;
+
+    place_category_input += `search=${searchValue}`
+
+
+    // 카테고리
+    let selectedCategory = document.querySelector('.seltext').textContent.trim();
+
+    if (selectedCategory === '식사' || selectedCategory === '주점' || selectedCategory === '카페') {
+        let categoryValue = encodeURIComponent(selectedCategory);
+        place_category_input += `&category=${categoryValue}`
+    }
+
+    const response = await fetch(`${BACKEND_BASE_URL}/place/search/${place_category_input}`, {
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
+        method: "GET",
+    });
+
+    let response_json = await response.json();
+
+    if (JSON.parse(payload)['is_staff']) {
+        place_create.innerHTML += `
+        <a href="place_create.html">
+            <img src="static/image/add.png" style="width:20px">
+        </a>
+        `
+    }
+
+    if (response_json['results'] == '') {
+        container.innerHTML += `<div style="margin-top: 100px; text-align:center;"><h2>일치하는 검색결과가 없습니다.</h2></div>`
+    }
+
+    response_json['results'].forEach((e, i) => {
+        let place_id = e.id
+        let name = e.title
+        let category = e.category
+        let content = e.content
+        let address = e.address
+        let image = e.image
+        let score = e.score
+        let bookmark = e.bookmark
+        let book_count = e.bookmark_count
+        let comment_count = e.comment_count
+        let like_count = e.like_count
+
+        container.innerHTML += `
+        <div id="place${place_id}" class="place-container"></div>`
+
+        let place = document.querySelector(`#place${place_id}`)
+
+        // 이미지 시작
+        if (image) {
+            place.innerHTML += `
+            <div>
+                <a href="place_view.html?id=${place_id}">
+                    <img class="place-container-img" src="${image['url']}" onclick="placePreUpdateView()">
+                </a>
+            </div>
+            `
+        } else {
+            place.innerHTML += `
+            <div style="width:230px; height:230px;">
+            </div>`
+        }
+        // 이미지 끝
+        // 북마크 시작
+        let place_book = ``
+
+        if (bookmark.includes(logined_user_id)) {
+
+            place_book = `
+            <a>
+                <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
+            </a>`
+        } else {
+            place_book = `
+            <a>
+                <img id="book${place_id}" src="static/image/bookmark.png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
+            </a>`
+        }
+        // 북마크 끝
+        // edit 버튼 시작
+        let place_edit = ``
+
+        if (JSON.parse(payload)['is_staff']) {
+            place_edit = `
+            <a>
+                <img src="static/image/edit.png" style="margin-top:10px; width:20px;"
+                    onclick="placePreUpdateView(${place_id})">
+            </a>
+            `
+        }
+        // edit 버튼 끝
+        // container html 시작
+        place.innerHTML += `
+        <div class="place-container-text">
+            <div class="place-container-main">
+                <div class="place-container-title">
+                    <div class="place-container-title0">
+                        <h2>${i + 1}.</h2>
+                    </div>
+                    <div class="place-container-title1">
+                        <h2><a class="place-container-title-a" href="place_view.html?id=${place_id}">${name}</a></h2>
+                    </div>
+                    <div class="place-container-title2">
+                        <div class="place-container-score">
+                            <h2>${score}</h2>
+                        </div>
+                    </div>
+                    <div id="place_edit">
+                    ${place_edit}
+                    </div>
+                </div>
+                <div class="place-container-book" id="place-container-book">
+                ${place_book}
+                </div>
+            </div>
+            <div class="place-container-address">${address}</div>
+            <div class="place-container-content">${content}</div>
+            <div class="place-container-count">
+                <div class="place-container-count-img">
+                    <img src="static/image/chat.png">
+                    ${comment_count}
+                </div>
+                <div class="place-container-count-img">
+                    <img src="static/image/heart (2).png">
+                    ${like_count}
+                </div>
+                <div class="place-container-count-img">
+                    <img src="static/image/bookmark (2).png">
+                    ${book_count}
+                </div>
+            </div>
+            <div id="map"></div>
+            
+        </div>
+        <div class="place-container-hr">
+            <hr>
+        </div>
+        `
+        // container html 끝
+    })
+}
+
+let searchForm = document.querySelector('.search-form');
+searchForm.addEventListener('submit', placeSearchView);
 
 // 지도 보여주기
 async function placeShowMap(name, address) {
@@ -880,7 +1076,7 @@ async function placeUpdate(place_id) {
 
 // 장소추천 삭제하기
 async function placeDelete(place_id) {
-    const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id} `, {
+    const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
             Authorization: "Bearer " + logined_token,
         },

@@ -7,6 +7,7 @@
 
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/counsel.css">
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
@@ -49,31 +50,36 @@
 
 
     <!-- 메인 -->
-    <div class="main">
+    <main>
+        <div class="main">
+            <div class="counsel-title">
+                <h2 id="title"></h2>
+                <div class="counsel-author" id="author"></div>
+                <div class="detail-buttons" id="buttons"></div>
+            </div>
 
-        <div class="counsel-title" id="title"></div>
-        <div class="counsel-author" id="author"></div>
-        <div class="counsel-content" id="content"></div>
-        <div class="counsel-likes_count" id="likes_count"></div>
-        <div class="like-button" id="like-button">
+            <div class="counsel-content" id="content"></div>
+            <div class="like">
+                <div class="like-button" id="like-button"></div>
+                <div class="counsel-likes_count" id="likes_count"></div>
+            </div>
+            <hr>
+            <div class="create_comment_box">
+                <div>
+                    <textarea name="" id="inputComment" class="textareaCommentclass" placeholder="댓글을 입력해주세요" cols="110"
+                        rows="4"></textarea>
+                </div>
+                <button class="commentbtn" onclick="counselCommentCreate()">작성완료</button>
+            </div>
+            <div class="comment_card_class">
+                <h4>댓글</h4>
+                <hr>
+                <div id="comment_card">
+                </div>
+            </div>
         </div>
+    </main>
 
-        <div class="buttons" id="buttons"></div>
-        <hr>
-        <h4>댓글</h4>
-        <div>
-            <p><input id="inputComment" type="text" placeholder="댓글 입력하기"></p>
-            <button onclick="counselCommentCreate()">작성</button>
-        </div>
-        <hr>
-        <div id="comment_card">
-        </div>
-        <div id="reply_card">
-        </div>
-
-
-
-    </div>
 </body>
 
 <!-- js -->

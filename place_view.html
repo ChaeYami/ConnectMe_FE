@@ -118,7 +118,7 @@
             <div class="search-select" id="category-box">
                 <span class="field"><label class="seltext" for="opened">카테고리</label><i></i></span><input id="opened"
                     type="checkbox" />
-                <ul style="z-index:-1;" class="select" id="category-select">
+                <ul style="z-index:-1; display:none;" class="select" id="category-select">
                     <li class="icon arrow"></li>
                     <li class="sel">
                         식사 <i class="icon list"></i>
@@ -182,8 +182,8 @@
                     <!-- search 시작 -->
                     <div class="search-div">
                         <form class="search-form">
-                            <input type="search" value="" placeholder="Search" class="search-input">
-                            <button type="submit" class="search-button">
+                            <input id="place-search-input" type="search" placeholder="Search" class="search-input">
+                            <button type="button" class="search-button" onclick="placeSearchView()">
                                 <svg class="submit-button">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
                                 </svg>
