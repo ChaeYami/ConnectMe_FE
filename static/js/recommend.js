@@ -45,11 +45,11 @@ async function recommend(filter) {
                 } else if (filter == 'all') {
                     filter_ = '전체'
                 }
-                if (rows[0][filter]){
+                if (rows[0][filter]) {
                     let condition = `${filter_} : ${rows[0][filter]}`
                     $('.condition').append(condition)
                 }
-                
+
                 for (let i = 0; i < rows.length; i++) {
                     let user_pk = rows[i]['id']
                     let user_nickname = rows[i]['nickname']
@@ -59,11 +59,13 @@ async function recommend(filter) {
                     let user_introduce = rows[i]['introduce']
                     let user_profile_img = rows[i]['profile_img']
                     if (user_profile_img == null) {
-                        user_profile_img = '/media/user.png'
+                        user_profile_img = 'static/image/user.png'
+                    } else {
+                        user_profile_img = `${BACKEND_BASE_URL}${user_profile_img}`
                     }
                     let temp_html = `<a onclick="go_profile(${user_pk})"><div class="card">
                     <div class="image_box">
-                        <img class="image" src="${BACKEND_BASE_URL}${user_profile_img}" alt="">
+                        <img class="image" src="${user_profile_img}" alt="">
                     </div>
                     <div class="user_info">
                         <div class="user_nickname">

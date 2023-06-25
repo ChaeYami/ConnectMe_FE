@@ -120,12 +120,15 @@ async function recommend(filter) {
                 let user_region = rows[i]['prefer_region']
                 let user_profile_img = rows[i]['profile_img']
                 if (user_profile_img == null) {
-                    user_profile_img = '/media/user.png'
+                    user_profile_img = 'static/image/user.png'
+                }else{
+                    user_profile_img=`${BACKEND_BASE_URL}${user_profile_img}`
                 }
+                
 
                 let temp_html = `<a onclick="go_profile(${user_pk})"><div class="card">
                     <div class="image_box">
-                        <img class="image" src="${BACKEND_BASE_URL}${user_profile_img}"alt="">
+                        <img class="image" src="${user_profile_img}"alt="">
                     </div>
                     <div class="user_info">
                         <div class="user_nickname">
