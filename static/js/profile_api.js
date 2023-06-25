@@ -7,6 +7,7 @@ const logined_account = payload_parse.account;
 window.onload = () => {
     Profile(user_id);
     if (payload_parse.user_id === user_id) {
+        // 내프로필일때
         document.getElementById("requests").style.display = "block";
         document.getElementById("friends-list").style.display = "block";
         document.getElementById("album").style.display = "block";
@@ -15,10 +16,12 @@ window.onload = () => {
         document.getElementById("addFriend").style.display = "none";
 
       } else {
+        // 다른사람 프로필일때
         document.getElementById("addFriend").style.display = "block";
         document.getElementById("chat").style.display = "block";
         document.getElementById("album").style.display = "block";
         document.getElementById("my-buttons").style.display="none";
+        document.getElementById("report-button").style.display="block";
       }
 }
 
@@ -60,6 +63,24 @@ async function addFriend(){
 
     if(response.status == 201){
         alert("친구신청을 보냈습니다.")
+    }else {
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        alert(errorArray[0][1]);
+    }
+}
+
+async function report(){
+    const response = await fetch(`${BACKEND_BASE_URL}/user/report/${user_id}/`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": "Bearer " + logined_token
+        },
+        method:"POST",
+    });
+
+    if(response.status == 200){
+        alert("신고 완료")
     }else {
         const errorData = await response.json();
         const errorArray = Object.entries(errorData);
