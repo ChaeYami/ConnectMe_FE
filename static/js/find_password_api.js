@@ -30,8 +30,8 @@ async function Set_Password() {
     const password = document.getElementById("new-password").value;
     const repassword = document.getElementById("new-password-confirm").value;
     const urlParams = new URLSearchParams(window.location.search);
-    const uidb64 = urlParams.get('id').replace(/'/g, '').replace('$b', '');
-    const token = urlParams.get('token').replace('$', '');
+    const uidb64 = urlParams.get('id');
+    const token = urlParams.get('token');
     const response = await fetch(`${BACKEND_BASE_URL}/user/password/reset/`, {
         headers: {
             'Content-type': 'application/json',
