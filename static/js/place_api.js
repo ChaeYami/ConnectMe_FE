@@ -26,6 +26,7 @@ $(document).ready(function () {
         $f.find('label').text(text);
         $f.find('i').attr('class', icon);
         $('#category-select').css('z-index', '');
+        $('#category-select').css('display', '');
     });
 
     $('.field').click(function (e) {
@@ -36,6 +37,7 @@ $(document).ready(function () {
     $(document).click(function () {
         $('#opened').prop('checked', false);
         $('#category-select').css('z-index', '-1');
+        $('#category-select').css('display', 'none');
     });
 });
 
@@ -44,19 +46,11 @@ function hoverCategory(input) {
 
     if (input) {
         select.style.zIndex = '2';
+        select.style.display = '';
     } else {
         select.style.zIndex = '-1';
-    }
-}
+        select.style.display = 'none';
 
-function hoverCategory(input) {
-    let select = document.querySelector('#category-select');
-
-    if (input) {
-        select.style.zIndex = '2';
-        console.log(select);
-    } else {
-        select.style.zIndex = '-1';
     }
 }
 
@@ -880,7 +874,7 @@ async function placeUpdate(place_id) {
 
 // 장소추천 삭제하기
 async function placeDelete(place_id) {
-    const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id} `, {
+    const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
             Authorization: "Bearer " + logined_token,
         },

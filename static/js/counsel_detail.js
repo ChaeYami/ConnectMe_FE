@@ -17,7 +17,7 @@ async function counselDetail(counsel_id) {
             let counsel_id = response.counsel['id']
             let counsel_title = response.counsel['title']
             let counsel_content = response.counsel['content']
-            let counsel_author = response.counsel['user']['nickname']
+            let counsel_author = response.counsel['user']['account']
             let counsel_author_id = response.counsel['user']['pk']
             let author_html = `<a onclick = "go_profile(${counsel_author_id})">${counsel_author}</a>`
             let counsel_created_at = response.counsel['created_at']
@@ -96,26 +96,60 @@ async function counselComments(counsel_id) {
         dataType: "json",
         success: function (response) {
             const rows = response
+            console.log(rows)
             for (let i = 0; i < rows.length; i++) {
                 id = rows[i]['id']
                 content = rows[i]['content']
                 updated_at = rows[i]['updated_at']
                 user = rows[i]['user']
                 comment_likes_count = rows[i]['comment_like_count']
-                let temp_html =
-                    `
+                like = rows[i]['like']
+                let temp_html = ``
+                let like_html = ``
+
+                if (like.includes(logined_user_id)) {
+                    like_html = `
+                    <a>
+                        <img src="static/image/heart (1).png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
+                    </a>`
+                } else {
+                    like_html = `
+                    <a>
+                        <img src="static/image/heart.png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
+                    </a>`
+                }
+
+
+
+                if (content == '삭제된 댓글 입니다.') {
+                    let temp_html = `
                     <p id="now_comment${id}" style="display:block;">${content}</p>
-                    <p id="p_comment_update_input${id}" style="display:none;"/><input id="comment_update_input${id}" type="text"/> <button  onclick="commentUpdateConfrim(${id})">완료</button></p>
-                    <a>${user}</a>
-                    <p>${updated_at}</p>
-                    <p>좋아요 ${comment_likes_count}</p>
-                    <p id="p_reply_create_input${id}" style="display:none;"/><input id="reply_create_input${id}" type="text"/> <button  onclick="replyCreateConfrim(${id})">완료</button></p>
-                    <button onclick="reply_create_handle(${id})">대댓글 작성하기</button>
-                    <button onclick="comment_update_handle(${id})">수정하기</button>
-                    <button onclick="commentDelete(${id})">삭제하기</button>
-                    <button onclick="clickCommentLike(${id})">좋아요버튼</button>
                     <div id="reply_card">
+                    <hr>
                     `
+                    $('#comment_card').append(temp_html)
+                }
+                else {
+                    let temp_html =
+                        `
+                            <p id="now_comment${id}" style="display:block;">${content}</p>
+                            <p id="p_comment_update_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 700px;" id="comment_update_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="commentUpdateConfrim(${id})">완료</button></p>
+                            <p> <small> ${user} ${updated_at}</p>
+                            
+                            <p id="p_reply_create_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 700px;" id="reply_create_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyCreateConfrim(${id})">완료</button></p>
+                            <div class=comment_btns>
+                            <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="reply_create_handle(${id})">대댓글 작성하기</button>
+                            ${like_html}<p style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p>
+                            <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="comment_update_handle(${id})"> </a>
+                            <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="commentDelete(${id})"> </a>
+                            </div>
+                            <div id="reply_card">
+                            <hr>
+                            `
+
+                    $('#comment_card').append(temp_html)
+                }
+
                 $('#comment_card').append(temp_html)
                 rows[i].reply.forEach((each_reply => {
                     id = each_reply['id']
@@ -123,17 +157,33 @@ async function counselComments(counsel_id) {
                     user = each_reply['user']['nickname']
                     updated_at = each_reply['updated_at']
                     reply_likes_count = each_reply['reply_like_count']
+                    like = each_reply['like']
+
+                    let like_html = ``
+
+                    if (like.includes(logined_user_id)) {
+                        like_html = `
+                        <a>
+                            <img src="static/image/heart (1).png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
+                        </a>`
+                    } else {
+                        like_html = `
+                        <a>
+                            <img src="static/image/heart.png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
+                        </a>`
+                    }
+
                     let temp_html = `
-                        <div style="color:red;">
+                        <div style="margin-left: 50px;">
                         <p id="now_reply${id}" style="display:block;">${content}</p>
-                        <p id="p_reply_update_input${id}" style="display:none;"/><input id="reply_update_input${id}" type="text"/> <button  onclick="replyUpdateConfrim(${id})">완료</button></p>
-                        <a>${user}</a>
-                        <p>${updated_at}</p>
-                        <p>좋아요 ${reply_likes_count}</p>
-                        <button onclick="reply_update_handle(${id})">대댓글 수정하기</button>
-                        <button onclick="replyDelete(${id})">대댓글 삭제하기</button>
-                        <button onclick="clickReplyLike(${id})">좋아요버튼</button>
+                        <p id="p_reply_update_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 600px;" id="reply_update_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyUpdateConfrim(${id})">완료</button></p>
+                        <div class=replybtns>
+                        <p> <small> ${user} ${updated_at}${like_html}<p style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p></p>
+                        <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="reply_update_handle(${id})"> </a>
+                        <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="replyDelete(${id})"> </a>
                         </div>
+                        </div>
+                        <hr>
                         `
                     $('#reply_card').append(temp_html)
                     $(`#reply_update_input${id}`).val(content)
@@ -420,8 +470,8 @@ async function clickCommentLike(comment_id) {
     });
 
     console.log(response)
-    if(response.status == 200){alert("좋아요 취소")}
-    else{alert("좋아요")}
+    if (response.status == 200) { alert("좋아요 취소") }
+    else { alert("좋아요") }
 }
 // ================================ 댓글 좋아요 끝 ================================
 
@@ -436,7 +486,7 @@ async function clickReplyLike(reply_id) {
     });
 
     console.log(response)
-    if(response.status == 200){alert("좋아요 취소")}
-    else{alert("좋아요")}
+    if (response.status == 200) { alert("좋아요 취소") }
+    else { alert("좋아요") }
 }
 // ================================ 대댓글 좋아요 끝 ================================

@@ -50,26 +50,28 @@
 
 
     <!-- 메인 -->
-    <div class="wrapper">
-        <h1 class="create_h1">Counsel Edit</h1>
-        <h5 class="create_h5">고민글을 수정합니다.</h5>
-        <form class="create_form">
-            <div class="group">
-                <textarea id="title" class="create_input" type="textarea" rows="1" required="required"></textarea><span
-                    class="highlight"></span><span class="bar"></span>
-                <label class="create_label">제목</label>
-            </div>
-            <div class="group">
-                <textarea id="content" class="create_input" type="textarea" rows="10"
-                    required="required"></textarea><span class="highlight"></span><span class="bar"></span>
-                <label class="create_label">내용</label>
-            </div>
-            <div class="btn-box">
-                <button class="btn btn-submit" type="button" onclick="CounselEdit(counsel_id)">submit</button>
-                <button class="btn btn-cancel" type="button" onclick="go_counselDetail(counsel_id)">cancel</button>
-            </div>
-        </form>
-    </div>
+    <main>
+        <div class="wrapper">
+            <h1 class="create_h1">Counsel Edit</h1>
+            <h5 class="create_h5">고민글을 수정합니다.</h5>
+            <form class="create_form">
+                <div class="group">
+                    <textarea id="title" class="create_input" type="textarea" rows="1"
+                        required="required"></textarea><span class="highlight"></span><span class="bar"></span>
+                    <label class="create_label">제목</label>
+                </div>
+                <div class="group">
+                    <textarea id="content" class="create_input" type="textarea" rows="10"
+                        required="required"></textarea><span class="highlight"></span><span class="bar"></span>
+                    <label class="create_label">내용</label>
+                </div>
+                <div class="btn-box">
+                    <button class="btn btn-submit" type="button" onclick="CounselEdit(counsel_id)">submit</button>
+                    <button class="btn btn-cancel" type="button" onclick="go_counselDetail(counsel_id)">cancel</button>
+                </div>
+            </form>
+        </div>
+    </main>
 </body>
 
 <!-- js -->

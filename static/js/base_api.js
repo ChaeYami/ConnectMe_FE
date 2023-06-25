@@ -121,24 +121,20 @@ function SuccessLocation(data) {
         url: `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}`,
         type: 'GET',
         headers: { 'Authorization': `KakaoAK ` + KAKAO_API },
-        success: function (position) {
-            let full_address = position['documents'][0]['address'];
-            let address = full_address['address_name'];
-            let r1 = full_address['region_1depth_name'];
-            let r2 = full_address['region_2depth_name'];
-            let r3 = full_address['region_3depth_name'];
+        success: async function (position) {
 
-            let current_region = `${r1} ${r2}`
+            let full_address = position['documents'][0]['address'];
+            let current_region1 = full_address['region_1depth_name'];
+            let current_region2 = full_address['region_2depth_name'];
+            let r3 = full_address['region_3depth_name'];
 
             const formdata = new FormData();
             formdata.append("user", logined_user_id)
-            formdata.append("current_region", current_region)
-            formdata.append("address", address)
-            formdata.append("r1", r1)
-            formdata.append("r2", r2)
+            formdata.append("current_region1", current_region1)
+            formdata.append("current_region2", current_region2)
             formdata.append("r3", r3)
 
-            const response = fetch(BACKEND_BASE_URL + `/user/region/`, {
+            const response = await fetch(BACKEND_BASE_URL + `/user/region/`, {
                 headers: {
                     Authorization: "Bearer " + logined_token,
                 },
@@ -149,8 +145,8 @@ function SuccessLocation(data) {
             go_home()
 
         },
-        error: function (e) {
-            console.log(e);
+        error: function (error) {
+            console.log(error);
         }
     });
 }
