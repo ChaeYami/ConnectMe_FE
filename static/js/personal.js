@@ -26,6 +26,30 @@ async function personal(){
     })
 }
 
+// 회원탈퇴
+async function deactivation() {
+    const delConfirm = confirm("정말 탈퇴하시겠습니까?")
+    const token = localStorage.getItem("access")
+    const password = document.getElementById("password").value
+    if (delConfirm) {
+        const response = await fetch(`${backend_base_url}/user/${user_id}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + token,
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+                "password": password
+            })
+        })
+        if (response.status == 204) {
+            handleLogout()
+        } else {
+            alert("비밀번호를 확인해주세요")
+        }
+    }
+}
+
 function go_editphone(){
     location.href = 'edit_phone.html'
 }
