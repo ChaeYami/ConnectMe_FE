@@ -48,7 +48,7 @@ function setLocalStorage(response) {
             }).join('')
         );
         localStorage.setItem("payload", jsonPayload);
-        window.location.replace('index.html')
+        go_api()
     } else {
         alert(response_json.error);
         window.location.replace('login.html')
@@ -121,10 +121,10 @@ async function recommend(filter) {
                 let user_profile_img = rows[i]['profile_img']
                 if (user_profile_img == null) {
                     user_profile_img = 'static/image/user.png'
-                }else{
-                    user_profile_img=`${BACKEND_BASE_URL}${user_profile_img}`
+                } else {
+                    user_profile_img = `${BACKEND_BASE_URL}${user_profile_img}`
                 }
-                
+
 
                 let temp_html = `<a onclick="go_profile(${user_pk})"><div class="card">
                     <div class="image_box">
@@ -152,20 +152,46 @@ async function recommend(filter) {
 
 }
 
+// 장소 북마크
+async function placeBook(place_id) {
+    const book = document.querySelector(`#book${place_id}`)
+
+    const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
+        method: "POST",
+    });
+
+    const response_json = await response.json();
+
+    if (response_json["message"] == "북마크") {
+        book['src'] = "static/image/bookmark (1).png"
+        alert("북마크가 추가되었습니다.");
+    } else {
+        book['src'] = "static/image/bookmark.png"
+        alert("북마크가 취소되었습니다.");
+    }
+}
+
 // 추천 핫플레이스
 async function recommendHotPlace() {
     let container = document.querySelector('#place-section')
 
-    const response = await fetch(`${BACKEND_BASE_URL}/place/`, {
+    container.innerHTML = ``
+
+    let place_category_input = `?search=`
+
+    const response = await fetch(`${BACKEND_BASE_URL}/place/category/${place_category_input}`, {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
         method: "GET",
     });
 
-    const response_json = await response.json();
+    let response_json = await response.json();
 
-    response_json.forEach((e, i) => {
+    response_json['results'].forEach((e, i) => {
         let place_id = e.id
         let name = e.title
         let category = e.category
@@ -177,7 +203,6 @@ async function recommendHotPlace() {
         let book_count = e.bookmark_count
         let comment_count = e.comment_count
         let like_count = e.like_count
-
 
         container.innerHTML += `
         <div id="place${place_id}" class="place-container"></div>`
@@ -250,30 +275,31 @@ async function recommendHotPlace() {
                 <div class="place-container-book" id="place-container-book">
                 ${place_book}
                 </div>
-                </div>
-                <div class="place-container-address">${address}</div>
-                <div class="place-container-content">${content}</div>
-                <div class="place-container-count">
-                    <div class="place-container-count-img">
-                        <img src="static/image/chat.png">
-                        ${comment_count}
-                    </div>
-                    <div class="place-container-count-img">
-                        <img src="static/image/heart (2).png">
-                        ${like_count}
-                    </div>
-                    <div class="place-container-count-img">
-                        <img src="static/image/bookmark (2).png">
-                        ${book_count}
-                    </div>
-                </div>
-                <div id="map"></div>
-                
             </div>
-            <div class="place-container-hr">
-                <hr>
+            <div class="place-container-address">${address}</div>
+            <div class="place-container-content">${content}</div>
+            <div class="place-container-count">
+                <div class="place-container-count-img">
+                    <img src="static/image/chat.png">
+                    ${comment_count}
+                </div>
+                <div class="place-container-count-img">
+                    <img src="static/image/heart (2).png">
+                    ${like_count}
+                </div>
+                <div class="place-container-count-img">
+                    <img src="static/image/bookmark (2).png">
+                    ${book_count}
+                </div>
             </div>
+            <div id="map"></div>
+            
+        </div>
+        <div class="place-container-hr">
+            <hr>
+        </div>
         `
         // container html 끝
     })
 }
+

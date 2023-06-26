@@ -39,7 +39,7 @@
 
     <div class="bot-nav">
         <div class="bot-nav-content">
-            <a href="">내글</a>
+            <a onclick="go_personal_create()">내글</a>
             <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
             <a href="">알림</a>
@@ -47,7 +47,6 @@
         <span class="dropbtn">프로필 메뉴</span>
     </div>
     <!--위, 아래 네비바 끝-->
-
     </div>
     <!-- 선택 검색 컨테이너 시작 -->
     <div class="meeting_search_box">
@@ -84,12 +83,10 @@
                 <li>
                     <label class="select-box__option" for="3" aria-hidden="aria-hidden">작성자</label>
                 </li>
-
             </ul>
         </div>
         <!-- select box 끝 -->
         <!-- 검색 시작 -->
-
         <div class="search-div">
 
             <div class="search-form">
@@ -109,11 +106,7 @@
         </div>
         <!-- 검색 끝 -->
     </div>
-
-    <!-- 선택, 검색 컨테이너 끝 -->
-    <!-- 모임 글 목록 시작 -->
-
-
+     <!-- 선택 검색 컨테이너 끝 -->
     <div>
         <h1 style="margin-left: 100px;">만남의 광장</h1>
         <a class="meeting_create_btn" onclick="go_meetingCreate()"><img src="static/image/add.png"
@@ -121,10 +114,7 @@
     </div>
     <div id="meeting_card" class="meeting_card_class">
     </div>
-
     <!-- 모임 글 목록 끝 -->
-
-    <!-- 모임 글 목록과 검색과 북마크, 북마크 목록 끝 -->
 </body>
 
 <!-- js -->
