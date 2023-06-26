@@ -3,19 +3,21 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
-    <link rel="stylesheet" href="static/css/find.css">
+    <link rel="stylesheet" href="static/css/personal_book.css">
+    <link rel="stylesheet" href="static/css/counsel.css">
 
-    <title>Connect ME | 비밀번호 재설정</title>
+
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <title>Document</title>
 </head>
 
 <body>
-
-
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
@@ -31,7 +33,6 @@
             </div>
         </div>
     </div>
-
     <div class="bot-nav">
         <div class="bot-nav-content">
             <a onclick="go_personal_create()">내글</a>
@@ -42,41 +43,29 @@
         <span class="dropbtn">프로필 메뉴</span>
     </div>
     <!--위, 아래 네비바 끝-->
-
-
-
-
-
-    <!--메인 시작-->
-    <div class="main">
-        <h2>비밀번호찾기</h2>
-        <hr>
-        <div class="find-section">
-
-            <div class="inputEmailForm">
-                <div class="input-box">
-                    <input type="email" name="reset_password" class="form-control" id="reset_password"
-                        placeholder="이메일 입력">
-                    <label for="phone">이메일</label>
-                </div>
-                <button type="button" class="btn btn-outline-secondary" onclick="handleResetPassword()">인증 메일
-                    전송</button>
+    <main>
+        <div class="counsel_user_create_container">
+            <div>
+                <h3>고민 상담</h3>
             </div>
-            <div class="buttons">
-                <a onclick="go_login()" style=" font-weight: 700;">로그인</a>
-                <a onclick="go_signup()" style=" font-weight: 700;">
-                    회원가입
-                </a>
+            <div>
+                <hr>
+            </div>
+            <div class="counsel_user_create_class" id="counsel_user_create_id">
             </div>
         </div>
-    </div>
-    <!--메인 끝-->
-
+        <div class="meeting-book-container">
+            <div>
+                <h3>만남의 광장</h3>
+            </div>
+            <div>
+            </div>
+            <div class="meeting_card_class" id="meeting_user_create_cards">
+            </div>
+        </div>
+    </main>
+    <script src="static/js/base_api.js"></script>
+    <script src="static/js/personal_create.js"></script>
 </body>
-
-
-<!-- js -->
-<script src="/static/js/base_api.js"></script>
-<script src="/static/js/find_password_api.js"></script>
 
 </html>
