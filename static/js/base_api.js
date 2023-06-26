@@ -9,6 +9,12 @@ const payload = localStorage.getItem("payload");
 const payload_parse = payload ? JSON.parse(payload) : null;
 const logined_user_id = payload_parse ? parseInt(payload_parse.user_id) : null;
 
+$(document).ready(function () {
+    if (!payload) {
+        go_login()
+    }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     const bot_nav = document.querySelector('.bot-nav');
     const loginLogout = document.querySelector('.login-logout');

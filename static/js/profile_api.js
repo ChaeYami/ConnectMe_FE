@@ -15,34 +15,34 @@ window.onload = () => {
         document.getElementById("chat").style.display = "none";
         document.getElementById("addFriend").style.display = "none";
 
-      } else {
+    } else {
         // 다른사람 프로필일때
         document.getElementById("addFriend").style.display = "block";
         document.getElementById("chat").style.display = "block";
         document.getElementById("album").style.display = "block";
-        document.getElementById("my-buttons").style.display="none";
-        document.getElementById("report-button").style.display="block";
-      }
+        document.getElementById("my-buttons").style.display = "none";
+        document.getElementById("report-button").style.display = "block";
+    }
 }
 
 // 프로필 내용 가져오기
-async function Profile(user_id){
+async function Profile(user_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
-        method:"GET",
+        method: "GET",
     })
     response_json = await response.json()
     const user_id_int = parseInt(user_id)
     const profile_img_url = `${BACKEND_BASE_URL}${response_json.profile_img}`;
     const profile_img_element = document.getElementById("profile-img")
     if (response_json.profile_img === null) {
-        profile_img_element.innerHTML=`<img src="static/image/user.png">`
-    
-    }else{
-        profile_img_element.innerHTML=`<img src="${profile_img_url}">`
+        profile_img_element.innerHTML = `<img src="static/image/user.png">`
+
+    } else {
+        profile_img_element.innerHTML = `<img src="${profile_img_url}">`
     }
-    if (response_json.introduce){
+    if (response_json.introduce) {
         document.getElementById('intro').innerHTML = `${response_json.introduce}`
-    }else{
+    } else {
         document.getElementById('intro').innerHTML = '등록된 소개가 없습니다.'
     }
     document.getElementById('nickname').innerHTML = `${response_json.nickname}<br>(${response_json.account})`
@@ -52,59 +52,61 @@ async function Profile(user_id){
 }
 
 // 친구신청 버튼 눌렀을 때
-async function addFriend(){
+async function addFriend() {
     const response = await fetch(`${BACKEND_BASE_URL}/user/friend/${user_id}/`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": "Bearer " + logined_token
         },
-        method:"POST",
+        method: "POST",
     });
 
-    if(response.status == 201){
+    if (response.status == 201) {
         alert("친구신청을 보냈습니다.")
-    }else {
+    } else {
         const errorData = await response.json();
         const errorArray = Object.entries(errorData);
         alert(errorArray[0][1]);
     }
 }
 
-async function report(){
-    const response = await fetch(`${BACKEND_BASE_URL}/user/report/${user_id}/`, {
-        headers: {
-            'content-type': 'application/json',
-            "Authorization": "Bearer " + logined_token
-        },
-        method:"POST",
-    });
+async function report() {
+    if (confirm("해당 유저를 신고하시겠습니까? 신고 이후엔 취소할 수 없습니다.")) {
+        const response = await fetch(`${BACKEND_BASE_URL}/user/report/${user_id}/`, {
+            headers: {
+                'content-type': 'application/json',
+                "Authorization": "Bearer " + logined_token
+            },
+            method: "POST",
+        });
 
-    if(response.status == 200){
-        alert("신고 완료")
-    }else {
-        const errorData = await response.json();
-        const errorArray = Object.entries(errorData);
-        alert(errorArray[0][1]);
+        if (response.status == 200) {
+            alert("신고 완료")
+        } else {
+            const errorData = await response.json();
+            const errorArray = Object.entries(errorData);
+            alert(errorArray[0][1]);
+        }
     }
 }
 
-function go_profileEdit(){
+function go_profileEdit() {
     location.href = `profile_edit.html?user_id=${logined_user_id}`
 }
 
-function go_personal(){
+function go_personal() {
     location.href = 'personal.html'
 }
 
-function go_requestList(me){
+function go_requestList(me) {
     location.href = `request_list.html?me=${me}`
 }
 
-function go_friends(){
+function go_friends() {
     location.href = 'friends_list.html'
 }
 
-function go_album(){
+function go_album() {
     location.href = `profile_album.html?user_id=${user_id}`
 
 }
