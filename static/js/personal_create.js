@@ -1,108 +1,16 @@
-const logined_token = localStorage.getItem("access");
-const user_id = new URLSearchParams(window.location.search).get('id');
-
-window.onload = () => {
-    placeBookList(user_id)
-}
-
-// 장소 북마크 가져오기
-async function placeBookList(user_id) {
-    const response = await fetch(`${BACKEND_BASE_URL}/place/${user_id}/book/`, {
-        headers: {
-            Authorization: "Bearer " + logined_token,
-        },
-        method: "GET",
-    });
-
-    const response_json = await response.json();
-
-    response_json.forEach((e, i) => {
-
-        let place_id = e.id;
-        let address = e.address;
-        let category = e.category;
-        let sort = e.sort;
-        let image = e.image.url;
-        let title = e.title;
-        let score = e.score;
-        let cards = document.querySelector('#hotplace-book-cards');
-
-
-        let sort_html = ``
-        if (sort) {
-            if (sort.includes('카페/주점')) {
-                if (sort.includes('-주점')) {
-                    sort_html = '/주점';
-                } else { }
-            } else {
-                sort_html = `/${sort}`;
-            }
-        }
-
-        cards.innerHTML += `
-        <div class="hotplace-card">
-            <div class="hotplace-image">
-                <a>
-                    <img src="${image}" onclick="go_placeDetailView(${place_id})">
-                </a>
-                <a>
-                    <img id="hotplace-img${place_id}" src="static/image/bookmark (1).png" onclick="placeBook(${place_id})">
-                </a>
-            </div>
-            <div class="hotplace-content">
-                <div class="hotplace-title">
-                    <h2>${title}</h2>
-                </div>
-                <div class="hotplace-score">
-                    <h2>${score}</h2>
-                </div>
-                <div>
-                    ${address}
-                </div>
-                <div>
-                    ${category}${sort_html}
-                </div>
-            </div>
-        </div>
-        `
-    });
-}
-
-
-// 장소 북마크
-async function placeBook(place_id) {
-    const book = document.querySelector(`#hotplace-img${place_id}`)
-
-    const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
-        headers: {
-            Authorization: "Bearer " + logined_token,
-        },
-        method: "POST",
-    });
-
-    const response_json = await response.json();
-
-    if (response_json["message"] == "북마크") {
-        book['src'] = "static/image/bookmark (1).png"
-        alert("북마크가 추가되었습니다.");
-    } else {
-        book['src'] = "static/image/bookmark.png"
-        alert("북마크가 취소되었습니다.");
-        go_placeBook();
-    }
-}
-
-// 모임 북마크 한 글 가져오기
+//================================ 유저가 작성한 모임 글 목록 시작 ================================ 
 {
     let token = localStorage.getItem("access")
     if (token) {
         $('#meeting_card').empty()
-        fetch(`${BACKEND_BASE_URL}/meeting/bookmark_list`, {
+        fetch(`${BACKEND_BASE_URL}/meeting/my_create_meeting/`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
+
             },
         })
+
             .then(res => res.json()).then(meetings => {
                 let payloadObj = JSON.parse(payload)
                 let user_id = payloadObj.user_id
@@ -140,7 +48,7 @@ async function placeBook(place_id) {
                         </div>
                         </div>
                         `
-                        $('#meeting-book-cards').append(temp_html)
+                        $('#meeting_user_create_cards').append(temp_html)
                     } else {
                         let id = meeting['id']
                         let title = meeting['title']
@@ -174,30 +82,60 @@ async function placeBook(place_id) {
                         </div>
                         </div>
                         `
-                        $('#meeting-book-cards').append(temp_html)
+                        $('#meeting_user_create_cards').append(temp_html)
                     }
                 })
             })
     } else { alert("로그인 해주세요") }
 }
-//================================ 북마크 한 글 목록에서 모임 북마크 하기 API 시작 ================================ 
-async function meetingBookmark(id) {
-    const book = document.querySelector(`#book${id}`)
+//================================ 유저가 작성한 모임 글 목록 끝 ================================
+
+//================================ 유저가 작성한 상담 글 목록 시작 ================================
+const logined_token = localStorage.getItem("access");
+
+
+$(document).ready(function () {
+    getCounsels()
+})
+// 게시글 목록 가져오기
+async function getCounsels() {
     let token = localStorage.getItem("access")
-    let response = await fetch(`${BACKEND_BASE_URL}/meeting/${id}/bookmark/`, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${token}`,
+    $('#list-section').empty()
+
+
+    $.ajax({
+        url: `${BACKEND_BASE_URL}/counsel/user/`,
+        type: "GET",
+        dataType: "json",
+        headers: {'Authorization': `Bearer ${token}`},
+        success: function (response) {
+            const rows = response;
+            for (let i = 0; i < rows.length; i++) {
+                let counsel_id = rows[i]['id']
+                let counsel_title = rows[i]['title']
+                let counsel_author = rows[i]['user']
+                let counsel_created_at = rows[i]['created_at']
+                let likes_count = rows[i]['like'].length
+
+                let temp_html = `
+                <a onclick="go_counselDetail(${counsel_id})">
+                    <div class="list-box">
+                        <div id="counsel-title">${counsel_title}</div>
+                        <div id="counsel-author">${counsel_author}</div>
+                        <div id="counsel-created-at">${counsel_created_at}</div>
+                        <div id="counsel-likes">${likes_count}</div>
+                    </div>
+                </a>
+                <hr>
+                `
+                $('#counsel_user_create_id').append(temp_html)
+            }
         },
-    })
-    if (token) {
-        if (response.status == "200") {
-            book['src'] = "static/image/bookmark.png"
-        } else {
-            book['src'] = "static/image/bookmark (1).png"
+        error: function () {
+            alert(response.status);
         }
-    } else {
-        alert("로그인 해주세요")
-    }
+
+    })
 }
-//================================ 북마크 한 글 목록에서 모임 북마크 하기 API 끝 ================================
+
+//================================ 유저가 작성한 상담 글 목록 끝 ================================

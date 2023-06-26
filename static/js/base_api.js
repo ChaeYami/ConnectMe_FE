@@ -1,5 +1,6 @@
-const BACKEND_BASE_URL = "https://api.connectme.co.kr"
-const FRONTEND_BASE_URL = "https://connectme.co.kr"
+
+const BACKEND_BASE_URL = "http://127.0.0.1:8000/"
+const FRONTEND_BASE_URL = "http://127.0.0.1:5500/"
 
 const KAKAO_API = '3611a3327df6a2e923777b26800f369d'
 const KAKAO_JAVASCRIPT_API = '61771f77ccf8e5fb8aed8a7b26e8cfb1'
@@ -73,6 +74,11 @@ function go_placeDetailView(place_id) {
 // 핫플레이스 북마크
 function go_placeBook() {
     location.href = `personal_book.html?id=${logined_user_id}`
+}
+
+// 내 글 
+function go_personal_create(){
+    location.href="/personal_create.html"
 }
 
 // 홈으로 보내고 api 실행
