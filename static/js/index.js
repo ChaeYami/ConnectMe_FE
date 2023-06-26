@@ -48,7 +48,7 @@ function setLocalStorage(response) {
             }).join('')
         );
         localStorage.setItem("payload", jsonPayload);
-        window.location.replace('index.html')
+        go_api()
     } else {
         alert(response_json.error);
         window.location.replace('login.html')
@@ -150,6 +150,28 @@ async function recommend(filter) {
         }
     })
 
+}
+
+// 장소 북마크
+async function placeBook(place_id) {
+    const book = document.querySelector(`#book${place_id}`)
+
+    const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
+        method: "POST",
+    });
+
+    const response_json = await response.json();
+
+    if (response_json["message"] == "북마크") {
+        book['src'] = "static/image/bookmark (1).png"
+        alert("북마크가 추가되었습니다.");
+    } else {
+        book['src'] = "static/image/bookmark.png"
+        alert("북마크가 취소되었습니다.");
+    }
 }
 
 // 추천 핫플레이스
@@ -277,3 +299,4 @@ async function recommendHotPlace() {
         // container html 끝
     })
 }
+

@@ -535,6 +535,7 @@
     display: grid;
     grid-template-columns: 160px 1fr 1fr;
     height: 60px;
+    margin-bottom: 20px;
 }
 
 .place-search {
