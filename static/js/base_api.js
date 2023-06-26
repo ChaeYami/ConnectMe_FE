@@ -1,3 +1,4 @@
+
 const BACKEND_BASE_URL = "https://api.connectme.co.kr"
 const FRONTEND_BASE_URL = "https://connectme.co.kr"
 
@@ -79,6 +80,11 @@ function go_placeDetailView(place_id) {
 // 핫플레이스 북마크
 function go_placeBook() {
     location.href = `personal_book.html?id=${logined_user_id}`
+}
+
+// 내 글 
+function go_personal_create(){
+    location.href="/personal_create.html"
 }
 
 // 홈으로 보내고 api 실행

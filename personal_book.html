@@ -7,6 +7,11 @@
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
     <link rel="stylesheet" href="static/css/personal_book.css">
+
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 
@@ -28,7 +33,7 @@
     </div>
     <div class="bot-nav">
         <div class="bot-nav-content">
-            <a href="">내글</a>
+            <a onclick="go_personal_create()">내글</a>
             <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
             <a href="">알림</a>
@@ -45,6 +50,17 @@
                 <hr>
             </div>
             <div class="hotplace-book-cards" id="hotplace-book-cards">
+            </div>
+        </div>
+        <hr>
+        <div class="meeting-book-container">
+            <div>
+                만남의 광장
+            </div>
+            <div>
+                <hr>
+            </div>
+            <div class="meeting_card_class" id="meeting-book-cards">
             </div>
         </div>
         <hr>
