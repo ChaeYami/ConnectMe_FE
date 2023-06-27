@@ -9,12 +9,6 @@ const payload = localStorage.getItem("payload");
 const payload_parse = payload ? JSON.parse(payload) : null;
 const logined_user_id = payload_parse ? parseInt(payload_parse.user_id) : null;
 
-$(document).ready(function () {
-    if (!payload) {
-        go_login()
-    }
-});
-
 document.addEventListener("DOMContentLoaded", function () {
     const bot_nav = document.querySelector('.bot-nav');
     const loginLogout = document.querySelector('.login-logout');
@@ -51,6 +45,10 @@ function go_findPassword() {
     location.href = "find_password.html"
 }
 
+function go_createMeeting() {
+    location.href = "meeting_create.html"
+}
+
 // 내 프로필로 가기
 function go_myProfile() {
     location.href = `profile.html?user_id=${logined_user_id}`
@@ -83,8 +81,8 @@ function go_placeBook() {
 }
 
 // 내 글 
-function go_personal_create(){
-    location.href="/personal_create.html"
+function go_personal_create() {
+    location.href = "/personal_create.html"
 }
 
 // 홈으로 보내고 api 실행

@@ -802,6 +802,10 @@ async function placeDetailView(place_id) {
                     ${book_html}
                     ${like_html}
                     <a>
+                        <img id="in_place_create_meeting" src="static/image/workgroup.png" class="place-detail-share" alt="모임생성하기"
+                            onclick="go_createMeeting()">
+                    </a>
+                    <a>
                         <img id="modal_opne_btn" src="static/image/share.png" class="place-detail-share" alt="공유하기"
                             onclick="placeShare(${place_id})">
                     </a>
