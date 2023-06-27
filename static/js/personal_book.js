@@ -7,7 +7,7 @@ window.onload = () => {
 
 // 장소 북마크 가져오기
 async function placeBookList(user_id) {
-    const response = await fetch(`${BACKEND_BASE_URL}/place/${user_id}/book/`, {
+    const response = await fetch(`${BACKEND_BASE_URL}/place/`, {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
