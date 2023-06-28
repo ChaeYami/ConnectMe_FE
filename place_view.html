@@ -202,8 +202,24 @@
         </div>
 
         <div id="place"></div>
-    </main>
 
+    </main>
+    <!-- 페이지네이션 시작 -->
+    <footer id="myFooter" style="display: none;">
+        <div class="paging">
+            <i class="fa-solid fa-angles-left" id="first_page" style="display:none; margin-top: 5px;"><img
+                    src="static/image/arrow_first.png" class="arrow-image"></i>
+            <i class="fa-solid fa-angle-left" id="prev_page" style="display:none; margin-top: 5px;"><img
+                    src="static/image/arrow_left.png" class="arrow-image"></i>
+            <div class="pages">
+            </div>
+            <i class="fa-solid fa-angle-right" id="next_page"><img src="static/image/arrow_right.png"
+                    class="arrow-image"></i>
+            <i class="fa-solid fa-angles-right" id="last_page"><img src="static/image/arrow_last.png"
+                    class="arrow-image"></i>
+        </div>
+    </footer>
+    <!-- 페이지네이션 끝 -->
     <script src="static/js/base_api.js"></script>
     <script src="static/js/place_api.js"></script>
 </body>
