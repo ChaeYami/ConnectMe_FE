@@ -24,7 +24,8 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     num_person_meeting = data['num_person_meeting']
     join_meeting = data['join_meeting']
     join_meeting_count = data['join_meeting_count']
-    hot_place_url_id = data['hot_place_url'].split('id=')[1]
+    place_title = data['place_title']
+    place_address = data['place_address']
 
     let meeting_book = ``
     if (bookmark.includes(user_id)) {
@@ -93,51 +94,26 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
 
 
     let token = localStorage.getItem("access")
-    fetch(`${BACKEND_BASE_URL}/place/${hot_place_url_id}`, {
+    fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
 
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,
         }
     },).then(res => res.json()).then(data => {
-        let address = data['place'].address
-        let sort = data['place'].sort
-        let category = data['place'].category
-        let price = data['place'].price
-        let hour = data['place'].hour
-        let holiday = data['place'].holiday
-        let content = data['place'].content
-
-        let detail_category = ``
-
-        if (sort) {
-            if (sort.includes('카페/주점')) {
-                if (sort.includes('-주점')) {
-                    detail_category = '/주점';
-                } else { }
-            } else {
-                detail_category = `/${sort}`;
-            }
-        }
-
+        console.log(data)
+        let name = data['place_title']
+        let address = data['place_address']
 
         hot_place_container.innerHTML += `<div class="place-detail-content">
     <div class="place-detail-content-grid">
         <div>
+            <div class="place-detail-font-gray">이름</div>
             <div class="place-detail-font-gray">주소</div>
-            <div class="place-detail-font-gray">카테고리</div>
-            <div class="place-detail-font-gray">가격대</div>
-            <div class="place-detail-font-gray">영업시간</div>
-            <div class="place-detail-font-gray">휴일</div>
-            <div class="place-detail-font-gray" style="margin-top: 20px;">내용</div>
         </div>
         <div>
-            <div style="margin-bottom:10px">${address}</div>
-            <div style="margin-bottom:10px">${category}${detail_category}</div>
-            <div style="margin-bottom:10px">${price}</div>
-            <div style="margin-bottom:10px">${hour}</div>
-            <div style="margin-bottom:10px">${holiday}</div>
-            <div class="place-detail-font-content">${content}</div>
+            <div >${name}</div>
+            <div >${address}</div>
         </div>
         <div class="place-detail-map" id="map">
         </div>
