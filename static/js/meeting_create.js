@@ -11,16 +11,16 @@ async function createMeeting() {
     let meeting_time = document.getElementById("meeting_time").value
     let meeting_at = `${meeting_date} ${meeting_time}`
     let num_person_meeting = document.getElementById("num_person_meeting").value
-    let hot_place_url = document.getElementById("hot_place_url").value
+    let place_title = document.getElementById("place_title").value
+    let place_address = document.getElementById("place_address").value
     let formData = new FormData();
     formData.append("title", meeting_title);
     formData.append("content", meeting_content);
     formData.append("meeting_city", meeting_city);
     formData.append("meeting_at", meeting_at);
     formData.append("num_person_meeting", num_person_meeting);
-    formData.append("hot_place_url", hot_place_url);
-
-
+    formData.append("place_title", place_title);
+    formData.append("place_address", place_address);
 
     for (let i = 0; i < meeting_image.length; i++) {
         let image = meeting_image[i]

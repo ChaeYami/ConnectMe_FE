@@ -10,6 +10,8 @@ fetch(`${BACKEND_BASE_URL}/meeting/` + meeting_id).then(res => res.json()).then(
     gugun1 = data['meeting_city'].slice(4)
     meeting_status = data['meeting_status']
     num_person_meeting = data['num_person_meeting']
+    place_title = data['place_title']
+    place_address = data['place_address']
     $('#meeting_title').val(title)
     $('#meeting_content').val(content)
     // $('#sido1').val(sido1)
@@ -18,6 +20,9 @@ fetch(`${BACKEND_BASE_URL}/meeting/` + meeting_id).then(res => res.json()).then(
     $('#meeting_time').val(meeting_time)
     $('#num_person_meeting').val(num_person_meeting)
     // $('#meeting_status').val(meeting_status)
+    $('#place_title').val(place_title)
+    $('#place_address').val(place_address)
+
     images = data['meeting_image']
     images.forEach((each_image) => {
         let image = each_image['image']
@@ -59,6 +64,8 @@ async function updateMeeting() {
     let meeting_time = document.getElementById("meeting_time").value
     let meeting_at = `${meeting_date} ${meeting_time}`
     let num_person_meeting = document.getElementById("num_person_meeting").value
+    let place_title = document.getElementById("place_title").value
+    let place_address = document.getElementById("place_address").value
 
     let meeting_image = document.getElementById("meeting_image").files
     let token = localStorage.getItem("access")
@@ -70,6 +77,10 @@ async function updateMeeting() {
     formData.append("meeting_status", meeting_status);
     formData.append("meeting_at", meeting_at);
     formData.append("num_person_meeting", num_person_meeting);
+    formData.append("place_address", place_address);
+    formData.append("place_title", place_title);
+
+
 
     for (let i = 0; i < meeting_image.length; i++) {
         let image = meeting_image[i]
