@@ -99,12 +99,13 @@ main {
     border: 1px solid rgb(203, 203, 203);
     border-radius: 10px;
     padding: 10px;
+    height: 500px;
 
 }
 
 .meeting_list_content {
     width: 270px;
-    height: 300px;
+    height: 280px;
     white-space: pre-line;
     overflow: hidden;
     text-overflow: ellipsis;

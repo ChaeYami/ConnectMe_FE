@@ -59,6 +59,20 @@
         <h5 class="create_h5">모임 약속 글을 작성해주세요.</h5>
         <form class="create_form">
             <div class="group">
+                <select name="sido1" id="sido1"></select>
+                <select name="gugun1" id="gugun1"></select>
+            </div>
+            <div class="group">
+                    <input id="meeting_date" type="date">
+                    <input id="meeting_time" type="time">
+                    <input id="num_person_meeting" type="number" placeholder="모집 인원수" min="1">
+            </div>
+            <div class="group">
+                <input id="hot_place_url" class="create_input" type="text" required="required" /><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">핫 플레이스 URL</label>
+            </div>
+            <div class="group">
                 <input id="meeting_title" class="create_input" type="text" required="required" /><span
                     class="highlight"></span><span class="bar"></span>
                 <label class="create_label">제목</label>

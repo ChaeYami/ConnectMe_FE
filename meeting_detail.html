@@ -9,10 +9,14 @@
     <link rel="stylesheet" href="static/css/base.css">
     <link rel="stylesheet" href="static/css/meeting_detail.css">
 
-
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+    <!-- kakao map -->
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61771f77ccf8e5fb8aed8a7b26e8cfb1&libraries=services"></script>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 
 
@@ -58,6 +62,8 @@
             <button class="commentbtn" onclick="meetingCommentCreate()">작성완료</button>
         </div>
 
+        <div id="hot_place_container">
+        </div>
         <div class="comment_card_class">
             <h4>댓글</h4>
             <hr>
