@@ -1,4 +1,7 @@
 const logined_token = localStorage.getItem("access")
+const count_per_page = 30; // 페이지당 데이터 건수
+const show_page_cnt = 10; // 화면에 보일 페이지 번호 개수
+let page_data = 0;
 
 
 window.onload = function () {
@@ -8,7 +11,6 @@ window.onload = function () {
     } else {
         placeView()
     }
-
 };
 
 // 카테고리 함수
@@ -55,6 +57,94 @@ function hoverCategory(input) {
     }
 }
 
+
+// 페이지네이션 시작
+$(function () {
+
+    $(document).on('click', 'div.paging>div.pages>span', function () {
+        if (!$(this).hasClass('active')) {
+            $(this).parent().find('span.active').removeClass('active');
+            $(this).addClass('active');
+            let category = document.querySelector('.seltext').innerText
+            let page_num = Number($(this).text())
+
+            placeView(category, page_num);
+        }
+    });
+
+    $(document).on('click', 'div.paging>i', function () {
+        let totalPage = Math.floor(page_data / count_per_page) + (page_data % count_per_page == 0 ? 0 : 1);
+        const id = $(this).attr('id')
+        let category = document.querySelector('.seltext').innerText
+        let page_num = Number($(this).text())
+        let first_page_id = document.querySelector('#first_page')
+        let prev_page_id = document.querySelector('#prev_page')
+
+        first_page_id.style.display = "";
+        prev_page_id.style.display = "";
+
+
+        if (id == 'first_page') {
+            placeView(category, 1);
+        } else if (id == 'prev_page') {
+            // 페이지 번호를 저장
+            let arrPages = [];
+            $('div.paging>div.pages>span').each(function (idx, item) {
+                arrPages.push(Number($(this).text()));
+            });
+
+            const prevPage = Math.min(...arrPages) - show_page_cnt;
+            placeView(category, prevPage);
+        } else if (id == 'next_page') {
+            // 페이지 번호를 저장
+            let arrPages = [];
+            $('div.paging>div.pages>span').each(function (idx, item) {
+                arrPages.push(Number($(this).text()));
+            });
+
+            const nextPage = Math.max(...arrPages) + 1;
+            placeView(category, nextPage);
+        } else if (id == 'last_page') {
+            const lastPage = Math.floor(page_data / count_per_page) + 1;
+
+            placeView(category, lastPage);
+        }
+    });
+})
+
+function setPaging(pageNum) {
+    const currentPage = pageNum;
+    const totalPage = Math.floor(page_data / count_per_page) + (page_data % count_per_page == 0 ? 0 : 1);
+
+    showAllIcon();
+
+    if (currentPage <= show_page_cnt) {
+        $('#first_page').hide();
+        $('#prev_page').hide();
+    }
+    if (
+        totalPage <= show_page_cnt ||
+        Math.floor((currentPage - 1) / show_page_cnt) * show_page_cnt + show_page_cnt + 1 > totalPage
+    ) {
+        $('#next_page').hide();
+        $('#last_page').hide();
+    }
+
+    let start = Math.floor((currentPage - 1) / show_page_cnt) * show_page_cnt + 1;
+    let sPagesHtml = '';
+    for (const end = start + show_page_cnt; start < end && start <= totalPage; start++) {
+        sPagesHtml += '<span class="' + (start == currentPage ? 'active' : '') + '">' + start + '</span>';
+    }
+    $('div.paging>div.pages').html(sPagesHtml);
+}
+
+function showAllIcon() {
+    $('#first_page').show();
+    $('#prev_page').show();
+    $('#next_page').show();
+    $('#last_page').show();
+}
+// 페이지네이션 끝
 // 장소추천 게시글 생성
 async function createPlace() {
     let name = document.querySelector('#name')
@@ -107,17 +197,24 @@ async function createPlace() {
 }
 
 // 장소추천 전체보기 (카테고리)
-async function placeView(category_select) {
+async function placeView(category_select, pages = 1) {
     let container = document.querySelector('#place')
     let place_create = document.querySelector('#place_create')
+    let foot = document.querySelector('#myFooter')
+
+    foot.style.display = ''
 
     container.innerHTML = ``
     place_create.innerHTML = ``
 
-    let place_category_input = `?search=`
+    let place_category_input = `?`
 
     if (category_select === '식사' || category_select === '주점' || category_select === '카페') {
-        place_category_input = `?search=${category_select}`
+        place_category_input = `?search=${category_select}&`
+    }
+
+    if (typeof (pages) === 'number') {
+        place_category_input += `page=${parseInt(pages)}`
     }
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/category/${place_category_input}`, {
@@ -128,6 +225,7 @@ async function placeView(category_select) {
     });
 
     let response_json = await response.json();
+    page_data = response_json["count"]
 
     if (JSON.parse(payload)['is_staff']) {
         place_create.innerHTML += `
@@ -247,6 +345,7 @@ async function placeView(category_select) {
         `
         // container html 끝
     })
+    setPaging(pages);
 }
 
 // 장소추천 검색하기
