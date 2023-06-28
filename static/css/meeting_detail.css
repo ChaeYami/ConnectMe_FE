@@ -76,6 +76,7 @@
 .place-detail-content-grid {
     display: grid;
     grid-template-columns: 120px 400px 1fr;
+    height: 250px;
 }
 .place-detail-font-content {
     margin-top: 20px;
