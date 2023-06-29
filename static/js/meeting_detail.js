@@ -11,6 +11,7 @@ else { delete_btn.hide() }
 fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(data => {
     let payloadObj = JSON.parse(payload)
     let user_id = payloadObj.user_id
+    let nickname = payloadObj.nickname
     id = data['id']
     user = data['user']
     title = data['title']
@@ -26,7 +27,26 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     join_meeting_count = data['join_meeting_count']
     place_title = data['place_title']
     place_address = data['place_address']
+    join_meeting = data['join_meeting']
+    join_meeting.forEach(join_user=>{
+        let join_user_nickname = join_user.nickname
+        let meeting_join_user_list = `
+                                <ul>
+                                    <li>${join_user_nickname}</li>
+                                </ul>
+                                `
+        $('#popup-user-list').append(meeting_join_user_list)
+    })
 
+    
+    who_join_meeting = ``
+    if (user == nickname) {
+        who_join_meeting = `
+        <a>
+        <img id="who_join_meeting${id}" src="static/image/who.png" style="margin-top:10px; width: 30px;" alt="참가유저목록" onclick="placeShare()">
+        </a>
+        `
+    }
     let meeting_book = ``
     if (bookmark.includes(user_id)) {
         meeting_book = `
@@ -77,6 +97,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
                     <a> <img src="static/image/delete.png" style="margin-top:10px; width: 30px;" onclick="meetingDelete()"> </a>
                     <a>${meeting_book}</a>
                     <a>${check_join_meeting}</a>
+                    <a>${who_join_meeting}</a>
                     <hr>
                     <p class=meeting_detail_content>${content}</p>
                     </div>
@@ -101,7 +122,6 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
             Authorization: `Bearer ${token}`,
         }
     },).then(res => res.json()).then(data => {
-        console.log(data)
         let name = data['place_title']
         let address = data['place_address']
 
@@ -119,7 +139,8 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         </div>
     </div>
 </div>`
-placeShowMap(name, address)}
+        placeShowMap(name, address)
+    }
     )
 
 })
@@ -467,7 +488,6 @@ async function handleJoinmeeting() {
                 Authorization: `Bearer ${token}`,
             },
         })
-        console.log(response)
         if (response.status === 200) {
             alert("약속 취소")
             location.reload()
@@ -482,3 +502,22 @@ async function handleJoinmeeting() {
     else { alert("로그인 해주세요") }
 }
 // ================================ 모임 게시글 상세보기 모임참가 끝 ================================
+
+// 공유하기 닫기
+function closePopup() {
+    $('html, body').css({
+        'overflow': 'auto'
+    });
+    $("#popup").fadeOut(200);
+}
+
+// 공유하기 열기
+function placeShare() {
+    // const share = document.querySelector('#modal_opne_btn')
+    // const place_modal = document.querySelector('#place_modal')
+    // const link_id = document.querySelector('#link_id')
+
+    // link_id.value = document.location.href;
+    $('#popup').fadeIn(200);
+    $('.popup').scrollTop(0);
+}
