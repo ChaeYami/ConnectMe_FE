@@ -101,7 +101,7 @@ async function counselComments(counsel_id) {
                 id = rows[i]['id']
                 content = rows[i]['content']
                 updated_at = rows[i]['updated_at']
-                user = rows[i]['user']
+                user = rows[i]['user']['nickname']
                 comment_likes_count = rows[i]['comment_like_count']
                 like = rows[i]['like']
                 let temp_html = ``

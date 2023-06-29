@@ -115,7 +115,7 @@ async function getCounsels(pages = 1) {
             for (let i = 0; i < rows.length; i++) {
                 let counsel_id = rows[i]['id']
                 let counsel_title = rows[i]['title']
-                let counsel_author = rows[i]['user']
+                let counsel_author = rows[i]['user']['nickname']
                 let counsel_created_at = rows[i]['created_at']
                 let likes_count = rows[i]['like'].length
 
