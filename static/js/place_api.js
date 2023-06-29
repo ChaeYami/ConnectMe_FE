@@ -354,6 +354,9 @@ async function placeSearchView(event) {
 
     let container = document.querySelector('#place')
     let place_create = document.querySelector('#place_create')
+    let foot = document.querySelector('#myFooter')
+
+    foot.style.display = 'none';
 
     container.innerHTML = ``
     place_create.innerHTML = ``
@@ -1036,6 +1039,11 @@ async function placePreUpdateView(place_id) {
     });
 
     const response_json = await response.json();
+
+    let foot = document.querySelector('#myFooter')
+
+    foot.style.display = 'none';
+
 
 
     let name = response_json['place'].title

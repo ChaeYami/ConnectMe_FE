@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+div.app {
+    width: 100%;
+}
+
+table,
+td {
+    border: 1px solid #333;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+td,
+th {
+    padding: 3px;
+}
+
+thead,
+tfoot {
+    background-color: #333;
+    color: #fff;
+}
+
+td.center {
+    text-align: center;
+}
+
+
+/********* 페이지네이션 시작 **********/
+.paging {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.paging>i,
+.paging>div.pages {
+    margin: 0 10px;
+}
+
+.paging>i,
+.paging>div.pages>span {
+    margin: 0 3px;
+    cursor: pointer;
+}
+
+span.active {
+    color: orangered;
+    font-weight: bold;
+}
+
+.arrow-image {
+    width: 15px;
+}
+
+/********* 페이지네이션 시작 **********/

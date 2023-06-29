@@ -23,7 +23,7 @@
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
-            <a onclick="go_home()">홈</a>
+            <a onclick="go_home()"><img class="home-logo" src="static/image/logo.png" alt="logo"></a>
             <a onclick="go_recommend()">친구찾기</a>
             <a onclick="go_placeView()">핫플레이스</a>
             <a onclick="go_counsel()">고민상담</a>
@@ -34,7 +34,19 @@
                 <a onclick="go_signup()">회원가입</a>
             </div>
         </div>
+        <div class="top-nav-line-bar">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div class="top-nav-small-line"></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div></div>
     </div>
+
     <div class="bot-nav">
         <div class="bot-nav-content">
             <a onclick="go_personal_create()">내글</a>
@@ -221,6 +233,7 @@
     </footer>
     <!-- 페이지네이션 끝 -->
     <script src="static/js/base_api.js"></script>
+    <script src="/static/js/base_redirect_login.js"></script>
     <script src="static/js/place_api.js"></script>
 </body>
 

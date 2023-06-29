@@ -24,7 +24,7 @@
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
-            <a onclick="go_home()">홈</a>
+            <a onclick="go_home()"><img class="home-logo" src="static/image/logo.png" alt="logo"></a>
             <a onclick="go_recommend()">친구찾기</a>
             <a onclick="go_placeView()">핫플레이스</a>
             <a onclick="go_counsel()">고민상담</a>
@@ -35,6 +35,17 @@
                 <a onclick="go_signup()">회원가입</a>
             </div>
         </div>
+        <div class="top-nav-line-bar">
+            <div></div>
+            <div></div>
+            <div class="top-nav-small-line"></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div></div>
     </div>
 
     <div class="bot-nav">
@@ -101,6 +112,7 @@
 
 <!-- js -->
 <script src="/static/js/base_api.js"></script>
+<script src="/static/js/base_redirect_login.js"></script>
 <script src="/static/js/recommend.js"></script>
 
 </html>

@@ -1,11 +1,20 @@
 .signup-section {
     width: 500px;
-    margin: 20vh auto;
+    margin: 50px auto;
 
     @media screen and (max-width: 800px) {
         width: 400px;
 
     }
+}
+
+.signup-logo {
+    display: flex;
+    justify-content: center;
+}
+
+.signup-logo img {
+    width: 350px;
 }
 
 .input-box {
