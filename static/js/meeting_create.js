@@ -1,3 +1,14 @@
+window.onload = function(){
+    
+    let dining_info = localStorage.getItem("dining")
+    let dining = JSON.parse(dining_info)
+    let dining_title = Object.values(dining)[0]
+    let dining_address = Object.values(dining)[1]
+    $('#place_title').val(dining_title)
+    $('#place_address').val(dining_address)
+    localStorage.removeItem('dining');
+}
+
 //모임 게시글 작성 시작
 async function createMeeting() {
     let meeting_title = document.getElementById("meeting_title").value
@@ -13,6 +24,7 @@ async function createMeeting() {
     let num_person_meeting = document.getElementById("num_person_meeting").value
     let place_title = document.getElementById("place_title").value
     let place_address = document.getElementById("place_address").value
+
     let formData = new FormData();
     formData.append("title", meeting_title);
     formData.append("content", meeting_content);
@@ -79,36 +91,30 @@ $('document').ready(function() {
       var area14 = ["경산시","경주시","구미시","김천시","문경시","상주시","안동시","영주시","영천시","포항시","고령군","군위군","봉화군","성주군","영덕군","영양군","예천군","울릉군","울진군","의성군","청도군","청송군","칠곡군"];
       var area15 = ["거제시","김해시","마산시","밀양시","사천시","양산시","진주시","진해시","창원시","통영시","거창군","고성군","남해군","산청군","의령군","창녕군","하동군","함안군","함양군","합천군"];
       var area16 = ["서귀포시","제주시","남제주군","북제주군"];
-   
-    
-   
+
     // 시/도 선택 박스 초기화
-   
-    $("select[name^=sido]").each(function() {
-     $selsido = $(this);
-     $.each(eval(area0), function() {
-      $selsido.append("<option value='"+this+"'>"+this+"</option>");
-     });
-     $selsido.next().append("<option value=''>구/군 선택</option>");
+
+    $("select[name^=sido]").each(function () {
+        $selsido = $(this);
+        $.each(eval(area0), function () {
+            $selsido.append("<option value='" + this + "'>" + this + "</option>");
+        });
+        $selsido.next().append("<option value=''>구/군 선택</option>");
     });
-   
-    
-   
+
     // 시/도 선택시 구/군 설정
-   
-    $("select[name^=sido]").change(function() {
-     var area = "area"+$("option",$(this)).index($("option:selected",$(this))); // 선택지역의 구군 Array
-     var $gugun = $(this).next(); // 선택영역 군구 객체
-     $("option",$gugun).remove(); // 구군 초기화
-   
-     if(area == "area0")
-      $gugun.append("<option value=''>구/군 선택</option>");
-     else {
-      $.each(eval(area), function() {
-       $gugun.append("<option value='"+this+"'>"+this+"</option>");
-      });
-     }
+
+    $("select[name^=sido]").change(function () {
+        var area = "area" + $("option", $(this)).index($("option:selected", $(this))); // 선택지역의 구군 Array
+        var $gugun = $(this).next(); // 선택영역 군구 객체
+        $("option", $gugun).remove(); // 구군 초기화
+
+        if (area == "area0")
+            $gugun.append("<option value=''>구/군 선택</option>");
+        else {
+            $.each(eval(area), function () {
+                $gugun.append("<option value='" + this + "'>" + this + "</option>");
+            });
+        }
     });
-   
-   
-   });
+});

@@ -46,8 +46,14 @@ function go_findPassword() {
     location.href = "find_password.html"
 }
 
-function go_createMeeting() {
-    location.href = "meeting_create.html"
+function go_createMeeting(info){
+    info_split = info.split(',')
+let dining = {
+    "title" : info_split[0],
+    "address" : info_split[1]
+};
+localStorage.setItem("dining", JSON.stringify(dining));
+location.href = "meeting_create.html"
 }
 
 // 내 프로필로 가기
