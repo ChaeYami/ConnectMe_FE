@@ -92,6 +92,11 @@ function go_personal_create() {
     location.href = "/personal_create.html"
 }
 
+// 더보기
+function go_personal_more(data) {
+    location.href = `personal_more.html?id=${data}`
+}
+
 // 홈으로 보내고 api 실행
 function go_api() {
     const redirectUrl = "index.html?showAPI=true";

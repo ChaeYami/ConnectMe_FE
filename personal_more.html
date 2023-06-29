@@ -4,22 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
-    <link rel="stylesheet" href="static/css/counsel.css">
+    <link rel="stylesheet" href="static/css/personal_more.css">
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-
-
-    <title>Connect ME</title>
+    <title>Document</title>
 </head>
 
 <body>
-
-
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
@@ -35,7 +30,6 @@
             </div>
         </div>
     </div>
-
     <div class="bot-nav">
         <div class="bot-nav-content">
             <a onclick="go_personal_create()">내글</a>
@@ -46,31 +40,10 @@
         <span class="dropbtn">프로필 메뉴</span>
     </div>
     <!--위, 아래 네비바 끝-->
-
-
-
-
-    <!-- 메인 -->
     <main>
-        <div class="buttons">
-            <a href="counsel_create.html">
-                <img src="static/image/add.png" style="width:20px">
-            </a>
-        </div>
-        <div class="list-section" id="list-section">
+        <div id="more-title" class="more_title"></div>
+        <div id="more-content" class="more_content"></div>
     </main>
-
-
-    <!-- <a onclick="go_counselDetail(${counsel_id})">
-            <div class="list-box">
-                <div id="counsel-title">${counsel_title}</div>
-                <div id="counsel-author">${counsel_author}</div>
-                <div id="counsel-created-at">${counsel_created_at}</div>
-                <div id="counsel-likes">${likes_count}</div>
-            </div>
-        </a>
-        <hr> -->
-    </div>
     <!-- 페이지네이션 시작 -->
     <footer id="myFooter" style="display: none;">
         <div class="paging">
@@ -87,10 +60,8 @@
         </div>
     </footer>
     <!-- 페이지네이션 끝 -->
+    <script src="static/js/base_api.js"></script>
+    <script src="static/js/personal_more.js"></script>
 </body>
-
-<!-- js -->
-<script src="/static/js/base_api.js"></script>
-<script src="/static/js/counsel_list_api.js"></script>
 
 </html>
