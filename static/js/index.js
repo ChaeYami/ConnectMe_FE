@@ -15,6 +15,8 @@ if (localStorage.getItem("payload")) {
         getGoogleToken(google_token);
     }
 
+} else {
+    go_login()
 }
 
 const logined_token = localStorage.getItem("access");

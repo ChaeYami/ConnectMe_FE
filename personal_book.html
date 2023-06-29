@@ -19,7 +19,7 @@
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
-            <a onclick="go_home()">홈</a>
+            <a onclick="go_home()"><img class="home-logo" src="static/image/logo.png" alt="logo"></a>
             <a onclick="go_recommend()">친구찾기</a>
             <a onclick="go_placeView()">핫플레이스</a>
             <a onclick="go_counsel()">고민상담</a>
@@ -30,7 +30,19 @@
                 <a onclick="go_signup()">회원가입</a>
             </div>
         </div>
+        <div class="top-nav-line-bar">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div></div>
     </div>
+
     <div class="bot-nav">
         <div class="bot-nav-content">
             <a onclick="go_personal_create()">내글</a>
@@ -42,9 +54,13 @@
     </div>
     <!--위, 아래 네비바 끝-->
     <main>
+        <div class="my_posts_container" id="my-posts-container">
+        </div>
         <div class="hotplace-book-container">
             <div class="book-more-views">
-                <div>핫플레이스</div>
+                <div>
+                    <h3>핫플레이스</h3>
+                </div>
                 <div><a onclick="go_personal_more(1)">더보기 >></a></div>
             </div>
             <div>
@@ -53,10 +69,11 @@
             <div class="hotplace-book-cards" id="hotplace-book-cards">
             </div>
         </div>
-        <hr>
         <div class="meeting-book-container">
             <div class="book-more-views">
-                <div>만남의 광장</div>
+                <div>
+                    <h3>만남의 광장</h3>
+                </div>
                 <div><a onclick="go_personal_more(2)">더보기 >></a></div>
             </div>
             <div>
@@ -65,9 +82,9 @@
             <div class="meeting_card_class" id="meeting-book-cards">
             </div>
         </div>
-        <hr>
     </main>
     <script src="static/js/base_api.js"></script>
+    <script src="/static/js/base_redirect_login.js"></script>
     <script src="static/js/personal_book.js"></script>
 </body>
 

@@ -3,6 +3,7 @@ const user_id = new URLSearchParams(window.location.search).get('id');
 
 window.onload = () => {
     placeBookList(user_id)
+    Profile(user_id)
 }
 
 // 장소 북마크 가져오기
@@ -16,10 +17,14 @@ async function placeBookList(user_id) {
 
     const response_json = await response.json();
 
-    card_page = 4
+    let card_page = response_json["place"].length
 
-    if (response_json["place"].length < 4) {
-        card_page = response_json["place"].length
+    if (card_page > 4) {
+        card_page = 4
+    } else if (card_page == 0) {
+        let temp_html = `<div class="none-text-align"><h2>북마크한 게시글이 없습니다.<h2></div>`
+        $('#hotplace-book-cards').removeClass('hotplace-book-cards');
+        $('#hotplace-book-cards').append(temp_html);
     }
 
     for (let i = 0; i < card_page; i++) {
@@ -112,6 +117,11 @@ async function placeBook(place_id) {
                 let payloadObj = JSON.parse(payload)
                 let user_id = payloadObj.user_id
                 let count = 0;
+
+                if (meetings['meeting'].length == 0) {
+                    let temp_html = `<div class="none-text-align"><h2>북마크한 게시글이 없습니다.<h2></div>`
+                    $('#meeting-book-cards').append(temp_html);
+                }
 
                 meetings['meeting'].forEach((meeting) => {
                     if (count >= 3) {
@@ -263,10 +273,34 @@ async function meetingBookmark(id) {
     if (logined_token) {
         if (response.status == "200") {
             book['src'] = "static/image/bookmark.png"
+            go_placeBook();
         } else {
             book['src'] = "static/image/bookmark (1).png"
+
         }
     } else {
         alert("로그인 해주세요")
     }
+}
+
+// 유저 가져오기 API
+
+async function Profile(user_id) {
+    const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
+        method: "GET",
+    })
+
+    response_json = await response.json()
+
+    const nickname = response_json.nickname
+    const profile_img_url = `${BACKEND_BASE_URL}${response_json.profile_img}`;
+    let my_posts = document.querySelector('#my-posts-container')
+    if (response_json.profile_img === null) {
+        my_posts.innerHTML = `<div><a onclick="go_myProfile()"><img src="static/image/user.png"></a></div>`
+
+    } else {
+        my_posts.innerHTML = `<div><a onclick="go_myProfile()"><img src="${profile_img_url}"></a></div>`
+    }
+
+    my_posts.innerHTML += `<div><a onclick="go_myProfile()">${nickname}</a></div> 님의 북마크 목록입니다.`
 }

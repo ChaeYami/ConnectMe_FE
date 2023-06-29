@@ -1,35 +1,38 @@
-.main{
+.main {
     display: grid;
     padding: 0 30px;
     width: 60vw;
     margin: 100px auto;
     max-width: 800px;
+
     @media screen and (max-width: 800px) {
         width: 90%;
 
     }
 }
 
-.profile-section{
+.profile-section {
     margin: 50px 0;
     display: grid;
     grid-template-columns: 1fr 2fr;
 
 }
-.profile{
+
+.profile {
     display: grid;
     width: 100%;
 }
-.nickname-section{
+
+.nickname-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
 
 }
 
-.nickname-section button{
+.nickname-section button {
     margin: 5px;
-    background-color:  #8eadd3;
+    background-color: #8eadd3;
     color: white;
     font-weight: bold;
     border: none;
@@ -38,26 +41,33 @@
     padding: 5px 10px;
     cursor: pointer;
 }
-.profile .buttons{
+
+.profile .buttons {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     justify-items: center;
-    background-color:   #EBF6FF;
+    background-color: #EBF6FF;
     border-radius: 10px;
-    
+
 }
 
 
-.profile-img{
+.profile-img {
     width: 150px;
     height: 150px;
-}
-.profile-img img{
-    width: 150px;
+    border-radius: 70%;
+    overflow: hidden;
+    box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, .2);
 }
 
-.info-section{
+.profile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-section {
     margin-top: 30px;
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -65,7 +75,8 @@
     align-items: center;
 
 }
-.info-section .ect{
+
+.info-section .ect {
     height: 200px;
     width: 100px;
     padding: 50px 40px;
@@ -76,18 +87,20 @@
         width: 80px;
 
     }
+
     @media screen and (max-width: 700px) {
-        font-size : 11pt;
+        font-size: 11pt;
         width: 100px;
         padding: 40px 20px;
 
     }
 }
-.info-section .ect div{
+
+.info-section .ect div {
     padding: 5px 0;
 }
 
-#intro{
+#intro {
     width: 300px;
     min-height: 200px;
     background-color: #EBF6FF;
@@ -97,9 +110,9 @@
     @media screen and (max-width: 900px) {
         width: 30vw;
     }
-    
+
     @media screen and (max-width: 700px) {
-        font-size : 11pt;
+        font-size: 11pt;
         width: 30vw;
         padding: 40px;
     }

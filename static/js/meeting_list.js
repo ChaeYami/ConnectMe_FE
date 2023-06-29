@@ -1,6 +1,7 @@
 const count_per_page = 12; // 페이지당 데이터 건수
 const show_page_cnt = 10; // 화면에 보일 페이지 번호 개수
 let page_data = 0;
+let foot = document.querySelector('#myFooter')
 
 
 $(document).ready(function () {
@@ -112,7 +113,6 @@ async function meetingShowList(pages = 1) {
             let payloadObj = JSON.parse(payload);
             let user_id = payloadObj.user_id;
             page_data = response["total-page"];
-            let foot = document.querySelector('#myFooter')
 
             foot.style.display = ''
 
@@ -248,6 +248,9 @@ function meetingSearch() {
     let user_id = payloadObj.user_id
     let search_field = $("input:radio[name=Ben]:checked").val()
     let search_key = $('#meeting_search').val()
+
+    foot.style.display = 'none';
+
     $('#meeting_card').empty()
     fetch(`${BACKEND_BASE_URL}/meeting/search_${search_field}/?search=${search_key}`).then(res => res.json()).then(meetings => {
         meetings.forEach((meeting) => {

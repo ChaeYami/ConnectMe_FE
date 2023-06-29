@@ -1,11 +1,21 @@
 .login-section {
     width: 500px;
-    margin: 20vh auto;
+    margin: 50px auto;
 
     @media screen and (max-width: 800px) {
         width: 400px;
 
     }
+}
+
+.login-logo {
+    display: flex;
+    margin-top: -80px;
+    justify-content: center;
+}
+
+.login-logo img {
+    width: 350px;
 }
 
 
@@ -65,13 +75,13 @@ input:not(:placeholder-shown) {
     margin-top: 10px;
 }
 
-.buttons{
+.buttons {
     margin-top: 20px;
 }
 
 .alert-danger {
     color: #ff4a4a;
-    background-color:white ;
+    background-color: white;
     display: none;
     margin: 10px auto;
 }
@@ -81,8 +91,9 @@ input:not(:placeholder-shown) {
     grid-template-columns: 1fr 1fr;
     justify-items: center;
 
-  }
-.sns-login{
+}
+
+.sns-login {
     margin-top: 50px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -90,11 +101,11 @@ input:not(:placeholder-shown) {
     justify-items: center;
 }
 
-  .button-naver img{
+.button-naver img {
     height: 45px;
-  }
+}
 
-  .button-google img{
+.button-google img {
     height: 45px;
 
-  }
+}
