@@ -14,7 +14,12 @@
             .then(res => res.json()).then(meetings => {
                 let payloadObj = JSON.parse(payload)
                 let user_id = payloadObj.user_id
-                meetings.forEach((meeting) => {
+                let count = 0;
+
+                meetings['meeting'].forEach((meeting) => {
+                    if (count >= 3) {
+                        return;
+                    }
                     if (meeting.meeting_image[0]) {
                         let id = meeting['id']
                         let title = meeting['title']
@@ -125,7 +130,7 @@
                                 <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                             </a>`
                         }
-            
+
                         let temp_html = `
                                     <div class="meeting_card">
                                     <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
@@ -143,6 +148,7 @@
                                     `
                         $('#meeting_user_create_cards').append(temp_html)
                     }
+                    count++;
                 })
             })
     } else { alert("로그인 해주세요") }
@@ -168,8 +174,8 @@ async function getCounsels() {
         dataType: "json",
         headers: { 'Authorization': `Bearer ${token}` },
         success: function (response) {
-            const rows = response;
-            for (let i = 0; i < rows.length; i++) {
+            const rows = response['counsel'];
+            for (let i = 0; i < 10; i++) {
                 let counsel_id = rows[i]['id']
                 let counsel_title = rows[i]['title']
                 let counsel_author = rows[i]['user']

@@ -1,0 +1,214 @@
+main {
+    width: 70vw;
+    margin: 75px auto;
+    max-width: 900px;
+}
+
+.more_title {
+    height: 80px;
+}
+
+/********* place-contariner 시작 **********/
+.place-container {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+}
+
+.place-container-text {
+    margin-left: 30px;
+}
+
+.place-container-img {
+    width: 230px;
+    height: 230px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.place-container-main {
+    display: grid;
+    grid-template-columns: 550px 1fr;
+}
+
+.place-container-title {
+    display: flex;
+    align-items: center;
+}
+
+.place-container-title0 {
+    margin-right: 10px;
+}
+
+.place-container-title1 {
+    margin-right: 20px;
+}
+
+.place-container-title2 {
+    margin-right: 10px;
+}
+
+.place-container-title-a {
+    text-decoration: none;
+    color: black;
+}
+
+.place-container-score {
+    color: rgb(155, 155, 155);
+}
+
+.place-container-book {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-right: 10px;
+}
+
+.place-container-address {
+    color: rgb(155, 155, 155);
+    font-weight: 600;
+}
+
+.place-container-content {
+    width: 580px;
+    line-height: 1.2em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* 원하는 줄 수로 변경 가능 */
+    -webkit-box-orient: vertical;
+    margin: 20px 0px 10px 60px;
+    text-indent: 1em;
+    white-space: normal;
+    text-overflow: ellipsis;
+}
+
+.place-container-count {
+    height: 55px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.place-container-count-img {
+    margin-left: 15px;
+    color: rgb(190, 190, 190);
+    font-weight: 600;
+    gap: 5px;
+    display: flex;
+}
+
+.place-container-count-img>img {
+    width: 20px;
+    filter: grayscale(100%);
+}
+
+.place-container-hr {
+    grid-column: 1/-1;
+    margin: 20px 0px;
+}
+
+/********* place-contariner 끝 **********/
+/* 북마크 만남의 광장 시작 */
+.meeting_card_class {
+    width: 70vw;
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+}
+
+.meeting_list_image {
+    width: 270px;
+    height: 300px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.meeting_img_list {
+    width: 30%;
+    margin-bottom: 10px;
+}
+
+.meeting_card {
+    margin-top: 10px;
+    border: 1px solid rgb(203, 203, 203);
+    border-radius: 10px;
+    padding: 10px;
+    height: 500px;
+
+}
+
+.meeting_list_content {
+    width: 270px;
+    height: 280px;
+    white-space: pre-line;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.meeting_create_btn {
+    margin-left: 90%;
+}
+
+/* 북마크 만남의 광장 끝 */
+
+.book-more-views {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    margin-top: 10px;
+}
+
+.book-more-views>div:nth-child(1) {
+    display: flex;
+    align-items: center;
+}
+
+.book-more-views>div:nth-child(2) {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    color: rgb(160, 160, 160);
+    font-size: 13px;
+}
+
+.list-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: start;
+    align-items: center;
+}
+
+/********* place 페이지네이션 시작 **********/
+
+.paging {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.paging>i,
+.paging>div.pages {
+    margin: 0 10px;
+}
+
+.paging>i,
+.paging>div.pages>span {
+    margin: 0 3px;
+    cursor: pointer;
+}
+
+span.active {
+    color: orangered;
+    font-weight: bold;
+}
+
+.arrow-image {
+    width: 15px;
+}
+
+/********* place 페이지네이션 시작 **********/

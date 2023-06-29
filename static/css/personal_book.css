@@ -114,4 +114,24 @@ main {
 .meeting_create_btn {
     margin-left: 90%;
 }
+
 /* 북마크 만남의 광장 끝 */
+
+.book-more-views {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    margin-top: 10px;
+}
+
+.book-more-views>div:nth-child(1) {
+    display: flex;
+    align-items: center;
+}
+
+.book-more-views>div:nth-child(2) {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    color: rgb(160, 160, 160);
+    font-size: 13px;
+}
