@@ -105,7 +105,7 @@ $(function () {
             const nextPage = Math.max(...arrPages) + 1;
             placeView(category, nextPage);
         } else if (id == 'last_page') {
-            const lastPage = Math.floor(page_data / count_per_page) + 1;
+            const lastPage = Math.floor(page_data / count_per_page) + (page_data % count_per_page == 0 ? 0 : 1);;
 
             placeView(category, lastPage);
         }
@@ -214,7 +214,7 @@ async function placeView(category_select, pages = 1) {
     }
 
     if (typeof (pages) === 'number') {
-        place_category_input += `page=${parseInt(pages)}`
+        place_category_input += `page=${pages}`
     }
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/category/${place_category_input}`, {
@@ -302,7 +302,7 @@ async function placeView(category_select, pages = 1) {
             <div class="place-container-main">
                 <div class="place-container-title">
                     <div class="place-container-title0">
-                        <h2>${i + 1}.</h2>
+                        <h2>${((pages - 1) * count_per_page) + i + 1}.</h2>
                     </div>
                     <div class="place-container-title1">
                         <h2><a class="place-container-title-a" href="place_view.html?id=${place_id}">${name}</a></h2>

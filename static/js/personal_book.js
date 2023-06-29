@@ -16,8 +16,14 @@ async function placeBookList(user_id) {
 
     const response_json = await response.json();
 
-    response_json.forEach((e, i) => {
+    card_page = 4
 
+    if (response_json["place"].length < 4) {
+        card_page = response_json["place"].length
+    }
+
+    for (let i = 0; i < card_page; i++) {
+        let e = response_json["place"][i];
         let place_id = e.id;
         let address = e.address;
         let category = e.category;
@@ -65,7 +71,7 @@ async function placeBookList(user_id) {
             </div>
         </div>
         `
-    });
+    };
 }
 
 
@@ -94,19 +100,23 @@ async function placeBook(place_id) {
 
 // 모임 북마크 한 글 가져오기
 {
-    let token = localStorage.getItem("access")
-    if (token) {
+    if (logined_token) {
         $('#meeting_card').empty()
-        fetch(`${BACKEND_BASE_URL}/meeting/bookmark_list`, {
+        fetch(`${BACKEND_BASE_URL}/meeting/1/bookmark/`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${logined_token}`,
             },
         })
             .then(res => res.json()).then(meetings => {
                 let payloadObj = JSON.parse(payload)
                 let user_id = payloadObj.user_id
-                meetings.forEach((meeting) => {
+                let count = 0;
+
+                meetings['meeting'].forEach((meeting) => {
+                    if (count >= 3) {
+                        return;
+                    }
                     if (meeting.meeting_image[0]) {
                         let id = meeting['id']
                         let title = meeting['title']
@@ -122,20 +132,25 @@ async function placeBook(place_id) {
                         let meeting_status = meeting['meeting_status']
                         let join_meeting_count = meeting['join_meeting_count']
                         let status_and_title = ``
-                        if (meeting_status == '모임중'){status_and_title = 
-                            `<h2><span style="color:blue;"><${meeting_status}></span> ${title}</h2>`
+                        if (meeting_status == '모임중') {
+                            status_and_title =
+                                `<h2><span style="color:blue;"><${meeting_status}></span> ${title}</h2>`
                         }
-                        else if (meeting_status == '모집중'){status_and_title =
-                            `<h2><span style="color:green;"><${meeting_status}></span> ${title}</h2>`
+                        else if (meeting_status == '모집중') {
+                            status_and_title =
+                                `<h2><span style="color:green;"><${meeting_status}></span> ${title}</h2>`
                         }
-                        else if (meeting_status == '모집완료'){status_and_title =
-                            `<h2><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h2>`
+                        else if (meeting_status == '모집완료') {
+                            status_and_title =
+                                `<h2><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h2>`
                         }
-                        else if (meeting_status == '자리없음'){status_and_title =
-                            `<h2><span style="color:orange;"><${meeting_status}></span> ${title}</h2>`
+                        else if (meeting_status == '자리없음') {
+                            status_and_title =
+                                `<h2><span style="color:orange;"><${meeting_status}></span> ${title}</h2>`
                         }
-                        else if (meeting_status == '모임종료'){status_and_title =
-                            `<h2><span style="color:red;"><${meeting_status}></span> ${title}</h2>`
+                        else if (meeting_status == '모임종료') {
+                            status_and_title =
+                                `<h2><span style="color:red;"><${meeting_status}></span> ${title}</h2>`
                         }
                         if (bookmark.includes(user_id)) {
                             meeting_book = `
@@ -181,20 +196,25 @@ async function placeBook(place_id) {
                         let join_meeting_count = meeting['join_meeting_count']
                         let meeting_book = ``
                         let status_and_title = ``
-                        if (meeting_status == '모임중'){status_and_title = 
-                            `<h2><span style="color:blue;"><${meeting_status}></span> ${title}</h2>`
+                        if (meeting_status == '모임중') {
+                            status_and_title =
+                                `<h2><span style="color:blue;"><${meeting_status}></span> ${title}</h2>`
                         }
-                        else if (meeting_status == '모집중'){status_and_title =
-                            `<h2><span style="color:green;"><${meeting_status}></span> ${title}</h2>`
+                        else if (meeting_status == '모집중') {
+                            status_and_title =
+                                `<h2><span style="color:green;"><${meeting_status}></span> ${title}</h2>`
                         }
-                        else if (meeting_status == '모집완료'){status_and_title =
-                            `<h2><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h2>`
+                        else if (meeting_status == '모집완료') {
+                            status_and_title =
+                                `<h2><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h2>`
                         }
-                        else if (meeting_status == '자리없음'){status_and_title =
-                            `<h2><span style="color:orange;"><${meeting_status}></span> ${title}</h2>`
+                        else if (meeting_status == '자리없음') {
+                            status_and_title =
+                                `<h2><span style="color:orange;"><${meeting_status}></span> ${title}</h2>`
                         }
-                        else if (meeting_status == '모임종료'){status_and_title =
-                            `<h2><span style="color:red;"><${meeting_status}></span> ${title}</h2>`
+                        else if (meeting_status == '모임종료') {
+                            status_and_title =
+                                `<h2><span style="color:red;"><${meeting_status}></span> ${title}</h2>`
                         }
                         if (bookmark.includes(user_id)) {
                             meeting_book = `
@@ -207,7 +227,7 @@ async function placeBook(place_id) {
                                 <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                             </a>`
                         }
-            
+
                         let temp_html = `
                         <div class="meeting_card">
                         <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
@@ -225,6 +245,7 @@ async function placeBook(place_id) {
                         `
                         $('#meeting-book-cards').append(temp_html)
                     }
+                    count++;
                 })
             })
     } else { alert("로그인 해주세요") }
@@ -233,14 +254,13 @@ async function placeBook(place_id) {
 
 async function meetingBookmark(id) {
     const book = document.querySelector(`#book${id}`)
-    let token = localStorage.getItem("access")
     let response = await fetch(`${BACKEND_BASE_URL}/meeting/${id}/bookmark/`, {
         method: 'POST',
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${logined_token}`,
         },
     })
-    if (token) {
+    if (logined_token) {
         if (response.status == "200") {
             book['src'] = "static/image/bookmark.png"
         } else {
