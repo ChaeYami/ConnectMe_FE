@@ -150,7 +150,7 @@ $(document).ready(function () {
                                     <p><small>${meeting_city}</p>
                                     ${status_and_title}
                                     <hr>
-                                    <h4 class=meeting_list_content>${content}</h4>
+                                    <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="">
                                     </div>
                                     <div id=bookmark_btn>
                                     <hr>
