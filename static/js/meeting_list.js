@@ -116,7 +116,7 @@ async function meetingShowList(pages = 1) {
 
             foot.style.display = ''
 
-            response.forEach(function (meeting) {
+            response['meeting'].forEach(function (meeting) {
                 if (meeting.meeting_image[0]) {
                     let id = meeting['id'];
                     let title = meeting['title'];

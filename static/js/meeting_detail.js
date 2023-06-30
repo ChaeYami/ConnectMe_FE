@@ -223,7 +223,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
                     
                     <p id="p_reply_create_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 700px;" id="reply_create_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyCreateConfrim(${id})">완료</button></p>
                     <div class=comment_btns>
-                    <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="reply_create_handle(${id})">대댓글 작성하기</button>
+                    <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="reply_create_handle(${id})">답글 작성하기</button>
                     <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="comment_update_handle(${id})"> </a>
                     <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="commentDelete(${id})"> </a>
                     </div>
@@ -242,12 +242,12 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
             updated_at = each_reply['updated_at']
             let temp_html = `
             <div style="margin-left: 50px;">
-            <p id="now_reply${reply_id}" style="display:block;">${content}</p>
-            <p id="p_reply_update_input${reply_id}" style="display:none;"/><input style="border-radius: 10px; width: 600px;" id="reply_update_input${reply_id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyUpdateConfrim(${reply_id})">완료</button></p>
+            <p id="now_reply${id}" style="display:block;">${content}</p>
+            <p id="p_reply_update_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 600px;" id="reply_update_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyUpdateConfrim(${id})">완료</button></p>
             <div class=replybtns>
             <p> <small> ${user} ${updated_at}</p>
-            <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="reply_update_handle(${reply_id})"> </a>
-            <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="replyDelete(${reply_id})"> </a>
+            <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="reply_update_handle(${id})"> </a>
+            <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="replyDelete(${id})"> </a>
             </div>
             </div>
             <hr>
