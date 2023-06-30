@@ -56,13 +56,24 @@ async function recommend(filter_) {
                     let user_region = rows[i]['prefer_region']
                     let user_age_range = rows[i]['age_range']
                     let user_mbti = rows[i]['mbti']
-                    let user_introduce = rows[i]['introduce']
+
+                    let user_introduce = ''
+                    if (user_introduce){
+                        user_introduce = rows[i]['introduce']
+                    }else{
+                        user_introduce = '<span class="no_intro">등록된 소개가 없습니다.</span>'
+                    }
+
+                    
                     let user_profile_img = rows[i]['profile_img']
                     if (user_profile_img == null) {
                         user_profile_img = 'static/image/user.png'
                     } else {
                         user_profile_img = `${BACKEND_BASE_URL}${user_profile_img}`
                     }
+                    
+
+
                     let temp_html = `<a onclick="go_profile(${user_pk})"><div class="card">
                     <div class="image_box">
                         <img class="image" src="${user_profile_img}" alt="">
