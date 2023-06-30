@@ -31,6 +31,9 @@ async function Profile(user_id) {
         method: "GET",
     })
     response_json = await response.json()
+    const current_region = `${response_json.current_region1} ${response_json.current_region2}`
+    console.log(current_region)
+
     const user_id_int = parseInt(user_id)
     const profile_img_url = `${BACKEND_BASE_URL}${response_json.profile_img}`;
     const profile_img_element = document.getElementById("profile-img")
@@ -47,6 +50,7 @@ async function Profile(user_id) {
     }
     document.getElementById('nickname').innerHTML = `${response_json.nickname}<br>(${response_json.account})`
     document.getElementById('region').innerHTML = `${response_json.prefer_region}`
+    document.getElementById('current-region').innerHTML = current_region
     document.getElementById('age').innerHTML = `${response_json.age}`
     document.getElementById('mbti').innerHTML = `${response_json.mbti}`
 }

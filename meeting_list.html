@@ -24,7 +24,7 @@
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
-            <a onclick="go_home()">홈</a>
+            <a onclick="go_home()"><img class="home-logo" src="static/image/logo.png" alt="logo"></a>
             <a onclick="go_recommend()">친구찾기</a>
             <a onclick="go_placeView()">핫플레이스</a>
             <a onclick="go_counsel()">고민상담</a>
@@ -35,6 +35,17 @@
                 <a onclick="go_signup()">회원가입</a>
             </div>
         </div>
+        <div class="top-nav-line-bar">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div class="top-nav-small-line"></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div></div>
     </div>
 
     <div class="bot-nav">
@@ -42,7 +53,6 @@
             <a onclick="go_personal_create()">내글</a>
             <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
-            <a href="">알림</a>
         </div>
         <span class="dropbtn">프로필 메뉴</span>
     </div>
@@ -92,7 +102,7 @@
                 </li>
             </ul>
         </div>
-        
+
         <!-- select box 끝 -->
         <!-- 검색 시작 -->
         <div class="search-div">
@@ -114,7 +124,7 @@
         </div>
         <!-- 검색 끝 -->
     </div>
-     <!-- 선택 검색 컨테이너 끝 -->
+    <!-- 선택 검색 컨테이너 끝 -->
     <div>
         <h1 style="margin-left: 100px;">만남의 광장</h1>
         <a class="meeting_create_btn" onclick="go_meetingCreate()"><img src="static/image/add.png"
@@ -123,10 +133,27 @@
     <div id="meeting_card" class="meeting_card_class">
     </div>
     <!-- 모임 글 목록 끝 -->
+    <!-- 페이지네이션 시작 -->
+    <footer id="myFooter" style="display: none;">
+        <div class="paging">
+            <i class="fa-solid fa-angles-left" id="first_page" style="display:none; margin-top: 5px;"><img
+                    src="static/image/arrow_first.png" class="arrow-image"></i>
+            <i class="fa-solid fa-angle-left" id="prev_page" style="display:none; margin-top: 5px;"><img
+                    src="static/image/arrow_left.png" class="arrow-image"></i>
+            <div class="pages">
+            </div>
+            <i class="fa-solid fa-angle-right" id="next_page"><img src="static/image/arrow_right.png"
+                    class="arrow-image"></i>
+            <i class="fa-solid fa-angles-right" id="last_page"><img src="static/image/arrow_last.png"
+                    class="arrow-image"></i>
+        </div>
+    </footer>
+    <!-- 페이지네이션 끝 -->
 </body>
 
 <!-- js -->
 <script src="static/js/base_api.js"></script>
+<script src="/static/js/base_redirect_login.js"></script>
 <script src="static/js/meeting_list.js"></script>
 
 </html>

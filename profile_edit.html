@@ -9,7 +9,12 @@
     <link rel="stylesheet" href="static/css/base.css">
     <link rel="stylesheet" href="static/css/profile_edit.css">
 
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
     <title>Connect ME | 프로필</title>
+
 </head>
 
 <body>
@@ -18,7 +23,7 @@
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
-            <a onclick="go_home()">홈</a>
+            <a onclick="go_home()"><img class="home-logo" src="static/image/logo.png" alt="logo"></a>
             <a onclick="go_recommend()">친구찾기</a>
             <a onclick="go_placeView()">핫플레이스</a>
             <a onclick="go_counsel()">고민상담</a>
@@ -29,6 +34,17 @@
                 <a onclick="go_signup()">회원가입</a>
             </div>
         </div>
+        <div class="top-nav-line-bar">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div></div>
     </div>
 
     <div class="bot-nav">
@@ -36,7 +52,6 @@
             <a onclick="go_personal_create()">내글</a>
             <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
-            <a href="">알림</a>
         </div>
         <span class="dropbtn">프로필 메뉴</span>
     </div>
@@ -67,7 +82,10 @@
                     <input type="text" id="nickname" name="nickname">
                 </div>
                 <div id="region">
-                    --지역수정 만들어야됨--
+                    <div class="group">
+                        <select name="sido1" id="sido1"></select>
+                        <select name="gugun1" id="gugun1"></select>
+                    </div>
                 </div>
                 <div class="age">
                     <label for="age">나이</label>
@@ -113,6 +131,7 @@
 
 <!-- js -->
 <script src="static/js/base_api.js"></script>
+<script src="/static/js/base_redirect_login.js"></script>
 <script src="static/js/profile_edit_api.js"></script>
 
 </html>

@@ -1,15 +1,53 @@
-/* 북마크 핫 플레이스 시작 */
-
 main {
     width: 70vw;
     margin: 75px auto 0px auto;
     max-width: 1200px;
 }
 
+.none-text-align {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* 유저 시작 */
+.my_posts_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.my_posts_container>div:nth-child(1) {
+    width: 100px;
+    height: 100px;
+    border-radius: 70%;
+    overflow: hidden;
+    margin-right: 20px;
+    box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, .2);
+
+}
+
+.my_posts_container>div:nth-child(1)>a>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.my_posts_container>div:nth-child(2)>a {
+    color: #8FB4E1;
+    font-weight: 800;
+    font-size: 18px;
+}
+
+
+/* 유저 끝 */
+/* 북마크 핫 플레이스 시작 */
+
 .hotplace-book-container {
     display: grid;
-    grid-template-rows: 40px 10px 1fr;
-    margin-top: 80px;
+    grid-template-rows: 60px 10px 1fr;
     height: 430px;
 }
 
@@ -71,6 +109,10 @@ main {
 /* 북마크 핫 플레이스 끝 */
 
 /* 북마크 만남의 광장 시작 */
+.meeting-book-container {
+    margin-top: 50px;
+}
+
 .meeting_card_class {
     width: 70vw;
     max-width: 900px;
@@ -114,4 +156,34 @@ main {
 .meeting_create_btn {
     margin-left: 90%;
 }
+
 /* 북마크 만남의 광장 끝 */
+/* 더보기 시작 */
+
+.book-more-views {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    margin: 10px 0px;
+}
+
+.book-more-views>div:nth-child(1) {
+    display: flex;
+    align-items: center;
+}
+
+.book-more-views>div:nth-child(2) {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    color: rgb(160, 160, 160);
+    font-size: 13px;
+
+}
+
+/* 더보기 끝 */
+/* 내 글 고민상담 시작 */
+.counsel_user_create_class {
+    height: 350px;
+}
+
+/* 내 글 고민상담 끝 */

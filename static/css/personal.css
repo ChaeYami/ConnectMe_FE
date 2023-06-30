@@ -1,4 +1,4 @@
-.main{
+.main {
     width: 60vw;
     padding: 0 30px;
     margin: 100px auto;
@@ -8,24 +8,24 @@
     }
 }
 
-.personal-box{
+.personal-box {
     margin: 50px auto;
     width: 400px;
     background-color: #f1f9ff;
     padding: 20px;
     border-radius: 15px;
     border: 1px solid #ffffff;
-    
+
 }
 
-.box{
+.box {
     padding: 30px;
     font-size: 14pt;
 }
 
-.box button{
+.box button {
     margin: 5px;
-    background-color:  #8eadd3;
+    background-color: #8eadd3;
     color: white;
     font-weight: bold;
     border: none;
@@ -42,34 +42,37 @@
 .input-box {
     position: relative;
     margin: 10px 0;
-    border: 1px solid  #ccc;
+    border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px;
 
 }
-#input-box{
+
+#input-box {
     margin: 50px auto;
     width: 500px;
+
     @media screen and (max-width: 700px) {
         width: 400px;
 
     }
 }
+
 .input-box>input {
     background: transparent;
     border: none;
-    padding:  10px;
+    padding: 10px;
     font-size: 14pt;
-    width:90%;
+    width: 90%;
 }
 
-.input-box>label{
+.input-box>label {
     font-size: 11pt;
     padding-left: 5px;
 }
 
-#buttons button{
-    background-color:  #9bb7da;
+#buttons button {
+    background-color: #9bb7da;
     border: none;
     color: rgb(255, 255, 255);
     border-radius: 5px;
@@ -84,39 +87,41 @@
 
 /* edit_phone.html*/
 
-.edit-phone-section{
+.edit-phone-section {
     margin: 30px auto;
     width: 500px;
 }
-.certify-phone{
+
+.certify-phone {
     display: flex;
 }
-.certify-phone button{
-    background-color:  #9bb7da;
+
+.certify-phone button {
+    background-color: #9bb7da;
     border: none;
     color: rgb(255, 255, 255);
     border-radius: 5px;
     font-size: 13pt;
     font-weight: bold;
     cursor: pointer;
-    margin : 20px;
+    margin: 20px;
 
 }
 
-#auth-num-box button{
-    background-color:  #9bb7da;
+#auth-num-box button {
+    background-color: #9bb7da;
     border: none;
     color: rgb(255, 255, 255);
     border-radius: 5px;
     font-size: 13pt;
     font-weight: bold;
     cursor: pointer;
-    margin : 20px;
+    margin: 20px;
 
 }
 
-.submit-button{
-    background-color:  #9bb7da;
+.submit-button {
+    background-color: #9bb7da;
     border: none;
     color: rgb(255, 255, 255);
     border-radius: 5px;
@@ -126,4 +131,23 @@
     font-weight: bold;
     cursor: pointer;
     margin-top: 10px;
+}
+
+.book-more-views {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    margin-top: 10px;
+}
+
+.book-more-views>div:nth-child(1) {
+    display: flex;
+    align-items: center;
+}
+
+.book-more-views>div:nth-child(2) {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    color: rgb(160, 160, 160);
+    font-size: 13px;
 }

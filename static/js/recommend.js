@@ -10,12 +10,12 @@ $(document).ready(function () {
 
 
 // 추천 유저목록
-async function recommend(filter) {
+async function recommend(filter_) {
     $('#list-section').empty()
     $('.condition').empty()
 
     $.ajax({
-        url: `${BACKEND_BASE_URL}/user/recommend/${filter}/`,
+        url: `${BACKEND_BASE_URL}/user/recommend/${filter_}/`,
         type: "GET",
         dataType: "json",
         headers: {
@@ -24,29 +24,29 @@ async function recommend(filter) {
         success: function (response) {
             const rows = response;
             if (rows[0] == undefined) {
-                if (filter == 'age_range') {
-                    filter = '나이가'
-                } else if (filter == 'mbti') {
-                    filter = 'MBTI가'
-                } else if (filter == 'prefer_region') {
-                    filter = '지역이'
+                if (filter_ == 'age_range') {
+                    filter_ = '나이가'
+                } else if (filter_ == 'mbti') {
+                    filter_ = 'MBTI가'
+                } else if (filter_ == 'prefer_region') {
+                    filter_ = '지역이'
                 }
-                let temp_html = `해당 조건에 맞는 유저가 존재하지 않거나 프로필에 설정된 ${filter} 없습니다.`
+                let temp_html = `해당 조건에 맞는 유저가 존재하지 않거나 프로필에 설정된 ${filter_} 없습니다.`
                 $('#list-section').append(temp_html)
 
             } else {
-                let filter_ = ''
-                if (filter == 'age_range') {
-                    filter_ = '나이'
-                } else if (filter == 'mbti') {
-                    filter_ = 'MBTI'
-                } else if (filter == 'prefer_region') {
-                    filter_ = '지역'
-                } else if (filter == 'all') {
-                    filter_ = '전체'
+                let filter__ = ''
+                if (filter_ == 'age_range') {
+                    filter__ = '나이'
+                } else if (filter_ == 'mbti') {
+                    filter__ = 'MBTI'
+                } else if (filter_ == 'prefer_region') {
+                    filter__ = '지역'
+                } else if (filter_ == 'all') {
+                    filter__ = '전체'
                 }
-                if (rows[0][filter]) {
-                    let condition = `${filter_} : ${rows[0][filter]}`
+                if (rows[0][filter_]) {
+                    let condition = `${filter__} : ${rows[0][filter_]}`
                     $('.condition').append(condition)
                 }
 

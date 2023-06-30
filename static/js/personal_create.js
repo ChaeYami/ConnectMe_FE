@@ -1,3 +1,11 @@
+const logined_token = localStorage.getItem("access");
+let user_id = JSON.parse(payload)['user_id']
+
+$(document).ready(function () {
+    getCounsels()
+    Profile(user_id)
+})
+
 //================================ 유저가 작성한 모임 글 목록 시작 ================================ 
 {
     let token = localStorage.getItem("access")
@@ -14,7 +22,17 @@
             .then(res => res.json()).then(meetings => {
                 let payloadObj = JSON.parse(payload)
                 let user_id = payloadObj.user_id
-                meetings.forEach((meeting) => {
+                let count = 0;
+
+                if (meetings['meeting'].length == 0) {
+                    let temp_html = `<div class="none-text-align"><h2>작성한 게시글이 없습니다.<h2></div>`
+                    $('#meeting_user_create_cards').append(temp_html)
+                }
+
+                meetings['meeting'].forEach((meeting) => {
+                    if (count >= 3) {
+                        return;
+                    }
                     if (meeting.meeting_image[0]) {
                         let id = meeting['id']
                         let title = meeting['title']
@@ -125,7 +143,7 @@
                                 <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                             </a>`
                         }
-            
+
                         let temp_html = `
                                     <div class="meeting_card">
                                     <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
@@ -143,6 +161,7 @@
                                     `
                         $('#meeting_user_create_cards').append(temp_html)
                     }
+                    count++;
                 })
             })
     } else { alert("로그인 해주세요") }
@@ -150,13 +169,7 @@
 //================================ 유저가 작성한 모임 글 목록 끝 ================================
 
 //================================ 유저가 작성한 상담 글 목록 시작 ================================
-const logined_token = localStorage.getItem("access");
 
-
-$(document).ready(function () {
-    getCounsels()
-})
-// 게시글 목록 가져오기
 async function getCounsels() {
     let token = localStorage.getItem("access")
     $('#list-section').empty()
@@ -168,8 +181,18 @@ async function getCounsels() {
         dataType: "json",
         headers: { 'Authorization': `Bearer ${token}` },
         success: function (response) {
-            const rows = response;
-            for (let i = 0; i < rows.length; i++) {
+            const rows = response['counsel'];
+            let row_num = response['counsel'].length
+
+            if (row_num >= 10) {
+                row_num = 10
+            } else if (row_num == 0) {
+                let temp_html = `<div class="none-text-align"><h2>작성한 게시글이 없습니다.<h2></div>`
+                $('#counsel_user_create_id').append(temp_html)
+            }
+
+
+            for (let i = 0; i < row_num; i++) {
                 let counsel_id = rows[i]['id']
                 let counsel_title = rows[i]['title']
                 let counsel_author = rows[i]['user']
@@ -196,5 +219,47 @@ async function getCounsels() {
 
     })
 }
-
 //================================ 유저가 작성한 상담 글 목록 끝 ================================
+
+// 모임 북마크 하기 API
+async function meetingBookmark(id) {
+    const book = document.querySelector(`#book${id}`)
+    let response = await fetch(`${BACKEND_BASE_URL}/meeting/${id}/bookmark/`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${logined_token}`,
+        },
+    })
+    if (logined_token) {
+        if (response.status == "200") {
+            book['src'] = "static/image/bookmark.png"
+        } else {
+            book['src'] = "static/image/bookmark (1).png"
+        }
+    } else {
+        alert("로그인 해주세요")
+    }
+}
+
+
+// 유저 가져오기 API
+
+async function Profile(user_id) {
+    const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
+        method: "GET",
+    })
+
+    response_json = await response.json()
+
+    const nickname = response_json.nickname
+    const profile_img_url = `${BACKEND_BASE_URL}${response_json.profile_img}`;
+    let my_posts = document.querySelector('#my-posts-container')
+    if (response_json.profile_img === null) {
+        my_posts.innerHTML = `<div><a onclick="go_myProfile()"><img src="static/image/user.png"></a></div>`
+
+    } else {
+        my_posts.innerHTML = `<div><a onclick="go_myProfile()"><img src="${profile_img_url}"></a></div>`
+    }
+
+    my_posts.innerHTML += `<div><a onclick="go_myProfile()">${nickname}</a></div> 님의 내 글 목록입니다.`
+}

@@ -4,17 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
-    <link rel="stylesheet" href="static/css/find.css">
+    <link rel="stylesheet" href="static/css/personal_more.css">
 
-    <title>Connect ME</title>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <title>Document</title>
 </head>
 
 <body>
-
-
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
@@ -51,33 +51,29 @@
         <span class="dropbtn">프로필 메뉴</span>
     </div>
     <!--위, 아래 네비바 끝-->
-
-
-
-
-
-    <div class="main">
-        <h2>계정찾기</h2>
-        <hr>
-        <div class="find-section">
-            <a class="find" onclick="go_findAccount()">
-                아이디 찾기
-            </a>
-            <a class="find" onclick="go_findPassword()">
-                비밀번호 찾기
-            </a>
+    <main>
+        <div id="more-title" class="more_title"></div>
+        <div id="more-content" class="more_content"></div>
+    </main>
+    <!-- 페이지네이션 시작 -->
+    <footer id="myFooter" style="display: none;">
+        <div class="paging">
+            <i class="fa-solid fa-angles-left" id="first_page" style="display:none; margin-top: 5px;"><img
+                    src="static/image/arrow_first.png" class="arrow-image"></i>
+            <i class="fa-solid fa-angle-left" id="prev_page" style="display:none; margin-top: 5px;"><img
+                    src="static/image/arrow_left.png" class="arrow-image"></i>
+            <div class="pages">
+            </div>
+            <i class="fa-solid fa-angle-right" id="next_page"><img src="static/image/arrow_right.png"
+                    class="arrow-image"></i>
+            <i class="fa-solid fa-angles-right" id="last_page"><img src="static/image/arrow_last.png"
+                    class="arrow-image"></i>
         </div>
-        <div class="buttons">
-            <a onclick="go_login()" style=" font-weight: 700;">로그인</a>
-            <a onclick="go_signup()" style=" font-weight: 700;">
-                회원가입
-            </a>
-        </div>
-    </div>
+    </footer>
+    <!-- 페이지네이션 끝 -->
+    <script src="static/js/base_api.js"></script>
+    <script src="/static/js/base_redirect_login.js"></script>
+    <script src="static/js/personal_more.js"></script>
 </body>
-
-<!-- js -->
-<script src="static/js/base_api.js"></script>
-<script src="/static/js/base_redirect_login.js"></script>
 
 </html>
