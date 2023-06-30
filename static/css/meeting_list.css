@@ -1,6 +1,12 @@
+.main {
+    width: 70vw;
+    margin: 75px auto;
+    max-width: 900px;
+}
+
 .meeting_card_class {
     width: 70vw;
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     grid-template-columns: 1fr 1fr 1fr;
     display: grid;
@@ -30,7 +36,7 @@
 }
 
 .meeting_card {
-    margin: 20px;
+    margin: 10px;
     border: 1px solid rgb(203, 203, 203);
     border-radius: 10px;
     padding: 10px;

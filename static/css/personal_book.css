@@ -1,7 +1,7 @@
 main {
     width: 70vw;
     margin: 75px auto 0px auto;
-    max-width: 1200px;
+    max-width: 1200px !important;
 }
 
 .none-text-align {
@@ -113,16 +113,6 @@ main {
     margin-top: 50px;
 }
 
-.meeting_card_class {
-    width: 70vw;
-    max-width: 900px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
-}
 
 .meeting_list_image {
     width: 270px;
@@ -141,7 +131,9 @@ main {
     border: 1px solid rgb(203, 203, 203);
     border-radius: 10px;
     padding: 10px;
-    height: 500px;
+    height: 550px;
+    margin: 5px;
+    width: 300px;
 
 }
 
@@ -199,12 +191,11 @@ main {
 
 .meeting_card_class {
     width: 70vw;
-    max-width: 1200px;
-    margin: 0 auto;
     grid-template-columns: 1fr 1fr 1fr;
     display: grid;
     justify-items: center;
-
+    max-width: 900px;
+    margin: 0 auto;
     @media screen and (max-width: 1200px) {
         grid-template-columns: 1fr 1fr;
 
@@ -216,26 +207,14 @@ main {
     }
 }
 
-.meeting_list_image {
-    width: 250px;
-    height: 300px;
-    border-radius: 5px;
-    object-fit: cover;
-}
+
 
 .meeting_img_list {
     width: 30%;
     margin-bottom: 10px;
 }
 
-.meeting_card {
-    margin: 20px;
-    border: 1px solid rgb(203, 203, 203);
-    border-radius: 10px;
-    padding: 10px;
-    height: 540px;
-    width: 260px;
-}
+
 
 .meeting_list_content {
     width: 270px;
@@ -386,4 +365,9 @@ main {
             opacity: 1;
         }
     }
+}
+
+.counsel_user_create_container{
+    max-width: 900px;
+    margin: 0 auto;
 }
