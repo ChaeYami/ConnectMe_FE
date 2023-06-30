@@ -28,7 +28,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     place_title = data['place_title']
     place_address = data['place_address']
     join_meeting = data['join_meeting']
-    join_meeting.forEach(join_user=>{
+    join_meeting.forEach(join_user => {
         let join_user_nickname = join_user.nickname
         let meeting_join_user_list = `
                                 <ul>
@@ -38,7 +38,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         $('#popup-user-list').append(meeting_join_user_list)
     })
 
-    
+
     who_join_meeting = ``
     if (user == nickname) {
         who_join_meeting = `
@@ -235,23 +235,23 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         }
         $(`#comment_update_input${id}`).val(content)
         each_comment.reply.forEach((each_reply => {
-            id = each_reply['id']
+            reply_id = each_reply['id']
             content = each_reply['content']
             user = each_reply['user']
             updated_at = each_reply['updated_at']
             let temp_html = `
             <div style="margin-left: 50px;">
-            <p id="now_reply${id}" style="display:block;">${content}</p>
-            <p id="p_reply_update_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 600px;" id="reply_update_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyUpdateConfrim(${id})">완료</button></p>
+            <p id="now_reply${reply_id}" style="display:block;">${content}</p>
+            <p id="p_reply_update_input${reply_id}" style="display:none;"/><input style="border-radius: 10px; width: 600px;" id="reply_update_input${reply_id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyUpdateConfrim(${reply_id})">완료</button></p>
             <div class=replybtns>
             <p> <small> ${user} ${updated_at}</p>
-            <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="reply_update_handle(${id})"> </a>
-            <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="replyDelete(${id})"> </a>
+            <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="reply_update_handle(${reply_id})"> </a>
+            <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="replyDelete(${reply_id})"> </a>
             </div>
             </div>
             <hr>
             `
-            $('#reply_card').append(temp_html)
+            $(`#reply_card${id}`).append(temp_html)
             $(`#reply_update_input${id}`).val(content)
         }))
     }))
