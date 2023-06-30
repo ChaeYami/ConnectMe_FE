@@ -357,7 +357,7 @@ async function bookMoreMeeting(pages = 1) {
                         let temp_html = `
                         <div id="meeting_card_${id}" class="meeting_card">
                         <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
-                                    <p><small>${meeting_city}</p>
+                                    <p><small>${meeting_city}</small></p>
                                     ${status_and_title}
                                     <hr>
                                     <img class=meeting_list_image src="${BACKEND_BASE_URL}${meeting_image}" alt="">
@@ -365,7 +365,7 @@ async function bookMoreMeeting(pages = 1) {
                                     <div id=bookmark_btn>
                                     <hr>
                                     <p id=info_line><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                                    <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
+                                    <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
                                     </div>
                                     </div>
                                     `
@@ -422,7 +422,7 @@ async function bookMoreMeeting(pages = 1) {
                         let temp_html = `
                         <div class="meeting_card">
                         <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
-                        <p><small>${meeting_city}</p>
+                        <p><small>${meeting_city}</small></p>
                         ${status_and_title}
                         <hr>
                         <h4 class=meeting_list_content>${content}</h4>
@@ -430,7 +430,7 @@ async function bookMoreMeeting(pages = 1) {
                         <div id=bookmark_btn>
                         <hr>
                         <p id=info_line><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                        <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
+                        <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
                         </div>
                         </div>
                         `
@@ -562,7 +562,7 @@ async function MoreUserDetailMeeting(pages = 1) {
                         let temp_html = `
                         <div id="meeting_card_${id}" class="meeting_card">
                         <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
-                                    <p><small>${meeting_city}</p>
+                                    <p><small>${meeting_city}</small></p>
                                     ${status_and_title}
                                     <hr>
                                     <img class=meeting_list_image src="${BACKEND_BASE_URL}${meeting_image}" alt="">
@@ -570,7 +570,7 @@ async function MoreUserDetailMeeting(pages = 1) {
                                     <div id=bookmark_btn>
                                     <hr>
                                     <p id=info_line><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                                    <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
+                                    <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
                                     </div>
                                     </div>
                                     `
@@ -627,7 +627,7 @@ async function MoreUserDetailMeeting(pages = 1) {
                         let temp_html = `
                         <div class="meeting_card">
                         <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
-                        <p><small>${meeting_city}</p>
+                        <p><small>${meeting_city}</small></p>
                         ${status_and_title}
                         <hr>
                         <h4 class=meeting_list_content>${content}</h4>
@@ -635,7 +635,7 @@ async function MoreUserDetailMeeting(pages = 1) {
                         <div id=bookmark_btn>
                         <hr>
                         <p id=info_line><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                        <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
+                        <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
                         </div>
                         </div>
                         `

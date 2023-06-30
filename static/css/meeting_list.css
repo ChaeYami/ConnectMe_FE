@@ -1,12 +1,19 @@
 .meeting_card_class {
     width: 70vw;
-    max-width: 900px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+    justify-items: center;
+
+    @media screen and (max-width: 1200px) {
+        grid-template-columns: 1fr 1fr;
+
+    }
+    @media screen and (max-width: 900px) {
+        grid-template-columns: 1fr;
+
+    }
 }
 
 .meeting_list_image {
@@ -22,12 +29,12 @@
 }
 
 .meeting_card {
-    margin-top: 10px;
+    margin: 20px;
     border: 1px solid rgb(203, 203, 203);
     border-radius: 10px;
     padding: 10px;
-    height: 500px;
-
+    height: 520px;
+    width: 290px;
 }
 
 .meeting_list_content {

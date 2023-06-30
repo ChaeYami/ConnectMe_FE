@@ -158,19 +158,19 @@ async function meetingShowList(pages = 1) {
                     }
 
                     let temp_html = `
-              <div id="meeting_card_${id}" class="meeting_card">
-                <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">
-                  <p><small>${meeting_city}</p>
-                  ${status_and_title}
-                  <hr>
-                  <img class="meeting_list_image" src="${BACKEND_BASE_URL}${meeting_image}" alt="">
-                </div>
-                <div id="bookmark_btn">
-                  <hr>
-                  <p id="info_line"><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                  <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
-                </div>
-              </div>
+                        <div id="meeting_card_${id}" class="meeting_card">
+                            <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">
+                                <p><small>${meeting_city}</small></p>
+                                ${status_and_title}
+                                <hr>
+                                <img class="meeting_list_image" src="${BACKEND_BASE_URL}${meeting_image}" alt="">
+                            </div>
+                            <div id="bookmark_btn">
+                                <hr>
+                                <p id="info_line"><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
+                                <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
+                            </div>
+                        </div>
             `;
                     $('#meeting_card').append(temp_html);
                 } else {
@@ -216,20 +216,20 @@ async function meetingShowList(pages = 1) {
                     }
 
                     let temp_html = `
-              <div class="meeting_card">
-                <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">
-                  <p><small>${meeting_city}</p>
-                  ${status_and_title}
-                  <hr>
-                  <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="">
-                </div>
-                <div id="bookmark_btn">
-                  <hr>
-                  <p id="info_line"><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                  <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
-                </div>
-              </div>
-            `;
+                        <div class="meeting_card">
+                            <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">
+                                <p><small>${meeting_city}</small></p>
+                                ${status_and_title}
+                                <hr>
+                                <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="">
+                            </div>
+                            <div id="bookmark_btn">
+                                <hr>
+                                <p id="info_line"><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
+                                <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
+                            </div>
+                        </div>
+                    `;
                     $('#meeting_card').append(temp_html);
                 }
             });
@@ -302,18 +302,18 @@ function meetingSearch() {
                 }
                 let temp_html = `
                         <div id="meeting_card_${id}" class="meeting_card">
-                        <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
-                                    <p><small>${meeting_city}</p>
-                                    ${status_and_title}
-                                    <hr>
-                                    <img class=meeting_list_image src="${meeting_image}" alt="">
-                                    </div>
-                                    <div id=bookmark_btn>
-                                    <hr>
-                                    <p id=info_line><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                                    <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
-                                    </div>
-                                    </div>
+                            <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
+                                <p><small>${meeting_city}</small></p>
+                                ${status_and_title}
+                                <hr>
+                                <img class=meeting_list_image src="${meeting_image}" alt="">
+                            </div>
+                            <div id=bookmark_btn>
+                                <hr>
+                                <p id=info_line><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
+                                <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
+                            </div>
+                        </div>
                                     `
                 $('#meeting_card').append(temp_html)
             } else {
@@ -364,17 +364,17 @@ function meetingSearch() {
                 }
                 let temp_html = `
                 <div class="meeting_card">
-                <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
-                <p><small>${meeting_city}</p>
-                ${status_and_title}
-                <hr>
-                <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="">
-                </div>
-                <div id=bookmark_btn>
-                <hr>
-                <p id=info_line><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
-                </div>
+                    <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
+                        <p><small>${meeting_city}</small></p>
+                        ${status_and_title}
+                        <hr>
+                        <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="">
+                    </div>
+                    <div id=bookmark_btn>
+                        <hr>
+                        <p id=info_line><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
+                        <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
+                    </div>
                 </div>
                 `
                 $('#meeting_card').append(temp_html)
