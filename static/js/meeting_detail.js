@@ -209,7 +209,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         if (content == '삭제된 댓글 입니다.') {
             let temp_html = `
             <p id="now_comment${id}" style="display:block;">${content}</p>
-            <div id="reply_card">
+            <div id="reply_card${id}">
             <hr>
             `
             $('#comment_card').append(temp_html)
@@ -227,7 +227,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
                     <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="comment_update_handle(${id})"> </a>
                     <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="commentDelete(${id})"> </a>
                     </div>
-                    <div id="reply_card">
+                    <div id="reply_card${id}">
                     <hr>
                     `
 
@@ -235,7 +235,8 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         }
         $(`#comment_update_input${id}`).val(content)
         each_comment.reply.forEach((each_reply => {
-            reply_id = each_reply['id']
+            comment = each_reply['comment']
+            id = each_reply['id']
             content = each_reply['content']
             user = each_reply['user']
             updated_at = each_reply['updated_at']
@@ -251,7 +252,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
             </div>
             <hr>
             `
-            $(`#reply_card${id}`).append(temp_html)
+            $(`#reply_card${comment}`).append(temp_html)
             $(`#reply_update_input${id}`).val(content)
         }))
     }))
