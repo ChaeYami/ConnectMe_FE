@@ -133,6 +133,7 @@ async function meetingShowList(pages = 1) {
                     let join_meeting_count = meeting['join_meeting_count'];
                     let status_and_title = '';
 
+
                     if (meeting_status == '모집중') {
                         status_and_title =
                             `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
@@ -141,7 +142,7 @@ async function meetingShowList(pages = 1) {
                         status_and_title =
                             `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
                     }
-                    else if (meeting_status == '모임종료') {
+                    else if (meeting_status == '모집종료') {
                         status_and_title =
                             `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                     }
@@ -194,6 +195,7 @@ async function meetingShowList(pages = 1) {
                     let join_meeting_count = meeting['join_meeting_count'];
                     let meeting_book = '';
                     let status_and_title = '';
+                    console.log(meeting_status)
 
                     if (meeting_status == '모집중') {
                         status_and_title =
@@ -203,7 +205,7 @@ async function meetingShowList(pages = 1) {
                         status_and_title =
                             `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
                     }
-                    else if (meeting_status == '모임종료') {
+                    else if (meeting_status == '모집종료') {
                         status_and_title =
                             `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                     }
@@ -285,7 +287,7 @@ function meetingSearch() {
                     status_and_title =
                         `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
                 }
-                else if (meeting_status == '모임종료') {
+                else if (meeting_status == '모집종료') {
                     status_and_title =
                         `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                 }
@@ -342,7 +344,7 @@ function meetingSearch() {
                     status_and_title =
                         `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
                 }
-                else if (meeting_status == '모임종료') {
+                else if (meeting_status == '모집종료') {
                     status_and_title =
                         `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                 }

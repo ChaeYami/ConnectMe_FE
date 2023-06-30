@@ -274,12 +274,12 @@ async function placeView(category_select = '카테고리', pages = 1) {
         if (bookmark.includes(logined_user_id)) {
 
             place_book = `
-            <a>
+            <a title="북마크"> 
                 <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook($${place_id})">
             </a>`
         } else {
             place_book = `
-            <a>
+            <a title="북마크">
                 <img id="book${place_id}" src="static/image/bookmark.png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
             </a>`
         }
@@ -466,12 +466,12 @@ async function placeSearchView(event) {
         if (bookmark.includes(logined_user_id)) {
 
             place_book = `
-            <a>
+            <a title="북마크">
                 <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
             </a>`
         } else {
             place_book = `
-            <a>
+            <a title="북마크">
                 <img id="book${place_id}" src="static/image/bookmark.png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
             </a>`
         }
@@ -848,24 +848,24 @@ async function placeDetailView(place_id) {
 
     if (bookmark.includes(logined_user_id)) {
         book_html = `
-        <a>
+        <a title="북마크">
             <img id="book${place_id}" src="static/image/bookmark (1).png" class="place-detail-book" alt="북마크" onclick="placeBook(${place_id},${book_count})">
         </a>`
     } else {
         book_html = `
-        <a>
+        <a title="북마크">
             <img id="book${place_id}" src="static/image/bookmark.png" class="place-detail-book" alt="북마크" onclick="placeBook(${place_id})">
         </a>`
     }
 
     if (like.includes(logined_user_id)) {
         like_html = `
-        <a>
+        <a title="좋아요">
             <img id="like${place_id}" src="static/image/heart (1).png" class="place-detail-like" alt="좋아요" onclick="placeLike(${place_id})">
         </a>`
     } else {
         like_html = `
-        <a>
+        <a title="좋아요">
             <img id="like${place_id}" src="static/image/heart.png" class="place-detail-like" alt="좋아요" onclick="placeLike(${place_id})">
         </a>`
     }
@@ -911,11 +911,11 @@ async function placeDetailView(place_id) {
                 <div class="place-detail-feed">
                     ${book_html}
                     ${like_html}
-                    <a>
+                    <a title="이 장소로 모임 생성하기">
                         <img id="in_place_create_meeting" src="static/image/workgroup.png" class="place-detail-share" alt="모임생성하기"
                             onclick="go_createMeeting(\'${name},${address}\')">
                     </a>
-                    <a>
+                    <a title="공유하기">
                         <img id="modal_opne_btn" src="static/image/share.png" class="place-detail-share" alt="공유하기"
                             onclick="placeShare(${place_id})">
                     </a>
