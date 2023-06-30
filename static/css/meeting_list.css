@@ -1,16 +1,30 @@
+.main {
+    width: 70vw;
+    margin: 75px auto;
+    max-width: 900px;
+}
+
 .meeting_card_class {
     width: 70vw;
     max-width: 900px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+    justify-items: center;
+
+    @media screen and (max-width: 1200px) {
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+    @media screen and (max-width: 900px) {
+        grid-template-columns: 1fr;
+
+    }
 }
 
 .meeting_list_image {
-    width: 270px;
+    width: 250px;
     height: 300px;
     border-radius: 5px;
     object-fit: cover;
@@ -22,12 +36,12 @@
 }
 
 .meeting_card {
-    margin-top: 10px;
+    margin: 10px;
     border: 1px solid rgb(203, 203, 203);
     border-radius: 10px;
     padding: 10px;
-    height: 500px;
-
+    height: 540px;
+    width: 260px;
 }
 
 .meeting_list_content {
@@ -326,3 +340,13 @@ span.active {
 }
 
 /********* place 페이지네이션 시작 **********/
+
+.status_and_title {
+    overflow: hidden;
+    white-space: nowrap;
+    height:50px;
+}
+
+.info_line {
+    margin-top: 5px;
+}

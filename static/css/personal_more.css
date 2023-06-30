@@ -23,6 +23,7 @@ main {
     height: 230px;
     object-fit: cover;
     object-position: center;
+    border-radius: 20px;
 }
 
 .place-container-main {
@@ -110,14 +111,19 @@ main {
 /********* place-contariner 끝 **********/
 /* 북마크 만남의 광장 시작 */
 .meeting_card_class {
-    width: 70vw;
-    max-width: 900px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+    justify-items: center;
+
+    @media screen and (max-width: 1200px) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media screen and (max-width: 900px) {
+        grid-template-columns: 1fr;
+
+    }
 }
 
 .meeting_list_image {
@@ -133,11 +139,12 @@ main {
 }
 
 .meeting_card {
-    margin-top: 10px;
+    margin: 5px;
     border: 1px solid rgb(203, 203, 203);
     border-radius: 10px;
     padding: 10px;
-    height: 500px;
+    height: 520px;
+    width: 280px;
 
 }
 
@@ -212,3 +219,65 @@ span.active {
 }
 
 /********* place 페이지네이션 시작 **********/
+.list-box {
+    display: grid;
+    grid-template-columns: 1fr 50px 300px 20px;
+    justify-items: start;
+    align-items: center;
+    gap: 20px;
+    margin: 0px 50px;
+}
+
+#counsel-title {
+    font-weight: bold;
+}
+
+#counsel-author {
+    color: #4b828d;
+    font-weight: 600;
+}
+
+#counsel-author>a {
+    color: #4b828d;
+}
+
+#counsel-created-at {
+    margin-left: 40px;
+}
+
+#counsel-likes {
+    color: #b7b7b7;
+}
+
+/* 유저 시작 */
+.my_posts_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 80px;
+}
+
+.my_posts_container>div:nth-child(1) {
+    width: 100px;
+    height: 100px;
+    border-radius: 70%;
+    overflow: hidden;
+    margin-right: 20px;
+    box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, .2);
+
+}
+
+.my_posts_container>div:nth-child(1)>a>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.my_posts_container>div:nth-child(2)>a {
+    color: #8FB4E1;
+    font-weight: 800;
+    font-size: 18px;
+}
+
+
+/* 유저 끝 */

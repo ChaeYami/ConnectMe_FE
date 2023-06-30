@@ -126,7 +126,7 @@ async function counselComments(counsel_id) {
                 if (content == '삭제된 댓글 입니다.') {
                     let temp_html = `
                     <p id="now_comment${id}" style="display:block;">${content}</p>
-                    <div id="reply_card">
+                    <div id="reply_card${id}">
                     <hr>
                     `
                     $('#comment_card').append(temp_html)
@@ -152,9 +152,9 @@ async function counselComments(counsel_id) {
                     $('#comment_card').append(temp_html)
                 }
 
-                $('#comment_card').append(temp_html)
+                $(`#comment_update_input${id}`).val(content)
                 rows[i].reply.forEach((each_reply => {
-
+                    comment = each_reply['comment']
                     reply_id = each_reply['id']
                     content = each_reply['content']
                     user = each_reply['user']['nickname']
@@ -188,7 +188,7 @@ async function counselComments(counsel_id) {
                         </div>
                         <hr>
                         `
-                    $(`#reply_card${id}`).append(temp_html)
+                    $(`#reply_card${comment}`).append(temp_html)
                     $(`#reply_update_input${id}`).val(content)
                 }))
             }

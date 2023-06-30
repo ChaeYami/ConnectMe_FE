@@ -46,7 +46,7 @@ async function Profile(user_id) {
     if (response_json.introduce) {
         document.getElementById('intro').innerHTML = `${response_json.introduce}`
     } else {
-        document.getElementById('intro').innerHTML = '등록된 소개가 없습니다.'
+        document.getElementById('intro').innerHTML = '<span style="color:gray;">등록된 소개가 없습니다.</span>'
     }
     document.getElementById('nickname').innerHTML = `${response_json.nickname}<br>(${response_json.account})`
     document.getElementById('region').innerHTML = `${response_json.prefer_region}`

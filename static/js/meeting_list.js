@@ -133,45 +133,50 @@ async function meetingShowList(pages = 1) {
                     let join_meeting_count = meeting['join_meeting_count'];
                     let status_and_title = '';
 
-                    if (meeting_status == '모임중') {
-                        status_and_title = `<h2><span style="color:blue;"><${meeting_status}></span> ${title}</h2>`;
-                    } else if (meeting_status == '모집중') {
-                        status_and_title = `<h2><span style="color:green;"><${meeting_status}></span> ${title}</h2>`;
-                    } else if (meeting_status == '모집완료') {
-                        status_and_title = `<h2><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h2>`;
-                    } else if (meeting_status == '자리없음') {
-                        status_and_title = `<h2><span style="color:orange;"><${meeting_status}></span> ${title}</h2>`;
-                    } else if (meeting_status == '모임종료') {
-                        status_and_title = `<h2><span style="color:red;"><${meeting_status}></span> ${title}</h2>`;
+
+                    if (meeting_status == '모집중') {
+                        status_and_title =
+                            `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '자리없음') {
+                        status_and_title =
+                            `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '모집종료') {
+                        status_and_title =
+                            `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                     }
 
                     if (bookmark.includes(user_id)) {
                         meeting_book = `
                 <a>
-                  <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
+                  <img id="book${id}" src="static/image/bookmark (1).png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                 </a>`;
                     } else {
                         meeting_book = `
                 <a>
-                  <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
+                  <img id="book${id}" src="static/image/bookmark.png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                 </a>`;
                     }
 
                     let temp_html = `
-              <div id="meeting_card_${id}" class="meeting_card">
-                <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">
-                  <p><small>${meeting_city}</p>
-                  ${status_and_title}
-                  <hr>
-                  <img class="meeting_list_image" src="${BACKEND_BASE_URL}${meeting_image}" alt="">
-                </div>
-                <div id="bookmark_btn">
-                  <hr>
-                  <p id="info_line"><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                  <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
-                </div>
-              </div>
-            `;
+                        <div id="meeting_card_${id}" class="meeting_card">
+                            <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">
+                                <p style="height:1px"><small>${meeting_city}</small></p>
+                                <div class="status_and_title">
+                                ${status_and_title}
+                                </div>
+                                <hr>
+                                <img class="meeting_list_image" src="${BACKEND_BASE_URL}${meeting_image}" alt="">
+                            </div>
+                            <hr>
+                            <div id="bookmark_btn" class="bookmark_btn">
+                                <p class=info_line id="info_line"><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
+                                <p><small>모임일 ${meeting_at}</small></p>
+                                <p><small>모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
+                            </div>
+                        </div>
+                            `;
                     $('#meeting_card').append(temp_html);
                 } else {
                     let payloadObj = JSON.parse(payload);
@@ -190,17 +195,19 @@ async function meetingShowList(pages = 1) {
                     let join_meeting_count = meeting['join_meeting_count'];
                     let meeting_book = '';
                     let status_and_title = '';
+                    console.log(meeting_status)
 
-                    if (meeting_status == '모임중') {
-                        status_and_title = `<h2><span style="color:blue;"><${meeting_status}></span> ${title}</h2>`;
-                    } else if (meeting_status == '모집중') {
-                        status_and_title = `<h2><span style="color:green;"><${meeting_status}></span> ${title}</h2>`;
-                    } else if (meeting_status == '모집완료') {
-                        status_and_title = `<h2><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h2>`;
-                    } else if (meeting_status == '자리없음') {
-                        status_and_title = `<h2><span style="color:orange;"><${meeting_status}></span> ${title}</h2>`;
-                    } else if (meeting_status == '모임종료') {
-                        status_and_title = `<h2><span style="color:red;"><${meeting_status}></span> ${title}</h2>`;
+                    if (meeting_status == '모집중') {
+                        status_and_title =
+                            `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '자리없음') {
+                        status_and_title =
+                            `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '모집종료') {
+                        status_and_title =
+                            `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                     }
 
                     if (bookmark.includes(user_id)) {
@@ -216,20 +223,23 @@ async function meetingShowList(pages = 1) {
                     }
 
                     let temp_html = `
-              <div class="meeting_card">
-                <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">
-                  <p><small>${meeting_city}</p>
-                  ${status_and_title}
-                  <hr>
-                  <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="">
-                </div>
-                <div id="bookmark_btn">
-                  <hr>
-                  <p id="info_line"><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                  <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
-                </div>
-              </div>
-            `;
+                        <div class="meeting_card">
+                            <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">
+                                <p style="height:1px"><small>${meeting_city}</small></p>
+                                <div class="status_and_title">
+                                ${status_and_title}
+                                </div>
+                                <hr>
+                                <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="" style = "opacity:0.7; filter : grayscale(30%)">
+                            </div>
+                            <hr>
+                            <div id="bookmark_btn" class="bookmark_btn">
+                                <p class=info_line id="info_line"><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
+                                <p><small>모임일 ${meeting_at}</small></p>
+                                <p><small>모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
+                            </div>
+                        </div>
+                    `;
                     $('#meeting_card').append(temp_html);
                 }
             });
@@ -269,51 +279,46 @@ function meetingSearch() {
                 let join_meeting_count = meeting['join_meeting_count']
                 let meeting_book = ``
                 let status_and_title = ``
-                if (meeting_status == '모임중') {
+                if (meeting_status == '모집중') {
                     status_and_title =
-                        `<h2><span style="color:blue;"><${meeting_status}></span> ${title}</h2>`
-                }
-                else if (meeting_status == '모집중') {
-                    status_and_title =
-                        `<h2><span style="color:green;"><${meeting_status}></span> ${title}</h2>`
-                }
-                else if (meeting_status == '모집종료') {
-                    status_and_title =
-                        `<h2><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h2>`
+                        `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
                 }
                 else if (meeting_status == '자리없음') {
                     status_and_title =
-                        `<h2><span style="color:orange;"><${meeting_status}></span> ${title}</h2>`
+                        `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
                 }
-                else if (meeting_status == '모임종료') {
+                else if (meeting_status == '모집종료') {
                     status_and_title =
-                        `<h2><span style="color:red;"><${meeting_status}></span> ${title}</h2>`
+                        `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                 }
                 if (bookmark.includes(user_id)) {
                     meeting_book = `
                     <a>
-                        <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
+                        <img id="book${id}" src="static/image/bookmark (1).png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                     </a>`
                 } else {
                     meeting_book = `
                     <a>
-                        <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
+                        <img id="book${id}" src="static/image/bookmark.png" style=" width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                     </a>`
                 }
                 let temp_html = `
                         <div id="meeting_card_${id}" class="meeting_card">
-                        <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
-                                    <p><small>${meeting_city}</p>
-                                    ${status_and_title}
-                                    <hr>
-                                    <img class=meeting_list_image src="${meeting_image}" alt="">
-                                    </div>
-                                    <div id=bookmark_btn>
-                                    <hr>
-                                    <p id=info_line><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                                    <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
-                                    </div>
-                                    </div>
+                            <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
+                                <p style="height:1px"><small>${meeting_city}</small></p>
+                                <div class="status_and_title">
+                                ${status_and_title}
+                                </div>
+                                <hr>
+                                <img class=meeting_list_image src="${meeting_image}" alt="">
+                            </div>
+                            <hr>
+                            <div id="bookmark_btn" class="bookmark_btn">
+                                <p class=info_line id="info_line"><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
+                                <p><small>모임일 ${meeting_at}</small></p>
+                                <p><small>모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
+                            </div>
+                        </div>
                                     `
                 $('#meeting_card').append(temp_html)
             } else {
@@ -331,50 +336,45 @@ function meetingSearch() {
                 let join_meeting_count = meeting['join_meeting_count']
                 let meeting_book = ``
                 let status_and_title = ``
-                if (meeting_status == '모임중') {
+                if (meeting_status == '모집중') {
                     status_and_title =
-                        `<h2><span style="color:blue;"><${meeting_status}></span> ${title}</h2>`
-                }
-                else if (meeting_status == '모집중') {
-                    status_and_title =
-                        `<h2><span style="color:green;"><${meeting_status}></span> ${title}</h2>`
-                }
-                else if (meeting_status == '모집종료') {
-                    status_and_title =
-                        `<h2><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h2>`
+                        `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
                 }
                 else if (meeting_status == '자리없음') {
                     status_and_title =
-                        `<h2><span style="color:orange;"><${meeting_status}></span> ${title}</h2>`
+                        `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
                 }
-                else if (meeting_status == '모임종료') {
+                else if (meeting_status == '모집종료') {
                     status_and_title =
-                        `<h2><span style="color:red;"><${meeting_status}></span> ${title}</h2>`
+                        `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                 }
                 if (bookmark.includes(user_id)) {
                     meeting_book = `
                     <a>
-                        <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
+                        <img id="book${id}" src="static/image/bookmark (1).png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                     </a>`
                 } else {
                     meeting_book = `
                     <a>
-                        <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
+                        <img id="book${id}" src="static/image/bookmark.png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                     </a>`
                 }
                 let temp_html = `
                 <div class="meeting_card">
-                <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
-                <p><small>${meeting_city}</p>
-                ${status_and_title}
-                <hr>
-                <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="">
-                </div>
-                <div id=bookmark_btn>
-                <hr>
-                <p id=info_line><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
-                <p><small>모임일 ${meeting_at} 모집인원 ${join_meeting_count} / ${num_person_meeting}</p>
-                </div>
+                    <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
+                        <p style="height:1px"><small>${meeting_city}</small></p>
+                        <div class="status_and_title">
+                                ${status_and_title}
+                                </div>
+                        <hr>
+                        <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="" style = "opacity:0.7; filter : grayscale(30%)">
+                    </div>
+                    <hr>
+                            <div id="bookmark_btn" class="bookmark_btn">
+                                <p class=info_line id="info_line"><small> ${user} <span style="color:red;font-weight:bold">[${comment_count}]</span> ${created_at} ${meeting_book}</small></p>
+                                <p><small>모임일 ${meeting_at}</small></p>
+                                <p><small>모집인원 ${join_meeting_count} / ${num_person_meeting}</small></p>
+                            </div>
                 </div>
                 `
                 $('#meeting_card').append(temp_html)

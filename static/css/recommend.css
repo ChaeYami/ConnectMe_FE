@@ -176,7 +176,13 @@
 }
 
 .user_info .intro {
-    background-color: rgb(240, 255, 249);
-    min-height: 70px;
+    background-color: #EBF6FF;
+    min-height: 55px;
     margin: 10px 0px;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.no_intro{
+    color: gray;
 }
