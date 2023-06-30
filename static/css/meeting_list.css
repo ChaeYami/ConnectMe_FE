@@ -10,6 +10,7 @@
         grid-template-columns: 1fr 1fr;
 
     }
+
     @media screen and (max-width: 900px) {
         grid-template-columns: 1fr;
 
@@ -333,3 +334,13 @@ span.active {
 }
 
 /********* place 페이지네이션 시작 **********/
+
+.status_and_title {
+    overflow: hidden;
+    white-space: nowrap;
+    height:50px;
+}
+
+.info_line {
+    margin-top: 5px;
+}
