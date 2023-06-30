@@ -1,6 +1,6 @@
 const logined_token = localStorage.getItem("access");
 const more_title = new URLSearchParams(window.location.search).get('id');
-let account = JSON.parse(payload)["account"]
+let account = JSON.parse(payload)["nickname"]
 let div_more_title = document.querySelector(`#more-title`);
 let div_more_content = document.querySelector('#more-content');
 let foot = document.querySelector('#myFooter');
