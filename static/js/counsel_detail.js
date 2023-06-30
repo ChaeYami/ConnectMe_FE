@@ -82,6 +82,9 @@ async function CounselLike(counsel_id) {
         alert(response_json["message"]);
     }
 
+    const likeCountElements = document.querySelector(`#likes_count`);
+    const like_count = response_json["counsel_like"]
+    likeCountElements.innerText = `${like_count}`;
 }
 
 
@@ -96,7 +99,6 @@ async function counselComments(counsel_id) {
         dataType: "json",
         success: function (response) {
             const rows = response
-            console.log(rows)
             for (let i = 0; i < rows.length; i++) {
                 id = rows[i]['id']
                 content = rows[i]['content']
@@ -110,12 +112,12 @@ async function counselComments(counsel_id) {
                 if (like.includes(logined_user_id)) {
                     like_html = `
                     <a>
-                        <img src="static/image/heart (1).png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
+                        <img id="comment-like-img${id}"src="static/image/heart (1).png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
                     </a>`
                 } else {
                     like_html = `
                     <a>
-                        <img src="static/image/heart.png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
+                        <img id="comment-like-img${id}"src="static/image/heart.png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
                     </a>`
                 }
 
@@ -139,11 +141,11 @@ async function counselComments(counsel_id) {
                             <p id="p_reply_create_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 700px;" id="reply_create_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyCreateConfrim(${id})">완료</button></p>
                             <div class=comment_btns>
                             <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="reply_create_handle(${id})">대댓글 작성하기</button>
-                            ${like_html}<p style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p>
+                            ${like_html}<p id="comment_count${id}" style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p>
                             <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="comment_update_handle(${id})"> </a>
                             <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="commentDelete(${id})"> </a>
                             </div>
-                            <div id="reply_card">
+                            <div id="reply_card${id}">
                             <hr>
                             `
 
@@ -152,7 +154,8 @@ async function counselComments(counsel_id) {
 
                 $('#comment_card').append(temp_html)
                 rows[i].reply.forEach((each_reply => {
-                    id = each_reply['id']
+
+                    reply_id = each_reply['id']
                     content = each_reply['content']
                     user = each_reply['user']['nickname']
                     updated_at = each_reply['updated_at']
@@ -164,28 +167,28 @@ async function counselComments(counsel_id) {
                     if (like.includes(logined_user_id)) {
                         like_html = `
                         <a>
-                            <img src="static/image/heart (1).png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
+                            <img id="reply-like-img${reply_id}" src="static/image/heart (1).png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickReplyLike(${reply_id})">
                         </a>`
                     } else {
                         like_html = `
                         <a>
-                            <img src="static/image/heart.png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
+                            <img id="reply-like-img${reply_id}" src="static/image/heart.png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickReplyLike(${reply_id})">
                         </a>`
                     }
 
                     let temp_html = `
                         <div style="margin-left: 50px;">
-                        <p id="now_reply${id}" style="display:block;">${content}</p>
-                        <p id="p_reply_update_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 600px;" id="reply_update_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyUpdateConfrim(${id})">완료</button></p>
+                        <p id="now_reply${reply_id}" style="display:block;">${content}</p>
+                        <p id="p_reply_update_input${reply_id}" style="display:none;"/><input style="border-radius: 10px; width: 600px;" id="reply_update_input${reply_id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyUpdateConfrim(${id})">완료</button></p>
                         <div class=replybtns>
-                        <p> <small> ${user} ${updated_at}${like_html}<p style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p></p>
-                        <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="reply_update_handle(${id})"> </a>
-                        <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="replyDelete(${id})"> </a>
+                        <p> <small> ${user} ${updated_at}${like_html}<p id="reply_count${reply_id}" style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p></p>
+                        <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="reply_update_handle(${reply_id})"> </a>
+                        <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="replyDelete(${reply_id})"> </a>
                         </div>
                         </div>
                         <hr>
                         `
-                    $('#reply_card').append(temp_html)
+                    $(`#reply_card${id}`).append(temp_html)
                     $(`#reply_update_input${id}`).val(content)
                 }))
             }
@@ -395,7 +398,7 @@ async function commentDelete(comment_id) {
                 Authorization: `Bearer ${token}`,
             },
         })
-        if (response.status == 200) { alert("삭제 완료"), window.location.reload() }
+        if (response.status == 204 || response.status == 200) { alert("삭제 완료"), window.location.reload() }
         else (alert("권한이 없습니다."))
     } else { alert("로그인 해주세요") }
 }
@@ -432,7 +435,7 @@ async function replyUpdateConfrim(reply_id) {
             },
             body: formData
         })
-        console.log(response)
+
         if (response.status == 200) { alert("수정 완료"), window.location.reload() }
         else if ((await response).status == 400) { alert("입력해주세요") }
         else { alert("권한이 없습니다.") }
@@ -461,6 +464,7 @@ async function replyDelete(reply_id) {
 // ================================ 댓글 좋아요 ================================
 
 async function clickCommentLike(comment_id) {
+    const like = document.querySelector(`#comment-like-img${comment_id}`)
 
     let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${comment_id}/like/`, {
         headers: {
@@ -469,14 +473,26 @@ async function clickCommentLike(comment_id) {
         method: "POST",
     });
 
-    console.log(response)
-    if (response.status == 200) { alert("좋아요 취소") }
-    else { alert("좋아요") }
+    const response_json = await response.json();
+
+    if (response.status == 200) {
+        like['src'] = "static/image/heart.png"
+        alert("좋아요 취소");
+    }
+    else {
+        like['src'] = "static/image/heart (1).png"
+        alert("좋아요")
+    }
+
+    const likeCountElements = document.querySelector(`#comment_count${comment_id}`);
+    const like_count = response_json["comment_like"]
+    likeCountElements.innerText = `${like_count}`;
 }
 // ================================ 댓글 좋아요 끝 ================================
 
 // ================================ 대댓글 좋아요 ================================
 async function clickReplyLike(reply_id) {
+    const like = document.querySelector(`#reply-like-img${reply_id}`)
 
     let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}/like/`, {
         headers: {
@@ -485,8 +501,21 @@ async function clickReplyLike(reply_id) {
         method: "POST",
     });
 
-    console.log(response)
-    if (response.status == 200) { alert("좋아요 취소") }
-    else { alert("좋아요") }
+    const response_json = await response.json();
+
+    if (response.status == 200) {
+        like['src'] = "static/image/heart.png"
+        alert("좋아요 취소");
+    }
+    else {
+        like['src'] = "static/image/heart (1).png"
+        alert("좋아요")
+    }
+
+
+    const likeCountElements = document.querySelector(`#reply_count${reply_id}`);
+    const like_count = response_json["reply_like"]
+    likeCountElements.innerText = `${like_count}`;
 }
+
 // ================================ 대댓글 좋아요 끝 ================================
