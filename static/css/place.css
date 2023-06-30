@@ -1157,6 +1157,7 @@ main {
     padding: 10px;
     background-color: transparent;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .commentbtn:hover {
@@ -1166,6 +1167,7 @@ main {
     background-color: #b9b4b4;
     color: white;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 

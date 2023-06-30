@@ -225,7 +225,6 @@ async function placeView(category_select = '카테고리', pages = 1) {
     });
 
     let response_json = await response.json();
-    console.log(response_json)
     page_data = response_json["count"]
 
     if (JSON.parse(payload)['is_staff']) {

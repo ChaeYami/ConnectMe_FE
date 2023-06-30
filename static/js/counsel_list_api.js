@@ -123,7 +123,7 @@ async function getCounsels(pages = 1) {
                 <a onclick="go_counselDetail(${counsel_id})">
                     <div class="list-box">
                         <div id="counsel-title">${counsel_title}</div>
-                        <div id="counsel-author">${counsel_author}</div>
+                        <div id="counsel-author"><a onclick="go_myProfile()">${counsel_author}</a></div>
                         <div id="counsel-created-at">${counsel_created_at}</div>
                         <div id="counsel-likes">${likes_count}</div>
                     </div>
