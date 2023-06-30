@@ -463,7 +463,7 @@ async function MoreUserDetailCounsel(pages = 1) {
             rows.forEach((e, i) => {
                 let counsel_id = e.id
                 let counsel_title = e.title
-                let counsel_author = e.user
+                let counsel_author = e.user.nickname
                 let counsel_created_at = e.created_at
                 let likes_count = e.like.length
 

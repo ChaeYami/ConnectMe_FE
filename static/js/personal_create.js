@@ -36,7 +36,7 @@ $(document).ready(function () {
                     if (meeting.meeting_image[0]) {
                         let id = meeting['id']
                         let title = meeting['title']
-                        let user = meeting['user']
+                        let user = meeting['user']['nickname']
                         let created_at = meeting['created_at']
                         let comment_count = meeting['comment_count']
                         let bookmark = meeting['bookmark']
@@ -195,7 +195,7 @@ async function getCounsels() {
             for (let i = 0; i < row_num; i++) {
                 let counsel_id = rows[i]['id']
                 let counsel_title = rows[i]['title']
-                let counsel_author = rows[i]['user']
+                let counsel_author = rows[i]['user']['nickname']
                 let counsel_created_at = rows[i]['created_at']
                 let likes_count = rows[i]['like'].length
 
