@@ -75,7 +75,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     }
 
     let temp_html =
-` 
+        ` 
 <div>
     <p><small>${meeting_city} </p>
     <h2  >${title}</h2>
@@ -266,18 +266,20 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
 
 // ================================ 모임 게시글 삭제 API 시작 ================================
 async function meetingDelete() {
-    let token = localStorage.getItem("access")
-    let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
-        method: 'DELETE',
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    })
-    if (response.status == 204) {
-        alert("삭제 완료")
-        await location.replace(`${FRONTEND_BASE_URL}/meeting_list.html`)
+    if (confirm("삭제하시겠습니까?")) {
+        let token = localStorage.getItem("access")
+        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (response.status == 204) {
+            alert("삭제 완료")
+            await location.replace(`${FRONTEND_BASE_URL}/meeting_list.html`)
+        }
+        else { alert("권한이 없습니다.") }
     }
-    else { alert("권한이 없습니다.") }
 }
 // ================================ 모임 게시글 삭제 API 끝 ================================
 
@@ -328,18 +330,20 @@ async function meetingCommentCreate() {
 
 // ================================ 모임 게시글 상세보기 댓글 삭제 시작 ================================
 async function commentDelete(comment_id) {
-    let token = localStorage.getItem("access")
-    let meeting_id = new URLSearchParams(window.location.search).get('id');
-    if (token) {
-        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/${comment_id}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
-        else (alert("권한이 없습니다."))
-    } else { alert("로그인 해주세요") }
+    if (confirm("삭제하시겠습니까?")) {
+        let token = localStorage.getItem("access")
+        let meeting_id = new URLSearchParams(window.location.search).get('id');
+        if (token) {
+            let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/${comment_id}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
+            else (alert("권한이 없습니다."))
+        } else { alert("로그인 해주세요") }
+    }
 }
 // ================================ 모임 게시글 상세보기 댓글 삭제 끝 ================================
 
@@ -440,19 +444,21 @@ async function replyUpdateConfrim(reply_id) {
 
 // ================================ 모임 게시글 상세보기 대댓글 삭제 시작 ================================
 async function replyDelete(reply_id) {
-    let token = localStorage.getItem("access")
-    let meeting_id = new URLSearchParams(window.location.search).get('id');
-    if (token) {
-        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/reply/${reply_id}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
-        else { alert("권한이 없습니다.") }
+    if (confirm("삭제하시겠습니까?")) {
+        let token = localStorage.getItem("access")
+        let meeting_id = new URLSearchParams(window.location.search).get('id');
+        if (token) {
+            let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/reply/${reply_id}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
+            else { alert("권한이 없습니다.") }
 
-    } else { alert("로그인 해주세요") }
+        } else { alert("로그인 해주세요") }
+    }
 }
 // ================================ 모임 게시글 상세보기 대댓글 삭제 끝 ================================
 
