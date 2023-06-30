@@ -110,3 +110,26 @@ function go_album() {
     location.href = `profile_album.html?user_id=${user_id}`
 
 }
+
+
+// 채팅방 이름 생성 요청 후 채팅방 입장
+function getChatRoom() {
+    $.ajax({
+        url: `${BACKEND_BASE_URL}/chat/${user_id}/`,
+        type: "POST",
+        dataType: "json",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("access")
+        },
+        success: function (response) {
+            room_name = response['room_name'];
+            let chat_url = '/chat_room.html?room=' + room_name;
+            window.open(chat_url);
+        },
+        error: function (xhr) {
+            // const errorData = xhr.responseJSON;
+            // const errorArray = Object.entries(errorData);
+            // alert(errorArray[0][1]);
+        }
+    });
+}
