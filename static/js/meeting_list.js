@@ -116,7 +116,7 @@ async function meetingShowList(pages = 1) {
 
             foot.style.display = ''
 
-            response['meeting'].forEach(function (meeting) {
+            response.forEach(function (meeting) {
                 if (meeting.meeting_image[0]) {
                     let id = meeting['id'];
                     let title = meeting['title'];
@@ -221,7 +221,7 @@ async function meetingShowList(pages = 1) {
                   <p><small>${meeting_city}</p>
                   ${status_and_title}
                   <hr>
-                  <h4 class="meeting_list_content">${content}</h4>
+                  <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="">
                 </div>
                 <div id="bookmark_btn">
                   <hr>
@@ -277,7 +277,7 @@ function meetingSearch() {
                     status_and_title =
                         `<h2><span style="color:green;"><${meeting_status}></span> ${title}</h2>`
                 }
-                else if (meeting_status == '모집완료') {
+                else if (meeting_status == '모집종료') {
                     status_and_title =
                         `<h2><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h2>`
                 }
@@ -339,7 +339,7 @@ function meetingSearch() {
                     status_and_title =
                         `<h2><span style="color:green;"><${meeting_status}></span> ${title}</h2>`
                 }
-                else if (meeting_status == '모집완료') {
+                else if (meeting_status == '모집종료') {
                     status_and_title =
                         `<h2><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h2>`
                 }
@@ -368,7 +368,7 @@ function meetingSearch() {
                 <p><small>${meeting_city}</p>
                 ${status_and_title}
                 <hr>
-                <h4 class=meeting_list_content>${content}</h4>
+                <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="">
                 </div>
                 <div id=bookmark_btn>
                 <hr>
