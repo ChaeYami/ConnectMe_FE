@@ -75,9 +75,7 @@
                 <select name="gugun1" id="gugun1"></select>
                 <select name="meeting_status" id="meeting_status">
                     <option value="모집중">모집중</option>
-                    <option value="모집완료">모집완료</option>
-                    <option value="모임중">모임중</option>
-                    <option value="모임종료">모임종료</option>
+                    <option value="모집종료">모집종료</option>
                 </select>
             </div>
             <div class="group" id = date_time_input>
@@ -124,7 +122,7 @@
 </body>
 <script>
     $('#meeting_time').timepicker({
-    timeFormat: 'h:mm p',
+    timeFormat: 'hh:mm p',
     interval: 10,
     minTime: '0',
     maxTime: '11:50pm',

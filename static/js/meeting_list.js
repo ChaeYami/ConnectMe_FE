@@ -133,16 +133,17 @@ async function meetingShowList(pages = 1) {
                     let join_meeting_count = meeting['join_meeting_count'];
                     let status_and_title = '';
 
-                    if (meeting_status == '모임중') {
-                        status_and_title = `<h3><span style="color:blue;"><${meeting_status}></span> ${title}</h3>`;
-                    } else if (meeting_status == '모집중') {
-                        status_and_title = `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`;
-                    } else if (meeting_status == '모집완료') {
-                        status_and_title = `<h3><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h3>`;
-                    } else if (meeting_status == '자리없음') {
-                        status_and_title = `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`;
-                    } else if (meeting_status == '모임종료') {
-                        status_and_title = `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`;
+                    if (meeting_status == '모집중') {
+                        status_and_title =
+                            `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '자리없음') {
+                        status_and_title =
+                            `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '모임종료') {
+                        status_and_title =
+                            `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                     }
 
                     if (bookmark.includes(user_id)) {
@@ -194,16 +195,17 @@ async function meetingShowList(pages = 1) {
                     let meeting_book = '';
                     let status_and_title = '';
 
-                    if (meeting_status == '모임중') {
-                        status_and_title = `<h3><span style="color:blue;"><${meeting_status}></span> ${title}</h3>`;
-                    } else if (meeting_status == '모집중') {
-                        status_and_title = `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`;
-                    } else if (meeting_status == '모집완료') {
-                        status_and_title = `<h3><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h3>`;
-                    } else if (meeting_status == '자리없음') {
-                        status_and_title = `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`;
-                    } else if (meeting_status == '모임종료') {
-                        status_and_title = `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`;
+                    if (meeting_status == '모집중') {
+                        status_and_title =
+                            `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '자리없음') {
+                        status_and_title =
+                            `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '모임종료') {
+                        status_and_title =
+                            `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                     }
 
                     if (bookmark.includes(user_id)) {
@@ -275,17 +277,9 @@ function meetingSearch() {
                 let join_meeting_count = meeting['join_meeting_count']
                 let meeting_book = ``
                 let status_and_title = ``
-                if (meeting_status == '모임중') {
-                    status_and_title =
-                        `<h3><span style="color:blue;"><${meeting_status}></span> ${title}</h3>`
-                }
-                else if (meeting_status == '모집중') {
+                if (meeting_status == '모집중') {
                     status_and_title =
                         `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
-                }
-                else if (meeting_status == '모집종료') {
-                    status_and_title =
-                        `<h3><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h3>`
                 }
                 else if (meeting_status == '자리없음') {
                     status_and_title =
@@ -340,17 +334,9 @@ function meetingSearch() {
                 let join_meeting_count = meeting['join_meeting_count']
                 let meeting_book = ``
                 let status_and_title = ``
-                if (meeting_status == '모임중') {
-                    status_and_title =
-                        `<h3><span style="color:blue;"><${meeting_status}></span> ${title}</h3>`
-                }
-                else if (meeting_status == '모집중') {
+                if (meeting_status == '모집중') {
                     status_and_title =
                         `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
-                }
-                else if (meeting_status == '모집종료') {
-                    status_and_title =
-                        `<h3><span style="color:chartreuse;"><${meeting_status}></span> ${title}</h3>`
                 }
                 else if (meeting_status == '자리없음') {
                     status_and_title =
