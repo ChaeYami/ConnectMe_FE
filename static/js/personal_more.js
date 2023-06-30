@@ -8,28 +8,34 @@ let count_per_page = 0; // 페이지당 데이터 건수
 let show_page_cnt = 10; // 화면에 보일 페이지 번호 개수
 let page_data = 0;
 let func_selected = '';
+let title_text = ''
 
 
 if (more_title) {
     MoreData(more_title);
+    Profile(JSON.parse(payload)['user_id'])
 }
 
 function MoreData(data) {
     if (data == '1') {
         count_per_page = 10;
         func_selected = bookMoreHotPlace;
+        title_text = '님의 핫플레이스 북마크 목록입니다.'
         bookMoreHotPlace();
     } else if (data == '2') {
         count_per_page = 12;
         func_selected = bookMoreMeeting;
+        title_text = '님의 만남의장소 북마크 목록입니다.'
         bookMoreMeeting()
     } else if (data == '3') {
         count_per_page = 15;
         func_selected = MoreUserDetailCounsel;
+        title_text = '님이 작성하신 고민상담 목록입니다.'
         MoreUserDetailCounsel();
     } else if (data == '4') {
         count_per_page = 12;
         func_selected = MoreUserDetailMeeting;
+        title_text = '님이 작성하신 만남의장소 목록입니다.'
         MoreUserDetailMeeting();
     }
 }
@@ -144,7 +150,6 @@ async function placeBook(place_id) {
 
 // 장소 북마크 모음
 async function bookMoreHotPlace(pages = 1) {
-    div_more_title.innerText = `${account}님의 핫플레이스 북마크 목록입니다`;
     foot.style.display = '';
     div_more_content.innerHTML = '';
 
@@ -287,7 +292,6 @@ async function meetingBookmark(id) {
 
 // 미팅 북마크 모음
 async function bookMoreMeeting(pages = 1) {
-    div_more_title.innerText = `${account}님의 만남의장소 북마크 목록입니다`;
     div_more_content.classList.add("meeting_card_class");
 
 
@@ -445,8 +449,6 @@ async function bookMoreMeeting(pages = 1) {
 
 // 유저가 작성한 고민상담
 async function MoreUserDetailCounsel(pages = 1) {
-    div_more_title.innerText = `${account}님이 작성한 고민상담 목록입니다`;
-
     $('#more-content').empty()
 
     $.ajax({
@@ -492,7 +494,6 @@ async function MoreUserDetailCounsel(pages = 1) {
 
 // 유저가 작성한 미팅
 async function MoreUserDetailMeeting(pages = 1) {
-    div_more_title.innerText = `${account}님이 작성한 만남의광장 목록입니다`;
     div_more_content.classList.add("meeting_card_class");
 
     if (logined_token) {
@@ -645,4 +646,24 @@ async function MoreUserDetailMeeting(pages = 1) {
                 setPaging(pages)
             })
     } else { alert("로그인 해주세요") }
+}
+
+async function Profile(user_id) {
+    const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
+        method: "GET",
+    })
+
+    response_json = await response.json()
+
+    const nickname = response_json.nickname
+    const profile_img_url = `${BACKEND_BASE_URL}${response_json.profile_img}`;
+    let my_posts = document.querySelector('#my-posts-container')
+    if (response_json.profile_img === null) {
+        my_posts.innerHTML = `<div><a onclick="go_myProfile()"><img src="static/image/user.png"></a></div>`
+
+    } else {
+        my_posts.innerHTML = `<div><a onclick="go_myProfile()"><img src="${profile_img_url}"></a></div>`
+    }
+
+    my_posts.innerHTML += `<div><a onclick="go_myProfile()">${nickname}</a></div> ${title_text}`
 }
