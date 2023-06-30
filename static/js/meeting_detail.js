@@ -28,7 +28,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     place_title = data['place_title']
     place_address = data['place_address']
     join_meeting = data['join_meeting']
-    join_meeting.forEach(join_user=>{
+    join_meeting.forEach(join_user => {
         let join_user_nickname = join_user.nickname
         let meeting_join_user_list = `
                                 <ul>
@@ -38,7 +38,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         $('#popup-user-list').append(meeting_join_user_list)
     })
 
-    
+
     who_join_meeting = ``
     if (user == nickname) {
         who_join_meeting = `
@@ -209,7 +209,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         if (content == '삭제된 댓글 입니다.') {
             let temp_html = `
             <p id="now_comment${id}" style="display:block;">${content}</p>
-            <div id="reply_card">
+            <div id="reply_card${id}">
             <hr>
             `
             $('#comment_card').append(temp_html)
@@ -223,11 +223,11 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
                     
                     <p id="p_reply_create_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 700px;" id="reply_create_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyCreateConfrim(${id})">완료</button></p>
                     <div class=comment_btns>
-                    <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="reply_create_handle(${id})">대댓글 작성하기</button>
+                    <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="reply_create_handle(${id})">답글 작성하기</button>
                     <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="comment_update_handle(${id})"> </a>
                     <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="commentDelete(${id})"> </a>
                     </div>
-                    <div id="reply_card">
+                    <div id="reply_card${id}">
                     <hr>
                     `
 
@@ -235,6 +235,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         }
         $(`#comment_update_input${id}`).val(content)
         each_comment.reply.forEach((each_reply => {
+            comment = each_reply['comment']
             id = each_reply['id']
             content = each_reply['content']
             user = each_reply['user']
@@ -251,7 +252,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
             </div>
             <hr>
             `
-            $('#reply_card').append(temp_html)
+            $(`#reply_card${comment}`).append(temp_html)
             $(`#reply_update_input${id}`).val(content)
         }))
     }))

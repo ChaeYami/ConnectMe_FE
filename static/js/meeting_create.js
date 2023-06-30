@@ -1,12 +1,34 @@
-window.onload = function(){
-    
+window.onload = function () {
+    date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    day = date.getDate();
+    let todayString = year + "-";
+    if (month < 10) {
+        todayString += "0";
+    }
+    todayString += month + "-";
+    if (day < 10) {
+        todayString += "0";
+    }
+    todayString += day;
+    let date_time_input_html = `
+<input id="meeting_date" type="date" min=${todayString}>
+
+`
+    $("#date_time_input").prepend (date_time_input_html)
+    console.log(todayString)
+    $("#meeting_time").timepicker('setTime', new Date());
+    document.getElementById('meeting_date').valueAsDate = new Date();
     let dining_info = localStorage.getItem("dining")
-    let dining = JSON.parse(dining_info)
-    let dining_title = Object.values(dining)[0]
-    let dining_address = Object.values(dining)[1]
-    $('#place_title').val(dining_title)
-    $('#place_address').val(dining_address)
-    localStorage.removeItem('dining');
+    if (dining_info) {
+        let dining = JSON.parse(dining_info)
+        let dining_title = Object.values(dining)[0]
+        let dining_address = Object.values(dining)[1]
+        $('#place_title').val(dining_title)
+        $('#place_address').val(dining_address)
+        localStorage.removeItem('dining');
+    }
 }
 
 //모임 게시글 작성 시작

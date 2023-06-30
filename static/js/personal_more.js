@@ -1,6 +1,6 @@
 const logined_token = localStorage.getItem("access");
 const more_title = new URLSearchParams(window.location.search).get('id');
-let account = JSON.parse(payload)["account"]
+let account = JSON.parse(payload)["nickname"]
 let div_more_title = document.querySelector(`#more-title`);
 let div_more_content = document.querySelector('#more-content');
 let foot = document.querySelector('#myFooter');
@@ -463,7 +463,7 @@ async function MoreUserDetailCounsel(pages = 1) {
             rows.forEach((e, i) => {
                 let counsel_id = e.id
                 let counsel_title = e.title
-                let counsel_author = e.user
+                let counsel_author = e.user.nickname
                 let counsel_created_at = e.created_at
                 let likes_count = e.like.length
 

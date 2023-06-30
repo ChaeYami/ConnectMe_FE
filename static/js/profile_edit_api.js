@@ -17,10 +17,57 @@ async function existingProfile(user_id) {
         method: 'GET',
     })
     response_json = await response.json()
-    document.getElementById('nickname').value = response_json.nickname
+    let nickname = response_json.nickname
+
+    if (nickname.includes(' ')) {
+        nickname = nickname.split(" ")[1]
+    }
+
+    document.getElementById('nickname').value = nickname
     document.getElementById('introduce').value = response_json.introduce
     document.getElementById('age').value = response_json.age
     document.getElementById('mbti').value = response_json.mbti
+    let prefer_region = response_json.prefer_region;
+    let sido_selected = '';
+    let gugun_selected = '';
+
+    if (prefer_region != '전국') {
+        sido_selected = prefer_region.split(" ")[0]
+        gugun_selected = prefer_region.split(" ")[1]
+    } else {
+        sido_selected = prefer_region
+    }
+
+
+
+
+
+    const sidoDropdown = document.getElementById('sido1');
+    const gugunDropdown = document.getElementById('gugun1');
+
+    // sidoDropdown에서 sido_selected 값을 선택된 값으로 설정하기
+    for (let i = 0; i < sidoDropdown.options.length; i++) {
+        if (sidoDropdown.options[i].value === sido_selected) {
+            sidoDropdown.selectedIndex = i;
+            break;
+        }
+    }
+
+    // sidoDropdown에서 change 이벤트를 트리거하여 gugunDropdown의 옵션을 업데이트하기
+    sidoDropdown.dispatchEvent(new Event('change'));
+
+    // gugunDropdown에서 gugun_selected 값을 선택된 값으로 설정하기
+    if (gugun_selected !== '전국') {
+        for (let i = 0; i < gugunDropdown.options.length; i++) {
+            if (gugunDropdown.options[i].value === gugun_selected) {
+                gugunDropdown.selectedIndex = i;
+                break;
+            }
+        }
+    }
+
+
+
     // 기존에 있던 프로필 이미지 불러오기
 
 
@@ -106,7 +153,7 @@ function deleteProfileImage() {
 
 
 $('document').ready(function () {
-    let area0 = ["시/도 선택", "서울특별시", "인천광역시", "대전광역시", "광주광역시", "대구광역시", "울산광역시", "부산광역시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도"];
+    let area0 = ["시/도 선택", "서울특별시", "인천광역시", "대전광역시", "광주광역시", "대구광역시", "울산광역시", "부산광역시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도", "전국"];
     let area1 = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
     let area2 = ["계양구", "남구", "남동구", "동구", "부평구", "서구", "연수구", "중구", "강화군", "옹진군"];
     let area3 = ["대덕구", "동구", "서구", "유성구", "중구"];
@@ -125,15 +172,15 @@ $('document').ready(function () {
     let area16 = ["서귀포시", "제주시", "남제주군", "북제주군"];
 
 
-
     // 시/도 선택 박스 초기화
 
     $("select[name^=sido]").each(function () {
-        $selsido = $(this);
+        let $selsido = $(this);
+
         $.each(eval(area0), function () {
             $selsido.append("<option value='" + this + "'>" + this + "</option>");
         });
-        $selsido.next().append("<option value=''>구/군 선택</option>");
+        $("select[name^=gugun]").append("<option value=''>구/군 선택</option>");
     });
 
 
@@ -145,14 +192,18 @@ $('document').ready(function () {
         var $gugun = $(this).next(); // 선택영역 군구 객체
         $("option", $gugun).remove(); // 구군 초기화
 
-        if (area == "area0")
+        if (area == "area0") {
             $gugun.append("<option value=''>구/군 선택</option>");
+        }
         else {
-            $.each(eval(area), function () {
-                $gugun.append("<option value='" + this + "'>" + this + "</option>");
-            });
+            try {
+                $.each(eval(area), function () {
+                    $gugun.append("<option value='" + this + "'>" + this + "</option>");
+                });
+                $('#gugun1').attr('style', '')
+            } catch (e) {
+                $('#gugun1').attr('style', 'display:none;')
+            }
         }
     });
-
-
 });
