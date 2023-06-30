@@ -221,7 +221,7 @@ async function meetingShowList(pages = 1) {
                                 <p><small>${meeting_city}</small></p>
                                 ${status_and_title}
                                 <hr>
-                                <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="">
+                                <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="" style = "opacity:0.7; filter : grayscale(30%)">
                             </div>
                             <div id="bookmark_btn">
                                 <hr>
@@ -368,7 +368,7 @@ function meetingSearch() {
                         <p><small>${meeting_city}</small></p>
                         ${status_and_title}
                         <hr>
-                        <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="">
+                        <img class="meeting_list_image" src="static/image/—Pngtree—two little kittens_852610.png" alt="" style = "opacity:0.7; filter : grayscale(30%)">
                     </div>
                     <div id=bookmark_btn>
                         <hr>
