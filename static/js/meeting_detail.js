@@ -75,20 +75,21 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     }
 
     let temp_html =
-        `
-                    <p><small>${meeting_city} </p>
-                    <h2>${title}</h2>
-                    <hr>
-                    <div style = "display:flex;">
-                    <div style="width:250px; border-right:solid 0.6px">
-                    <p>생성일 : ${created_at}</p>
-                    <p>수정일 : ${updated_at}</p>
-                    <p>작성자 : ${user}</p>
-                    </div>
-                    <div style="width:250px; margin-left:10px;">
-                    <p>약속일 : ${meeting_at}</p>
-                    <p>모임 상태 : ${meeting_status} 
-                    <p>모임 인원 : ${join_meeting_count}/${num_person_meeting}
+` 
+<div>
+    <p><small>${meeting_city} </p>
+    <h2  >${title}</h2>
+    <hr>
+        <div style = "display:flex;">
+            <div style="width:250px; border-right:solid 0.6px">
+                <p>생성일 : ${created_at}</p>
+                <p>수정일 : ${updated_at}</p>
+                <p>작성자 : ${user}</p>
+            </div>
+        <div style="width:250px; margin-left:10px;">
+                <p>약속일 : ${meeting_at}</p>
+                <p>모임 상태 : ${meeting_status} 
+                <p>모임 인원 : ${join_meeting_count}/${num_person_meeting}
                     </div>
                     </div>
                     <div>
@@ -216,16 +217,18 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         }
         else {
             let temp_html =
-                `
+                `   
+                    <div class ="comment-text">
                     <p id="now_comment${id}" style="display:block;">${content}</p>
-                    <p id="p_comment_update_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 700px;" id="comment_update_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="commentUpdateConfrim(${id})">완료</button></p>
+                    <a> <img src="static/image/comment_edit.png" id="comment_edit_icon${id}" class="comment_edit_icon" onclick="comment_update_handle(${id})"> </a>
+                    <a> <img src="static/image/comment_delete.png" id="comment_delete_icon${id}" class="comment_delete_icon" onmouseover="this.src='static/image/comment_delete (1).png'" onmouseout="this.src='static/image/comment_delete.png'"  onclick="commentDelete(${id})"> </a>
+                    </div>
+                    <p id="p_comment_update_input${id}" style="display:none;"/><input class="reply-input" id="comment_update_input${id}" type="text"/> <button class="button-blue" onclick="commentUpdateConfrim(${id})">완료</button> <button class="button-white" onclick="comment_update_handle(${id})">취소하기</button></p>
                     <p> <small> ${user} ${updated_at}</p>
                     
-                    <p id="p_reply_create_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 700px;" id="reply_create_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyCreateConfrim(${id})">완료</button></p>
+                    <p id="p_reply_create_input${id}" style="display:none;"/><input class="reply-input" id="reply_create_input${id}" type="text"/> <button class="button-blue" onclick="replyCreateConfrim(${id})">완료</button> <button class="button-white" onclick="reply_create_handle(${id})">취소하기</button></p>
                     <div class=comment_btns>
-                    <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="reply_create_handle(${id})">답글 작성하기</button>
-                    <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="comment_update_handle(${id})"> </a>
-                    <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="commentDelete(${id})"> </a>
+                    <button id="reply_create_btn${id}" class="commentbtn" onclick="reply_create_handle(${id})">답글 작성하기</button>
                     </div>
                     <div id="reply_card${id}">
                     <hr>
@@ -242,12 +245,14 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
             updated_at = each_reply['updated_at']
             let temp_html = `
             <div style="margin-left: 50px;">
+            <div class ="comment-text">
             <p id="now_reply${id}" style="display:block;">${content}</p>
-            <p id="p_reply_update_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 600px;" id="reply_update_input${id}" type="text"/> <button style="border-radius: 10px; padding: 5px; background-color: transparent;" onclick="replyUpdateConfrim(${id})">완료</button></p>
+            <a id = "reply_edit_icon${id}">  <img src="static/image/comment_edit.png" class="comment_edit_icon" onclick="reply_update_handle(${id})"> </a>
+            <a id = "reply_delete_icon${id}> "<img src="static/image/comment_delete.png" class="comment_delete_icon" onclick="replyDelete(${id})"> </a>
+            </div>
+            <p id="p_reply_update_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 600px;" id="reply_update_input${id}" type="text"/> <button class="" onclick="replyUpdateConfrim(${id})">완료</button> <button onclick="reply_update_handle(${id})">취소하기</button></p>
             <div class=replybtns>
             <p> <small> ${user} ${updated_at}</p>
-            <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="reply_update_handle(${id})"> </a>
-            <a> <img src="static/image/comment_delete.png" style="width: 30px;" onclick="replyDelete(${id})"> </a>
             </div>
             </div>
             <hr>
@@ -345,12 +350,18 @@ async function comment_update_handle(id) {
     if (token) {
         let comment_update_input = document.getElementById(`p_comment_update_input${id}`)
         let now_comment = document.getElementById(`now_comment${id}`);
+        let comment_edit_icon = document.getElementById(`comment_edit_icon${id}`);
+        let comment_delete_icon = document.getElementById(`comment_delete_icon${id}`);
         if (comment_update_input.style.display == 'none') {
             comment_update_input.style.display = 'block'
             now_comment.style.display = 'none';
+            comment_edit_icon.style.display = 'none';
+            comment_delete_icon.style.display = 'none';
         } else {
             comment_update_input.style.display = 'none';
             now_comment.style.display = 'block';
+            comment_edit_icon.style.display = 'block';
+            comment_delete_icon.style.display = 'block';
         }
     } else { alert("로그인 해주세요") }
 }
@@ -385,12 +396,19 @@ async function reply_update_handle(id) {
     if (token) {
         let reply_update_input = document.getElementById(`p_reply_update_input${id}`)
         let now_reply = document.getElementById(`now_reply${id}`);
+        let reply_edit_icon = document.getElementById(`reply_edit_icon${id}`)
+        let reply_delete_icon = document.getElementById(`reply_delete_icon${id}`)
+
         if (reply_update_input.style.display == 'none') {
             reply_update_input.style.display = 'block'
             now_reply.style.display = 'none';
+            reply_edit_icon.style.display = 'none';
+            reply_delete_icon.style.display = 'none';
         } else {
             reply_update_input.style.display = 'none';
             now_reply.style.display = 'block';
+            reply_edit_icon.style.display = 'block';
+            reply_delete_icon.style.display = 'block';
         }
     } else { alert("로그인 해주세요") }
 }
@@ -469,10 +487,14 @@ async function reply_create_handle(id) {
     let token = localStorage.getItem("access")
     if (token) {
         let p_reply_create_input = document.getElementById(`p_reply_create_input${id}`)
+        let reply_create_btn = document.getElementById(`reply_create_btn${id}`)
         if (p_reply_create_input.style.display == 'none') {
             p_reply_create_input.style.display = 'block'
+            reply_create_btn.style.display = 'none'
+
         } else {
             p_reply_create_input.style.display = 'none';
+            reply_create_btn.style.display = 'block'
         }
     } else { alert("로그인 해주세요") }
 }

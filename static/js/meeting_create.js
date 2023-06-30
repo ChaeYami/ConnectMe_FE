@@ -14,10 +14,8 @@ window.onload = function () {
     todayString += day;
     let date_time_input_html = `
 <input id="meeting_date" type="date" min=${todayString}>
-
 `
     $("#date_time_input").prepend (date_time_input_html)
-    console.log(todayString)
     $("#meeting_time").timepicker('setTime', new Date());
     document.getElementById('meeting_date').valueAsDate = new Date();
     let dining_info = localStorage.getItem("dining")

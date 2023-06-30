@@ -1,3 +1,27 @@
+window.onload = function () {
+    date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    day = date.getDate();
+    let todayString = year + "-";
+    if (month < 10) {
+        todayString += "0";
+    }
+    todayString += month + "-";
+    if (day < 10) {
+        todayString += "0";
+    }
+    todayString += day;
+    let date_time_input_html = `
+<input id="meeting_date" type="date" min=${todayString}>
+
+`
+    $("#date_time_input").prepend (date_time_input_html)
+    console.log(todayString)
+    $("#meeting_time").timepicker('setTime', new Date());
+    document.getElementById('meeting_date').valueAsDate = new Date();
+}
+
 //================================ 모임 게시글 수정 할 데이터 불러오기 API 시작 ================================ 
 let meeting_id = new URLSearchParams(window.location.search).get('id');
 fetch(`${BACKEND_BASE_URL}/meeting/` + meeting_id).then(res => res.json()).then(data => {
