@@ -1,8 +1,3 @@
-const BACKEND_BASE_URL = "http://127.0.0.1:8000"
-const FRONTEND_BASE_URL = "http://127.0.0.1:5500"
-// const BACKEND_BASE_URL = "https://api.connectme.co.kr"
-// const FRONTEND_BASE_URL = "https://connectme.co.kr"
-
 const KAKAO_API = '3611a3327df6a2e923777b26800f369d'
 const KAKAO_JAVASCRIPT_API = '61771f77ccf8e5fb8aed8a7b26e8cfb1'
 
@@ -46,14 +41,14 @@ function go_findPassword() {
     location.href = "find_password.html"
 }
 
-function go_createMeeting(info){
+function go_createMeeting(info) {
     info_split = info.split(',')
-let dining = {
-    "title" : info_split[0],
-    "address" : info_split[1]
-};
-localStorage.setItem("dining", JSON.stringify(dining));
-location.href = "meeting_create.html"
+    let dining = {
+        "title": info_split[0],
+        "address": info_split[1]
+    };
+    localStorage.setItem("dining", JSON.stringify(dining));
+    location.href = "meeting_create.html"
 }
 
 // 내 프로필로 가기
