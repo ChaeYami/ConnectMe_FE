@@ -6,7 +6,7 @@
 
 🔗 Shortcut Link
 ------
-**📱배포 : https://connectme.co.kr/**  
+**📱배포 : https://connectme.co.kr/**   
 **🐋 Back-End : [Back-End Link](https://github.com/ChaeYami/ConnectMe_BE)**  
 **💙 DOCS : [사회화지원소 팀노션](https://rhetorical-cilantro-7e4.notion.site/538c12449cf94e28b0c20a9f4ac0a3fc?v=96c787ffabfa458586546ec93833852b&pvs=4)**
 
