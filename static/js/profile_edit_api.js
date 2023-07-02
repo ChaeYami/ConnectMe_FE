@@ -141,8 +141,10 @@ async function updateProfile() {
     if (response.status == 200) {
         alert("수정 완료")
         window.location.replace(`/profile.html?user_id=${user_id}`)
-    } else {
-        alert('으엥에ㅔ에에')
+    } else if (response.status == 403) {
+        alert('권한이 없습니다!')
+    } else{
+        alert('오류가 발생했습니다.')
     }
 }
 

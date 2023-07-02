@@ -390,17 +390,19 @@ async function commentUpdateConfrim(id) {
 
 // ================================ 상담 게시글 상세보기 댓글 삭제 시작 ================================
 async function commentDelete(comment_id) {
-    let token = localStorage.getItem("access")
-    if (token) {
-        let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${comment_id}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        if (response.status == 204 || response.status == 200) { alert("삭제 완료"), window.location.reload() }
-        else (alert("권한이 없습니다."))
-    } else { alert("로그인 해주세요") }
+    if (confirm("삭제하시겠습니까?")) {
+        let token = localStorage.getItem("access")
+        if (token) {
+            let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${comment_id}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            if (response.status == 204 || response.status == 200) { alert("삭제 완료"), window.location.reload() }
+            else (alert("권한이 없습니다."))
+        } else { alert("로그인 해주세요") }
+    }
 }
 // ================================ 상담 게시글 상세보기 댓글 삭제 끝 ================================
 
@@ -446,17 +448,18 @@ async function replyUpdateConfrim(reply_id) {
 
 // ================================ 고민 게시글 상세보기 대댓글 삭제 시작 ================================
 async function replyDelete(reply_id) {
-    let token = localStorage.getItem("access")
-    if (token) {
-        let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        if (response.status == 200) { alert("삭제 완료"), window.location.reload() }
-        else { alert("권한이 없습니다.") }
-
+    if (confirm("삭제하시겠습니까?")) {
+        let token = localStorage.getItem("access")
+        if (token) {
+            let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            if (response.status == 200) { alert("삭제 완료"), window.location.reload() }
+            else { alert("권한이 없습니다.") }
+        }
     } else { alert("로그인 해주세요") }
 }
 // ================================ 고민 게시글 상세보기 대댓글 삭제 끝 ================================

@@ -50,7 +50,6 @@ async function Profile(user_id) {
     }
     document.getElementById('nickname').innerHTML = `${response_json.nickname}<br>(${response_json.account})`
     document.getElementById('region').innerHTML = `${response_json.prefer_region}`
-    document.getElementById('current-region').innerHTML = current_region
     document.getElementById('age').innerHTML = `${response_json.age}`
     document.getElementById('mbti').innerHTML = `${response_json.mbti}`
 }
