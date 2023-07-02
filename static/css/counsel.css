@@ -45,7 +45,11 @@ main {
 }
 
 .counsel-likes_count {
-    color: rgb(158, 158, 158)
+    color: rgb(158, 158, 158);
+}
+
+.counsel_created_at {
+    color: rgb(158, 158, 158);
 }
 
 /********* counsel detail 끝 **********/
@@ -167,7 +171,13 @@ main {
 }
 
 #counsel-title {
+    display: flex;
     font-weight: bold;
+    gap: 10px;
+}
+
+#counsel-comment-count {
+    color: #e23e3e;
 }
 
 #counsel-author {

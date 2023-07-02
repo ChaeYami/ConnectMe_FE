@@ -159,6 +159,20 @@ async function meetingShowList(pages = 1) {
                 </a>`;
                     }
 
+                    if (meeting_image.includes('http')) {
+                        if (meeting_image.includes('www')) {
+                            image = meeting_image.slice(16);
+                            let decodedURL = decodeURIComponent(image);
+                            img_urls = `http://${decodedURL}`
+                        } else {
+                            image = meeting_image.slice(15);
+                            let decodedURL = decodeURIComponent(image);
+                            img_urls = `http://${decodedURL}`
+                        }
+                    } else {
+                        img_urls = `${BACKEND_BASE_URL}${meeting_image}`
+                    }
+
                     let temp_html = `
                         <div id="meeting_card_${id}" class="meeting_card">
                             <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">
@@ -167,7 +181,7 @@ async function meetingShowList(pages = 1) {
                                 ${status_and_title}
                                 </div>
                                 <hr>
-                                <img class="meeting_list_image" src="${BACKEND_BASE_URL}${meeting_image}" alt="">
+                                <img class="meeting_list_image" src="${img_urls}" alt="">
                             </div>
                             <hr>
                             <div id="bookmark_btn" class="bookmark_btn">
@@ -302,6 +316,23 @@ function meetingSearch() {
                         <img id="book${id}" src="static/image/bookmark.png" style=" width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                     </a>`
                 }
+
+                if (meeting_image.includes('http')) {
+                    if (meeting_image.includes('www')) {
+                        image = meeting_image.slice(37);
+                        let decodedURL = decodeURIComponent(image);
+                        img_urls = `http://${decodedURL}`
+                    } else {
+                        image = meeting_image.slice(36);
+                        let decodedURL = decodeURIComponent(image);
+                        img_urls = `http://${decodedURL}`
+                    }
+                } else {
+                    img_urls = `${meeting_image}`
+                }
+
+
+
                 let temp_html = `
                         <div id="meeting_card_${id}" class="meeting_card">
                             <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
@@ -310,7 +341,7 @@ function meetingSearch() {
                                 ${status_and_title}
                                 </div>
                                 <hr>
-                                <img class=meeting_list_image src="${meeting_image}" alt="">
+                                <img class=meeting_list_image src="${img_urls}" alt="">
                             </div>
                             <hr>
                             <div id="bookmark_btn" class="bookmark_btn">
