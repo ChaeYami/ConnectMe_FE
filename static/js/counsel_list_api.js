@@ -118,11 +118,12 @@ async function getCounsels(pages = 1) {
                 let counsel_author = rows[i]['user']['nickname']
                 let counsel_created_at = rows[i]['created_at']
                 let likes_count = rows[i]['like'].length
+                let counsel_comment_count = rows[i]['comment_count']
 
                 let temp_html = `
                 <a onclick="go_counselDetail(${counsel_id})">
                     <div class="list-box">
-                        <div id="counsel-title">${counsel_title}</div>
+                        <div id="counsel-title">${counsel_title}<div id="counsel-comment-count">[${counsel_comment_count}]</div></div>
                         <div id="counsel-author"><a onclick="go_myProfile()">${counsel_author}</a></div>
                         <div id="counsel-created-at">${counsel_created_at}</div>
                         <div id="counsel-likes">${likes_count}</div>
