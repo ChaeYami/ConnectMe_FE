@@ -350,7 +350,6 @@ async function placeView(category_select = '카테고리', pages = 1) {
 
 // 장소추천 검색하기
 async function placeSearchView(event) {
-    // event.preventDefault();
 
     let container = document.querySelector('#place')
     let place_create = document.querySelector('#place_create')
@@ -913,7 +912,7 @@ async function placeDetailView(place_id) {
                     ${like_html}
                     <a title="이 장소로 모임 생성하기">
                         <img id="in_place_create_meeting" src="static/image/workgroup.png" class="place-detail-share" alt="모임생성하기"
-                            onclick="go_createMeeting(\'${name},${address}\')">
+                            onclick="go_createMeeting(${place_id})">
                     </a>
                     <a title="공유하기">
                         <img id="modal_opne_btn" src="static/image/share.png" class="place-detail-share" alt="공유하기"

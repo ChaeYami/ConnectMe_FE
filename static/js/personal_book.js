@@ -127,6 +127,7 @@ async function placeBook(place_id) {
                     if (count >= 3) {
                         return;
                     }
+
                     if (meeting.meeting_image[0]) {
                         let id = meeting['id']
                         let title = meeting['title']
@@ -154,7 +155,7 @@ async function placeBook(place_id) {
                             status_and_title =
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
-    
+
                         if (bookmark.includes(user_id)) {
                             meeting_book = `
                     <a>
@@ -166,7 +167,22 @@ async function placeBook(place_id) {
                       <img id="book${id}" src="static/image/bookmark.png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                     </a>`;
                         }
-    
+
+                        if (meeting_image.includes('http')) {
+                            if (meeting_image.includes('www')) {
+                                image = meeting_image.slice(16);
+                                let decodedURL = decodeURIComponent(image);
+                                img_urls = `http://${decodedURL}`
+                            } else {
+                                image = meeting_image.slice(15);
+                                let decodedURL = decodeURIComponent(image);
+                                img_urls = `http://${decodedURL}`
+                            }
+                        } else {
+                            img_urls = `${BACKEND_BASE_URL}${meeting_image}`
+                        }
+
+
                         let temp_html = `
                             <div id="meeting_card_${id}" class="meeting_card">
                                 <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">
@@ -175,7 +191,7 @@ async function placeBook(place_id) {
                                     ${status_and_title}
                                     </div>
                                     <hr>
-                                    <img class="meeting_list_image" src="${BACKEND_BASE_URL}${meeting_image}" alt="">
+                                    <img class="meeting_list_image" src="${img_urls}" alt="">
                                 </div>
                                 <hr>
                                 <div id="bookmark_btn" class="bookmark_btn">
@@ -203,7 +219,7 @@ async function placeBook(place_id) {
                         let join_meeting_count = meeting['join_meeting_count'];
                         let meeting_book = '';
                         let status_and_title = '';
-    
+
                         if (meeting_status == '모집중') {
                             status_and_title =
                                 `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
@@ -216,7 +232,7 @@ async function placeBook(place_id) {
                             status_and_title =
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
-    
+
                         if (bookmark.includes(user_id)) {
                             meeting_book = `
                     <a>
@@ -228,7 +244,7 @@ async function placeBook(place_id) {
                       <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
                     </a>`;
                         }
-    
+
                         let temp_html = `
                             <div class="meeting_card">
                                 <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">

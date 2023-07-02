@@ -42,12 +42,7 @@ function go_findPassword() {
 }
 
 function go_createMeeting(info) {
-    info_split = info.split(',')
-    let dining = {
-        "title": info_split[0],
-        "address": info_split[1]
-    };
-    localStorage.setItem("dining", JSON.stringify(dining));
+    localStorage.setItem("dining", JSON.stringify(info));
     location.href = "meeting_create.html"
 }
 

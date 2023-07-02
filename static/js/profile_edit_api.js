@@ -180,9 +180,13 @@ $('document').ready(function () {
         let $selsido = $(this);
 
         $.each(eval(area0), function () {
-            $selsido.append("<option value='" + this + "'>" + this + "</option>");
+            if (this == '시/도 선택') {
+                $selsido.append(`<option value='' selected disabled> ${this} </option>`);
+            } else {
+                $selsido.append("<option value='" + this + "'>" + this + "</option>");
+            }
         });
-        $("select[name^=gugun]").append("<option value=''>구/군 선택</option>");
+        $("select[name^=gugun]").append("<option value='' selected disabled>구/군 선택</option>");
     });
 
 
@@ -195,7 +199,7 @@ $('document').ready(function () {
         $("option", $gugun).remove(); // 구군 초기화
 
         if (area == "area0") {
-            $gugun.append("<option value=''>구/군 선택</option>");
+            $gugun.append("<option value='' selected disabled>구/군 선택</option>");
         }
         else {
             try {

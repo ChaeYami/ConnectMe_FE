@@ -38,7 +38,6 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         $('#popup-user-list').append(meeting_join_user_list)
     })
 
-
     who_join_meeting = ``
     if (user == nickname) {
         who_join_meeting = `
@@ -109,9 +108,26 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
 
     data.meeting_image.forEach((each_image => {
         image = each_image['image']
-        temp_html = `
-        <img class=detail_image src="${BACKEND_BASE_URL}${image}" alt="">`
-        $('#image_box').append(temp_html)
+        if (image.includes('http')) {
+            if (image.includes('www')) {
+                image = each_image['image'].slice(16);
+                let decodedURL = decodeURIComponent(image);
+                temp_html = `
+                <img class="detail_image" src="http://${decodedURL}" alt="">`
+                $('#image_box').append(temp_html)
+            } else {
+                image = each_image['image'].slice(15);
+                let decodedURL = decodeURIComponent(image);
+                temp_html = `
+                <img class="detail_image" src="http://${decodedURL}" alt="">`
+                $('#image_box').append(temp_html)
+            }
+        } else {
+            temp_html = `
+            <img class="detail_image" src="${BACKEND_BASE_URL}${image}" alt="">`
+            $('#image_box').append(temp_html)
+        }
+
     }))
 
 
@@ -125,16 +141,21 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     },).then(res => res.json()).then(data => {
         let name = data['place_title']
         let address = data['place_address']
+        let place_title = name
+
+        if (data['place'] !== null) {
+            place_title = `<a onclick="go_placeDetailView(${data['place']})">${name}</a>`
+        }
 
         hot_place_container.innerHTML += `<div class="place-detail-content">
     <div class="place-detail-content-grid">
         <div>
-            <div class="place-detail-font-gray">이름</div>
-            <div class="place-detail-font-gray">주소</div>
+            <div class="place-detail-font-gray" style="margin-top:23px">이름</div>
+            <div class="place-detail-font-gray" style="margin-top:20px">주소</div>
         </div>
         <div>
-            <div >${name}</div>
-            <div >${address}</div>
+            <div><h3>${place_title}</h3></div>
+            <div>${address}</div>
         </div>
         <div class="place-detail-map" id="map">
         </div>
