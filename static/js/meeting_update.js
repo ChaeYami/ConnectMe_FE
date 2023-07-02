@@ -17,7 +17,6 @@ window.onload = function () {
 
 `
     $("#date_time_input").prepend (date_time_input_html)
-    console.log(todayString)
     $("#meeting_time").timepicker('setTime', new Date());
     document.getElementById('meeting_date').valueAsDate = new Date();
 }

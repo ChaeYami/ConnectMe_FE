@@ -32,7 +32,6 @@ async function Profile(user_id) {
     })
     response_json = await response.json()
     const current_region = `${response_json.current_region1} ${response_json.current_region2}`
-    console.log(current_region)
 
     const user_id_int = parseInt(user_id)
     const profile_img_url = `${BACKEND_BASE_URL}${response_json.profile_img}`;

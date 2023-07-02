@@ -19,7 +19,6 @@ async function signup() {
     formData.append("nickname", nickname);
     formData.append("phone", phone);
 
-    console.log(phone.length)
     const response = await fetch(`${BACKEND_BASE_URL}/user/`, {
         headers: {
         },

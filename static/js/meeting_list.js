@@ -209,7 +209,6 @@ async function meetingShowList(pages = 1) {
                     let join_meeting_count = meeting['join_meeting_count'];
                     let meeting_book = '';
                     let status_and_title = '';
-                    console.log(meeting_status)
 
                     if (meeting_status == '모집중') {
                         status_and_title =
