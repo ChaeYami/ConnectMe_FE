@@ -21,7 +21,7 @@ async function counselDetail(counsel_id) {
             if (is_anonymous) {
                 counsel_author = '익명'
             } else {
-                response.counsel['user']['nickname']
+                counsel_author = response.counsel['user']['nickname']
             }
             let counsel_author_id = response.counsel['user']['pk']
             let author_html = `<a onclick = "go_profile(${counsel_author_id})">${counsel_author}</a>`
@@ -158,9 +158,13 @@ async function counselComments(counsel_id) {
                         `
                             <p id="now_comment${id}" style="display:block;">[${user}] ${content} ${comment_edit}</p>
                             <p id="p_comment_update_input${id}" style="display:none;"/>
+                                
                                 <input class="reply-input" id="comment_update_input${id}" type="text"/> 
+                                <input type="checkbox" id="anonymous-checkbox">
+                    <label for="anonymous-checkbox">익명</label>
                                 <button class="button-blue" onclick="commentUpdateConfrim(${id})">수정하기</button>
                                 <button type="button" class="button-white" onclick="commentCancel(${counsel_id},${id})">취소하기</button>
+                                
                             </p>
                             <p> <small>${updated_at}</small></p>
                             
@@ -348,6 +352,14 @@ async function counselCommentCreate() {
 async function CounselEdit() {
     let title = document.querySelector('#title')
     let content = document.querySelector('#content')
+    let checked = $('#anonymous-checkbox').is(':checked');
+    let is_anonymous = ''
+    if (checked) {
+        is_anonymous = 'True';
+
+    }else{
+        is_anonymous = 'False';
+    }
 
     const response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/`, {
         headers: {
@@ -358,6 +370,7 @@ async function CounselEdit() {
         body: JSON.stringify({
             title: title.value,
             content: content.value,
+            is_anonymous : is_anonymous
         })
     })
 
@@ -462,10 +475,19 @@ async function comment_update_handle(id) {
 // ================================ 상담 게시글 상세보기 댓글 수정 시작 ================================
 async function commentUpdateConfrim(id) {
     let comment = document.getElementById(`comment_update_input${id}`).value
+    let checked = $('#anonymous-checkbox').is(':checked');
+
     let token = localStorage.getItem("access")
     if (token) {
         let formData = new FormData();
         formData.append("content", comment);
+        if (checked) {
+            formData.append("is_anonymous", 'True');
+    
+        }else{
+            formData.append("is_anonymous", 'False');
+    
+        }
         let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${id}/`, {
             method: 'PUT',
             headers: {
