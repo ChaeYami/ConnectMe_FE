@@ -79,7 +79,7 @@
 }
 
 .info-section .ect {
-    height: 200px;
+    height: 150px;
     width: 180px;
     padding: 50px 40px;
     border-radius: 10px;
@@ -112,7 +112,7 @@
 
 #intro {
     width: 250px;
-    min-height: 200px;
+    min-height: 150px;
     background-color: #EBF6FF;
     padding: 50px;
     border-radius: 10px;
@@ -126,4 +126,19 @@
         width: 150px;
         padding: 40px;
     }
+}
+
+.profile-album-section{
+    margin-top: 30px;
+}
+.album img{
+    width: 200px;
+    margin: 20px;
+}
+
+.album .images{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
 }

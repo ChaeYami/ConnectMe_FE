@@ -6,9 +6,7 @@ $(document).ready(function () {
     showAlbum()
     if (user_id != logined_user_id){
         const upload_btn = document.getElementById('upload-photo')
-        const del_photo_btn = document.getElementById('del_photo_btn')
         upload_btn.style.display = 'none';
-        del_photo_btn.style.display = 'none';
     }
 });
 

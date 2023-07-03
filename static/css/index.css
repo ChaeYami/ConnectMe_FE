@@ -255,6 +255,8 @@ footer a{
 }
 footer .team-logo img{
     width: 200px;
+    opacity: 0.8;
+
 }
 
 .notion{
