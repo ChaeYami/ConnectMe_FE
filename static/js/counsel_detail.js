@@ -13,11 +13,16 @@ async function counselDetail(counsel_id) {
         type: "GET",
         dataType: "json",
         success: function (response) {
-
             let counsel_id = response.counsel['id']
+            let is_anonymous = response.counsel['is_anonymous']
             let counsel_title = response.counsel['title']
             let counsel_content = response.counsel['content']
-            let counsel_author = response.counsel['user']['nickname']
+            let counsel_author = ''
+            if (is_anonymous) {
+                counsel_author = '익명'
+            } else {
+                response.counsel['user']['nickname']
+            }
             let counsel_author_id = response.counsel['user']['pk']
             let author_html = `<a onclick = "go_profile(${counsel_author_id})">${counsel_author}</a>`
             let counsel_created_at = response.counsel['created_at']
@@ -103,9 +108,17 @@ async function counselComments(counsel_id) {
             const rows = response
             for (let i = 0; i < rows.length; i++) {
                 id = rows[i]['id']
+
                 content = rows[i]['content']
                 updated_at = rows[i]['updated_at']
-                user = rows[i]['user']['nickname']
+
+                is_anonymous = rows[i]['is_anonymous']
+                if (is_anonymous) {
+                    user = '익명'
+                } else {
+                    user = rows[i]['user']['nickname']
+                }
+
                 comment_likes_count = rows[i]['comment_like_count']
                 like = rows[i]['like']
                 user_id = rows[i]['user'].pk
@@ -172,7 +185,12 @@ async function counselComments(counsel_id) {
                     comment = each_reply['comment']
                     reply_id = each_reply['id']
                     content = each_reply['content']
-                    user = each_reply['user']['nickname']
+                    is_anonymous = each_reply['is_anonymous']
+                    if (is_anonymous) {
+                        user = '익명'
+                    } else {
+                        user = rows[i]['user']['nickname']
+                    }
                     updated_at = each_reply['updated_at']
                     reply_likes_count = each_reply['reply_like_count']
                     like = each_reply['like']
@@ -291,9 +309,15 @@ function go_counselEdit() {
 // 댓글작성
 async function counselCommentCreate() {
     let comment = document.getElementById("inputComment").value
+    let checked = $('#anonymous-checkbox').is(':checked');
+    if (checked) {
+        is_anonymous = 'True';
 
+    } else {
+        is_anonymous = 'False';
+    }
+    console.log(is_anonymous)
     if (logined_token) {
-
 
         const response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/`, {
             method: 'POST',
@@ -302,14 +326,15 @@ async function counselCommentCreate() {
                 "Authorization": "Bearer " + logined_token,
             },
             body: JSON.stringify({
-                "content": comment,
-
+                content: comment,
+                is_anonymous: is_anonymous
             })
         })
         if (response.status == 201) {
             alert("댓글 작성 완료.")
             location.reload();
         } else {
+            console.log(response.json)
             const errorData = await response.json();
             const errorArray = Object.entries(errorData);
             alert(errorArray[0][1]);
@@ -352,34 +377,34 @@ async function CounselEdit() {
 }
 
 // 글 작성
-async function CreateCounsel() {
-    let title = document.querySelector('#title');
-    let content = document.querySelector('#content');
+// async function CreateCounsel() {
+//     let title = document.querySelector('#title');
+//     let content = document.querySelector('#content');
 
-    const formdata = new FormData();
-    formdata.append("title", title.value);
-    formdata.append("content", content.value);
+//     const formdata = new FormData();
+//     formdata.append("title", title.value);
+//     formdata.append("content", content.value);
 
-    const response = await fetch(`${BACKEND_BASE_URL}/counsel/`, {
-        headers: {
-            Authorization: "Bearer " + logined_token,
-        },
-        method: "POST",
-        body: formdata,
-    });
+//     const response = await fetch(`${BACKEND_BASE_URL}/counsel/`, {
+//         headers: {
+//             Authorization: "Bearer " + logined_token,
+//         },
+//         method: "POST",
+//         body: formdata,
+//     });
 
-    const response_json = await response.json();
+//     const response_json = await response.json();
 
-    if (response.status == 200) {
-        alert("고민 상담이 등록되었습니다.");
-        window.location.replace(`${FRONTEND_BASE_URL}/counsel_list.html`);
-    } else if (response.status == 400) {
-        for (let key in response_json) {
-            alert(`${response_json[key]}`);
-            break
-        }
-    }
-}
+//     if (response.status == 200) {
+//         alert("고민 상담이 등록되었습니다.");
+//         window.location.replace(`${FRONTEND_BASE_URL}/counsel_list.html`);
+//     } else if (response.status == 400) {
+//         for (let key in response_json) {
+//             alert(`${response_json[key]}`);
+//             break
+//         }
+//     }
+// }
 
 // ================================ 상담 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 시작 ================================
 function reply_create_handle(id) {

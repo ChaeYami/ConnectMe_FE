@@ -63,8 +63,11 @@
             <h1 class="create_h1">Counsel Create</h1>
             <h5 class="create_h5">고민이 있다면 이곳에 작성해주세요.</h5>
             <form class="create_form">
+                <div><input type="checkbox" id="anonymous-checkbox">
+                    <label for="anonymous-checkbox">익명</label>
+                </div>
                 <div class="group">
-                    <input id="title" class="create_input" type="text" required="required" maxlength="50"/><span
+                    <input id="title" class="create_input" type="text" required="required" maxlength="50" /><span
                         class="highlight"></span><span class="bar"></span>
                     <label class="create_label">제목</label>
                 </div>
@@ -86,6 +89,6 @@
 <script src="/static/js/base_url.js"></script>
 <script src="/static/js/base_api.js"></script>
 <script src="/static/js/base_redirect_login.js"></script>
-<script src="static/js/counsel_detail.js"></script>
+<script src="static/js/counsel_create.js"></script>
 
 </html>
