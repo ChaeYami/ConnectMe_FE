@@ -125,6 +125,11 @@ async function handleLogout() {
     alert("로그아웃되었습니다.")
 }
 
+function go_requestList(me) {
+    location.href = `request_list.html?me=${me}`
+}
+
+
 function SuccessLocation(data) {
     const lat = data['coords'].latitude;
     const lon = data['coords'].longitude;
