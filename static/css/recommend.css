@@ -160,9 +160,9 @@
     box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, .2);
 }
 
-.card>.image_box>.image {
-    width: 100%;
-    height: 100%;
+.image_box>.image {
+    width: 150px;
+    height: 150px;
     object-fit: cover;
 }
 
@@ -174,9 +174,24 @@
     font-size: 14pt;
     font-weight: bold;
 }
-
+.user_nickname button{
+    margin: 5px;
+    background-color: #8eadd3;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
 .user_info .intro {
-    background-color: rgb(240, 255, 249);
-    min-height: 70px;
+    background-color: #EBF6FF;
+    min-height: 55px;
     margin: 10px 0px;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.no_intro{
+    color: gray;
 }

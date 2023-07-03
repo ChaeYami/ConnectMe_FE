@@ -56,20 +56,33 @@ async function recommend(filter_) {
                     let user_region = rows[i]['prefer_region']
                     let user_age_range = rows[i]['age_range']
                     let user_mbti = rows[i]['mbti']
+
                     let user_introduce = rows[i]['introduce']
+                    if (user_introduce){
+                        user_introduce = rows[i]['introduce']
+                    }else{
+                        user_introduce = '<span class="no_intro">등록된 소개가 없습니다.</span>'
+                    }
+
+                    
                     let user_profile_img = rows[i]['profile_img']
                     if (user_profile_img == null) {
                         user_profile_img = 'static/image/user.png'
                     } else {
                         user_profile_img = `${BACKEND_BASE_URL}${user_profile_img}`
                     }
+                    
+
+
                     let temp_html = `<a onclick="go_profile(${user_pk})"><div class="card">
                     <div class="image_box">
                         <img class="image" src="${user_profile_img}" alt="">
                     </div>
+                    </a>
                     <div class="user_info">
                         <div class="user_nickname">
-                            ${user_nickname}
+                        <a onclick="go_profile(${user_pk})">${user_nickname}</a>
+                            <button onclick="addFriend(${user_pk})"> 친구신청 </button>
                         </div>
                         <div class="ect">
                             지역 : ${user_region} | 
@@ -80,7 +93,7 @@ async function recommend(filter_) {
                             ${user_introduce}
                         </div>
                     </div>
-                </div></a>`
+                </div>`
 
                     $('#list-section').append(temp_html)
                 }
@@ -91,4 +104,24 @@ async function recommend(filter_) {
         }
     })
 
+}
+
+
+// 친구신청 버튼 눌렀을 때
+async function addFriend(user_id) {
+    const response = await fetch(`${BACKEND_BASE_URL}/user/friend/${user_id}/`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": "Bearer " + logined_token
+        },
+        method: "POST",
+    });
+
+    if (response.status == 201) {
+        alert("친구신청을 보냈습니다.")
+    } else {
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        alert(errorArray[0][1]);
+    }
 }

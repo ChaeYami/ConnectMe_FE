@@ -114,6 +114,7 @@ main {
     height: 230px;
     object-fit: cover;
     object-position: center;
+    border-radius: 20px;
 }
 
 .place-container-main {

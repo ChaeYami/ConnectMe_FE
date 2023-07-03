@@ -50,6 +50,14 @@ async function Login() {
     }
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("password").addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            Login();
+        }
+    });
+});
+
 
 // 카카오로그인
 async function kakaoLogin() {

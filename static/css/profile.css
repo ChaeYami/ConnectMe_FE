@@ -29,7 +29,9 @@
     align-items: center;
 
 }
-
+.nickname{
+    font-weight: bold;
+}
 .nickname-section button {
     margin: 5px;
     background-color: #8eadd3;
@@ -78,7 +80,7 @@
 
 .info-section .ect {
     height: 200px;
-    width: 150px;
+    width: 180px;
     padding: 50px 40px;
     border-radius: 10px;
     background-color: #EBF6FF;
@@ -97,6 +99,15 @@
 
 .info-section .ect div {
     padding: 5px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr ;
+
+    grid-template-rows: 1fr 1fr;
+        
+    }
 }
 
 #intro {

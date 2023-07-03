@@ -197,7 +197,7 @@ async function createPlace() {
 }
 
 // 장소추천 전체보기 (카테고리)
-async function placeView(category_select, pages = 1) {
+async function placeView(category_select = '카테고리', pages = 1) {
     let container = document.querySelector('#place')
     let place_create = document.querySelector('#place_create')
     let foot = document.querySelector('#myFooter')
@@ -274,12 +274,12 @@ async function placeView(category_select, pages = 1) {
         if (bookmark.includes(logined_user_id)) {
 
             place_book = `
-            <a>
-                <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
+            <a title="북마크"> 
+                <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook($${place_id})">
             </a>`
         } else {
             place_book = `
-            <a>
+            <a title="북마크">
                 <img id="book${place_id}" src="static/image/bookmark.png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
             </a>`
         }
@@ -323,15 +323,15 @@ async function placeView(category_select, pages = 1) {
             <div class="place-container-address">${address}</div>
             <div class="place-container-content">${content}</div>
             <div class="place-container-count">
-                <div class="place-container-count-img">
+                <div id="place-container-count-comment${place_id}" class="place-container-count-img">
                     <img src="static/image/chat.png">
                     ${comment_count}
                 </div>
-                <div class="place-container-count-img">
+                <div id="place-container-count-like${place_id}" class="place-container-count-img">
                     <img src="static/image/heart (2).png">
                     ${like_count}
                 </div>
-                <div class="place-container-count-img">
+                <div id="place-container-count-book${place_id}" class="place-container-count-img">
                     <img src="static/image/bookmark (2).png">
                     ${book_count}
                 </div>
@@ -350,7 +350,6 @@ async function placeView(category_select, pages = 1) {
 
 // 장소추천 검색하기
 async function placeSearchView(event) {
-    event.preventDefault();
 
     let container = document.querySelector('#place')
     let place_create = document.querySelector('#place_create')
@@ -466,12 +465,12 @@ async function placeSearchView(event) {
         if (bookmark.includes(logined_user_id)) {
 
             place_book = `
-            <a>
+            <a title="북마크">
                 <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
             </a>`
         } else {
             place_book = `
-            <a>
+            <a title="북마크">
                 <img id="book${place_id}" src="static/image/bookmark.png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
             </a>`
         }
@@ -515,15 +514,15 @@ async function placeSearchView(event) {
             <div class="place-container-address">${address}</div>
             <div class="place-container-content">${content}</div>
             <div class="place-container-count">
-                <div class="place-container-count-img">
+                <div id="place-container-count-comment${place_id}" class="place-container-count-img">
                     <img src="static/image/chat.png">
                     ${comment_count}
                 </div>
-                <div class="place-container-count-img">
+                <div id="place-container-count-like${place_id}" class="place-container-count-img">
                     <img src="static/image/heart (2).png">
                     ${like_count}
                 </div>
-                <div class="place-container-count-img">
+                <div id="place-container-count-book${place_id}" class="place-container-count-img">
                     <img src="static/image/bookmark (2).png">
                     ${book_count}
                 </div>
@@ -541,6 +540,14 @@ async function placeSearchView(event) {
 
 let searchForm = document.querySelector('.search-form');
 searchForm.addEventListener('submit', placeSearchView);
+
+let searchInput = document.querySelector('#place-search-input');
+searchInput.addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        placeSearchView(event);
+    }
+});
 
 // 지도 보여주기
 async function placeShowMap(name, address) {
@@ -840,24 +847,24 @@ async function placeDetailView(place_id) {
 
     if (bookmark.includes(logined_user_id)) {
         book_html = `
-        <a>
-            <img id="book${place_id}" src="static/image/bookmark (1).png" class="place-detail-book" alt="북마크" onclick="placeBook(${place_id})">
+        <a title="북마크">
+            <img id="book${place_id}" src="static/image/bookmark (1).png" class="place-detail-book" alt="북마크" onclick="placeBook(${place_id},${book_count})">
         </a>`
     } else {
         book_html = `
-        <a>
+        <a title="북마크">
             <img id="book${place_id}" src="static/image/bookmark.png" class="place-detail-book" alt="북마크" onclick="placeBook(${place_id})">
         </a>`
     }
 
     if (like.includes(logined_user_id)) {
         like_html = `
-        <a>
+        <a title="좋아요">
             <img id="like${place_id}" src="static/image/heart (1).png" class="place-detail-like" alt="좋아요" onclick="placeLike(${place_id})">
         </a>`
     } else {
         like_html = `
-        <a>
+        <a title="좋아요">
             <img id="like${place_id}" src="static/image/heart.png" class="place-detail-like" alt="좋아요" onclick="placeLike(${place_id})">
         </a>`
     }
@@ -903,11 +910,11 @@ async function placeDetailView(place_id) {
                 <div class="place-detail-feed">
                     ${book_html}
                     ${like_html}
-                    <a>
+                    <a title="이 장소로 모임 생성하기">
                         <img id="in_place_create_meeting" src="static/image/workgroup.png" class="place-detail-share" alt="모임생성하기"
-                            onclick="go_createMeeting(\'${name},${address}\')">
+                            onclick="go_createMeeting(${place_id})">
                     </a>
-                    <a>
+                    <a title="공유하기">
                         <img id="modal_opne_btn" src="static/image/share.png" class="place-detail-share" alt="공유하기"
                             onclick="placeShare(${place_id})">
                     </a>
@@ -918,15 +925,15 @@ async function placeDetailView(place_id) {
                 <div class="place-detail-category">
                     <div>${category}${detail_category}</div>
                 </div>
-                <div class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
+                <div id="place-container-count-comment${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
                     <img src="static/image/chat.png">
                     ${comment_count}
                 </div>
-                <div class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
+                <div id="place-container-count-like${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
                     <img src="static/image/heart (2).png">
                     ${like_count}
                 </div>
-                <div class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
+                <div id="place-container-count-book${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
                     <img src="static/image/bookmark (2).png">
                     ${book_count}
                 </div>
@@ -1004,11 +1011,15 @@ async function placeBook(place_id) {
         book['src'] = "static/image/bookmark.png"
         alert("북마크가 취소되었습니다.");
     }
+
+    const bookCountElements = document.querySelector(`#place-container-count-book${place_id}`);
+    const book_count = response_json["book_count"]
+    bookCountElements.innerHTML = `<img src="static/image/bookmark (2).png">${book_count}`;
 }
 
 // 장소 좋아요
 async function placeLike(place_id) {
-    const like = document.querySelector(`#like${place_id}`)
+    const like_id = document.querySelector(`#like${place_id}`)
 
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}/like/`, {
         headers: {
@@ -1019,14 +1030,18 @@ async function placeLike(place_id) {
 
     const response_json = await response.json();
 
+
     if (response_json["message"] == "좋아요") {
-        like['src'] = "static/image/heart (1).png"
+        like_id['src'] = "static/image/heart (1).png"
         alert("좋아요.");
     } else {
-        like['src'] = "static/image/heart.png"
+        like_id['src'] = "static/image/heart.png"
         alert("좋아요 취소!");
     }
 
+    const likeCountElements = document.querySelector(`#place-container-count-like${place_id}`);
+    const like_count = response_json["like_count"]
+    likeCountElements.innerHTML = `<img src="static/image/heart (2).png">${like_count}`;
 }
 
 // 장소추천 수정전 html 띄워주기

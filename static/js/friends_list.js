@@ -17,19 +17,27 @@ async function friendsList() {
         success: function (response) {
 
             const rows = response;
-           
             for (let i = 0; i < rows.length; i++) {
-                let user_nickname = rows[i]['from_nickname']
-                let user_account = rows[i]['from_account']
-                let user_id = rows[i]['from_user']
+                let friend_nickname = ''
+                let friend_account = ''
+                let friend_id=''
+                if (logined_user_id == rows[i]['from_user']){
+                    friend_id = rows[i]['to_user']
+                    friend_nickname = rows[i]['to_nickname']
+                    friend_account = rows[i]['to_account']
+                }else{
+                    friend_id = rows[i]['from_user']
+                    friend_nickname = rows[i]['from_nickname']
+                    friend_account = rows[i]['from_account']
+                }
                 let request_id = rows[i]['id']
 
                 let temp_html = `
                 <div class="friend-box">
                     <div class="info-box">
-                        <a onclick="go_profile(${user_id})">
-                            <div class="nickname">${user_nickname}</div>
-                            <div class="account">${user_account}</div>
+                        <a onclick="go_profile(${friend_id})">
+                            <div class="nickname">${friend_nickname}</div>
+                            <div class="account">${friend_account}</div>
                         </a>
                     </div>
                     <div class = "buttons">

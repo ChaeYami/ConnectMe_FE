@@ -19,7 +19,6 @@ async function signup() {
     formData.append("nickname", nickname);
     formData.append("phone", phone);
 
-    console.log(phone.length)
     const response = await fetch(`${BACKEND_BASE_URL}/user/`, {
         headers: {
         },
@@ -40,6 +39,14 @@ async function signup() {
     }
 
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("nickname").addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            signup();
+        }
+    });
+});
 
 async function signupButton() {
     const response = await signup();
@@ -66,47 +73,47 @@ function makeAlert(key, errorText) {
 }
 
 // 인증번호 발송
-async function certifyPhoneSignup(){
+async function certifyPhoneSignup() {
     const phone = document.getElementById("phone").value
 
     $.ajax({
-        url : `${BACKEND_BASE_URL}/user/phone/send/signup/`,
-        type :"POST",
-        dataType : "json",
+        url: `${BACKEND_BASE_URL}/user/phone/send/signup/`,
+        type: "POST",
+        dataType: "json",
         data: {
-            "phone":phone
+            "phone": phone
         },
 
-        success: function(response){
+        success: function (response) {
             alert(response.message)
             $("#auth-num-box").attr("style", "display:flex;");
 
-        }, error: function(response){
+        }, error: function (response) {
             alert(response.responseJSON.message)
         }
     })
 }
 
 // 인증번호 확인
-async function ConfirmPhoneSignup(){
+async function ConfirmPhoneSignup() {
     const phone = document.getElementById("phone").value
     const auth_num = document.getElementById("auth-num").value
 
     $.ajax({
-        url : `${BACKEND_BASE_URL}/user/phone/confirm/signup/`,
-        type :"POST",
-        dataType : "json",
+        url: `${BACKEND_BASE_URL}/user/phone/confirm/signup/`,
+        type: "POST",
+        dataType: "json",
         data: {
-            "phone":phone,
-            "auth_number" : auth_num
+            "phone": phone,
+            "auth_number": auth_num
         },
 
-        success: function(response){
+        success: function (response) {
             alert(response.message)
             $("#phone-front").prop("disabled", true);
             $("#phone").prop("disabled", true);
 
-        }, error: function(response){
+        }, error: function (response) {
             alert(response.responseJSON.message)
         }
     })

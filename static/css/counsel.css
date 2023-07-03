@@ -1,7 +1,7 @@
 main {
     width: 70vw;
     margin: 75px auto;
-    max-width: 900px;
+    max-width: 1200px;
 }
 
 .main {
@@ -45,7 +45,11 @@ main {
 }
 
 .counsel-likes_count {
-    color: rgb(158, 158, 158)
+    color: rgb(158, 158, 158);
+}
+
+.counsel_created_at {
+    color: rgb(158, 158, 158);
 }
 
 /********* counsel detail 끝 **********/
@@ -158,9 +162,39 @@ main {
 
 .list-box {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 50px 300px 20px;
     justify-items: start;
     align-items: center;
+    gap: 20px;
+    margin: 0px 50px;
+    padding: 5px 0;
+}
+
+#counsel-title {
+    display: flex;
+    font-weight: bold;
+    gap: 10px;
+}
+
+#counsel-comment-count {
+    color: #e23e3e;
+}
+
+#counsel-author {
+    color: #4b828d;
+    font-weight: 600;
+}
+
+#counsel-author>a {
+    color: #4b828d;
+}
+
+#counsel-created-at {
+    margin-left: 40px;
+}
+
+#counsel-likes {
+    color: #b7b7b7;
 }
 
 /* create input 시작 */
