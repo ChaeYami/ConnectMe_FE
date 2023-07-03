@@ -1,6 +1,6 @@
 .main {
-    width: 60vw;
-    margin: 100px auto;
+    width: 90vw;
+    margin: 250px auto;
     max-width: 800px;
 
     @media screen and (max-width: 800px) {
@@ -8,10 +8,30 @@
     }
 }
 
+.title {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    top: 30px;
+    position: fixed;
+
+}
+
+.title img {
+    margin: 0 auto;
+    width: 350px;
+}
+#user-list{
+    margin: 0px 20px;
+}
 #list-section {
     display: flex;
     align-items: center;
     font-size: smaller;
+    width: 100%;
+    overflow: auto;
+    white-space: nowrap;
+    margin-bottom: 20px;
 }
 
 #list-section .card {
@@ -19,8 +39,8 @@
 }
 
 .image_box {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     border-radius: 70%;
     overflow: hidden;
     box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, .2);
@@ -34,8 +54,43 @@
 }
 
 #list-section img {
-    width: 70px;
+    width: 60px;
 }
+
+.user_info .ect {
+    margin-top: 3px;
+    font-size: smaller;
+}
+
+.title-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #EBF6FF;
+    padding: 8px;
+    border-radius: 3px;
+}
+
+.M_C_H{
+    display: flex;
+    justify-items: center;
+    margin: 0px 20px;
+    justify-content: space-between;
+
+}
+
+.meeting-section {
+    width: 34vw;
+}
+
+
+
+.counsel-n-hotplace{
+    width: 34vw;
+
+}
+
+
 
 /********* place-contariner 시작 **********/
 main {
