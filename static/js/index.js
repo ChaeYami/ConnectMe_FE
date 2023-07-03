@@ -283,6 +283,19 @@ async function counselList() {
 
 }
 
+// 스크롤 이벤트 리스너 등록
+window.addEventListener('scroll', function() {
+    let scrollPosition = window.scrollY;
+    let viewportHeight = window.innerHeight;
+    let documentHeight = document.documentElement.scrollHeight;
+
+    if (scrollPosition + viewportHeight >= documentHeight) {
+      document.querySelector('.bot-nav').style.marginBottom = '250px'; 
+    } else {
+      document.querySelector('.bot-nav').style.marginBottom = '0px'; 
+    }
+  });
+
 
 // // 추천 핫플레이스
 // async function recommendHotPlace() {
