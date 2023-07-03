@@ -8,7 +8,7 @@
 
 body {
     /* width: 70vw; */
-    margin: 120px auto 50px auto;
+    margin: 120px auto 0px auto;
     background-color: #f9f9fb;
     /* max-width: 900px; */
 }
@@ -86,7 +86,20 @@ h2 {
     background-color: #D3EAFB;
     height: auto;
     border-radius: 10px;
+    transition: margin-bottom 0.3s ease; /* transition 속성 설정 */
 }
+
+/* .bot-nav {
+    padding: 15px;
+    width: auto;
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    z-index: 2;
+    background-color: #D3EAFB;
+    height: auto;
+    border-radius: 10px;
+} */
 
 .bot-nav a {
     padding: 5px;

@@ -200,112 +200,117 @@ body{
     color: gray;
 }
 
-
-/********* place-contariner 시작 **********/
-/* main {
-    width: 70vw;
-    margin: 75px auto;
-    max-width: 900px;
+footer{
+    background-color: #F9F9FB;
+    align-items: stretch;
+    padding-bottom: 20px;
+    color: gray;
 }
-
-
-.place-container {
+footer a{
+    color: gray;
+}
+#footer{
+    height: inherit;
     display: grid;
-    grid-template-columns: 230px 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 90%;
+    margin: 0 auto;
+    padding: 30px 10px;
+    border-top: 2px solid rgb(218, 218, 218);
+    align-items: center;
+
 }
 
-.place-container-text {
-    margin-left: 30px;
-}
-
-.place-container-img {
-    width: 230px;
-    height: 230px;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 20px;
-}
-
-.place-container-main {
+.info{
+    padding: 10px;
     display: grid;
-    grid-template-columns: 550px 1fr;
+    justify-items: start;
+    align-items: center;
+    font-size: 14px;
+}
+.info h3{
+    margin-left: 20px;
+}
+.info img{
+    width: 25px;
+    margin: 0px 5px;
+}
+.info .notion a{
+    display: flex;
+    align-items: center;
+}
+.intro-member{
+    display: grid;
+    grid-template-rows: 30px 30px 30px 30px 30px;
+    justify-items: end;
+    font-size: 14px;
+    align-items: center;
+
+}
+.team-logo{
+    display: grid;
+    justify-items: center;
+    align-items: center;
+
+}
+footer .team-logo img{
+    width: 200px;
 }
 
-.place-container-title {
+.notion{
+    height: 50px;
+    display: flex;
+    align-items: center;
+
+}
+footer .member{
+    display: grid;
+    align-items: center;
+    justify-items: start;
+    grid-template-columns: 150px 100px 100px;
+    height: 25px;
+}
+
+.member img{
+    width: 25px;
+}
+
+.github a{
     display: flex;
     align-items: center;
 }
 
-.place-container-title0 {
-    margin-right: 10px;
-}
-
-.place-container-title1 {
-    margin-right: 20px;
-}
-
-.place-container-title2 {
-    margin-right: 10px;
-}
-
-.place-container-title-a {
-    text-decoration: none;
-    color: black;
-}
-
-.place-container-score {
-    color: rgb(155, 155, 155);
-}
-
-.place-container-book {
+.blog a{
     display: flex;
     align-items: center;
-    justify-content: end;
-    margin-right: 10px;
+}
+.member img{
+    margin: 0px 5px;
 }
 
-.place-container-address {
-    color: rgb(155, 155, 155);
-    font-weight: 600;
+.member .name{
+    font-weight: bold;
 }
 
-.place-container-content {
-    width: 580px;
-    line-height: 1.2em;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    /* 원하는 줄 수로 변경 가능 */
-    /*-webkit-box-orient: vertical;
-    margin: 20px 0px 10px 60px;
-    text-indent: 1em;
-    white-space: normal;
-    text-overflow: ellipsis;
+.team-intro{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: start;
+    height: 100px;
 }
 
-.place-container-count {
-    height: 55px;
+.team-intro div{
+    margin: 0px 10px;
     display: flex;
-    justify-content: end;
-    align-items: end;
+    align-items: center;
 }
-
-.place-container-count-img {
-    margin-left: 15px;
-    color: rgb(190, 190, 190);
-    font-weight: 600;
-    gap: 5px;
+.team-intro div a{
     display: flex;
+    align-items: center;
 }
 
-.place-container-count-img>img {
-    width: 20px;
-    filter: grayscale(100%);
+.info img{
+    width: 25px;
+    margin: 0px 5px;
 }
-
-.place-container-hr {
-    grid-column: 1/-1;
-    margin: 20px 0px;
-} */
-
-/********* place-contariner 끝 **********/

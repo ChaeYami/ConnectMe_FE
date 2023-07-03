@@ -165,3 +165,17 @@ function SuccessLocation(data) {
 
 function onGeoError() {
 }
+
+
+// 스크롤 이벤트 리스너 등록
+window.addEventListener('scroll', function() {
+    let scrollPosition = window.scrollY;
+    let viewportHeight = window.innerHeight;
+    let documentHeight = document.documentElement.scrollHeight;
+
+    if (scrollPosition + viewportHeight >= documentHeight) {
+      document.querySelector('.bot-nav').style.marginBottom = '250px'; 
+    } else {
+      document.querySelector('.bot-nav').style.marginBottom = '0px'; 
+    }
+  });
