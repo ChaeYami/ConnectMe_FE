@@ -56,6 +56,12 @@
     margin-left: 90%;
 }
 
+.status_and_title h3 {
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    word-break: break-all
+}
 /********* search 시작 **********/
 
 .search-div {

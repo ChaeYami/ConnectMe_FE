@@ -23,7 +23,10 @@ const logined_token = localStorage.getItem("access");
 
 $(document).ready(function () {
     recommend('all');
-    recommendHotPlace();
+    counselList();
+    meetingList()
+
+
     const params = new URLSearchParams(window.location.search).get('showAPI');
     if (params) {
         if (confirm("위치권한에 동의하시겠습니까?")) {
@@ -155,29 +158,131 @@ async function recommend(filter) {
 }
 
 
+// 만남의 광장
+async function meetingList(){
+    $('#meeting-list-section').empty()
+
+    $.ajax({
+        url: `${BACKEND_BASE_URL}/meeting/`,
+        type: "GET",
+        dataType: "json",
+        headers: {
+            "Authorization": "Bearer " + logined_token
+        },
+        success: function (response) {
+            const rows = response["meeting"];
+            console.log(rows)
+            for (let i = 0; i < 4; i++) {
+                let id = rows[i]['id'];
+                let title = rows[i]['title'];
+                let user = rows[i]['user'];
+                let comment_count = rows[i]['comment_count'];
+                let meeting_city = rows[i]['meeting_city'];
+                let num_person_meeting = rows[i]['num_person_meeting'];
+                let meeting_status = rows[i]['meeting_status'];
+                let join_meeting_count = rows[i]['join_meeting_count'];
+                let status= '';
+
+                if (meeting_status == '모집중') {
+                    status=
+                        `<span style="color:green;"><${meeting_status}></span>`
+                }
+                else if (meeting_status == '자리없음') {
+                    status=
+                        `<span style="color:orange;"><${meeting_status}></span>`
+                }
+                else if (meeting_status == '모집종료') {
+                    status=
+                        `<span style="color:red;"><${meeting_status}></span>`
+                }
+                if(rows[i].meeting_image[0]){
+                    let meeting_image = rows[i]['meeting_image'][0]["image"];
+                    if (meeting_image.includes('http')) {
+                        if (meeting_image.includes('www')) {
+                            image = meeting_image.slice(16);
+                            let decodedURL = decodeURIComponent(image);
+                            img_urls = `http://${decodedURL}`
+                        } else {
+                            image = meeting_image.slice(15);
+                            let decodedURL = decodeURIComponent(image);
+                            img_urls = `http://${decodedURL}`
+                        }
+                    } else {
+                        img_urls = `${BACKEND_BASE_URL}${meeting_image}`
+                    }
+                }else{
+                    img_urls = `static/image/—Pngtree—two little kittens_852610.png" alt="" style = "opacity:0.7; filter : grayscale(30%)`
+                }
+
+                let temp_html = `
+                <div class="card">
+                    <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;">
+                        <div class = "meeting-title-section">
+                            <div class="meeting-status">${status}</div>
+                            <div class="meeting-title">${title}</div>
+                            
+                        </div>
+                        <div class="meeting-img"><img class="meeting_list_image" src="${img_urls}" alt=""></div>
+                        <div class="meeting-info">
+                            <div>${meeting_city}</div>
+                            <div>${join_meeting_count} / ${num_person_meeting}</div>
+                        </div>
+                    </div>
+                </div>
+                `
+
+                $('#meeting-list-section').append(temp_html)
+            }
 
 
-// 장소 북마크
-// async function placeBook(place_id) {
-//     const book = document.querySelector(`#book${place_id}`)
+        }, error: function () {
+            alert(response.status);
+        }
 
-//     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
-//         headers: {
-//             Authorization: "Bearer " + logined_token,
-//         },
-//         method: "POST",
-//     });
 
-//     const response_json = await response.json();
+    })
+        
+    
+}
 
-//     if (response_json["message"] == "북마크") {
-//         book['src'] = "static/image/bookmark (1).png"
-//         alert("북마크가 추가되었습니다.");
-//     } else {
-//         book['src'] = "static/image/bookmark.png"
-//         alert("북마크가 취소되었습니다.");
-//     }
-// }
+
+// 고민상담
+async function counselList() {
+    $('#counsel-list-section').empty()
+
+    $.ajax({
+        url: `${BACKEND_BASE_URL}/counsel/`,
+        type: "GET",
+        dataType: "json",
+        headers: {
+            "Authorization": "Bearer " + logined_token
+        },
+        success: function (response) {
+            const rows = response["counsel"];
+            for (let i = 0; i < 3; i++) {
+                let counsel_id = rows[i]['id']
+                let counsel_title = rows[i]['title']
+                let counsel_comment_count = rows[i]['comment_count']
+
+                let temp_html = `
+
+                <div class="content" onclick="go_counselDetail(${counsel_id})" style="cursor:pointer;">
+                    <div id="home-counsel-title">${counsel_title}</div>
+                    <div id="home-counsel-comment" class="comment-count">[${counsel_comment_count}]</div>
+                </div>
+                `
+
+                $('#counsel-list-section').append(temp_html)
+            }
+
+
+        }, error: function () {
+            alert(response.status);
+        }
+    })
+
+}
+
 
 // // 추천 핫플레이스
 // async function recommendHotPlace() {

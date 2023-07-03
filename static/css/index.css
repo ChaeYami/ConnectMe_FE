@@ -1,40 +1,43 @@
 .main {
     width: 90vw;
-    margin: 250px auto;
-    max-width: 800px;
+    margin: 50px auto;
+    max-width: 1200px;
 
     @media screen and (max-width: 800px) {
-        width: 80%;
+        width: 100%;
     }
 }
-
-.title {
+body{
+    margin-top: 30px;
+}
+.title-logo {
     display: flex;
     width: 100%;
     align-items: center;
     top: 30px;
-    position: fixed;
 
 }
 
-.title img {
+.title-logo img {
     margin: 0 auto;
-    width: 350px;
+    width: 300px;
 }
-#user-list{
+
+#user-list {
     margin: 0px 20px;
 }
-#list-section {
+
+#user-list .list-section {
     display: flex;
     align-items: center;
     font-size: smaller;
-    width: 100%;
+    width: 95%;
     overflow: auto;
     white-space: nowrap;
-    margin-bottom: 20px;
+    margin-left: 15px;
 }
 
-#list-section .card {
+#user-list .list-section .card {
     padding: 15px;
 }
 
@@ -63,37 +66,143 @@
 }
 
 .title-info {
-    display: flex;
+    display: grid;
+    grid-template-columns: 100px 1fr 60px ;
     justify-content: space-between;
     align-items: center;
-    background-color: #EBF6FF;
-    padding: 8px;
+    background-color: #ebf6ff6b;
+    padding: 10px 20px;
     border-radius: 3px;
+    margin: 15px;
+    border-bottom: 2px solid #b4ddfd;
 }
 
-.M_C_H{
-    display: flex;
+.title-info .section-info {
+    color: gray;
+}
+
+.title-info .section-title {
+    font-weight: bold;
+}
+.section-more {
+    font-size: 14px;
+}
+.M_C_H {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-items: center;
     margin: 0px 20px;
     justify-content: space-between;
 
 }
-
+.M_C_H a{
+    width: 100%;
+}
 .meeting-section {
-    width: 34vw;
+    width: 100%;
 }
 
 
 
-.counsel-n-hotplace{
-    width: 34vw;
+.counsel-n-hotplace {
+    display: grid;
+    grid-template-rows: 220px 1fr;
 
 }
 
+.comment-count{
+    color: rgb(255, 54, 104);
+}
+
+.counsel-list-section{
+    margin: 15px;
+}
+.counsel-list-section .content{
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    width: 100%;
+}
+#home-counsel-title {
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    word-break: break-all
+}
+.meeting-list-section{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    padding: 15px;
+
+    @media screen and (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.meeting-list-section .card{
+    display: grid;
+    width: 200px;
+    border: 1px solid rgb(216, 216, 216);
+    height: auto;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+    @media screen and (max-width: 1200px) {
+        width: 80%;
+    }
+    @media screen and (max-width: 900px) {
+        width: 80%;
+        height: auto;
+    }
+}
+
+.meeting-status span{
+    font-weight: bold;
+}
+.meeting-title{
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    word-break: break-all;
+    font-weight: bold;
+}
+.meeting-title-section{
+    display: grid;
+    grid-template-columns: 83px 1fr;
+
+}
+.meeting-img{
+    margin: 15px auto 5px;
+    border-radius: 5px;
+    height: 180px;
+    width: 180px;
+
+    @media screen and (max-width: 1120px) {
+        width: 100%;
+        height: 100%;
+    }
+}
+.meeting-img img{
+    width: 180px;
+    border-radius: 5px;
+
+    @media screen and (max-width: 1120px) {
+        width: 100%;
+    }
+
+}
+.meeting-info{
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    color: gray;
+}
 
 
 /********* place-contariner 시작 **********/
-main {
+/* main {
     width: 70vw;
     margin: 75px auto;
     max-width: 900px;
@@ -197,6 +306,6 @@ main {
 .place-container-hr {
     grid-column: 1/-1;
     margin: 20px 0px;
-}
+} */
 
 /********* place-contariner 끝 **********/

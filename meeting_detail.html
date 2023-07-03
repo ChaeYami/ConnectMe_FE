@@ -24,6 +24,8 @@
 </head>
 
 <body>
+    
+
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
@@ -33,18 +35,14 @@
             <a onclick="go_counsel()">고민상담</a>
             <a onclick="go_meetingList()">만남의 광장</a>
 
-            <div class="login-logout">
-                <a onclick="go_login()">로그인</a>
-                <a onclick="go_signup()">회원가입</a>
-            </div>
         </div>
         <div class="top-nav-line-bar">
             <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
             <div class="top-nav-small-line"></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
             <div></div>
             <div></div>
         </div>
@@ -56,10 +54,13 @@
             <a onclick="go_personal_create()">내글</a>
             <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
+            <a onclick="logoutButton()">로그아웃</a>
         </div>
-        <span class="dropbtn">프로필 메뉴</span>
+        <span class="dropbtn">MENU</span>
     </div>
     <!--위, 아래 네비바 끝-->
+
+
     <!-- 메인 -->
     <div class="meeting_detail_warp">
         <div id="meeting_detail_card" class="meeting_detail_card_class">
@@ -92,7 +93,7 @@
                         <h4>참가 유저 목록</h4>
                     </div>
                     <div class="popup-user-list" id="popup-user-list">
-                        
+
                     </div>
                 </div>
                 <button class="close_popup_btn" onclick="closePopup()"></button>

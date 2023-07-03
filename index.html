@@ -28,10 +28,6 @@
             <a onclick="go_counsel()">고민상담</a>
             <a onclick="go_meetingList()">만남의 광장</a>
 
-            <div class="login-logout">
-                <a onclick="go_login()">로그인</a>
-                <a onclick="go_signup()">회원가입</a>
-            </div>
         </div>
         <div class="top-nav-line-bar">
             <div></div>
@@ -45,33 +41,34 @@
         </div>
         <div></div>
     </div> -->
-    <div class="title">
+
+    <div class="title-logo" onclick="location.href='/'" style="cursor: pointer;">
         <img src="static/image/ConnectME - 1.png" alt="">
     </div>
+
     <div class="bot-nav">
         <div class="bot-nav-content">
             <a onclick="go_personal_create()">내글</a>
             <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
+            <a onclick="logoutButton()">로그아웃</a>
         </div>
-        <span class="dropbtn">프로필 메뉴</span>
+        <span class="dropbtn">MENU</span>
     </div>
     <!--위, 아래 네비바 끝-->
-
-
-
 
     <!-- 메인 -->
     <div class="main">
 
-
-
         <!-- 친구추천 -->
         <div id="user-list">
-            <div class="title-info">
-                <div class="section-title">친구추천</div>
-                <div class="section-info">현재 지역과 MBTI, 나이에 따라 친구를 추천해줍니다.</div>
-            </div>
+            <a onclick="go_recommend()">
+                <div class="title-info">
+                    <div class="section-title">친구추천</div>
+                    <div class="section-info">현재 지역과 MBTI, 나이에 따라 친구를 추천해줍니다. </div>
+                    <div class="section-more">더보기 > </div>
+                </div>
+            </a>
             <div class="list-section" id="list-section">
 
                 <!-- <div class="card">
@@ -97,32 +94,63 @@
         <div class="M_C_H">
             <!-- 만남의광장 -->
             <div class="meeting-section" id="meeting-section">
-                <div class="title-info">
+
+                <div class="title-info" onclick="go_meetingList()" style="cursor: pointer;">
+
                     <div class="section-title">만남의 광장</div>
                     <div class="section-info">모임을 통해 친구를 만나보세요.</div>
+
+
+                    <div class="section-more">더보기 > </div>
+
                 </div>
                 <div class="meeting-list-section" id="meeting-list-section">
+
+                    <div class="card">
+
+                        <!-- <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                            <div class="meeting-status">상태</div>
+                            <div class="meeting-title">제목</div>
+                        </div>
+                        <div class="meeting-img"><img class="meeting_list_image" src="" alt=""></div>
+                        <div class="meeting-person">인원</div> -->
+
+                    </div>
+
+
+
                 </div>
             </div>
+
 
             <!-- 고민상담, 핫플레이스 -->
             <div class="counsel-n-hotplace">
                 <!-- 고민상담 -->
+
                 <div class="counsel-section" id="counsel-section">
-                    <div class="title-info">
+                    <div class="title-info" onclick="go_counsel()" style="cursor: pointer;">
                         <div class="section-title">고민상담</div>
-                        <div class="section-info">모임을 통해 친구를 만나보세요.</div>
+                        <div class="section-info">익명으로 고민을 나눠보세요.</div>
+                        <div class="section-more">더보기 > </div>
                     </div>
                     <div class="counsel-list-section" id="counsel-list-section">
+
+                        <!-- <div class="content">
+                                <div id="home-counsel-title"></div>
+                                <div id="home-counsel-comment"></div>
+                            </div> -->
                     </div>
                 </div>
+
                 <!-- 핫플레이스 -->
                 <div class="hotplace-section" id="hotplace-section">
-                    <div class="title-info">
+                    <div class="title-info" onclick="go_placeView()" style="cursor: pointer;">
                         <div class="section-title">핫플레이스</div>
-                        <div class="section-info">모임을 통해 친구를 만나보세요.</div>
+                        <div class="section-info">핫플레이스에서 모임을 생성할 수 있습니다.</div>
+                        <div class="section-more">더보기 > </div>
                     </div>
                     <div class="hotplace-list-section" id="hotplace-list-section">
+
                     </div>
                 </div>
 
