@@ -24,7 +24,7 @@ body{
 }
 
 #user-list {
-    margin: 0px 20px;
+    margin: 0px 20px 20px;
 }
 
 #user-list .list-section {
@@ -276,7 +276,7 @@ body{
     display: -webkit-box;
     -webkit-line-clamp: 3;
     /* 원하는 줄 수로 변경 가능 */
-    -webkit-box-orient: vertical;
+    /*-webkit-box-orient: vertical;
     margin: 20px 0px 10px 60px;
     text-indent: 1em;
     white-space: normal;
