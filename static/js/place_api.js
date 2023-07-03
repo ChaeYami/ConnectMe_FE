@@ -1084,7 +1084,7 @@ async function placePreUpdateView(place_id) {
                 <div class="image-wrapper">
                     <img id="image${image[i]['id']}" class="image_preview" src="${image[i]['url']}"></img>
                     <a>
-                        <img id="delete-image${image[i]['id']}" src="static/image/comment_delete.png" class="image-button"  onmouseover="changeDeleteImage(${image[i]['id']})" onmouseout="restoreDeleteImage(${image[i]['id']})" onclick="imageDelete(${place_id}, ${image[i]['id']})">
+                        <img id="delete-image${image[i]['id']}" src="static/image/comment_delete.png" class="image-button" onmouseover="changeDeleteImage(${image[i]['id']})" onmouseout="restoreDeleteImage(${image[i]['id']})" onclick="imageDelete(${place_id}, ${image[i]['id']})">
                     </a>
                 </div>
             </div>
