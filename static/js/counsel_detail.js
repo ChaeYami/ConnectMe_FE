@@ -127,14 +127,14 @@ async function counselComments(counsel_id) {
 
                 if (JSON.parse(payload)['user_id'] == user_id) {
                     comment_edit = `
-                    <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="comment_update_handle(${id})"> </a>
-                    <a> <img id="delete-image${id}" src="static/image/comment_delete.png" style="width: 30px;" onclick="commentDelete(${id})" onmouseover="changeDeleteImage(${id})" onmouseout="restoreDeleteImage(${id})"> </a>
+                    <a> <img src="static/image/comment_edit.png" class="auth_btn" style="margin-left: 10px;" onclick="comment_update_handle(${id})"> </a>
+                    <a> <img id="delete-image${id}" src="static/image/comment_delete.png" class="auth_btn" onclick="commentDelete(${id})" onmouseover="changeDeleteImage(${id})" onmouseout="restoreDeleteImage(${id})"> </a>
                     `
                 }
 
                 if (content == '삭제된 댓글 입니다.') {
                     let temp_html = `
-                    <p id="now_comment${id}" style="display:block;">${content}</p>
+                    <p id="now_comment${id}" style="display:block;">[사용자] ${content}</p>
                     <div id="reply_card${id}">
                     <hr>
                     `
@@ -143,13 +143,13 @@ async function counselComments(counsel_id) {
                 else {
                     let temp_html =
                         `
-                            <p id="now_comment${id}" style="display:block;">${content}</p>
+                            <p id="now_comment${id}" style="display:block;">[${user}] ${content} ${comment_edit}</p>
                             <p id="p_comment_update_input${id}" style="display:none;"/>
                                 <input class="reply-input" id="comment_update_input${id}" type="text"/> 
                                 <button class="button-blue" onclick="commentUpdateConfrim(${id})">수정하기</button>
                                 <button type="button" class="button-white" onclick="commentCancel(${counsel_id},${id})">취소하기</button>
                             </p>
-                            <p> <small> ${user} ${updated_at}</p>
+                            <p> <small>${updated_at}</small></p>
                             
                             <p id="p_reply_create_input${id}" style="margin-right:5px; display:none;"/>
                                 <input class="reply-input" id="reply_create_input${id}" type="text"/> 
@@ -159,7 +159,6 @@ async function counselComments(counsel_id) {
                             <div class=comment_btns>
                                 <button class="commentbtn" onclick="reply_create_handle(${id})">답글 작성하기</button>
                                 ${like_html}<p id="comment_count${id}" style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p>
-                                ${comment_edit}
                             </div>
                             <div id="reply_card${id}">
                             <hr>
@@ -177,7 +176,7 @@ async function counselComments(counsel_id) {
                     updated_at = each_reply['updated_at']
                     reply_likes_count = each_reply['reply_like_count']
                     like = each_reply['like']
-                    reply_user_id = each_reply['user']['user_id']
+                    reply_user_id = each_reply['user']['pk']
 
                     let like_html = ``
                     let reply_edit = ``
@@ -194,24 +193,24 @@ async function counselComments(counsel_id) {
                         </a>`
                     }
 
+
                     if (JSON.parse(payload)['user_id'] == reply_user_id) {
                         reply_edit = `
-                        <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="reply_update_handle(${reply_id})"> </a>
-                        <a> <img id="delete-image${reply_id}" src="static/image/comment_delete.png" style="width: 30px;" onclick="replyDelete(${reply_id})" onmouseover="changeDeleteImage(${reply_id})" onmouseout="restoreDeleteImage(${reply_id})"> </a>
+                        <a> <img src="static/image/comment_edit.png" class="auth_btn" style="margin-left: 10px;" onclick="reply_update_handle(${reply_id})"> </a>
+                        <a> <img id="delete-reply-image${reply_id}" src="static/image/comment_delete.png" class="auth_btn" onclick="replyDelete(${reply_id})" onmouseover="changeReplyDeleteImage(${reply_id})" onmouseout="restoreReplyDeleteImage(${reply_id})"> </a>
                         `
                     }
 
                     let temp_html = `
                         <div style="margin-left: 50px;">
-                            <p id="now_comment${reply_id}" style="display:block;">${content}</p>
-                            <p id="p_comment_update_input${reply_id}" style="display:none;"/>
-                                <input class="reply-input" id="comment_update_input${reply_id}" value="${content}" type="text"/> 
+                            <p id="now_reply_comment${reply_id}" style="display:block;">[${user}] ${content} ${reply_edit}</p>
+                            <p id="p_reply_update_input${reply_id}" style="display:none;"/>
+                                <input class="reply-input" id="reply_update_input${reply_id}" value="${content}" type="text"/> 
                                 <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${reply_id})">수정하기</button>
-                                <button type="button" class="button-white" onclick="commentCancel(${counsel_id}, ${reply_id})">취소하기</button>
+                                <button type="button" class="button-white" onclick="replyCancel(${counsel_id}, ${reply_id})">취소하기</button>
                             </p>
                             <div class=replybtns>
-                                <p> <small> ${user} ${updated_at}${like_html}<p id="reply_count${reply_id}" style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p></small></p>
-                                ${reply_edit}
+                                <p> <small>${updated_at}${like_html}<p id="reply_count${reply_id}" style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p></small></p>  
                             </div>
                         </div>
                         <hr>
@@ -235,10 +234,30 @@ function restoreDeleteImage(id) {
     document.querySelector(`#delete-image${id}`).src = 'static/image/comment_delete.png'
 }
 
+// 댓글 삭제 버튼 src 변경
+function changeReplyDeleteImage(id) {
+    document.querySelector(`#delete-reply-image${id}`).src = 'static/image/comment_delete (1).png'
+
+}
+
+// 댓글 삭제 버튼 src 변경
+function restoreReplyDeleteImage(id) {
+    document.querySelector(`#delete-reply-image${id}`).src = 'static/image/comment_delete.png'
+}
+
 // 댓글 취소
 function commentCancel(counsel_id, id) {
     let comment = document.querySelector(`#now_comment${id}`)
     let input = document.querySelector(`#p_comment_update_input${id}`)
+
+    comment.style.display = '';
+    input.style.display = 'none';
+}
+
+// 대댓글 취소
+function replyCancel(counsel_id, id) {
+    let comment = document.querySelector(`#now_reply_comment${id}`)
+    let input = document.querySelector(`#p_reply_update_input${id}`)
 
     comment.style.display = '';
     input.style.display = 'none';
@@ -457,8 +476,8 @@ async function commentDelete(comment_id) {
 async function reply_update_handle(id) {
     let token = localStorage.getItem("access")
     if (token) {
-        let reply_update_input = document.getElementById(`p_comment_update_input${id}`)
-        let now_reply = document.getElementById(`now_comment${id}`);
+        let reply_update_input = document.getElementById(`p_reply_update_input${id}`)
+        let now_reply = document.getElementById(`now_reply_comment${id}`);
         if (reply_update_input.style.display == 'none') {
             reply_update_input.style.display = 'block'
             now_reply.style.display = 'none';
@@ -472,7 +491,7 @@ async function reply_update_handle(id) {
 
 // ================================ 상담 게시글 상세보기 대댓글 수정 시작 ================================
 async function replyUpdateConfrim(reply_id) {
-    let reply = document.getElementById(`comment_update_input${reply_id}`).value
+    let reply = document.getElementById(`reply_update_input${reply_id}`).value
     let token = localStorage.getItem("access")
     if (token) {
         let formData = new FormData();
