@@ -7,7 +7,7 @@ document.getElementById('nickname').innerText = nickname
 
 const room_name = new URLSearchParams(window.location.search).get('room');
 
-const chatSocket = new ReconnectingWebSocket(
+const chatSocket = new WebSocket(
     WS_BACKEND_BASE_URL
     + '/ws/chat/'
     + room_name
