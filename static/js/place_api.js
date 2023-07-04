@@ -298,6 +298,7 @@ async function placeView(category_select = '카테고리', pages = 1) {
             </a>`
         }
         // 북마크 끝
+
         // 이미지 시작
         if (image) {
             place.innerHTML += `
@@ -310,17 +311,20 @@ async function placeView(category_select = '카테고리', pages = 1) {
             `
         } else {
             place.innerHTML += `
-            <div style="width:230px; height:230px;">
+            <div class="hotplace-image-div">
+                <a href="place_view.html?id=${place_id}">
+                    <img class="place-container-img" style="object-fit: contain;" src="static/image/ConnectME - 하늘고래.png">
+                </a>
+                ${place_book}
             </div>`
         }
         // 이미지 끝
         // 모임생성 시작
         let place_meeting = `
         <a title="이 장소로 모임 생성하기"> 
-            <img id="book${place_id}" src="static/image/workgroup.png" style="margin-top:10px; width: 45px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
+            <img id="book${place_id}" src="static/image/workgroup.png" style="margin-top:10px; width: 50px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
         </a>
         `
-
         // 모임생성 끝
         // edit 버튼 시작
         let place_edit = ``
@@ -1000,7 +1004,7 @@ async function placeDetailView(place_id, page = 1) {
                 </div>
                 <div class="place-detail-feed">
                     <a title="이 장소로 모임 생성하기">
-                        <img id="in_place_create_meeting" src="static/image/workgroup.png" class="place-detail-share" style="width:45px;" alt="모임생성하기"
+                        <img id="in_place_create_meeting" src="static/image/workgroup.png" class="place-detail-share" style="width:55px;" alt="모임생성하기"
                             onclick="go_createMeeting(${place_id})">
                     </a>
                 </div>
@@ -1152,8 +1156,9 @@ async function placePreUpdateView(place_id) {
 
     let foot = document.querySelector('#myFooter')
 
-    foot.style.display = 'none';
-
+    if (foot) {
+        foot.style.display = 'none';
+    }
 
 
     let name = response_json['place'].title
@@ -1167,9 +1172,11 @@ async function placePreUpdateView(place_id) {
     let holiday = response_json['place'].holiday
 
     let place = document.querySelector('#place')
+    let place_div = document.querySelector('#place-container-div')
     let slide = document.querySelector('#place-image-slide')
     slide.style.display = "none";
 
+    place_div.innerHTML = ''
     let images = ``
 
     if (image) {
