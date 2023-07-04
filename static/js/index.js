@@ -171,7 +171,6 @@ async function meetingList(){
         },
         success: function (response) {
             const rows = response["meeting"];
-            console.log(rows)
             for (let i = 0; i < 4; i++) {
                 let id = rows[i]['id'];
                 let title = rows[i]['title'];
