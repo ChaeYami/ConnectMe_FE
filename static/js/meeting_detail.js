@@ -11,7 +11,7 @@ else { delete_btn.hide() }
 fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(data => {
     let payloadObj = JSON.parse(payload)
     let user_id = payloadObj.user_id
-    let payload_nickname = user_id = payloadObj.nickname
+    let payload_nickname = payloadObj.nickname
     id = data['id']
     user = data['user']['nickname']
     title = data['title']
