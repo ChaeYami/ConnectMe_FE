@@ -8,7 +8,7 @@
 
 body {
     /* width: 70vw; */
-    margin: 120px auto 50px auto;
+    margin: 120px auto 0px auto;
     background-color: #f9f9fb;
     /* max-width: 900px; */
 }
@@ -40,7 +40,7 @@ h2 {
     max-width: 900px;
     height: 60px;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     justify-items: center;
     align-items: center;
     margin: 10px auto;
@@ -51,7 +51,7 @@ h2 {
     max-width: 1000px;
     background-color: #D3EAFB;
     display: grid;
-    grid-template-columns: 50px repeat(6, 1fr) 50px;
+    grid-template-columns: 50px repeat(5, 1fr) 50px;
     justify-items: center;
     align-items: center;
     margin: auto;
@@ -83,13 +83,27 @@ h2 {
     bottom: 50px;
     left: 50px;
     z-index: 2;
+    background-color: #d3eafbb9;
+    height: auto;
+    border-radius: 10px;
+    transition: margin-bottom 0.3s ease; /* transition 속성 설정 */
+    font-weight: bold;
+}
+
+/* .bot-nav {
+    padding: 15px;
+    width: auto;
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    z-index: 2;
     background-color: #D3EAFB;
     height: auto;
     border-radius: 10px;
-}
+} */
 
 .bot-nav a {
-    padding: 5px;
+    padding: 10px;
 }
 
 .bot-nav-content {
@@ -100,7 +114,7 @@ h2 {
 
 .bot-nav-content a {
     display: block;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
 
 }
 

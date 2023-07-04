@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginLogout = document.querySelector('.login-logout');
     if (payload) {
         bot_nav.style.display = 'grid'; // bot-nav 표시
-        loginLogout.innerHTML = '<a onclick="logoutButton()">로그아웃</a>';
+
     } else {
         bot_nav.style.display = 'none'; // bot-nav 숨김
         loginLogout.innerHTML = `
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function go_home() {
-    location.href = "index.html"
+    location.href = "/"
 
 }
 function go_login() {
@@ -98,6 +98,10 @@ function go_meetingList() {
     location.href = "meeting_list.html"
 }
 
+function go_meetingDetail(meeting_id) {
+    location.href = `meeting_detail.html?id=${meeting_id}`
+}
+
 function go_counsel() {
     location.href = "counsel_list.html"
 }
@@ -124,6 +128,11 @@ async function handleLogout() {
     location.replace('/index.html')
     alert("로그아웃되었습니다.")
 }
+
+function go_requestList(me) {
+    location.href = `request_list.html?me=${me}`
+}
+
 
 function SuccessLocation(data) {
     const lat = data['coords'].latitude;
@@ -165,3 +174,5 @@ function SuccessLocation(data) {
 
 function onGeoError() {
 }
+
+

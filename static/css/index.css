@@ -1,26 +1,49 @@
 .main {
-    width: 60vw;
-    margin: 100px auto;
-    max-width: 800px;
+    width: 90vw;
+    margin: 50px auto;
+    max-width: 1200px;
 
     @media screen and (max-width: 800px) {
-        width: 80%;
+        width: 100%;
     }
 }
+body{
+    margin-top: 30px;
+}
+.title-logo {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    top: 30px;
 
-#list-section {
+}
+
+.title-logo img {
+    margin: 0 auto;
+    width: 300px;
+}
+
+#user-list {
+    margin: 0px 20px 20px;
+}
+
+#user-list .list-section {
     display: flex;
     align-items: center;
     font-size: smaller;
+    width: 95%;
+    overflow: auto;
+    white-space: nowrap;
+    margin-left: 15px;
 }
 
-#list-section .card {
+#user-list .list-section .card {
     padding: 15px;
 }
 
 .image_box {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     border-radius: 70%;
     overflow: hidden;
     box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, .2);
@@ -34,114 +57,262 @@
 }
 
 #list-section img {
-    width: 70px;
+    width: 60px;
 }
 
-/********* place-contariner 시작 **********/
-main {
-    width: 70vw;
-    margin: 75px auto;
-    max-width: 900px;
+.user_info .ect {
+    margin-top: 3px;
+    font-size: smaller;
 }
 
-
-.place-container {
+.title-info {
     display: grid;
-    grid-template-columns: 230px 1fr;
+    grid-template-columns: 100px 1fr 60px ;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ebf6ff6b;
+    padding: 10px 20px;
+    border-radius: 3px;
+    margin: 15px;
+    border-bottom: 2px solid #b4ddfd;
 }
 
-.place-container-text {
-    margin-left: 30px;
+.title-info .section-info {
+    color: gray;
 }
 
-.place-container-img {
-    width: 230px;
-    height: 230px;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 20px;
+.title-info .section-title {
+    font-weight: bold;
 }
-
-.place-container-main {
+.section-more {
+    font-size: 14px;
+}
+.M_C_H {
     display: grid;
-    grid-template-columns: 550px 1fr;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    margin: 0px 20px;
+    justify-content: space-between;
+
+}
+.M_C_H a{
+    width: 100%;
+}
+.meeting-section {
+    width: 100%;
 }
 
-.place-container-title {
-    display: flex;
-    align-items: center;
+
+
+.counsel-n-hotplace {
+    display: grid;
+    grid-template-rows: 220px 1fr;
+
 }
 
-.place-container-title0 {
-    margin-right: 10px;
+.comment-count{
+    color: rgb(255, 54, 104);
 }
 
-.place-container-title1 {
-    margin-right: 20px;
+.counsel-list-section{
+    margin: 15px;
 }
-
-.place-container-title2 {
-    margin-right: 10px;
+.counsel-list-section .content{
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    width: 100%;
 }
-
-.place-container-title-a {
-    text-decoration: none;
-    color: black;
-}
-
-.place-container-score {
-    color: rgb(155, 155, 155);
-}
-
-.place-container-book {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    margin-right: 10px;
-}
-
-.place-container-address {
-    color: rgb(155, 155, 155);
-    font-weight: 600;
-}
-
-.place-container-content {
-    width: 580px;
-    line-height: 1.2em;
+#home-counsel-title {
     overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    /* 원하는 줄 수로 변경 가능 */
-    -webkit-box-orient: vertical;
-    margin: 20px 0px 10px 60px;
-    text-indent: 1em;
-    white-space: normal;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    word-break: break-all
+}
+.meeting-list-section{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    padding: 15px;
+
+    @media screen and (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+
 }
 
-.place-container-count {
-    height: 55px;
+.meeting-list-section .card{
+    display: grid;
+    width: 200px;
+    border: 1px solid rgb(216, 216, 216);
+    height: auto;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+    @media screen and (max-width: 1200px) {
+        width: 80%;
+    }
+    @media screen and (max-width: 900px) {
+        width: 80%;
+        height: auto;
+    }
+}
+
+.meeting-status span{
+    font-weight: bold;
+}
+.meeting-title{
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    word-break: break-all;
+    font-weight: bold;
+}
+.meeting-title-section{
+    display: grid;
+    grid-template-columns: 83px 1fr;
+
+}
+.meeting-img{
+    margin: 15px auto 5px;
+    border-radius: 5px;
+    height: 180px;
+    width: 180px;
+
+    @media screen and (max-width: 1120px) {
+        width: 100%;
+        height: 100%;
+    }
+}
+.meeting-img img{
+    width: 180px;
+    border-radius: 5px;
+
+    @media screen and (max-width: 1120px) {
+        width: 100%;
+    }
+
+}
+.meeting-info{
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    color: gray;
+}
+
+footer{
+    background-color: #F9F9FB;
+    align-items: stretch;
+    padding-bottom: 20px;
+    color: gray;
+}
+footer a{
+    color: gray;
+}
+#footer{
+    height: inherit;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 90%;
+    margin: 0 auto;
+    padding: 30px 10px;
+    border-top: 2px solid rgb(218, 218, 218);
+    align-items: center;
+
+}
+
+.info{
+    padding: 10px;
+    display: grid;
+    justify-items: start;
+    align-items: center;
+    font-size: 14px;
+}
+.info h3{
+    margin-left: 20px;
+}
+.info img{
+    width: 25px;
+    margin: 0px 5px;
+}
+.info .notion a{
     display: flex;
-    justify-content: end;
-    align-items: end;
+    align-items: center;
+}
+.intro-member{
+    display: grid;
+    grid-template-rows: 30px 30px 30px 30px 30px;
+    justify-items: end;
+    font-size: 14px;
+    align-items: center;
+
+}
+.team-logo{
+    display: grid;
+    justify-items: center;
+    align-items: center;
+
+}
+footer .team-logo img{
+    width: 200px;
+    opacity: 0.8;
+
 }
 
-.place-container-count-img {
-    margin-left: 15px;
-    color: rgb(190, 190, 190);
-    font-weight: 600;
-    gap: 5px;
+.notion{
+    height: 50px;
     display: flex;
+    align-items: center;
+
+}
+footer .member{
+    display: grid;
+    align-items: center;
+    justify-items: start;
+    grid-template-columns: 150px 100px 100px;
+    height: 25px;
 }
 
-.place-container-count-img>img {
-    width: 20px;
-    filter: grayscale(100%);
+.member img{
+    width: 25px;
 }
 
-.place-container-hr {
-    grid-column: 1/-1;
-    margin: 20px 0px;
+.github a{
+    display: flex;
+    align-items: center;
 }
 
-/********* place-contariner 끝 **********/
+.blog a{
+    display: flex;
+    align-items: center;
+}
+.member img{
+    margin: 0px 5px;
+}
+
+.member .name{
+    font-weight: bold;
+}
+
+.team-intro{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: start;
+    height: 100px;
+}
+
+.team-intro div{
+    margin: 0px 10px;
+    display: flex;
+    align-items: center;
+}
+.team-intro div a{
+    display: flex;
+    align-items: center;
+}
+
+.info img{
+    width: 25px;
+    margin: 0px 5px;
+}

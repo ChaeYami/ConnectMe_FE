@@ -13,11 +13,16 @@ async function counselDetail(counsel_id) {
         type: "GET",
         dataType: "json",
         success: function (response) {
-
             let counsel_id = response.counsel['id']
+            let is_anonymous = response.counsel['is_anonymous']
             let counsel_title = response.counsel['title']
             let counsel_content = response.counsel['content']
-            let counsel_author = response.counsel['user']['nickname']
+            let counsel_author = ''
+            if (is_anonymous) {
+                counsel_author = '익명'
+            } else {
+                counsel_author = response.counsel['user']['nickname']
+            }
             let counsel_author_id = response.counsel['user']['pk']
             let author_html = `<a onclick = "go_profile(${counsel_author_id})">${counsel_author}</a>`
             let counsel_created_at = response.counsel['created_at']
@@ -103,9 +108,17 @@ async function counselComments(counsel_id) {
             const rows = response
             for (let i = 0; i < rows.length; i++) {
                 id = rows[i]['id']
+
                 content = rows[i]['content']
                 updated_at = rows[i]['updated_at']
-                user = rows[i]['user']['nickname']
+
+                is_anonymous = rows[i]['is_anonymous']
+                if (is_anonymous) {
+                    user = '익명'
+                } else {
+                    user = rows[i]['user']['nickname']
+                }
+
                 comment_likes_count = rows[i]['comment_like_count']
                 like = rows[i]['like']
                 user_id = rows[i]['user'].pk
@@ -127,14 +140,14 @@ async function counselComments(counsel_id) {
 
                 if (JSON.parse(payload)['user_id'] == user_id) {
                     comment_edit = `
-                    <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="comment_update_handle(${id})"> </a>
-                    <a> <img id="delete-image${id}" src="static/image/comment_delete.png" style="width: 30px;" onclick="commentDelete(${id})" onmouseover="changeDeleteImage(${id})" onmouseout="restoreDeleteImage(${id})"> </a>
+                    <a> <img src="static/image/comment_edit.png" class="auth_btn" style="margin-left: 10px;" onclick="comment_update_handle(${id})"> </a>
+                    <a> <img id="delete-image${id}" src="static/image/comment_delete.png" class="auth_btn" onclick="commentDelete(${id})" onmouseover="changeDeleteImage(${id})" onmouseout="restoreDeleteImage(${id})"> </a>
                     `
                 }
 
                 if (content == '삭제된 댓글 입니다.') {
                     let temp_html = `
-                    <p id="now_comment${id}" style="display:block;">${content}</p>
+                    <p id="now_comment${id}" style="display:block;">[사용자] ${content}</p>
                     <div id="reply_card${id}">
                     <hr>
                     `
@@ -143,13 +156,17 @@ async function counselComments(counsel_id) {
                 else {
                     let temp_html =
                         `
-                            <p id="now_comment${id}" style="display:block;">${content}</p>
+                            <p id="now_comment${id}" style="display:block;">[${user}] ${content} ${comment_edit}</p>
                             <p id="p_comment_update_input${id}" style="display:none;"/>
+                                
                                 <input class="reply-input" id="comment_update_input${id}" type="text"/> 
+                                <input type="checkbox" id="anonymous-checkbox">
+                    <label for="anonymous-checkbox">익명</label>
                                 <button class="button-blue" onclick="commentUpdateConfrim(${id})">수정하기</button>
                                 <button type="button" class="button-white" onclick="commentCancel(${counsel_id},${id})">취소하기</button>
+                                
                             </p>
-                            <p> <small> ${user} ${updated_at}</p>
+                            <p> <small>${updated_at}</small></p>
                             
                             <p id="p_reply_create_input${id}" style="margin-right:5px; display:none;"/>
                                 <input class="reply-input" id="reply_create_input${id}" type="text"/> 
@@ -159,7 +176,6 @@ async function counselComments(counsel_id) {
                             <div class=comment_btns>
                                 <button class="commentbtn" onclick="reply_create_handle(${id})">답글 작성하기</button>
                                 ${like_html}<p id="comment_count${id}" style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p>
-                                ${comment_edit}
                             </div>
                             <div id="reply_card${id}">
                             <hr>
@@ -173,11 +189,16 @@ async function counselComments(counsel_id) {
                     comment = each_reply['comment']
                     reply_id = each_reply['id']
                     content = each_reply['content']
-                    user = each_reply['user']['nickname']
+                    is_anonymous = each_reply['is_anonymous']
+                    if (is_anonymous) {
+                        user = '익명'
+                    } else {
+                        user = rows[i]['user']['nickname']
+                    }
                     updated_at = each_reply['updated_at']
                     reply_likes_count = each_reply['reply_like_count']
                     like = each_reply['like']
-                    reply_user_id = each_reply['user']['user_id']
+                    reply_user_id = each_reply['user']['pk']
 
                     let like_html = ``
                     let reply_edit = ``
@@ -194,24 +215,24 @@ async function counselComments(counsel_id) {
                         </a>`
                     }
 
+
                     if (JSON.parse(payload)['user_id'] == reply_user_id) {
                         reply_edit = `
-                        <a> <img src="static/image/comment_edit.png" style="width: 30px;" onclick="reply_update_handle(${reply_id})"> </a>
-                        <a> <img id="delete-image${reply_id}" src="static/image/comment_delete.png" style="width: 30px;" onclick="replyDelete(${reply_id})" onmouseover="changeDeleteImage(${reply_id})" onmouseout="restoreDeleteImage(${reply_id})"> </a>
+                        <a> <img src="static/image/comment_edit.png" class="auth_btn" style="margin-left: 10px;" onclick="reply_update_handle(${reply_id})"> </a>
+                        <a> <img id="delete-reply-image${reply_id}" src="static/image/comment_delete.png" class="auth_btn" onclick="replyDelete(${reply_id})" onmouseover="changeReplyDeleteImage(${reply_id})" onmouseout="restoreReplyDeleteImage(${reply_id})"> </a>
                         `
                     }
 
                     let temp_html = `
                         <div style="margin-left: 50px;">
-                            <p id="now_comment${reply_id}" style="display:block;">${content}</p>
-                            <p id="p_comment_update_input${reply_id}" style="display:none;"/>
-                                <input class="reply-input" id="comment_update_input${reply_id}" value="${content}" type="text"/> 
+                            <p id="now_reply_comment${reply_id}" style="display:block;">[${user}] ${content} ${reply_edit}</p>
+                            <p id="p_reply_update_input${reply_id}" style="display:none;"/>
+                                <input class="reply-input" id="reply_update_input${reply_id}" value="${content}" type="text"/> 
                                 <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${reply_id})">수정하기</button>
-                                <button type="button" class="button-white" onclick="commentCancel(${counsel_id}, ${reply_id})">취소하기</button>
+                                <button type="button" class="button-white" onclick="replyCancel(${counsel_id}, ${reply_id})">취소하기</button>
                             </p>
                             <div class=replybtns>
-                                <p> <small> ${user} ${updated_at}${like_html}<p id="reply_count${reply_id}" style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p></small></p>
-                                ${reply_edit}
+                                <p> <small>${updated_at}${like_html}<p id="reply_count${reply_id}" style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p></small></p>  
                             </div>
                         </div>
                         <hr>
@@ -235,10 +256,30 @@ function restoreDeleteImage(id) {
     document.querySelector(`#delete-image${id}`).src = 'static/image/comment_delete.png'
 }
 
+// 댓글 삭제 버튼 src 변경
+function changeReplyDeleteImage(id) {
+    document.querySelector(`#delete-reply-image${id}`).src = 'static/image/comment_delete (1).png'
+
+}
+
+// 댓글 삭제 버튼 src 변경
+function restoreReplyDeleteImage(id) {
+    document.querySelector(`#delete-reply-image${id}`).src = 'static/image/comment_delete.png'
+}
+
 // 댓글 취소
 function commentCancel(counsel_id, id) {
     let comment = document.querySelector(`#now_comment${id}`)
     let input = document.querySelector(`#p_comment_update_input${id}`)
+
+    comment.style.display = '';
+    input.style.display = 'none';
+}
+
+// 대댓글 취소
+function replyCancel(counsel_id, id) {
+    let comment = document.querySelector(`#now_reply_comment${id}`)
+    let input = document.querySelector(`#p_reply_update_input${id}`)
 
     comment.style.display = '';
     input.style.display = 'none';
@@ -272,9 +313,15 @@ function go_counselEdit() {
 // 댓글작성
 async function counselCommentCreate() {
     let comment = document.getElementById("inputComment").value
+    let checked = $('#anonymous-checkbox').is(':checked');
+    if (checked) {
+        is_anonymous = 'True';
 
+    } else {
+        is_anonymous = 'False';
+    }
+    console.log(is_anonymous)
     if (logined_token) {
-
 
         const response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/`, {
             method: 'POST',
@@ -283,14 +330,15 @@ async function counselCommentCreate() {
                 "Authorization": "Bearer " + logined_token,
             },
             body: JSON.stringify({
-                "content": comment,
-
+                content: comment,
+                is_anonymous: is_anonymous
             })
         })
         if (response.status == 201) {
             alert("댓글 작성 완료.")
             location.reload();
         } else {
+            console.log(response.json)
             const errorData = await response.json();
             const errorArray = Object.entries(errorData);
             alert(errorArray[0][1]);
@@ -304,6 +352,14 @@ async function counselCommentCreate() {
 async function CounselEdit() {
     let title = document.querySelector('#title')
     let content = document.querySelector('#content')
+    let checked = $('#anonymous-checkbox').is(':checked');
+    let is_anonymous = ''
+    if (checked) {
+        is_anonymous = 'True';
+
+    }else{
+        is_anonymous = 'False';
+    }
 
     const response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/`, {
         headers: {
@@ -314,6 +370,7 @@ async function CounselEdit() {
         body: JSON.stringify({
             title: title.value,
             content: content.value,
+            is_anonymous : is_anonymous
         })
     })
 
@@ -333,34 +390,34 @@ async function CounselEdit() {
 }
 
 // 글 작성
-async function CreateCounsel() {
-    let title = document.querySelector('#title');
-    let content = document.querySelector('#content');
+// async function CreateCounsel() {
+//     let title = document.querySelector('#title');
+//     let content = document.querySelector('#content');
 
-    const formdata = new FormData();
-    formdata.append("title", title.value);
-    formdata.append("content", content.value);
+//     const formdata = new FormData();
+//     formdata.append("title", title.value);
+//     formdata.append("content", content.value);
 
-    const response = await fetch(`${BACKEND_BASE_URL}/counsel/`, {
-        headers: {
-            Authorization: "Bearer " + logined_token,
-        },
-        method: "POST",
-        body: formdata,
-    });
+//     const response = await fetch(`${BACKEND_BASE_URL}/counsel/`, {
+//         headers: {
+//             Authorization: "Bearer " + logined_token,
+//         },
+//         method: "POST",
+//         body: formdata,
+//     });
 
-    const response_json = await response.json();
+//     const response_json = await response.json();
 
-    if (response.status == 200) {
-        alert("고민 상담이 등록되었습니다.");
-        window.location.replace(`${FRONTEND_BASE_URL}/counsel_list.html`);
-    } else if (response.status == 400) {
-        for (let key in response_json) {
-            alert(`${response_json[key]}`);
-            break
-        }
-    }
-}
+//     if (response.status == 200) {
+//         alert("고민 상담이 등록되었습니다.");
+//         window.location.replace(`${FRONTEND_BASE_URL}/counsel_list.html`);
+//     } else if (response.status == 400) {
+//         for (let key in response_json) {
+//             alert(`${response_json[key]}`);
+//             break
+//         }
+//     }
+// }
 
 // ================================ 상담 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 시작 ================================
 function reply_create_handle(id) {
@@ -418,10 +475,19 @@ async function comment_update_handle(id) {
 // ================================ 상담 게시글 상세보기 댓글 수정 시작 ================================
 async function commentUpdateConfrim(id) {
     let comment = document.getElementById(`comment_update_input${id}`).value
+    let checked = $('#anonymous-checkbox').is(':checked');
+
     let token = localStorage.getItem("access")
     if (token) {
         let formData = new FormData();
         formData.append("content", comment);
+        if (checked) {
+            formData.append("is_anonymous", 'True');
+    
+        }else{
+            formData.append("is_anonymous", 'False');
+    
+        }
         let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${id}/`, {
             method: 'PUT',
             headers: {
@@ -457,8 +523,8 @@ async function commentDelete(comment_id) {
 async function reply_update_handle(id) {
     let token = localStorage.getItem("access")
     if (token) {
-        let reply_update_input = document.getElementById(`p_comment_update_input${id}`)
-        let now_reply = document.getElementById(`now_comment${id}`);
+        let reply_update_input = document.getElementById(`p_reply_update_input${id}`)
+        let now_reply = document.getElementById(`now_reply_comment${id}`);
         if (reply_update_input.style.display == 'none') {
             reply_update_input.style.display = 'block'
             now_reply.style.display = 'none';
@@ -472,7 +538,7 @@ async function reply_update_handle(id) {
 
 // ================================ 상담 게시글 상세보기 대댓글 수정 시작 ================================
 async function replyUpdateConfrim(reply_id) {
-    let reply = document.getElementById(`comment_update_input${reply_id}`).value
+    let reply = document.getElementById(`reply_update_input${reply_id}`).value
     let token = localStorage.getItem("access")
     if (token) {
         let formData = new FormData();

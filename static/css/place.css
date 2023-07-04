@@ -806,12 +806,26 @@ main {
     margin-left: 30px;
 }
 
+.hotplace-image-div {
+    position: relative;
+    width: 250px;
+    margin: 10px 5px;
+}
+
 .place-container-img {
     width: 230px;
     height: 230px;
     object-fit: cover;
     object-position: center;
     border-radius: 20px;
+}
+
+.hotplace-image-div>a:nth-child(2)>img {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    width: 40px;
+    z-index: 1;
 }
 
 .place-container-main {
@@ -871,8 +885,19 @@ main {
     text-overflow: ellipsis;
 }
 
+.place-container-bottom {
+    display: grid;
+    grid-template-columns: 1fr 150px;
+}
+
 .place-container-count {
     height: 55px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.place-empathy {
     display: flex;
     justify-content: end;
     align-items: end;
@@ -976,6 +1001,117 @@ main {
 /********* 이미지 슬라이더 끝 **********/
 /********* place-detail 시작 **********/
 
+/* 좌측 임시 시작 */
+.place-container-div {
+    width: 100vw;
+    margin: 75px auto;
+    max-width: 1550px;
+    display: grid;
+    grid-template-columns: 1100px 450px;
+    gap: 25px;
+}
+
+.place-meeting-list {
+    width: 400px;
+    height: auto;
+    margin: 20px auto 10px auto;
+    border: 1px solid rgb(165, 165, 165);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.meeting-data {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0px;
+    align-items: flex-start;
+}
+
+.meeting-status span {
+    font-weight: bold;
+}
+
+.meeting-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    font-weight: bold;
+}
+
+.meeting-title-section {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 20px;
+}
+
+.meeting-info {
+    text-align: right;
+    margin-left: auto;
+    color: gray;
+    overflow: visible;
+    white-space: nowrap;
+}
+
+/* 좌측 임시 끝 */
+/* 하단 임시 시작 */
+.meeting-list-section {
+    display: grid;
+    grid-template-columns: 10px repeat(4, 1fr) 10px;
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
+
+    @media screen and (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.meeting-list-section .card {
+    display: grid;
+    width: 200px;
+    border: 1px solid rgb(216, 216, 216);
+    height: auto;
+    border-radius: 10px;
+    padding: 15px;
+    /* margin: 10px; */
+
+    @media screen and (max-width: 1200px) {
+        width: 80%;
+    }
+
+    @media screen and (max-width: 900px) {
+        width: 80%;
+        height: auto;
+    }
+}
+
+.meeting-img {
+    margin: 15px auto 5px;
+    border-radius: 5px;
+    height: 180px;
+    width: 180px;
+
+    @media screen and (max-width: 1120px) {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.meeting-img img {
+    width: 180px;
+    border-radius: 5px;
+
+    @media screen and (max-width: 1120px) {
+        width: 100%;
+    }
+
+}
+
+
+
+/* 하단 임시 끝 */
 .place-detail-container {
     margin-top: -50px;
     width: 100%;
@@ -983,14 +1119,20 @@ main {
 
 .place-detail-text {
     display: grid;
-    grid-template-columns: 1fr 150px;
+    grid-template-columns: 1fr 400px;
     height: 50px;
 }
 
 .place-detail-top {
     display: flex;
     flex-direction: row;
+    align-items: center;
     height: 50px;
+}
+
+.place-empathy {
+    align-items: end;
+    justify-content: end;
 }
 
 .place-detail-title {
@@ -1005,14 +1147,13 @@ main {
     width: 20px;
     height: auto;
     object-fit: contain;
-    margin: 25px 5px 0px 15px;
+    margin: 10px 5px 0px 15px;
 }
 
 .place-detail-delete {
     width: 20px;
     height: auto;
     object-fit: contain;
-    margin-top: 25px;
 }
 
 .place-detail-category {
@@ -1031,21 +1172,21 @@ main {
 }
 
 .place-detail-book {
-    width: 30px;
+    width: 25px;
     height: auto;
     object-fit: contain;
     margin-right: 10px;
 }
 
 .place-detail-like {
-    width: 30px;
+    width: 25px;
     height: auto;
     object-fit: contain;
     margin-right: 15px;
 }
 
 .place-detail-share {
-    width: 30px;
+    width: 25px;
     height: auto;
     object-fit: contain;
     margin-right: 10px;
@@ -1058,7 +1199,7 @@ main {
 
 .place-detail-content-grid {
     display: grid;
-    grid-template-columns: 120px 400px 1fr;
+    grid-template-columns: 120px 1fr 1fr;
 }
 
 .place-detail-font-gray {

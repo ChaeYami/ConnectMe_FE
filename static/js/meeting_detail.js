@@ -13,7 +13,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     let user_id = payloadObj.user_id
     let nickname = payloadObj.nickname
     id = data['id']
-    user = data['user']
+    user = data['user']['nickname']
     title = data['title']
     created_at = data['created_at']
     updated_at = data['updated_at']
@@ -221,16 +221,69 @@ function meetingUpdateMove() {
 // ================================ 모임 게시글 상세보기 API 끝 ================================
 
 // ================================ 모임 게시글 댓글 목록 API 시작 ================================
-fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(data => {
+// 댓글 삭제 버튼 src 변경
+function changeDeleteImage(id) {
+    document.querySelector(`#delete-image${id}`).src = 'static/image/comment_delete (1).png'
+
+}
+
+// 댓글 삭제 버튼 src 변경
+function restoreDeleteImage(id) {
+    document.querySelector(`#delete-image${id}`).src = 'static/image/comment_delete.png'
+}
+
+// 댓글 삭제 버튼 src 변경
+function changeReplyDeleteImage(id) {
+    document.querySelector(`#delete-reply-image${id}`).src = 'static/image/comment_delete (1).png'
+
+}
+
+// 댓글 삭제 버튼 src 변경
+function restoreReplyDeleteImage(id) {
+    document.querySelector(`#delete-reply-image${id}`).src = 'static/image/comment_delete.png'
+}
+
+// 댓글 취소
+function commentCancel(counsel_id, id) {
+    let comment = document.querySelector(`#now_comment${id}`)
+    let input = document.querySelector(`#p_comment_update_input${id}`)
+
+    comment.style.display = '';
+    input.style.display = 'none';
+}
+
+// 대댓글 취소
+function replyCancel(counsel_id, id) {
+    let comment = document.querySelector(`#now_reply_comment${id}`)
+    let input = document.querySelector(`#p_reply_update_input${id}`)
+
+    comment.style.display = '';
+    input.style.display = 'none';
+}
+
+fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`).then(res => res.json()).then(data => {
     $('#comment_card').empty()
     data.comment.forEach((each_comment => {
         id = each_comment['id']
         content = each_comment['content']
         updated_at = each_comment['updated_at']
-        user = each_comment['user']
+        user = each_comment['user']['nickname']
+        user_id = each_comment['user']['pk']
+
+        let comment_edit = ``
+
+
+
+        if (JSON.parse(payload)['user_id'] == user_id) {
+            comment_edit = `
+            <a> <img src="static/image/comment_edit.png" class="auth_btn" style="margin-left: 10px;" onclick="comment_update_handle(${id})"> </a>
+            <a> <img id="delete-image${id}" src="static/image/comment_delete.png" class="auth_btn" onclick="commentDelete(${id})" onmouseover="changeDeleteImage(${id})" onmouseout="restoreDeleteImage(${id})"> </a>
+            `
+        }
+
         if (content == '삭제된 댓글 입니다.') {
             let temp_html = `
-            <p id="now_comment${id}" style="display:block;">${content}</p>
+            <p id="now_comment${id}" style="display:block;">[사용자] ${content}</p>
             <div id="reply_card${id}">
             <hr>
             `
@@ -240,12 +293,10 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
             let temp_html =
                 `   
                     <div class ="comment-text">
-                    <p id="now_comment${id}" style="display:block;">${content}</p>
-                    <a> <img src="static/image/comment_edit.png" id="comment_edit_icon${id}" class="comment_edit_icon" onclick="comment_update_handle(${id})"> </a>
-                    <a> <img src="static/image/comment_delete.png" id="comment_delete_icon${id}" class="comment_delete_icon" onmouseover="this.src='static/image/comment_delete (1).png'" onmouseout="this.src='static/image/comment_delete.png'"  onclick="commentDelete(${id})"> </a>
+                    <p id="now_comment${id}" style="display:block;">[${user}] ${content} ${comment_edit}</p>
                     </div>
                     <p id="p_comment_update_input${id}" style="display:none;"/><input class="reply-input" id="comment_update_input${id}" type="text"/> <button class="button-blue" onclick="commentUpdateConfrim(${id})">완료</button> <button class="button-white" onclick="comment_update_handle(${id})">취소하기</button></p>
-                    <p> <small> ${user} ${updated_at}</p>
+                    <p> <small> ${updated_at}</small></p>
                     
                     <p id="p_reply_create_input${id}" style="display:none;"/><input class="reply-input" id="reply_create_input${id}" type="text"/> <button class="button-blue" onclick="replyCreateConfrim(${id})">완료</button> <button class="button-white" onclick="reply_create_handle(${id})">취소하기</button></p>
                     <div class=comment_btns>
@@ -259,21 +310,35 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         }
         $(`#comment_update_input${id}`).val(content)
         each_comment.reply.forEach((each_reply => {
+            console.log(each_reply)
             comment = each_reply['comment']
             id = each_reply['id']
             content = each_reply['content']
-            user = each_reply['user']
+            user = each_reply['user']['nickname']
+            reply_user_id = each_reply['user']['pk']
             updated_at = each_reply['updated_at']
+            meeting_id = each_reply['meeting']
+
+            let reply_edit = ``
+
+            if (JSON.parse(payload)['user_id'] == reply_user_id) {
+                reply_edit = `
+                <a> <img src="static/image/comment_edit.png" class="auth_btn" style="margin-left: 10px;" onclick="reply_update_handle(${id})"> </a>
+                <a> <img id="delete-reply-image${id}" src="static/image/comment_delete.png" class="auth_btn" onclick="replyDelete(${id})" onmouseover="changeReplyDeleteImage(${id})" onmouseout="restoreReplyDeleteImage(${id})"> </a>
+                `
+            }
+
             let temp_html = `
             <div style="margin-left: 50px;">
             <div class ="comment-text">
-            <p id="now_reply${id}" style="display:block;">${content}</p>
-            <a id = "reply_edit_icon${id}">  <img src="static/image/comment_edit.png" class="comment_edit_icon" onclick="reply_update_handle(${id})"> </a>
-            <a id = "reply_delete_icon${id}> "<img src="static/image/comment_delete.png" class="comment_delete_icon" onclick="replyDelete(${id})"> </a>
+            <p id="now_reply_comment${id}" style="display:block;">[${user}] ${content} ${reply_edit}</p>
+            <p id="p_reply_update_input${id}" style="display:none;"/>
+                <input class="reply-input" id="reply_update_input${id}" value="${content}" type="text"/> 
+                <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${id})">수정하기</button>
+                <button type="button" class="button-white" onclick="replyCancel(${meeting_id}, ${id})">취소하기</button>
             </div>
-            <p id="p_reply_update_input${id}" style="display:none;"/><input style="border-radius: 10px; width: 600px;" id="reply_update_input${id}" type="text"/> <button class="" onclick="replyUpdateConfrim(${id})">완료</button> <button onclick="reply_update_handle(${id})">취소하기</button></p>
             <div class=replybtns>
-            <p> <small> ${user} ${updated_at}</p>
+                <p> <small>${updated_at}</small></p>
             </div>
             </div>
             <hr>
@@ -420,20 +485,20 @@ async function reply_update_handle(id) {
     let token = localStorage.getItem("access")
     if (token) {
         let reply_update_input = document.getElementById(`p_reply_update_input${id}`)
-        let now_reply = document.getElementById(`now_reply${id}`);
-        let reply_edit_icon = document.getElementById(`reply_edit_icon${id}`)
-        let reply_delete_icon = document.getElementById(`reply_delete_icon${id}`)
+        let now_reply = document.getElementById(`now_reply_comment${id}`);
+        // let reply_edit_icon = document.getElementById(`reply_edit_icon${id}`)
+        // let reply_delete_icon = document.getElementById(`reply_delete_icon${id}`)
 
         if (reply_update_input.style.display == 'none') {
             reply_update_input.style.display = 'block'
             now_reply.style.display = 'none';
-            reply_edit_icon.style.display = 'none';
-            reply_delete_icon.style.display = 'none';
+            // reply_edit_icon.style.display = 'none';
+            // reply_delete_icon.style.display = 'none';
         } else {
             reply_update_input.style.display = 'none';
             now_reply.style.display = 'block';
-            reply_edit_icon.style.display = 'block';
-            reply_delete_icon.style.display = 'block';
+            // reply_edit_icon.style.display = 'block';
+            // reply_delete_icon.style.display = 'block';
         }
     } else { alert("로그인 해주세요") }
 }
@@ -456,7 +521,7 @@ async function replyUpdateConfrim(reply_id) {
             body: formData
         })
         if (response.status == 200) { alert("수정 완료"), window.location.reload() }
-        else if ((await response).status == 400) { alert("입력해주세요") }
+        else if (response.status == 400) { alert("입력해주세요") }
         else { alert("권한이 없습니다.") }
 
     } else { alert("로그인 해주세요") }

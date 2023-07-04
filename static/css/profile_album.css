@@ -11,15 +11,14 @@
     }
 }
 
-
-img{
+.album img{
     width: 200px;
+    margin: 20px;
 }
 
-
-
-/* upload */
-
-#image_container img{
-    width: 300px;
-}
+/* .album .images{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+} */

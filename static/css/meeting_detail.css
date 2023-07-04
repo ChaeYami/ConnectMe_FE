@@ -34,7 +34,7 @@
     padding: 10px;
     background-color: transparent;
     margin-top: 10px;
-    
+
 }
 
 .commentbtn:hover {
@@ -109,6 +109,10 @@
     display: flex;
 }
 
+.auth_btn {
+    width: 20px;
+}
+
 /********* meeting-detail 댓글 끝 **********/
 
 .image_box_class {
@@ -155,11 +159,13 @@
     grid-template-columns: 120px 400px 1fr;
     height: 250px;
 }
+
 .place-detail-font-content {
     margin-top: 20px;
     text-indent: 0.5em;
     white-space: pre-line;
 }
+
 .place-detail-map {
     margin: 0px 0px 0px 15px;
     justify-content: center;

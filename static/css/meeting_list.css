@@ -1,7 +1,13 @@
 .main {
+    padding: 0 30px;
     width: 70vw;
-    margin: 75px auto;
-    max-width: 900px;
+    margin: 100px auto;
+    max-width: 800px;
+
+    @media screen and (max-width: 800px) {
+        width: 80%;
+
+    }
 }
 
 .meeting_card_class {
@@ -56,6 +62,12 @@
     margin-left: 90%;
 }
 
+.status_and_title h3 {
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    word-break: break-all
+}
 /********* search 시작 **********/
 
 .search-div {

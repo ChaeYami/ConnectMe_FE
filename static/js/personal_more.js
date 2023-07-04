@@ -184,9 +184,12 @@ async function bookMoreHotPlace(pages = 1) {
         // 이미지 시작
         if (image) {
             place.innerHTML += `
-            <div>
+            <div class="hotplace-image-div">
                 <a href="place_view.html?id=${place_id}">
                     <img class="place-container-img" src="${image['url']}" onclick="placePreUpdateView()">
+                </a>
+                <a>
+                    <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
                 </a>
             </div>
             `
@@ -196,13 +199,13 @@ async function bookMoreHotPlace(pages = 1) {
             </div>`
         }
         // 이미지 끝
-        // 북마크 시작
-        let place_book = `
+        // 모임생성 시작
+        let place_meeting = `
             <a>
-                <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
+                <img id="book${place_id}" src="static/image/workgroup.png" style="margin-top:10px; width: 40px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
             </a>
             `
-        // 북마크 끝
+        // 모임생성 끝
         // edit 버튼 시작
         let place_edit = ``
 
@@ -236,7 +239,7 @@ async function bookMoreHotPlace(pages = 1) {
                     </div>
                 </div>
                 <div class="place-container-book" id="place-container-book">
-                ${place_book}
+                ${place_meeting}
                 </div>
             </div>
             <div class="place-container-address">${address}</div>
