@@ -150,17 +150,34 @@ async function createMeeting(place_id = -1) {
                     alert("작성 되었습니다.")
                     location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
                 } else {
-                    alert("빠짐없이 입력해주세요.")
+                    if (data.meeting_city) {
+                        alert("모임 지역을 선택해주세요")
+                    }
+                    else if (data.num_person_meeting) {
+                        alert("모집 인원수를 본인 포함 두 명 이상으로 입력 해주세요.")
+                    }
+                    else if (data.place_title) {
+                        alert("모임 장소 이름을 입력해주세요")
+                    }
+                    else if (data.place_address) {
+                        alert("모임 주소를 입력해주세요")
+                    }
+                    else if (data.title) {
+                        alert("제목을 입력해주세요")
+                    }
+                    else if(data.content){
+                        alert("내용을 입력해주세요")
+                    }
                 }
             }
             );
         });
 }
-
 function setThumbnail(event) {
+    var container = document.querySelector("#image_container");
+    container.innerHTML = '';
     for (var image of event.target.files) {
         var reader = new FileReader();
-
         reader.onload = function (event) {
             var img = document.createElement("img");
             img.className = 'show_img';
