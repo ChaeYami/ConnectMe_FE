@@ -9,20 +9,20 @@
 
     <!-- css -->
     <link rel="stylesheet" href="static/css/base.css">
-    <link rel="stylesheet" href="static/css/personal.css">
+    <link rel="stylesheet" href="static/css/personal_more.css">
+    <link rel="stylesheet" href="static/css/personal_book.css">
+
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-
-    <title>Connect ME | 내정보보기</title>
+    <title>Connect ME | 더보기</title>
 </head>
 
 <body>
 
-
        <!--위, 아래 네비바 시작-->
-       <div class="top-nav">
+    <div class="top-nav">
         <div class="items">
             <a onclick="go_home()"><img class="home-logo" src="static/image/logo.png" alt="logo"></a>
             <a onclick="go_recommend()">친구찾기</a>
@@ -58,41 +58,30 @@
     <!--위, 아래 네비바 끝-->
 
 
-
-    <div class="main">
-        <h2>내 정보</h2>
-        <hr>
-        <div class="personal-box">
-
-            <div class="box">
-
-                <div class="phone">전화번호 : <span id="phone"></span>
-                    <button onclick="go_editphone()">전화번호 변경</button>
-                </div>
+    <main>
+        <div id="my-posts-container" class="my_posts_container"></div>
+        <div id="more-content" class="more_content"></div>
+    </main>
+    <!-- 페이지네이션 시작 -->
+    <footer id="myFooter" style="display: none;">
+        <div class="paging">
+            <i class="fa-solid fa-angles-left" id="first_page" style="display:none; margin-top: 5px;"><img
+                    src="static/image/arrow_first.png" class="arrow-image"></i>
+            <i class="fa-solid fa-angle-left" id="prev_page" style="display:none; margin-top: 5px;"><img
+                    src="static/image/arrow_left.png" class="arrow-image"></i>
+            <div class="pages">
             </div>
-            <div class="box">
-                <div class="email">이메일 : <span id="email"></span></div>
-            </div>
-
-            <div class="box">
-                <div class="joined-at">가입일 : <span id="joined-at"></span></div>
-            </div>
-
-            <div class="box" style="display: grid;grid-template-columns: 1fr 1fr;justify-items: center;">
-                <div class="password" id="password"><button onclick="go_passwordChange()">비밀번호 변경</button></div>
-                <div class="deactivation" id="deactivation "><button onclick="deactivation()">회원탈퇴</button></div>
-            </div>
-
+            <i class="fa-solid fa-angle-right" id="next_page"><img src="static/image/arrow_right.png"
+                    class="arrow-image"></i>
+            <i class="fa-solid fa-angles-right" id="last_page"><img src="static/image/arrow_last.png"
+                    class="arrow-image"></i>
         </div>
-    </div>
-
-
+    </footer>
+    <!-- 페이지네이션 끝 -->
+    <script src="static/js/base_api.js"></script>
+    <script src="static/js/base_url.js"></script>
+    <script src="/static/js/base_redirect_login.js"></script>
+    <script src="static/js/meeting_join_list.js"></script>
 </body>
-
-<!-- js -->
-<script src="/static/js/base_url.js"></script>
-<script src="static/js/base_api.js"></script>
-<script src="/static/js/base_redirect_login.js"></script>
-<script src="static/js/personal.js"></script>
 
 </html>

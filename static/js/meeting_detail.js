@@ -11,7 +11,7 @@ else { delete_btn.hide() }
 fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(data => {
     let payloadObj = JSON.parse(payload)
     let user_id = payloadObj.user_id
-    let nickname = payloadObj.nickname
+    let payload_nickname = user_id = payloadObj.nickname
     id = data['id']
     user = data['user']['nickname']
     title = data['title']
@@ -37,15 +37,6 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
                                 `
         $('#popup-user-list').append(meeting_join_user_list)
     })
-
-    who_join_meeting = ``
-    if (user == nickname) {
-        who_join_meeting = `
-        <a>
-        <img id="who_join_meeting${id}" src="static/image/who.png" style="margin-top:10px; width: 30px;" alt="참가유저목록" onclick="placeShare()">
-        </a>
-        `
-    }
     let meeting_book = ``
     if (bookmark.includes(user_id)) {
         meeting_book = `
@@ -72,7 +63,13 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         </a>
         `
     }
-
+    let meeting_btn =``
+    if(payload_nickname == user){
+        meeting_btn = `
+        <a> <img src="static/image/edit.png" style="margin-top:10px; width: 30px;" onclick="meetingUpdateMove()"> </a>
+        <a> <img src="static/image/delete.png" style="margin-top:10px; width: 30px;" onclick="meetingDelete()"> </a>
+        `
+    }
     let temp_html =
         ` 
 <div>
@@ -93,11 +90,12 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
                     </div>
                     <div>
                     <hr>
-                    <a> <img src="static/image/edit.png" style="margin-top:10px; width: 30px;" onclick="meetingUpdateMove()"> </a>
-                    <a> <img src="static/image/delete.png" style="margin-top:10px; width: 30px;" onclick="meetingDelete()"> </a>
+                    ${meeting_btn}
                     <a>${meeting_book}</a>
                     <a>${check_join_meeting}</a>
-                    <a>${who_join_meeting}</a>
+                    <a>
+        <img id="who_join_meeting${id}" src="static/image/who.png" style="margin-top:10px; width: 30px;" alt="참가유저목록" onclick="join_user_list()">
+        </a>
                     <hr>
                     <p class=meeting_detail_content>${content}</p>
                     </div>
@@ -212,7 +210,7 @@ function meetingUpdateMove() {
     fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(data => {
         let payloadObj = JSON.parse(payload)
         let nickname = payloadObj.nickname
-        if (nickname == data.user) { location.replace(`${FRONTEND_BASE_URL}/meeting_update.html?id=` + meeting_id) }
+        if (nickname == data.user.nickname) { location.replace(`${FRONTEND_BASE_URL}/meeting_update.html?id=` + meeting_id) }
         else { alert("권한이 없습니다.") }
     })
 }
@@ -596,29 +594,33 @@ async function reply_create_handle(id) {
 async function handleJoinmeeting() {
     let token = localStorage.getItem("access")
     if (token) {
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
-        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/join_meeting/`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        if (response.status === 200) {
-            alert("약속 취소")
-            location.reload()
-        } else if (num_person_meeting == join_meeting_count) {
-            alert("자리가 없습니다.")
-            location.reload()
+        if (meeting_status == "모집종료") {
+            alert("모집종료 된 모임입니다.")
         } else {
-            alert("약속")
-            location.reload()
+            let meeting_id = new URLSearchParams(window.location.search).get('id');
+            let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/join_meeting/`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            if (response.status === 200) {
+                alert("약속 취소")
+                location.reload()
+            } else if (num_person_meeting == join_meeting_count) {
+                alert("자리가 없습니다.")
+                location.reload()
+            } else {
+                alert("약속")
+                location.reload()
+            }
         }
     }
     else { alert("로그인 해주세요") }
 }
 // ================================ 모임 게시글 상세보기 모임참가 끝 ================================
 
-// 공유하기 닫기
+// 참가유저목록 열기
 function closePopup() {
     $('html, body').css({
         'overflow': 'auto'
@@ -626,8 +628,8 @@ function closePopup() {
     $("#popup").fadeOut(200);
 }
 
-// 공유하기 열기
-function placeShare() {
+// 참가유저목록 열기
+function join_user_list() {
     // const share = document.querySelector('#modal_opne_btn')
     // const place_modal = document.querySelector('#place_modal')
     // const link_id = document.querySelector('#link_id')

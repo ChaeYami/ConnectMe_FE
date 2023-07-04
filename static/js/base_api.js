@@ -171,4 +171,6 @@ function SuccessLocation(data) {
 function onGeoError() {
 }
 
-
+function go_meeting_join_list() {
+    location.href = "meeting_join_list.html"
+}

@@ -210,7 +210,7 @@ async function counselComments(counsel_id) {
                                 <button type="button" class="button-white" onclick="replyCancel(${counsel_id}, ${reply_id})">취소하기</button>
                             </p>
                             <div class=replybtns>
-                                <p> <small>${updated_at}${like_html}<p id="reply_count${reply_id}" style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p></small></p>  
+                                <p> <small>${updated_at}${like_html}<p id="reply_count${reply_id}" style="margin: 0px 20px 0px 5px;">${reply_likes_count}</p></small></p>  
                             </div>
                         </div>
                         <hr>
