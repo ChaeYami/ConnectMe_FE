@@ -316,7 +316,7 @@ function meetingSearch() {
                     </a>`
                 }
 
-                if (meeting_image.includes('http')) {
+                if (meeting_image.includes('%3A')) {
                     if (meeting_image.includes('www')) {
                         image = meeting_image.slice(37);
                         let decodedURL = decodeURIComponent(image);
@@ -413,7 +413,13 @@ function meetingSearch() {
     })
 }
 //================================ 모임 글 검색 API 끝 ================================ 
-
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("meeting_search").addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            meetingSearch();
+        }
+    });
+});
 //================================ 모임 글 목록에서 북마크 하기 API 시작 ================================ 
 async function meetingBookmark(id) {
     const book = document.querySelector(`#book${id}`)

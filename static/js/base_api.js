@@ -98,6 +98,10 @@ function go_meetingList() {
     location.href = "meeting_list.html"
 }
 
+function go_meetingDetail(meeting_id) {
+    location.href = `meeting_detail.html?id=${meeting_id}`
+}
+
 function go_counsel() {
     location.href = "counsel_list.html"
 }
