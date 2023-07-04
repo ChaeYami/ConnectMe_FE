@@ -108,6 +108,20 @@ main {
     margin: 20px 0px;
 }
 
+.hotplace-image-div {
+    position: relative;
+    width: 250px;
+    margin: 10px 5px;
+}
+
+.hotplace-image-div>a:nth-child(2)>img {
+    position: absolute;
+    top: 5px;
+    right: 25px;
+    width: 40px;
+    z-index: 1;
+}
+
 /********* place-contariner 끝 **********/
 /* 북마크 만남의 광장 시작 */
 .meeting_card_class {

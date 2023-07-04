@@ -33,7 +33,7 @@ async function placeBookList(user_id) {
         let address = e.address;
         let category = e.category;
         let sort = e.sort;
-        let image = e.image.url;
+        let image = e.image;
         let title = e.title;
         let score = e.score;
         let cards = document.querySelector('#hotplace-book-cards');
@@ -50,12 +50,25 @@ async function placeBookList(user_id) {
             }
         }
 
+        // 이미지 시작
+        if (image) {
+            image = `
+                <a href="place_view.html?id=${place_id}">
+                    <img class="place-container-img" src="${image['url']}" onclick="go_placeDetailView(${place_id})">
+                </a>`
+        } else {
+            image = `
+                <a href="place_view.html?id=${place_id}">
+                    <img class="place-container-img" src="static/image/ConnectME - 하늘고래.png" style="object-fit: contain; filter: grayscale(60%);
+                    opacity: 0.7;" onclick="go_placeDetailView(${place_id})">
+                </a>`
+        }
+        // 이미지 끝
+
         cards.innerHTML += `
         <div class="hotplace-card">
             <div class="hotplace-image">
-                <a>
-                    <img src="${image}" onclick="go_placeDetailView(${place_id})">
-                </a>
+                ${image}
                 <a>
                     <img id="hotplace-img${place_id}" src="static/image/bookmark (1).png" onclick="placeBook(${place_id})">
                 </a>
@@ -67,7 +80,7 @@ async function placeBookList(user_id) {
                 <div class="hotplace-score">
                     <h2>${score}</h2>
                 </div>
-                <div>
+                <div class="hotplace-address">
                     ${address}
                 </div>
                 <div>

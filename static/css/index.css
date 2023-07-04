@@ -7,9 +7,11 @@
         width: 100%;
     }
 }
-body{
+
+body {
     margin-top: 30px;
 }
+
 .title-logo {
     display: flex;
     width: 100%;
@@ -67,7 +69,7 @@ body{
 
 .title-info {
     display: grid;
-    grid-template-columns: 100px 1fr 60px ;
+    grid-template-columns: 100px 1fr 60px;
     justify-content: space-between;
     align-items: center;
     background-color: #ebf6ff6b;
@@ -84,9 +86,11 @@ body{
 .title-info .section-title {
     font-weight: bold;
 }
+
 .section-more {
     font-size: 14px;
 }
+
 .M_C_H {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -95,9 +99,11 @@ body{
     justify-content: space-between;
 
 }
-.M_C_H a{
+
+.M_C_H a {
     width: 100%;
 }
+
 .meeting-section {
     width: 100%;
 }
@@ -110,26 +116,29 @@ body{
 
 }
 
-.comment-count{
+.comment-count {
     color: rgb(255, 54, 104);
 }
 
-.counsel-list-section{
+.counsel-list-section {
     margin: 15px;
 }
-.counsel-list-section .content{
+
+.counsel-list-section .content {
     padding: 10px;
     display: grid;
     grid-template-columns: 1fr 50px;
     width: 100%;
 }
+
 #home-counsel-title {
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-all
 }
-.meeting-list-section{
+
+.meeting-list-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
@@ -142,7 +151,7 @@ body{
 
 }
 
-.meeting-list-section .card{
+.meeting-list-section .card {
     display: grid;
     width: 200px;
     border: 1px solid rgb(216, 216, 216);
@@ -150,31 +159,36 @@ body{
     border-radius: 10px;
     padding: 15px;
     margin: 10px;
+
     @media screen and (max-width: 1200px) {
         width: 80%;
     }
+
     @media screen and (max-width: 900px) {
         width: 80%;
         height: auto;
     }
 }
 
-.meeting-status span{
+.meeting-status span {
     font-weight: bold;
 }
-.meeting-title{
+
+.meeting-title {
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-all;
     font-weight: bold;
 }
-.meeting-title-section{
+
+.meeting-title-section {
     display: grid;
     grid-template-columns: 83px 1fr;
 
 }
-.meeting-img{
+
+.meeting-img {
     margin: 15px auto 5px;
     border-radius: 5px;
     height: 180px;
@@ -185,8 +199,10 @@ body{
         height: 100%;
     }
 }
-.meeting-img img{
+
+.meeting-img img {
     width: 180px;
+    height: 170px;
     border-radius: 5px;
 
     @media screen and (max-width: 1120px) {
@@ -194,22 +210,25 @@ body{
     }
 
 }
-.meeting-info{
+
+.meeting-info {
     display: grid;
     grid-template-columns: 1fr 50px;
     color: gray;
 }
 
-footer{
+footer {
     background-color: #F9F9FB;
     align-items: stretch;
     padding-bottom: 20px;
     color: gray;
 }
-footer a{
+
+footer a {
     color: gray;
 }
-#footer{
+
+#footer {
     height: inherit;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -221,25 +240,29 @@ footer a{
 
 }
 
-.info{
+.info {
     padding: 10px;
     display: grid;
     justify-items: start;
     align-items: center;
     font-size: 14px;
 }
-.info h3{
+
+.info h3 {
     margin-left: 20px;
 }
-.info img{
+
+.info img {
     width: 25px;
     margin: 0px 5px;
 }
-.info .notion a{
+
+.info .notion a {
     display: flex;
     align-items: center;
 }
-.intro-member{
+
+.intro-member {
     display: grid;
     grid-template-rows: 30px 30px 30px 30px 30px;
     justify-items: end;
@@ -247,25 +270,28 @@ footer a{
     align-items: center;
 
 }
-.team-logo{
+
+.team-logo {
     display: grid;
     justify-items: center;
     align-items: center;
 
 }
-footer .team-logo img{
+
+footer .team-logo img {
     width: 200px;
     opacity: 0.8;
 
 }
 
-.notion{
+.notion {
     height: 50px;
     display: flex;
     align-items: center;
 
 }
-footer .member{
+
+footer .member {
     display: grid;
     align-items: center;
     justify-items: start;
@@ -273,28 +299,29 @@ footer .member{
     height: 25px;
 }
 
-.member img{
+.member img {
     width: 25px;
 }
 
-.github a{
+.github a {
     display: flex;
     align-items: center;
 }
 
-.blog a{
+.blog a {
     display: flex;
     align-items: center;
 }
-.member img{
+
+.member img {
     margin: 0px 5px;
 }
 
-.member .name{
+.member .name {
     font-weight: bold;
 }
 
-.team-intro{
+.team-intro {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -302,17 +329,99 @@ footer .member{
     height: 100px;
 }
 
-.team-intro div{
+.team-intro div {
     margin: 0px 10px;
     display: flex;
     align-items: center;
 }
-.team-intro div a{
+
+.team-intro div a {
     display: flex;
     align-items: center;
 }
 
-.info img{
+.info img {
     width: 25px;
     margin: 0px 5px;
+}
+
+.hotplace-list-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    justify-items: center;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+
+    @media screen and (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hotplace-card {
+    width: 220px;
+    height: 320px;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+
+    @media screen and (max-width: 1200px) {
+        width: 80%;
+    }
+
+    @media screen and (max-width: 900px) {
+        width: 80%;
+        height: auto;
+    }
+}
+
+.hotplace-title {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.hotplace-image-div {
+    position: relative;
+}
+
+.place-container-img {
+    margin: 15px 0px;
+    width: 220px;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    filter: grayscale(60%);
+    opacity: 0.7;
+}
+
+.hotplace-book {
+    position: absolute;
+    top: 25px;
+    right: 10px;
+    width: 45px;
+    z-index: 2;
+}
+
+.hotplace-info {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    color: gray;
+    margin: 10px 0px;
+    line-height: 1.2em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* 원하는 줄 수로 변경 가능 */
+    -webkit-box-orient: vertical;
+    text-indent: 1em;
+    white-space: normal;
+    text-overflow: ellipsis;
 }

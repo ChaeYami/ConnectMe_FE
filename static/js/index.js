@@ -24,7 +24,8 @@ const logined_token = localStorage.getItem("access");
 $(document).ready(function () {
     recommend('all');
     counselList();
-    meetingList()
+    meetingList();
+    recommendHotPlace();
 
 
     const params = new URLSearchParams(window.location.search).get('showAPI');
@@ -159,7 +160,7 @@ async function recommend(filter) {
 
 
 // 만남의 광장
-async function meetingList(){
+async function meetingList() {
     $('#meeting-list-section').empty()
 
     $.ajax({
@@ -180,21 +181,21 @@ async function meetingList(){
                 let num_person_meeting = rows[i]['num_person_meeting'];
                 let meeting_status = rows[i]['meeting_status'];
                 let join_meeting_count = rows[i]['join_meeting_count'];
-                let status= '';
+                let status = '';
 
                 if (meeting_status == '모집중') {
-                    status=
+                    status =
                         `<span style="color:green;"><${meeting_status}></span>`
                 }
                 else if (meeting_status == '자리없음') {
-                    status=
+                    status =
                         `<span style="color:orange;"><${meeting_status}></span>`
                 }
                 else if (meeting_status == '모집종료') {
-                    status=
+                    status =
                         `<span style="color:red;"><${meeting_status}></span>`
                 }
-                if(rows[i].meeting_image[0]){
+                if (rows[i].meeting_image[0]) {
                     let meeting_image = rows[i]['meeting_image'][0]["image"];
                     if (meeting_image.includes('http')) {
                         if (meeting_image.includes('www')) {
@@ -209,7 +210,7 @@ async function meetingList(){
                     } else {
                         img_urls = `${BACKEND_BASE_URL}${meeting_image}`
                     }
-                }else{
+                } else {
                     img_urls = `static/image/—Pngtree—two little kittens_852610.png" alt="" style = "opacity:0.7; filter : grayscale(30%)`
                 }
 
@@ -240,8 +241,8 @@ async function meetingList(){
 
 
     })
-        
-    
+
+
 }
 
 
@@ -283,145 +284,61 @@ async function counselList() {
 }
 
 // 스크롤 이벤트 리스너 등록
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     let scrollPosition = window.scrollY;
     let viewportHeight = window.innerHeight;
     let documentHeight = document.documentElement.scrollHeight;
 
     if (scrollPosition + viewportHeight >= documentHeight) {
-      document.querySelector('.bot-nav').style.marginBottom = '250px'; 
+        document.querySelector('.bot-nav').style.marginBottom = '250px';
     } else {
-      document.querySelector('.bot-nav').style.marginBottom = '0px'; 
+        document.querySelector('.bot-nav').style.marginBottom = '0px';
     }
-  });
+});
 
 
-// // 추천 핫플레이스
-// async function recommendHotPlace() {
-//     let container = document.querySelector('#place-section')
+// 추천 핫플레이스
+async function recommendHotPlace() {
+    let container = document.querySelector('#hotplace-list-section')
 
-//     container.innerHTML = ``
+    container.innerHTML = ``
 
-//     let place_category_input = `?search=`
+    const response = await fetch(`${BACKEND_BASE_URL}/place/category/`, {
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
+        method: "GET",
+    });
 
-//     const response = await fetch(`${BACKEND_BASE_URL}/place/category/${place_category_input}`, {
-//         headers: {
-//             Authorization: "Bearer " + logined_token,
-//         },
-//         method: "GET",
-//     });
+    let response_json = await response.json();
+    console.log(response_json)
 
-//     let response_json = await response.json();
+    response_json['results'].slice(0, 2).forEach((e, i) => {
+        console.log(e)
+        let place_id = e.id
+        let name = e.title
+        let address = e.address
+        let image = e.image
 
-//     response_json['results'].forEach((e, i) => {
-//         let place_id = e.id
-//         let name = e.title
-//         let category = e.category
-//         let content = e.content
-//         let address = e.address
-//         let image = e.image
-//         let score = e.score
-//         let bookmark = e.bookmark
-//         let book_count = e.bookmark_count
-//         let comment_count = e.comment_count
-//         let like_count = e.like_count
+        if (image == null) {
+            image = `<img class="place-container-img" src="static/image/ConnectME - 하늘고래.png" style=""object-fit: contain;"">`
+        } else {
+            image = `<img class="place-container-img" src="${image['url']}">`
+        }
 
-//         container.innerHTML += `
-//         <div id="place${place_id}" class="place-container"></div>`
+        container.innerHTML += `
+        <div class="hotplace-card" onclick="go_placeDetailView(${place_id})">
+            <div class="hotplace-title">${name}</div>
+            <div class="hotplace-image-div">
+                    ${image}
+                <a title="이 장소로 모임생성하기">
+                    <img class="hotplace-book" src="static/image/workgroup.png" alt="모임생성"
+                        onclick="go_createMeeting(${place_id})">
+                </a>
+            </div>
+            <div class="hotplace-info">${address}</div>
+        </div>
+        `
 
-//         let place = document.querySelector(`#place${place_id}`)
-
-//         // 이미지 시작
-//         if (image) {
-//             place.innerHTML += `
-//             <div>
-//                 <a href="place_view.html?id=${place_id}">
-//                     <img class="place-container-img" src="${image['url']}" onclick="placePreUpdateView()">
-//                 </a>
-//             </div>
-//             `
-//         } else {
-//             place.innerHTML += `
-//             <div style="width:230px; height:230px;">
-//             </div>`
-//         }
-//         // 이미지 끝
-//         // 북마크 시작
-//         let place_book = ``
-
-//         if (bookmark.includes(logined_user_id)) {
-
-//             place_book = `
-//             <a>
-//                 <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
-//             </a>`
-//         } else {
-//             place_book = `
-//             <a>
-//                 <img id="book${place_id}" src="static/image/bookmark.png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
-//             </a>`
-//         }
-//         // 북마크 끝
-//         // edit 버튼 시작
-//         let place_edit = ``
-
-//         if (JSON.parse(payload)['is_staff']) {
-//             place_edit = `
-//             <a>
-//                 <img src="static/image/edit.png" style="margin-top:10px; width:20px;"
-//                     onclick="placePreUpdateView(${place_id})">
-//             </a>
-//             `
-//         }
-//         // edit 버튼 끝
-//         // container html 시작
-//         place.innerHTML += `
-//         <div class="place-container-text">
-//             <div class="place-container-main">
-//                 <div class="place-container-title">
-//                     <div class="place-container-title0">
-//                         <h2>${i + 1}.</h2>
-//                     </div>
-//                     <div class="place-container-title1">
-//                         <h2><a class="place-container-title-a" href="place_view.html?id=${place_id}">${name}</a></h2>
-//                     </div>
-//                     <div class="place-container-title2">
-//                         <div class="place-container-score">
-//                             <h2>${score}</h2>
-//                         </div>
-//                     </div>
-//                     <div id="place_edit">
-//                     ${place_edit}
-//                     </div>
-//                 </div>
-//                 <div class="place-container-book" id="place-container-book">
-//                 ${place_book}
-//                 </div>
-//             </div>
-//             <div class="place-container-address">${address}</div>
-//             <div class="place-container-content">${content}</div>
-//             <div class="place-container-count">
-//                 <div class="place-container-count-img">
-//                     <img src="static/image/chat.png">
-//                     ${comment_count}
-//                 </div>
-//                 <div class="place-container-count-img">
-//                     <img src="static/image/heart (2).png">
-//                     ${like_count}
-//                 </div>
-//                 <div class="place-container-count-img">
-//                     <img src="static/image/bookmark (2).png">
-//                     ${book_count}
-//                 </div>
-//             </div>
-//             <div id="map"></div>
-            
-//         </div>
-//         <div class="place-container-hr">
-//             <hr>
-//         </div>
-//         `
-//         // container html 끝
-//     })
-// }
-
+    })
+}
