@@ -64,22 +64,20 @@
             <div class="profile">
                 <div class="nickname-section">
                     <div id="nickname" class="nickname">
-                        닉네임
                     </div>
                     <div id="my-buttons">
                         <button onclick="go_personal()">내정보보기</button>
                         <button onclick="go_profileEdit()">프로필수정</button>
                     </div>
-                    <button id="report-button" onclick="report()" style="display: none; width: 100px;">신고하기</button>
 
                 </div>
                 <div class="buttons">
-                    <div id="addFriend"><a onclick="addFriend()">친구신청</a></div>
-                    <div id="chat"><a onclick="getChatRoom()">채팅하기</a></div>
-                    <div id="album"><a onclick="go_album()">사진첩</a></div>
-                    <div id="requests" style="display: none;"><a onclick="go_requestList('to')">친구신청목록</a>
-                    </div>
-                    <div id="friends-list" style="display: none;"><a onclick="go_friends()">친구목록</a></div>
+                    <button id="addFriend" onclick="addFriend()">친구신청</button>
+                    <button id="chat" onclick="getChatRoom()">채팅하기</button>
+                    <button id="report-button" onclick="report()" style="display: none;">신고하기</button>
+                    <button id="requests" style="display: none;" onclick="go_requestList('to')">친구신청목록
+                    </button>
+                    <button id="friends-list" style="display: none;"onclick="go_friends()">친구목록</button>
                 </div>
             </div>
         </div>
@@ -89,12 +87,12 @@
                 <div>나이 : <span id="age"></span></div>
                 <div>MBTI : <span id="mbti"></span></div>
             </div>
-            <div id="intro">자기소개</div>
+            <div id="intro"></div>
         </div>
 
         <div class="profile-album-section">
             <div class="container">
-                <h2>앨범</h2>
+                <h2><a onclick="go_album()">앨범</a></h2>
                 <hr>
                 <button id="upload-photo" onclick="go_uploadPhoto()">사진 올리기</button>
 

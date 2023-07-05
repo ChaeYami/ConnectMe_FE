@@ -34,23 +34,29 @@
 }
 .nickname-section button {
     margin: 5px;
-    background-color: #8eadd3;
-    color: white;
-    font-weight: bold;
+    background-color: #e0eeff;
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 5px;
     height: 30px;
     padding: 5px 10px;
     cursor: pointer;
 }
-
 .profile .buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
     align-items: center;
-    justify-items: center;
-    background-color: #EBF6FF;
-    border-radius: 10px;
+}
+.profile .buttons button{
+    width: 100px;
+    height: 35px;
+    margin-right: 20px;
+    background-color: #8eadd3;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
 
 }
 

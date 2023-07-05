@@ -2,16 +2,44 @@ const user_id = parseInt(new URLSearchParams(window.location.search).get('user_i
 const logined_token = localStorage.getItem("access");
 const logined_account = payload_parse.account;
 
+async function isFriend() {
+
+    $.ajax({
+        url: `${BACKEND_BASE_URL}/user/friend/list/`,
+        type: "GET",
+        dataType: "json",
+        headers: {
+            "Authorization": "Bearer " + logined_token
+        },
+        success: function (response) {
+
+            const rows = response;
+            for (let i = 0; i < rows.length; i++) {
+                let friend_id = ''
+                if (logined_user_id == rows[i]['from_user']) {
+                    friend_id = rows[i]['to_user']
+                } else {
+                    friend_id = rows[i]['from_user']
+                }
+
+                if (friend_id == user_id) {
+                    document.getElementById("addFriend").style.display = "none";
+
+                }
+            }
+        }
+    })
+}
 
 
 window.onload = () => {
     Profile(user_id);
     showAlbum()
+    isFriend()
     if (payload_parse.user_id === user_id) {
         // 내프로필일때
         document.getElementById("requests").style.display = "block";
         document.getElementById("friends-list").style.display = "block";
-        document.getElementById("album").style.display = "block";
         // 채팅하기, 친구추가 숨김
         document.getElementById("chat").style.display = "none";
         document.getElementById("addFriend").style.display = "none";
@@ -20,7 +48,6 @@ window.onload = () => {
         // 다른사람 프로필일때
         document.getElementById("addFriend").style.display = "block";
         document.getElementById("chat").style.display = "block";
-        document.getElementById("album").style.display = "block";
         document.getElementById("my-buttons").style.display = "none";
         document.getElementById("report-button").style.display = "block";
         const upload_btn = document.getElementById('upload-photo')
@@ -154,21 +181,21 @@ async function showAlbum() {
 
             for (let i = 0; i < rows.length; i++) {
                 temp_html = ``
-                if (user_id != logined_user_id){
-                temp_html = `
+                if (user_id != logined_user_id) {
+                    temp_html = `
                 <img src="${BACKEND_BASE_URL}${rows[i]['album_img']}">
 
                 `
 
-                $('.images').append(temp_html)
-                }else{
-                temp_html = `
+                    $('.images').append(temp_html)
+                } else {
+                    temp_html = `
                 <img src="${BACKEND_BASE_URL}${rows[i]['album_img']}">
                 <a id="del_photo_btn">
                     <img src="static/image/comment_delete.png" onclick="deletePhoto(${user_id}, ${rows[i]['id']})" style="width:20px;">
                 </a>
                 `
-                $('.images').append(temp_html)
+                    $('.images').append(temp_html)
                 }
             }
         }
@@ -176,9 +203,9 @@ async function showAlbum() {
 }
 
 
-function go_uploadPhoto(){
+function go_uploadPhoto() {
     location.href = 'profile_upload_photo.html'
-    
+
 }
 
 // 이미지 삭제하기

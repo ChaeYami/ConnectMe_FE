@@ -1,12 +1,42 @@
 const logined_token = localStorage.getItem("access");
 
 $(document).ready(function () {
+    isFriend()
     recommend('all')
     $('#recommend-select').change(function () {
         let recommend_value = $(this).val();
         recommend(recommend_value);
     });
 });
+
+
+const friend_id_list = [];
+
+async function isFriend() {
+
+    $.ajax({
+        url: `${BACKEND_BASE_URL}/user/friend/list/`,
+        type: "GET",
+        dataType: "json",
+        headers: {
+            "Authorization": "Bearer " + logined_token
+        },
+        success: function (response) {
+
+            const rows = response;
+            for (let i = 0; i < rows.length; i++) {
+                let friend_id = ''
+                if (logined_user_id == rows[i]['from_user']) {
+                    friend_id = rows[i]['to_user']
+                } else {
+                    friend_id = rows[i]['from_user']
+                }
+
+                friend_id_list.push(friend_id);
+            }
+        }
+    })
+}
 
 
 // 추천 유저목록
@@ -58,21 +88,26 @@ async function recommend(filter_) {
                     let user_mbti = rows[i]['mbti']
 
                     let user_introduce = rows[i]['introduce']
-                    if (user_introduce){
+                    if (user_introduce) {
                         user_introduce = rows[i]['introduce']
-                    }else{
+                    } else {
                         user_introduce = '<span class="no_intro">등록된 소개가 없습니다.</span>'
                     }
 
-                    
+
                     let user_profile_img = rows[i]['profile_img']
                     if (user_profile_img == null) {
                         user_profile_img = 'static/image/user.png'
                     } else {
                         user_profile_img = `${BACKEND_BASE_URL}${user_profile_img}`
                     }
-                    
 
+                    display = ''
+                    if (friend_id_list.includes(user_pk)){
+                        display = 'none'
+                    } else{
+                        display = 'inline'
+                    }
 
                     let temp_html = `<a onclick="go_profile(${user_pk})"><div class="card">
                     <div class="image_box">
@@ -82,7 +117,8 @@ async function recommend(filter_) {
                     <div class="user_info">
                         <div class="user_nickname">
                         <a onclick="go_profile(${user_pk})">${user_nickname}</a>
-                            <button onclick="addFriend(${user_pk})"> 친구신청 </button>
+                        
+                            <button id="addFriend" onclick="addFriend(${user_pk})" style="display:${display}"> 친구신청 </button>
                         </div>
                         <div class="ect">
                             지역 : ${user_region} | 
