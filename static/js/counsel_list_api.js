@@ -117,22 +117,25 @@ async function getCounsels(pages = 1) {
                 let is_anonymous = rows[i]['is_anonymous']
                 let counsel_title = rows[i]['title']
                 let counsel_author = ''
-                if (is_anonymous) {
-                    counsel_author = '익명'
-                } else {
-                    counsel_author = rows[i]['user']['nickname']
-                }
-
+                
                 let counsel_created_at = rows[i]['created_at']
                 let likes_count = rows[i]['like'].length
                 let author_id = rows[i]['user']['pk']
                 let counsel_comment_count = rows[i]['comment_count']
+                let author_html = ``
+                if (is_anonymous) {
+                    counsel_author = '익명'
+                    author_html = `<a style = "color: #4b828d; cursor : text;">${counsel_author}</a>`
+                } else {
+                    counsel_author = rows[i]['user']['nickname']
+                    author_html = `<a onclick = "go_profile(${author_id})">${counsel_author}</a>`
+                }
 
                 let temp_html = `
                 <a onclick="go_counselDetail(${counsel_id})">
                     <div class="list-box">
                         <div id="counsel-title">${counsel_title}<div id="counsel-comment-count">[${counsel_comment_count}]</div></div>
-                        <div id="counsel-author"><a onclick="go_profile(${author_id})">${counsel_author}</a></div>
+                        <div id="counsel-author">${author_html}</div>
                         <div id="counsel-created-at">${counsel_created_at}</div>
                         <div id="counsel-likes">${likes_count}</div>
                     </div>

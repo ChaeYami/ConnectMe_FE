@@ -18,13 +18,16 @@ async function counselDetail(counsel_id) {
             let counsel_title = response.counsel['title']
             let counsel_content = response.counsel['content']
             let counsel_author = ''
+            let author_html = ``
+            let counsel_author_id = response.counsel['user']['pk']
+
             if (is_anonymous) {
                 counsel_author = '익명'
+                author_html = `<span style = "color: rgb(158, 158, 158);">${counsel_author}</span>`
             } else {
                 counsel_author = response.counsel['user']['nickname']
+                author_html = `<a onclick = "go_profile(${counsel_author_id})">${counsel_author}</a>`
             }
-            let counsel_author_id = response.counsel['user']['pk']
-            let author_html = `<a onclick = "go_profile(${counsel_author_id})">${counsel_author}</a>`
             let counsel_created_at = response.counsel['created_at']
             let likes_count = response.counsel['like'].length
             let like = response.counsel['like']
@@ -161,7 +164,7 @@ async function counselComments(counsel_id) {
                                 
                                 <input class="reply-input" id="comment_update_input${id}" type="text"/> 
                                 <input type="checkbox" id="anonymous-checkbox">
-                    <label for="anonymous-checkbox">익명</label>
+                                <label for="anonymous-checkbox">익명</label>
                                 <button class="button-blue" onclick="commentUpdateConfrim(${id})">수정하기</button>
                                 <button type="button" class="button-white" onclick="commentCancel(${counsel_id},${id})">취소하기</button>
                                 
@@ -388,36 +391,6 @@ async function CounselEdit() {
 
 
 }
-
-// 글 작성
-// async function CreateCounsel() {
-//     let title = document.querySelector('#title');
-//     let content = document.querySelector('#content');
-
-//     const formdata = new FormData();
-//     formdata.append("title", title.value);
-//     formdata.append("content", content.value);
-
-//     const response = await fetch(`${BACKEND_BASE_URL}/counsel/`, {
-//         headers: {
-//             Authorization: "Bearer " + logined_token,
-//         },
-//         method: "POST",
-//         body: formdata,
-//     });
-
-//     const response_json = await response.json();
-
-//     if (response.status == 200) {
-//         alert("고민 상담이 등록되었습니다.");
-//         window.location.replace(`${FRONTEND_BASE_URL}/counsel_list.html`);
-//     } else if (response.status == 400) {
-//         for (let key in response_json) {
-//             alert(`${response_json[key]}`);
-//             break
-//         }
-//     }
-// }
 
 // ================================ 상담 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 시작 ================================
 function reply_create_handle(id) {
