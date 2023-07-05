@@ -311,7 +311,6 @@ async function recommendHotPlace() {
     });
 
     let response_json = await response.json();
-    console.log(response_json)
 
     response_json['results'].slice(0, 2).forEach((e, i) => {
         console.log(e)
