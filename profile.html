@@ -65,15 +65,15 @@
                 <div class="nickname-section">
                     <div id="nickname" class="nickname">
                     </div>
-                    <div id="my-buttons">
-                        <button onclick="go_personal()">내정보보기</button>
+                    <div id="my-buttons" style="display: none;">
+                        <button onclick="go_personal()" >내정보보기</button>
                         <button onclick="go_profileEdit()">프로필수정</button>
                     </div>
 
                 </div>
                 <div class="buttons">
-                    <button id="addFriend" onclick="addFriend()">친구신청</button>
-                    <button id="chat" onclick="getChatRoom()">채팅하기</button>
+                    <button id="addFriend" onclick="addFriend()" style="display: none;">친구신청</button>
+                    <button id="chat" onclick="getChatRoom()" style="display: none;">채팅하기</button>
                     <button id="report-button" onclick="report()" style="display: none;">신고하기</button>
                     <button id="requests" style="display: none;" onclick="go_requestList('to')">친구신청목록
                     </button>

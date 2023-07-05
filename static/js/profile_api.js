@@ -38,17 +38,14 @@ window.onload = () => {
     isFriend()
     if (payload_parse.user_id === user_id) {
         // 내프로필일때
+        document.getElementById("my-buttons").style.display = "block"
         document.getElementById("requests").style.display = "block";
         document.getElementById("friends-list").style.display = "block";
-        // 채팅하기, 친구추가 숨김
-        document.getElementById("chat").style.display = "none";
-        document.getElementById("addFriend").style.display = "none";
-
+        
     } else {
-        // 다른사람 프로필일때
+        // 다른사람 프로필일때 채팅하기, 친구추가, 신고 보이기
         document.getElementById("addFriend").style.display = "block";
         document.getElementById("chat").style.display = "block";
-        document.getElementById("my-buttons").style.display = "none";
         document.getElementById("report-button").style.display = "block";
         const upload_btn = document.getElementById('upload-photo')
         upload_btn.style.display = 'none';
