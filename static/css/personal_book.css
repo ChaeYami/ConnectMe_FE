@@ -85,25 +85,40 @@ main {
 
 .hotplace-content {
     display: grid;
+    width: 250px;
     grid-template-rows: 40px 25px 1fr 1fr;
 }
 
 .hotplace-title {
     display: flex;
     align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    font-weight: bold;
 }
 
 .hotplace-score {
     display: flex;
     align-items: center;
     color: rgb(155, 155, 155);
-    display: flex;
     gap: 15px;
+    margin-bottom: 10px;
 }
 
-.hotplace-content>:nth-child(3) {
+.hotplace-address {
     display: flex;
-    align-items: center;
+    height: 1.2em;
+    line-height: 1.2em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    /* 원하는 줄 수로 변경 가능 */
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    text-overflow: ellipsis;
+    margin-top: 5px;
 }
 
 /* 북마크 핫 플레이스 끝 */
@@ -182,7 +197,7 @@ main {
 .status_and_title {
     overflow: hidden;
     white-space: nowrap;
-    height:50px;
+    height: 50px;
 }
 
 .info_line {
@@ -196,6 +211,7 @@ main {
     justify-items: center;
     max-width: 900px;
     margin: 0 auto;
+
     @media screen and (max-width: 1200px) {
         grid-template-columns: 1fr 1fr;
 
@@ -367,7 +383,7 @@ main {
     }
 }
 
-.counsel_user_create_container{
+.counsel_user_create_container {
     max-width: 900px;
     margin: 0 auto;
 }

@@ -195,29 +195,23 @@ async function bookMoreHotPlace(pages = 1) {
             `
         } else {
             place.innerHTML += `
-            <div style="width:230px; height:230px;">
+            <div class="hotplace-image-div">
+                <a href="place_view.html?id=${place_id}">
+                    <img class="place-container-img" src="static/image/ConnectME - 하늘고래.png" style="object-fit: contain;" onclick="placePreUpdateView()">
+                </a>
+                <a>
+                    <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
+                </a>
             </div>`
         }
         // 이미지 끝
         // 모임생성 시작
         let place_meeting = `
             <a>
-                <img id="book${place_id}" src="static/image/workgroup.png" style="margin-top:10px; width: 40px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
+                <img id="book${place_id}" src="static/image/workgroup.png" style="margin-top:10px; width: 50px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
             </a>
             `
         // 모임생성 끝
-        // edit 버튼 시작
-        let place_edit = ``
-
-        if (JSON.parse(payload)['is_staff']) {
-            place_edit = `
-            <a>
-                <img src="static/image/edit.png" style="margin-top:10px; width:20px;"
-                    onclick="placePreUpdateView(${place_id})">
-            </a>
-            `
-        }
-        // edit 버튼 끝
         // container html 시작
         place.innerHTML += `
         <div class="place-container-text">
@@ -233,9 +227,6 @@ async function bookMoreHotPlace(pages = 1) {
                         <div class="place-container-score">
                             <h2>${score}</h2>
                         </div>
-                    </div>
-                    <div id="place_edit">
-                    ${place_edit}
                     </div>
                 </div>
                 <div class="place-container-book" id="place-container-book">
