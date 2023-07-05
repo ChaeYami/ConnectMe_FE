@@ -1,14 +1,17 @@
 const logined_token = localStorage.getItem("access")
-const count_per_page = 30; // 페이지당 데이터 건수
-const show_page_cnt = 10; // 화면에 보일 페이지 번호 개수
+let count_per_page = 30; // 페이지당 데이터 건수
+let show_page_cnt = 10; // 화면에 보일 페이지 번호 개수
 let page_data = 0;
+let func_selected = '';
+let urlParams = new URLSearchParams(window.location.search).get("id");
 
 
 window.onload = function () {
-    const urlParams = new URLSearchParams(window.location.search).get("id");
     if (urlParams) {
+        func_selected = 'placeDetailView'
         placeDetailView(urlParams);
     } else {
+        func_selected = 'placeView';
         placeView()
     }
 };
@@ -68,7 +71,12 @@ $(function () {
             let category = document.querySelector('.seltext').innerText
             let page_num = Number($(this).text())
 
-            placeView(category, page_num);
+            if (func_selected == 'placeView') {
+                placeView(category, page_num);
+            } else if (func_selected == 'placeDetailView') {
+                placeDetailView(urlParams, page_num);
+            }
+
         }
     });
 
@@ -85,7 +93,11 @@ $(function () {
 
 
         if (id == 'first_page') {
-            placeView(category, 1);
+            if (func_selected == 'placeView') {
+                placeView(category, 1);
+            } else if (func_selected == 'placeDetailView') {
+                placeDetailView(urlParams, 1);
+            }
         } else if (id == 'prev_page') {
             // 페이지 번호를 저장
             let arrPages = [];
@@ -94,7 +106,12 @@ $(function () {
             });
 
             const prevPage = Math.min(...arrPages) - show_page_cnt;
-            placeView(category, prevPage);
+
+            if (func_selected == 'placeView') {
+                placeView(category, prevPage);
+            } else if (func_selected == 'placeDetailView') {
+                placeDetailView(urlParams, prevPage);
+            }
         } else if (id == 'next_page') {
             // 페이지 번호를 저장
             let arrPages = [];
@@ -103,11 +120,20 @@ $(function () {
             });
 
             const nextPage = Math.max(...arrPages) + 1;
-            placeView(category, nextPage);
-        } else if (id == 'last_page') {
-            const lastPage = Math.floor(page_data / count_per_page) + (page_data % count_per_page == 0 ? 0 : 1);;
 
-            placeView(category, lastPage);
+            if (func_selected == 'placeView') {
+                placeView(category, nextPage);
+            } else if (func_selected == 'placeDetailView') {
+                placeDetailView(urlParams, nextPage);
+            }
+        } else if (id == 'last_page') {
+            const lastPage = Math.floor(page_data / count_per_page) + (page_data % count_per_page == 0 ? 0 : 1);
+
+            if (func_selected == 'placeView') {
+                placeView(category, lastPage);
+            } else if (func_selected == 'placeDetailView') {
+                placeDetailView(urlParams, lastPage);
+            }
         }
     });
 })
@@ -131,8 +157,9 @@ function setPaging(pageNum) {
     }
 
     let start = Math.floor((currentPage - 1) / show_page_cnt) * show_page_cnt + 1;
+
     let sPagesHtml = '';
-    for (const end = start + show_page_cnt; start < end && start <= totalPage; start++) {
+    for (let end = start + show_page_cnt; start < end && start <= totalPage; start++) {
         sPagesHtml += '<span class="' + (start == currentPage ? 'active' : '') + '">' + start + '</span>';
     }
     $('div.paging>div.pages').html(sPagesHtml);
@@ -201,6 +228,9 @@ async function placeView(category_select = '카테고리', pages = 1) {
     let container = document.querySelector('#place')
     let place_create = document.querySelector('#place_create')
     let foot = document.querySelector('#myFooter')
+    count_per_page = 30
+    show_page_cnt = 10
+    func_selected = 'placeView'
 
     foot.style.display = ''
 
@@ -252,14 +282,30 @@ async function placeView(category_select = '카테고리', pages = 1) {
         <div id="place${place_id}" class="place-container"></div>`
 
         let place = document.querySelector(`#place${place_id}`)
+        // 북마크 시작
+        let place_book = ``
 
+        if (bookmark.includes(logined_user_id)) {
+
+            place_book = `
+            <a title="북마크"> 
+                <img id="book${place_id}" src="static/image/bookmark (1).png" alt="북마크" onclick="placeBook($${place_id})">
+            </a>`
+        } else {
+            place_book = `
+            <a title="북마크">
+                <img id="book${place_id}" src="static/image/bookmark.png" alt="북마크" onclick="placeBook(${place_id})">
+            </a>`
+        }
+        // 북마크 끝
         // 이미지 시작
         if (image) {
             place.innerHTML += `
-            <div>
+            <div class="hotplace-image-div">
                 <a href="place_view.html?id=${place_id}">
                     <img class="place-container-img" src="${image['url']}" onclick="placePreUpdateView()">
                 </a>
+                ${place_book}
             </div>
             `
         } else {
@@ -268,22 +314,14 @@ async function placeView(category_select = '카테고리', pages = 1) {
             </div>`
         }
         // 이미지 끝
-        // 북마크 시작
-        let place_book = ``
+        // 모임생성 시작
+        let place_meeting = `
+        <a title="이 장소로 모임 생성하기"> 
+            <img id="book${place_id}" src="static/image/workgroup.png" style="margin-top:10px; width: 45px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
+        </a>
+        `
 
-        if (bookmark.includes(logined_user_id)) {
-
-            place_book = `
-            <a title="북마크"> 
-                <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook($${place_id})">
-            </a>`
-        } else {
-            place_book = `
-            <a title="북마크">
-                <img id="book${place_id}" src="static/image/bookmark.png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
-            </a>`
-        }
-        // 북마크 끝
+        // 모임생성 끝
         // edit 버튼 시작
         let place_edit = ``
 
@@ -317,7 +355,7 @@ async function placeView(category_select = '카테고리', pages = 1) {
                     </div>
                 </div>
                 <div class="place-container-book" id="place-container-book">
-                ${place_book}
+                ${place_meeting}
                 </div>
             </div>
             <div class="place-container-address">${address}</div>
@@ -381,11 +419,11 @@ async function placeSearchView(event) {
             break;
 
         case 4:
-            place_category_input = `?ordering=-like&`
+            place_category_input = `?ordering=-likes_count&`
             break;
 
         case 5:
-            place_category_input = `?ordering=-bookmark&`
+            place_category_input = `?ordering=-books_count&`
             break;
     }
 
@@ -651,7 +689,11 @@ function copyButton() {
 }
 
 // 장소추천 상세보기
-async function placeDetailView(place_id) {
+async function placeDetailView(place_id, page = 1) {
+    count_per_page = 5;
+    show_page_cnt = 5;
+    func_selected = 'placeDetailView'
+
     const response = await fetch(`${BACKEND_BASE_URL}/place/${place_id}`, {
         headers: {
             Authorization: "Bearer " + logined_token,
@@ -666,28 +708,39 @@ async function placeDetailView(place_id) {
     place_category.style.display = 'none';
     // 검색, select 숨기기 끝
 
-    let comments = response_json['comment']
-    let name = response_json['place'].title
-    let category = response_json['place'].category
-    let sort = response_json['place'].sort
-    let content = response_json['place'].content
-    let address = response_json['place'].address
-    let image = response_json['place'].image
-    let score = response_json['place'].score
-    let price = response_json['place'].price
-    let hour = response_json['place'].hour
-    let holiday = response_json['place'].holiday
-    let place = document.querySelector('#place')
-    let like = response_json['place'].like
-    let bookmark = response_json['place'].bookmark
-    let comment_count = response_json['place'].comment_count
-    let like_count = response_json['place'].like_count
-    let book_count = response_json['place'].bookmark_count
-    let slide_container = document.querySelector('#place-image-slide')
-    let slide = document.querySelector('#place-detail-slide-images')
+    let comments = response_json['comment'];
+    let name = response_json['place'].title;
+    let category = response_json['place'].category;
+    let sort = response_json['place'].sort;
+    let content = response_json['place'].content;
+    let address = response_json['place'].address;
+    let image = response_json['place'].image;
+    let score = response_json['place'].score;
+    let price = response_json['place'].price;
+    let hour = response_json['place'].hour;
+    let holiday = response_json['place'].holiday;
+    let place_hide = document.querySelector('#place');
+    let like = response_json['place'].like;
+    let bookmark = response_json['place'].bookmark;
+    let comment_count = response_json['place'].comment_count;
+    let like_count = response_json['place'].like_count;
+    let book_count = response_json['place'].bookmark_count;
+    let meeting = response_json['place'].meeting;
+    let slide_container = document.querySelector('#place-image-slide');
+    let slide = document.querySelector('#place-detail-slide-images');
+    let place_show = document.querySelector('#place-container-div');
+    let place = document.querySelector('#place-div');
+    let meeting_div = document.querySelector('#place-meeting-list');
+    const footer = document.getElementById('myFooter');
+    page_data = meeting.length;
+    meeting_div.innerHTML = ''
+
+    if (footer) {
+        footer.remove();
+    }
 
     slide_container.style.display = ""
-
+    place_show.style.display = ""
 
     // 이미지 슬라이더 시작
     let images = ``
@@ -704,6 +757,44 @@ async function placeDetailView(place_id) {
 
     slide.innerHTML = images
     // 이미지 슬라이더 끝
+
+    // 미팅 리스트 시작
+    meeting_div.innerHTML += `
+    <div>
+        <h3>이 장소의 만남 리스트</h3>
+    </div>
+    <hr>
+    `
+    meeting.slice(count_per_page * (page - 1), count_per_page * page).forEach((e) => {
+        if (e.meeting_status == '모집중') {
+            status_and_title =
+                `<span style="color:green;"><${e.meeting_status}></span>`
+        }
+        else if (e.meeting_status == '자리없음') {
+            status_and_title =
+                `<span style="color:orange;"><${e.meeting_status}></span>`
+        }
+        else if (e.meeting_status == '모집종료') {
+            status_and_title =
+                `<span style="color:red;"><${e.meeting_status}></span>`
+        }
+
+        meeting_div.innerHTML += `
+        <a onclick="go_meetingDetail(${e.id})">
+            <div class="meeting-data">
+                <div class="meeting-title-section">
+                    <div class="meeting-status">${status_and_title}</div>
+                    <div class="meeting-title">${e.title}</div>
+                </div>
+                <div class="meeting-info">모집인원 ${e.join_meeting}/${e.num_person_meeting}</div>
+            </div>
+        </a>
+        `
+    })
+
+
+
+    // 미팅 리스트 끝
 
     // ================================ 상세보기 댓글 시작 ================================
 
@@ -872,7 +963,7 @@ async function placeDetailView(place_id) {
     if (JSON.parse(payload)['is_staff']) {
         auth_html = `
         <a>
-            <img src="static/image/edit.png" class="place-detail-edit" onclick="placePreUpdateView(${place_id})">
+            <img src="static/image/edit.png" class="place-detail-edit" style="margin-left:20px;" onclick="placePreUpdateView(${place_id})">
         </a>
         <a>
             <img src="static/image/delete.png" class="place-detail-delete" onclick="placeDelete(${place_id})">
@@ -908,34 +999,37 @@ async function placeDetailView(place_id) {
                     </div>
                 </div>
                 <div class="place-detail-feed">
-                    ${book_html}
-                    ${like_html}
                     <a title="이 장소로 모임 생성하기">
-                        <img id="in_place_create_meeting" src="static/image/workgroup.png" class="place-detail-share" alt="모임생성하기"
+                        <img id="in_place_create_meeting" src="static/image/workgroup.png" class="place-detail-share" style="width:45px;" alt="모임생성하기"
                             onclick="go_createMeeting(${place_id})">
                     </a>
+                </div>
+            </div>
+            <div class="place-container-bottom">
+                <div class="place-container-count" style="justify-content: start; align-items: end; margin-bottom: 20px;">
+                    <div class="place-detail-category">
+                        <div>${category}${detail_category}</div>
+                    </div>
+                    <div id="place-container-count-comment${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
+                        <img src="static/image/chat.png">
+                        ${comment_count}
+                    </div>
+                    <div id="place-container-count-like${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
+                        <img src="static/image/heart (2).png">
+                        ${like_count}
+                    </div>
+                    <div id="place-container-count-book${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
+                        <img src="static/image/bookmark (2).png">
+                        ${book_count}
+                    </div>
+                </div>
+                <div class="place-empathy">
+                    ${book_html}
+                    ${like_html}
                     <a title="공유하기">
                         <img id="modal_opne_btn" src="static/image/share.png" class="place-detail-share" alt="공유하기"
                             onclick="placeShare(${place_id})">
                     </a>
-                </div>
-            </div>
-            
-            <div class="place-container-count" style="justify-content: start; align-items: end; margin-bottom: 20px;">
-                <div class="place-detail-category">
-                    <div>${category}${detail_category}</div>
-                </div>
-                <div id="place-container-count-comment${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
-                    <img src="static/image/chat.png">
-                    ${comment_count}
-                </div>
-                <div id="place-container-count-like${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
-                    <img src="static/image/heart (2).png">
-                    ${like_count}
-                </div>
-                <div id="place-container-count-book${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
-                    <img src="static/image/bookmark (2).png">
-                    ${book_count}
                 </div>
             </div>
             <hr>
@@ -977,6 +1071,7 @@ async function placeDetailView(place_id) {
     
     `
     placeShowMap(name, address)
+    setPaging(page)
     imageSlider()
 
 }

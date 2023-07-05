@@ -26,19 +26,18 @@
     <!--위, 아래 네비바 시작-->
     <div class="top-nav">
         <div class="items">
-            <a onclick="go_home()"><img class="home-logo" src="static/image/logo.png" alt="logo"></a>
-            <a onclick="go_recommend()">친구찾기</a>
-            <a onclick="go_placeView()">핫플레이스</a>
-            <a onclick="go_counsel()">고민상담</a>
-            <a onclick="go_meetingList()">만남의 광장</a>
-
-        </div>
+                <a onclick="go_home()"><img class="home-logo" src="static/image/logo.png" alt="logo"></a>
+                <a onclick="go_recommend()">친구찾기</a>
+                <a onclick="go_meetingList()">만남의 광장</a>
+                <a onclick="go_placeView()">핫플레이스</a>
+                <a onclick="go_counsel()">고민상담</a>
+            </div>
         <div class="top-nav-line-bar">
             <div></div>
             <div></div>
             <div></div>
-            <div class="top-nav-small-line"></div>
             <div></div>
+            <div class="top-nav-small-line"></div>
             <div></div>
             <div></div>
         </div>
@@ -46,10 +45,11 @@
 
     <div class="bot-nav">
         <div class="bot-nav-content">
-            <a onclick="go_requestList('to')">친구신청목록</a>
-            <a onclick="go_personal_create()">내글</a>
+        <a onclick="go_personal_create()">내글</a>
             <a onclick="go_placeBook()">북마크</a>
             <a onclick="go_myProfile()">내프로필</a>
+            <a onclick="go_requestList('to')">친구신청목록</a>
+            <a onclick="go_meeting_join_list()">참여 모임</a>
             <a onclick="logoutButton()">로그아웃</a>
         </div>
         <span class="dropbtn">MENU</span>
@@ -213,10 +213,27 @@
                 <!-- search 끝 -->
             </div>
         </div>
-
         <div id="place"></div>
-
     </main>
+    <div id="place-container-div" class="place-container-div" style="display: none;">
+        <div id="place-div"></div>
+        <div id="meeting-div">
+            <div class="place-meeting-list" id="place-meeting-list">
+            </div>
+            <div class="paging">
+                <i class="fa-solid fa-angles-left" id="first_page" style="display:none; margin-top: 5px;"><img
+                        src="static/image/arrow_first.png" class="arrow-image"></i>
+                <i class="fa-solid fa-angle-left" id="prev_page" style="display:none; margin-top: 5px;"><img
+                        src="static/image/arrow_left.png" class="arrow-image"></i>
+                <div class="pages">
+                </div>
+                <i class="fa-solid fa-angle-right" id="next_page"><img src="static/image/arrow_right.png"
+                        class="arrow-image"></i>
+                <i class="fa-solid fa-angles-right" id="last_page"><img src="static/image/arrow_last.png"
+                        class="arrow-image"></i>
+            </div>
+        </div>
+    </div>
     <!-- 페이지네이션 시작 -->
     <footer id="myFooter" style="display: none;">
         <div class="paging">

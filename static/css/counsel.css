@@ -216,7 +216,7 @@ main {
 }
 
 .create_form {
-    width: 320px;
+    width: 500px;
     margin: 45px auto;
 }
 
@@ -249,7 +249,7 @@ main {
     font-size: 18px;
     padding: 10px 10px 10px 5px;
     display: block;
-    width: 320px;
+    width: 100%;
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #c6c6c6;

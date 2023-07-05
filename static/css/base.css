@@ -83,10 +83,11 @@ h2 {
     bottom: 50px;
     left: 50px;
     z-index: 2;
-    background-color: #D3EAFB;
+    background-color: #d3eafbb9;
     height: auto;
     border-radius: 10px;
     transition: margin-bottom 0.3s ease; /* transition 속성 설정 */
+    font-weight: bold;
 }
 
 /* .bot-nav {
@@ -102,7 +103,7 @@ h2 {
 } */
 
 .bot-nav a {
-    padding: 5px;
+    padding: 10px;
 }
 
 .bot-nav-content {

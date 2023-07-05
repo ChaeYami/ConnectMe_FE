@@ -114,8 +114,15 @@ async function getCounsels(pages = 1) {
 
             for (let i = 0; i < rows.length; i++) {
                 let counsel_id = rows[i]['id']
+                let is_anonymous = rows[i]['is_anonymous']
                 let counsel_title = rows[i]['title']
-                let counsel_author = rows[i]['user']['nickname']
+                let counsel_author = ''
+                if (is_anonymous) {
+                    counsel_author = '익명'
+                } else {
+                    counsel_author = rows[i]['user']['nickname']
+                }
+
                 let counsel_created_at = rows[i]['created_at']
                 let likes_count = rows[i]['like'].length
                 let author_id = rows[i]['user']['pk']
