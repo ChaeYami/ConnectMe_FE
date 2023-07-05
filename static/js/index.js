@@ -331,7 +331,7 @@ async function recommendHotPlace() {
             <div class="hotplace-image-div">
                     ${image}
                 <a title="이 장소로 모임생성하기">
-                    <img class="hotplace-book" src="static/image/workgroup.png" alt="모임생성"
+                    <img class="hotplace-book" src="static/image/people (2).png" alt="모임생성"
                         onclick="go_createMeeting(${place_id})">
                 </a>
             </div>

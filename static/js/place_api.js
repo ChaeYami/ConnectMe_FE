@@ -322,7 +322,7 @@ async function placeView(category_select = '카테고리', pages = 1) {
         // 모임생성 시작
         let place_meeting = `
         <a title="이 장소로 모임 생성하기"> 
-            <img id="book${place_id}" src="static/image/workgroup.png" style="margin-top:10px; width: 50px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
+            <img id="book${place_id}" src="static/image/people (1).png" style="margin-top:10px; width: 50px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
         </a>
         `
         // 모임생성 끝
@@ -1004,8 +1004,8 @@ async function placeDetailView(place_id, page = 1) {
                 </div>
                 <div class="place-detail-feed">
                     <a title="이 장소로 모임 생성하기">
-                        <img id="in_place_create_meeting" src="static/image/workgroup.png" class="place-detail-share" style="width:55px;" alt="모임생성하기"
-                            onclick="go_createMeeting(${place_id})">
+                        <img id="in_place_create_meeting" src="static/image/people (1).png" class="place-detail-share" alt="모임생성하기"
+                            onclick="go_createMeeting(${place_id})">모임생성
                     </a>
                 </div>
             </div>

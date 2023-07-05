@@ -84,7 +84,9 @@ body {
 }
 
 .title-info .section-title {
-    font-weight: bold;
+    /* font-weight: bold; */
+    font-family:'omyu_pretty';
+    font-size: 16pt;
 }
 
 .section-more {
@@ -212,9 +214,10 @@ body {
 }
 
 .meeting-info {
-    display: grid;
-    grid-template-columns: 1fr 50px;
+    display: flex;
     color: gray;
+    align-items: center;
+    justify-content: space-between;
 }
 
 footer {
@@ -400,6 +403,9 @@ footer .member {
     border-radius: 10px;
     filter: grayscale(60%);
     opacity: 0.7;
+    @media screen and (max-width: 1120px) {
+        width: 100%;
+    }
 }
 
 .hotplace-book {

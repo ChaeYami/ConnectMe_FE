@@ -1,7 +1,7 @@
 main {
     width: 70vw;
     margin: 75px auto;
-    max-width: 1200px;
+    max-width: 1000px;
 }
 
 .main {
@@ -17,17 +17,19 @@ main {
 /********* counsel detail 시작 **********/
 .counsel-title {
     display: flex;
+    align-items: center;
 }
+
 
 .detail-buttons {
     margin: 25px 0px 0px 30px;
 }
 
 .counsel-author {
-    margin-top: 20px;
-    margin-left: 20px;
+    margin: 20px;
     font-weight: 600;
     font-size: large;
+    
 }
 
 .counsel-author>a {
@@ -57,7 +59,7 @@ main {
 
 
 .comment_card_class {
-    width: 800px;
+    width: 95%;
     margin: 20px auto 10px auto;
     border: 1px solid rgb(165, 165, 165);
     padding: 10px;
@@ -65,7 +67,7 @@ main {
 }
 
 .create_comment_box {
-    width: 800px;
+    width: 95%;
     margin: 20px auto 10px auto;
     border: 1px solid rgb(165, 165, 165);
     padding: 10px;
@@ -79,8 +81,10 @@ main {
 }
 
 .textareaCommentclass {
+    width: 90%;
     border-radius: 10px;
     padding: 10px;
+    margin: 0 auto;
 }
 
 .commentbtn {
@@ -178,6 +182,7 @@ main {
     display: flex;
     font-weight: bold;
     gap: 10px;
+    
 }
 
 #counsel-comment-count {
