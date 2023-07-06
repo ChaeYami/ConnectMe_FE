@@ -1,5 +1,5 @@
 const logined_token = localStorage.getItem("access");
-const user_id = new URLSearchParams(window.location.search).get('id');
+const user_id = JSON.parse(payload)['user_id']
 
 window.onload = () => {
     placeBookList(user_id)
@@ -132,7 +132,7 @@ async function placeBook(place_id) {
                 let count = 0;
 
                 if (meetings['meeting'].length == 0) {
-                    let temp_html = `<div class="none-text-align"><h2>북마크한 게시글이 없습니다.<h2></div>`
+                    let temp_html = `<div></div><div class="none-text-align"><h2>북마크한 게시글이 없습니다.<h2></div>`
                     $('#meeting-book-cards').append(temp_html);
                 }
 

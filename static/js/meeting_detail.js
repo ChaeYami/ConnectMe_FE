@@ -63,10 +63,10 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         </a>
         `
     }
-    let meeting_btn =``
-    if(payload_nickname == user){
+    let meeting_btn = ``
+    if (payload_nickname == user) {
         meeting_btn = `
-        <a> <img src="static/image/edit.png" style="margin-top:10px; width: 30px;" onclick="meetingUpdateMove()"> </a>
+        <a> <img src="static/image/edit.png" style="margin-top:10px; width: 30px;" onclick="meetingPreEdit(${meeting_id})"> </a>
         <a> <img src="static/image/delete.png" style="margin-top:10px; width: 30px;" onclick="meetingDelete()"> </a>
         `
     }
@@ -637,4 +637,312 @@ function join_user_list() {
     // link_id.value = document.location.href;
     $('#popup').fadeIn(200);
     $('.popup').scrollTop(0);
+}
+
+function meetingEditBasic() {
+    date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    day = date.getDate();
+    let todayString = year + "-";
+    if (month < 10) {
+        todayString += "0";
+    }
+    todayString += month + "-";
+    if (day < 10) {
+        todayString += "0";
+    }
+    todayString += day;
+    let date_time_input_html = `
+    <input id="meeting_date" type="date" min=${todayString}>
+    `
+
+    $("#date_time_input").prepend(date_time_input_html)
+    $("#meeting_time").timepicker('setTime', new Date());
+    document.getElementById('meeting_date').valueAsDate = new Date();
+}
+
+//================================ 모임 게시글 수정 할 데이터 불러오기 API 시작 ================================ 
+
+async function meetingPreEdit(meeting_id) {
+    let token = localStorage.getItem("access");
+
+    try {
+        const response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            },
+        });
+
+        const data = await response.json();
+
+        $('#meeting-detail').hide();
+
+        let title = data['title'];
+        let content = data['content'];
+        let join_meeting = data['join_meeting'];
+        let meeting_date = data['meeting_at'].slice(0, 10);
+        let meeting_time = data['meeting_at'].slice(11);
+        let sido = data['meeting_city'].split(" ")[0];
+        let gugun = data['meeting_city'].split(" ")[1];
+        let meeting_status = data['meeting_status'];
+        let num_person_meeting = data['num_person_meeting'];
+        let place_title = data['place_title'];
+        let place_address = data['place_address'];
+
+
+        let img_html = '';
+
+        let images = data['meeting_image'];
+        images.forEach((each_image) => {
+            let image = each_image['image'];
+            let id = each_image['id'];
+
+            let img_urls = '';
+            if (image.includes('http')) {
+                if (image.includes('www')) {
+                    image = image.slice(16);
+                    let decodedURL = decodeURIComponent(image);
+                    img_urls = `http://${decodedURL}`;
+                } else {
+                    image = image.slice(15);
+                    let decodedURL = decodeURIComponent(image);
+                    img_urls = `http://${decodedURL}`;
+                }
+            } else {
+                img_urls = `${BACKEND_BASE_URL}${image}`;
+            }
+
+            img_html += `
+            <div class="update_image_box">
+                <img class="update_image" src="${img_urls}" alt="">
+                <a class="image_delete_btn">
+                    <img id="delete-image${id}" src="static/image/comment_delete.png" style="width: 30px;" onmouseover="changeDeleteImage(${id})" onmouseout="restoreDeleteImage(${id})" onclick="deleteImage(${id})">
+                </a>
+            </div>`;
+        });
+
+        if (meeting_status == '모집중') {
+            meeting_status = `
+            <option value="모집중" selected>모집중</option>
+            <option value="모집종료">모집종료</option>
+            `
+        } else if (meeting_status == '모집종료') {
+            meeting_status = `
+            <option value="모집중">모집중</option>
+            <option value="모집종료" selected>모집종료</option>
+            `
+        }
+
+        const foot_html = `
+        <div class="wrapper">
+            <h1 class="create_h1">Meeting Update</h1>
+            <h5 class="create_h5">모임 약속 글을 수정해주세요.</h5>
+            <form class="create_form">
+                <div class="group">
+                    <select name="sido1" id="sido1"></select>
+                    <select name="gugun1" id="gugun1"></select>
+                    <select name="meeting_status" id="meeting_status">
+                    ${meeting_status}
+                    </select>
+                </div>
+                <div class="group" id="date_time_input">
+                    <input id="meeting_time" type="text" value="${meeting_time}">
+                    <input id="num_person_meeting" type="number" placeholder="모집 인원수" min="1" value="${num_person_meeting}">
+                </div>
+                <div class="group">
+                    <input id="place_title" class="create_input" type="text" required="required" value="${place_title}"/><span
+                        class="highlight"></span><span class="bar"></span>
+                    <label class="create_label">모임장소 이름</label>
+                </div>
+                <div class="group">
+                    <input id="place_address" class="create_input" type="text" required="required" value="${place_address}"/><span
+                        class="highlight"></span><span class="bar"></span>
+                    <label class="create_label">모임장소 주소</label>
+                </div>
+                <div class="group">
+                    <input id="meeting_title" class="create_input" type="text" required="required" value="${title}"/><span
+                        class="highlight"></span><span class="bar"></span>
+                    <label class="create_label">제목</label>
+                </div>
+                <div class="group">
+                    <textarea id="meeting_content" class="create_input" type="textarea" rows="10"
+                        required="required">${content}</textarea><span class="highlight"></span><span class="bar"></span>
+                    <label class="create_label">내용</label>
+                </div>
+                <div class="file_class">
+                    <input id="meeting_image" type="file" class="file_input" onchange="setThumbnail(event);"
+                        multiple /><span class="highlight"></span><span class="bar_input"></span>
+                </div>
+            </form>
+        </div>
+        <div id="update_image_container" class="update_image_container_class">
+        ${img_html}
+        </div>
+        <hr>
+        <div class="row">
+            <div id="image_container" class="image_container">
+            </div>
+        </div>
+        <div class="btn-box">
+            <button class="btn btn-submit" type="button" onclick="updateMeeting()">submit</button>
+            <button class="btn btn-cancel" type="button" onclick="go_meetingList()">cancel</button>
+        </div>`;
+        $('#meeting-edit-footer').html(foot_html);
+        meetingEditBasic();
+        meetingPreEditWrapper(sido, gugun);
+    } catch (error) {
+        console.log(error);
+    }
+}
+//================================ 모임 게시글 수정 할 데이터 불러오기 API 끝 ================================ 
+
+
+//================================ 모임 게시글 수정 시 이미지 삭제 API 시작 ================================ 
+async function deleteImage(id) {
+    let token = localStorage.getItem("access")
+    await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/meeting_image/${id}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+    window.location.reload()
+}
+//================================ 모임 게시글 수정 시 이미지 삭제 API 끝 ================================ 
+
+//================================ 모임 게시글 수정 API 시작 ================================ 
+async function updateMeeting() {
+    let meeting_title = document.getElementById("meeting_title").value
+    let meeting_content = document.getElementById("meeting_content").value
+    let sido1 = document.getElementById("sido1").value
+    let gugun1 = document.getElementById("gugun1").value
+    let meeting_city = `${sido1} ${gugun1}`
+    let meeting_status = document.getElementById("meeting_status").value
+    let meeting_date = document.getElementById("meeting_date").value
+    let meeting_time = document.getElementById("meeting_time").value
+    let meeting_at = `${meeting_date} ${meeting_time}`
+    let num_person_meeting = document.getElementById("num_person_meeting").value
+    let place_title = document.getElementById("place_title").value
+    let place_address = document.getElementById("place_address").value
+
+    let meeting_image = document.getElementById("meeting_image").files
+
+
+    let token = localStorage.getItem("access")
+
+    let formData = new FormData();
+    formData.append("title", meeting_title);
+    formData.append("content", meeting_content);
+    formData.append("meeting_city", meeting_city);
+    formData.append("meeting_status", meeting_status);
+    formData.append("meeting_at", meeting_at);
+    formData.append("num_person_meeting", num_person_meeting);
+    formData.append("place_address", place_address);
+    formData.append("place_title", place_title);
+
+
+
+    for (let i = 0; i < meeting_image.length; i++) {
+        let image = meeting_image[i]
+        formData.append("image", image);
+    }
+    await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: formData
+    })
+
+    location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
+}
+//================================ 모임 게시글 수정 API 끝 ================================ 
+function setThumbnail(event) {
+    for (var image of event.target.files) {
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+            var img = document.createElement("img");
+            img.className = 'show_img';
+            img.setAttribute("src", event.target.result);
+            document.querySelector("div#image_container").appendChild(img);
+        };
+        reader.readAsDataURL(image);
+    }
+}
+
+function meetingPreEditWrapper(sido, gugun) {
+
+    $(document).ready(function () {
+        var area0 = ["시/도", "서울", "인천", "대전", "광주", "대구", "울산", "부산", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"];
+        var area1 = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
+        var area2 = ["계양구", "남구", "남동구", "동구", "부평구", "서구", "연수구", "중구", "강화군", "옹진군"];
+        var area3 = ["대덕구", "동구", "서구", "유성구", "중구"];
+        var area4 = ["광산구", "남구", "동구", "북구", "서구"];
+        var area5 = ["남구", "달서구", "동구", "북구", "서구", "수성구", "중구", "달성군"];
+        var area6 = ["남구", "동구", "북구", "중구", "울주군"];
+        var area7 = ["강서구", "금정구", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구", "기장군"];
+        var area8 = ["고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시", "가평군", "양평군", "여주군", "연천군"];
+        var area9 = ["강릉시", "동해시", "삼척시", "속초시", "원주시", "춘천시", "태백시", "고성군", "양구군", "양양군", "영월군", "인제군", "정선군", "철원군", "평창군", "홍천군", "화천군", "횡성군"];
+        var area10 = ["제천시", "청주시", "충주시", "괴산군", "단양군", "보은군", "영동군", "옥천군", "음성군", "증평군", "진천군", "청원군"];
+        var area11 = ["계룡시", "공주시", "논산시", "보령시", "서산시", "아산시", "천안시", "금산군", "당진군", "부여군", "서천군", "연기군", "예산군", "청양군", "태안군", "홍성군"];
+        var area12 = ["군산시", "김제시", "남원시", "익산시", "전주시", "정읍시", "고창군", "무주군", "부안군", "순창군", "완주군", "임실군", "장수군", "진안군"];
+        var area13 = ["광양시", "나주시", "목포시", "순천시", "여수시", "강진군", "고흥군", "곡성군", "구례군", "담양군", "무안군", "보성군", "신안군", "영광군", "영암군", "완도군", "장성군", "장흥군", "진도군", "함평군", "해남군", "화순군"];
+        var area14 = ["경산시", "경주시", "구미시", "김천시", "문경시", "상주시", "안동시", "영주시", "영천시", "포항시", "고령군", "군위군", "봉화군", "성주군", "영덕군", "영양군", "예천군", "울릉군", "울진군", "의성군", "청도군", "청송군", "칠곡군"];
+        var area15 = ["거제시", "김해시", "마산시", "밀양시", "사천시", "양산시", "진주시", "진해시", "창원시", "통영시", "거창군", "고성군", "남해군", "산청군", "의령군", "창녕군", "하동군", "함안군", "함양군", "합천군"];
+        var area16 = ["서귀포시", "제주시", "남제주군", "북제주군"];
+
+
+
+        // 시/도 선택 박스 초기화
+
+        $("select[name^=sido]").each(function () {
+            $selsido = $(this);
+            $.each(eval(area0), function () {
+                $selsido.append("<option value='" + this + "'>" + this + "</option>");
+            });
+            $selsido.next().append("<option value=''>구/군 선택</option>");
+        });
+
+
+
+        // 시/도 선택시 구/군 설정
+
+        $("select[name^=sido]").change(function () {
+            var area = "area" + $("option", $(this)).index($("option:selected", $(this))); // 선택지역의 구군 Array
+            var $gugun = $(this).next(); // 선택영역 군구 객체
+            $("option", $gugun).remove(); // 구군 초기화
+
+            if (area == "area0")
+                $gugun.append("<option value=''>구/군 선택</option>");
+            else {
+                $.each(eval(area), function () {
+                    $gugun.append("<option value='" + this + "'>" + this + "</option>");
+                });
+            }
+        });
+
+        const sidoDropdown = document.getElementById('sido1');
+        const gugunDropdown = document.getElementById('gugun1');
+
+        for (let i = 0; i < sidoDropdown.options.length; i++) {
+            if (sidoDropdown.options[i].value === sido) {
+                sidoDropdown.selectedIndex = i;
+                break;
+            }
+        }
+
+        // sidoDropdown에서 change 이벤트를 트리거하여 gugunDropdown의 옵션을 업데이트하기
+        sidoDropdown.dispatchEvent(new Event('change'));
+
+        // gugunDropdown에서 gugun_selected 값을 선택된 값으로 설정하기
+        for (let i = 0; i < gugunDropdown.options.length; i++) {
+            if (gugunDropdown.options[i].value === gugun) {
+                gugunDropdown.selectedIndex = i;
+                break;
+            }
+        }
+    });
 }

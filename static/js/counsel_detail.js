@@ -44,7 +44,7 @@ async function counselDetail(counsel_id) {
             if (JSON.parse(payload)['user_id'] == counsel_author_id) {
                 buttons.innerHTML += `
                 <a>
-                    <img src="static/image/edit.png" style="width:20px" onclick="go_counselEdit()">
+                    <img src="static/image/edit.png" style="width:20px" onclick="counselPreUpdate(${counsel_id})">
                 </a>
                 <a>
                     <img src="static/image/delete.png" style="width:20px" onclick="counselDelete()">
@@ -308,9 +308,60 @@ async function counselDelete() {
     }
 }
 
-// 수정페이지로 이동
-function go_counselEdit() {
-    location.href = `counsel_edit.html?counsel_id=${counsel_id}`
+
+async function counselPreUpdate(counsel_id) {
+    const response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/`, {
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
+        method: "GET",
+    })
+
+    const response_json = await response.json();
+
+    if (response_json['counsel'].is_anonymous) {
+        anonymous = `
+        <div><input type="checkbox" id="counsel-edit-anonymous-checkbox" checked>
+            <label for="anonymous-checkbox">익명</label>
+        </div>`
+    } else {
+        anonymous = `
+        <div><input type="checkbox" id="counsel-edit-anonymous-checkbox">
+            <label for="anonymous-checkbox">익명</label>
+        </div>`
+    }
+
+
+    $('#counsel-detail-main').hide();
+
+    temp_html = `
+    <div class="wrapper">
+        <h1 class="create_h1">Counsel Edit</h1>
+        <h5 class="create_h5">고민글을 수정합니다.</h5>
+        <form class="create_form">
+            ${anonymous}
+            <div class="group">
+                <textarea id="counsel-edit-title" class="create_input" type="textarea" rows="1" required="required"
+                    maxlength="50">${response_json['counsel'].title}</textarea><span class="highlight"></span><span class="bar"></span>
+                <label class="create_label">제목</label>
+            </div>
+            <div class="group">
+                <textarea id="counsel-edit-content" class="create_input" type="textarea" rows="10"
+                    required="required">${response_json['counsel'].content}</textarea><span class="highlight"></span><span class="bar"></span>
+                <label class="create_label">내용</label>
+            </div>
+            <div class="btn-box">
+                <button class="btn btn-submit" type="button" onclick="CounselEdit()">submit</button>
+                <button class="btn btn-cancel" type="button" onclick="go_counselDetail(${counsel_id})">cancel</button>
+            </div>
+        </form>
+    </div>
+    `
+
+
+    $('#counsel-detail-footer').html(temp_html);
+
+
 }
 
 // 댓글작성
@@ -352,14 +403,14 @@ async function counselCommentCreate() {
 
 // 글 수정
 async function CounselEdit() {
-    let title = document.querySelector('#title')
-    let content = document.querySelector('#content')
-    let checked = $('#anonymous-checkbox').is(':checked');
+    let title = document.querySelector('#counsel-edit-title').value
+    let content = document.querySelector('#counsel-edit-content').value
+    let checked = $('#counsel-edit-anonymous-checkbox').is(':checked');
     let is_anonymous = ''
     if (checked) {
         is_anonymous = 'True';
 
-    }else{
+    } else {
         is_anonymous = 'False';
     }
 
@@ -370,13 +421,11 @@ async function CounselEdit() {
         },
         method: "PUT",
         body: JSON.stringify({
-            title: title.value,
-            content: content.value,
-            is_anonymous : is_anonymous
+            title: title,
+            content: content,
+            is_anonymous: is_anonymous
         })
     })
-
-    const response_json = await response.json();
 
     if (response.status == 200) {
         alert("고민 상담이 수정되었습니다.");
@@ -387,8 +436,6 @@ async function CounselEdit() {
             break
         }
     }
-
-
 }
 
 // ================================ 상담 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 시작 ================================
@@ -455,10 +502,10 @@ async function commentUpdateConfrim(id) {
         formData.append("content", comment);
         if (checked) {
             formData.append("is_anonymous", 'True');
-    
-        }else{
+
+        } else {
             formData.append("is_anonymous", 'False');
-    
+
         }
         let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${id}/`, {
             method: 'PUT',

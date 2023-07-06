@@ -74,7 +74,7 @@ function go_placeDetailView(place_id) {
 
 // 핫플레이스 북마크
 function go_placeBook() {
-    location.href = `personal_book.html?id=${logined_user_id}`
+    location.href = `personal_book.html`
 }
 
 // 내 글 
