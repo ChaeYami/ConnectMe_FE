@@ -150,9 +150,9 @@ async function updateProfile() {
         const errorData = await response.json();
         const errorArray = Object.entries(errorData);
         if (errorArray[1][1].nickname){
-            alert(errorArray[1][1].nickname)
+            swal("error",`${errorArray[1][1].nickname}`,"error")
         } else{
-            alert(errorArray[0][1].age)
+            swal("error",`${errorArray[0][1].age}`,"error")
         }
     }
 }
