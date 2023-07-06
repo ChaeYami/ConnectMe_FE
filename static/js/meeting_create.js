@@ -172,6 +172,7 @@ async function createMeeting(place_id = -1) {
             }
             );
         });
+        
 }
 function setThumbnail(event) {
     var container = document.querySelector("#image_container");

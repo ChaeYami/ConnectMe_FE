@@ -22,7 +22,9 @@ async function uploadPhoto() {
         alert("사진 업로드 완료")
         window.location.replace(`profile_album.html?user_id=${logined_user_id}`)
     } else {
-        alert('으엥에ㅔ에에')
+        const errorData = await response.json();
+        alert(errorData.error)
+
     }
 }
 
