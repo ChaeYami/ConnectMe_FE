@@ -855,7 +855,7 @@ async function updateMeeting() {
         let image = meeting_image[i]
         formData.append("image", image);
     }
-    await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`, {
+    const response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`, {
         method: 'PATCH',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -872,6 +872,40 @@ async function updateMeeting() {
         });
 
 
+
+
+
+    let response_json = await response.json();
+
+    if (response.status == 200) {
+        alert('수정되었습니다.')
+        location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
+    } else {
+        if (response_json.meeting_city) {
+            alert("모임 지역을 선택해주세요")
+        }
+        else if (response_json.num_person_meeting) {
+            alert("모집 인원수를 본인 포함 두 명 이상으로 입력 해주세요.")
+        }
+        else if (response_json.place_title) {
+            alert("모임 장소 이름을 입력해주세요")
+        }
+        else if (response_json.place_address) {
+            alert("모임 주소를 입력해주세요")
+        }
+        else if (response_json.title) {
+            alert("제목을 입력해주세요")
+        }
+        else if (response_json.content) {
+            alert("내용을 입력해주세요")
+        }
+        else if (response_json.non_field_errors) {
+            alert(response_json.non_field_errors)
+            document.querySelector('#image_container').innerHTML = ''
+            const fileInput = document.getElementById('meeting_image');
+            fileInput.value = '';
+        }
+    }
 
 
 }

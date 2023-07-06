@@ -397,7 +397,7 @@
     position: relative;
     cursor: pointer;
     height: 20px;
-    width: 150px;
+    width: 140px;
     line-height: 20px;
     padding: 15px 0px;
     text-transform: uppercase;
@@ -406,7 +406,6 @@
     font-weight: normal;
     font-style: normal;
     font-size: 18px;
-    width: 150px;
     color: #c0b7b4;
     border-bottom: 1px solid #ddd8d7;
     text-align: left;
@@ -535,7 +534,6 @@
     display: grid;
     grid-template-columns: 160px 1fr 1fr;
     height: 60px;
-    margin-bottom: 20px;
 }
 
 .place-search {
@@ -548,6 +546,11 @@
 /********* place 카테고리 끝 **********/
 
 /********* select box 시작 **********/
+.place-sorted {
+    display: flex;
+    justify-content: end;
+}
+
 .select-box {
     position: relative;
     width: 100%;
@@ -630,6 +633,7 @@
     padding: 15px;
     height: 18px;
     background-color: #fff;
+    cursor: pointer;
 }
 
 .select-box__option:hover,

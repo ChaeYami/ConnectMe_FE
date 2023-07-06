@@ -150,7 +150,13 @@ async function createMeeting(place_id = -1) {
                         swal("제목을 입력해주세요", '', 'warning')
                     }
                     else if (data.content) {
+
                         swal("내용을 입력해주세요", '', 'warning')
+                    } else if (data.non_field_errors) {
+                        alert(data.non_field_errors)
+                        document.querySelector('#image_container').innerHTML = ''
+                        const fileInput = document.getElementById('meeting_image');
+                        fileInput.value = '';
                     }
                 }
             }
