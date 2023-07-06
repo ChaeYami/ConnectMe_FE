@@ -45,12 +45,13 @@ h1{
 
 .meeting_card {
     margin: 10px;
-    border: 1px solid rgb(203, 203, 203);
+    border: 1px solid rgba(0, 0, 0, 0.425);
     border-radius: 10px;
     padding: 10px;
     height: 540px;
     width: 260px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.158);
+    color: white;
 }
 
 .meeting_list_content {
