@@ -127,7 +127,7 @@ async function updateProfile() {
 
     if (file) {
         formData.append('profile_img', file);
-    }else{
+    } else {
         formData.append('profile_img', '');
 
     }
@@ -149,10 +149,14 @@ async function updateProfile() {
     } else {
         const errorData = await response.json();
         const errorArray = Object.entries(errorData);
-        if (errorArray[1][1].nickname){
+        if (errorArray[1][1].nickname) {
             alert(errorArray[1][1].nickname)
-        } else{
+        } else if (errorArray[0][1].age) {
             alert(errorArray[0][1].age)
+        } else if (errorArray[0][1].non_field_errors) {
+            alert(errorArray[0][1].non_field_errors)
+            $('#profile_preview').attr('src', 'static/image/user.png');;
+            $('#profile_img').val('');
         }
     }
 }
