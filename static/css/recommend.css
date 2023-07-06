@@ -3,7 +3,7 @@
     width: 70vw;
     margin: 100px auto;
     max-width: 800px;
-
+    color: white;
     @media screen and (max-width: 800px) {
         width: 90%;
 
@@ -135,12 +135,13 @@
 
 .list-section {
     display: grid;
-    background-color: #DAE3F3;
+    background-color: #dae3f331;
     border-radius: 50px;
 }
 
-.list-section a {
+.user_nickname a {
     margin: 15px;
+    color: rgb(255, 252, 222);
 }
 
 .card {
@@ -189,13 +190,14 @@
     cursor: pointer;
 }
 .user_info .intro {
-    background-color: #EBF6FF;
+    background-color: #00000017;
     min-height: 55px;
     margin: 10px 0px;
     border-radius: 10px;
     padding: 15px;
+    color: rgb(255, 255, 255);
 }
 
 .no_intro{
-    color: gray;
+    color: rgb(161, 161, 161);
 }
