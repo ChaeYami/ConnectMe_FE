@@ -217,7 +217,7 @@ function meetingUpdateMove() {
         let payloadObj = JSON.parse(payload)
         let nickname = payloadObj.nickname
         if (nickname == data.user.nickname) { location.replace(`${FRONTEND_BASE_URL}/meeting_update.html?id=` + meeting_id) }
-        else { alert("권한이 없습니다.") }
+        else { swal("권한이 없습니다.", '', 'error') }
     })
 }
 // ================================ 모임 게시글 수정하기 페이지로 이동 끝 ================================
@@ -365,10 +365,12 @@ async function meetingDelete() {
             },
         })
         if (response.status == 204) {
-            alert("삭제 완료")
+            swal("삭제 완료", '', 'success')
             await location.replace(`${FRONTEND_BASE_URL}/meeting_list.html`)
         }
-        else { alert("권한이 없습니다.") }
+        else {
+            swal("권한이 없습니다.", '', 'error')
+        }
     }
 }
 // ================================ 모임 게시글 삭제 API 끝 ================================
@@ -385,13 +387,17 @@ async function handleBookmark() {
             },
         })
         if (response.status === 200) {
-            alert("북마크 취소")
-            location.reload()
+            swal("북마크 취소", '')
+                .then((value) => {
+                    location.reload()
+                });
         } else {
-            alert("북마크")
-            location.reload()
+            swal("북마크", '')
+                .then((value) => {
+                    location.reload()
+                });
         }
-    } else { alert("로그인 해주세요") }
+    } else { swal("로그인 해주세요", "", "warning") }
 }
 // ================================ 모임 게시글 상세보기 북마크 끝 ================================
 
@@ -411,10 +417,19 @@ async function meetingCommentCreate() {
             },
             body: formData
         })
-        if (response.status == 200) { alert("작성 완료"), window.location.reload() }
-        else { alert("입력 해주세요") }
+        if (response.status == 200) {
+            swal("댓글 작성 완료", '', 'success')
+                .then((value) => {
+                    window.location.reload()
+                });
+        }
+        else {
+            alert("입력 해주세요")
+        }
 
-    } else { alert("로그인 해주세요") }
+    } else {
+        alert("로그인 해주세요")
+    }
 }
 // ================================ 모임 게시글 상세보기 댓글 작성 끝 ================================
 
@@ -526,7 +541,7 @@ async function replyUpdateConfrim(reply_id) {
         })
         if (response.status == 200) { alert("수정 완료"), window.location.reload() }
         else if (response.status == 400) { alert("입력해주세요") }
-        else { alert("권한이 없습니다.") }
+        else { swal("권한이 없습니다.", '', 'error') }
 
     } else { alert("로그인 해주세요") }
 }
@@ -545,7 +560,7 @@ async function replyDelete(reply_id) {
                 },
             })
             if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
-            else { alert("권한이 없습니다.") }
+            else { swal("권한이 없습니다.", '', 'error') }
 
         } else { alert("로그인 해주세요") }
     }
@@ -781,7 +796,7 @@ async function meetingPreEdit(meeting_id) {
             "autodateOnStart": false
         });   
         </script>`
-        ;
+            ;
         $('#meeting-edit-footer').html(foot_html);
         meetingEditBasic();
         meetingPreEditWrapper(sido, gugun);
@@ -847,15 +862,17 @@ async function updateMeeting() {
         },
         body: formData
     })
-    .then((response) => response.json())
-  .then((data) => {if(data['non_field_errors']){alert(data['non_field_errors'])}else{
+        .then((response) => response.json())
+        .then((data) => {
+            if (data['non_field_errors']) { alert(data['non_field_errors']) } else {
 
-    alert('수정 되었습니다.')
-    location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
-  }});
- 
+                alert('수정 되었습니다.')
+                location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
+            }
+        });
 
-    
+
+
 
 }
 //================================ 모임 게시글 수정 API 끝 ================================ 

@@ -126,32 +126,37 @@ async function createMeeting(place_id = -1) {
             response.json().then((data) => {
                 let meeting_id = data.id
                 if (data.id) {
-                    alert("작성 되었습니다.")
-                    location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
+                    swal("작성 되었습니다.", '', 'success')
+                        .then((value) => {
+                            location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
+                        });
+                    
+
+                    
                 } else {
                     if (data.meeting_city) {
-                        alert("모임 지역을 선택해주세요")
+                        swal('모임 지역을 선택해주세요', '', 'warning')
                     }
                     else if (data.num_person_meeting) {
-                        alert("모집 인원수를 본인 포함 두 명 이상으로 입력 해주세요.")
+                        swal("모집 인원수를 본인 포함 두 명 이상으로 입력 해주세요.", '', 'warning')
                     }
                     else if (data.place_title) {
-                        alert("모임 장소 이름을 입력해주세요")
+                        swal("모임 장소 이름을 입력해주세요", '', 'warning')
                     }
                     else if (data.place_address) {
-                        alert("모임 주소를 입력해주세요")
+                        swal("모임 주소를 입력해주세요", '', 'warning')
                     }
                     else if (data.title) {
-                        alert("제목을 입력해주세요")
+                        swal("제목을 입력해주세요", '', 'warning')
                     }
-                    else if(data.content){
-                        alert("내용을 입력해주세요")
+                    else if (data.content) {
+                        swal("내용을 입력해주세요", '', 'warning')
                     }
                 }
             }
             );
         });
-        
+
 }
 function setThumbnail(event) {
     var container = document.querySelector("#image_container");
