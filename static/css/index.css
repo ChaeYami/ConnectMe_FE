@@ -5,7 +5,7 @@
     background-color: #f1f6ff31;
     padding: 10px;
     border-radius: 30px;
-    
+
     @media screen and (max-width: 800px) {
         width: 100%;
     }
@@ -43,17 +43,20 @@ body {
     background-color: rgba(0, 3, 32, 0.075);
     border-radius: 100px;
 }
-#user-list .list-section::-webkit-scrollbar{
+
+#user-list .list-section::-webkit-scrollbar {
     background-color: 000000;
     height: 15px;
 }
-#user-list .list-section::-webkit-scrollbar-thumb{
+
+#user-list .list-section::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.247);
     border-radius: 15px;
     background-clip: padding-box;
     border: 3px solid transparent;
 }
-#user-list .list-section::-webkit-scrollbar-button{
+
+#user-list .list-section::-webkit-scrollbar-button {
     width: 35px;
 }
 
@@ -62,6 +65,11 @@ body {
     padding: 15px;
     color: rgb(255, 255, 255);
     font-family: nanumgothic;
+}
+
+#user-list>.list-section>a>.card> :hover {
+    transform: scale(1.07);
+    transition-duration: 0.3s;
 }
 
 .image_box {
@@ -106,7 +114,7 @@ body {
 
 .title-info .section-title {
     /* font-weight: bold; */
-    font-family:'omyu_pretty';
+    font-family: 'omyu_pretty';
     font-size: 16pt;
     color: wheat;
 }
@@ -207,7 +215,7 @@ body {
     white-space: nowrap;
     word-break: break-all;
     font-weight: bold;
-    
+
 }
 
 .meeting-title-section {
@@ -263,7 +271,7 @@ body {
 
 .hotplace-card {
     width: 220px;
-    height: 320px;
+    height: 300px;
     border: 1px solid #ffffff44;
     border-radius: 5px;
     padding: 15px;
@@ -303,6 +311,7 @@ body {
     border-radius: 10px;
     filter: grayscale(10%);
     opacity: 0.8;
+
     @media screen and (max-width: 1200px) {
         width: 100%;
     }
@@ -324,10 +333,9 @@ body {
     line-height: 1.2em;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     /* 원하는 줄 수로 변경 가능 */
     -webkit-box-orient: vertical;
-    text-indent: 1em;
     white-space: normal;
     text-overflow: ellipsis;
 }
@@ -342,6 +350,47 @@ footer {
 
 footer a {
     color: gray;
+
+}
+
+footer a:hover {
+    animation-duration: 3s;
+    animation-name: rainbow;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rainbow {
+    0% {
+        color: #ff2a2a;
+    }
+
+    15% {
+        color: #ff7a2a;
+    }
+
+    30% {
+        color: #ffc52a;
+    }
+
+    45% {
+        color: #43ff2a;
+    }
+
+    60% {
+        color: #2a89ff;
+    }
+
+    75% {
+        color: #202082;
+    }
+
+    90% {
+        color: #6b2aff;
+    }
+
+    100% {
+        color: #e82aff;
+    }
 }
 
 #footer {

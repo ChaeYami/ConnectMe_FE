@@ -12,7 +12,9 @@
 
     }
 }
-
+h2{
+    color: #b9d8ff;
+}
 .main-buttons {
     display: flex;
     margin: 20px
@@ -66,4 +68,11 @@
     padding: 5px;
     margin: 5px;
     cursor: pointer;
+}
+
+.info-box {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid rgba(255, 233, 184, 0.295);
+    border-radius: 5px;
 }

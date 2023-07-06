@@ -125,7 +125,7 @@ async function getCounsels(pages = 1) {
                 let author_html = ``
                 if (is_anonymous) {
                     counsel_author = '익명'
-                    author_html = `<a style = "color: #4b828d; cursor : text;">${counsel_author}</a>`
+                    author_html = `<a style = "color: #9fbabf; cursor : text;">${counsel_author}</a>`
                 } else {
                     counsel_author = rows[i]['user']['nickname']
                     author_html = `<a onclick = "go_profile(${author_id})">${counsel_author}</a>`
