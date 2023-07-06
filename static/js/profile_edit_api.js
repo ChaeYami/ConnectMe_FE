@@ -1,4 +1,4 @@
-const user_id = parseInt(new URLSearchParams(window.location.search).get('user_id'));
+const user_id = JSON.parse(payload)['user_id']
 
 window.onload = () => {
     existingProfile(user_id)
@@ -143,14 +143,22 @@ async function updateProfile() {
         window.location.replace(`/profile.html?user_id=${user_id}`)
     } else if (response.status == 403) {
         alert('권한이 없습니다!')
-    } else{
+    } else {
         alert('오류가 발생했습니다.')
     }
 }
 
-function deleteProfileImage() {
+async function deleteProfileImage() {
     $('#profile_img').val('');
     $('#profile_preview').attr('src', "/static/image/user.png")
+
+    const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
+        headers: {
+            "Authorization": "Bearer " + logined_token,
+        },
+        method: 'DELETE',
+    });
+
 }
 
 

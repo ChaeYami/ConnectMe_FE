@@ -122,7 +122,7 @@ async function report() {
 
 
 function go_profileEdit() {
-    location.href = `profile_edit.html?user_id=${logined_user_id}`
+    location.href = `profile_edit.html`
 }
 
 function go_personal() {

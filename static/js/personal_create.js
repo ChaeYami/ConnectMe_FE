@@ -25,7 +25,7 @@ $(document).ready(function () {
                 let count = 0;
 
                 if (meetings['meeting'].length == 0) {
-                    let temp_html = `<div class="none-text-align"><h2>작성한 게시글이 없습니다.<h2></div>`
+                    let temp_html = `<div></div><div class="none-text-align"><h2>작성한 게시글이 없습니다.<h2></div>`
                     $('#meeting_user_create_cards').append(temp_html)
                 }
 
