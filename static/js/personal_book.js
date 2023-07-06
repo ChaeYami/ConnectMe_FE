@@ -158,7 +158,7 @@ async function placeBook(place_id) {
                         let status_and_title = ``
                         if (meeting_status == '모집중') {
                             status_and_title =
-                                `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
+                                `<h3><span style="color:rgb(0, 201, 0);"><${meeting_status}></span> ${title}</h3>`
                         }
                         else if (meeting_status == '자리없음') {
                             status_and_title =
@@ -235,7 +235,7 @@ async function placeBook(place_id) {
 
                         if (meeting_status == '모집중') {
                             status_and_title =
-                                `<h3><span style="color:green;"><${meeting_status}></span> ${title}</h3>`
+                                `<h3><span style="color:rgb(0, 201, 0);"><${meeting_status}></span> ${title}</h3>`
                         }
                         else if (meeting_status == '자리없음') {
                             status_and_title =

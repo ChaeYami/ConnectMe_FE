@@ -3,13 +3,15 @@
     width: 70vw;
     margin: 100px auto;
     max-width: 800px;
-
+    
     @media screen and (max-width: 800px) {
         width: 80%;
 
     }
 }
-
+h1{
+    color: white;
+}
 .meeting_card_class {
     width: 70vw;
     max-width: 900px;
@@ -48,6 +50,7 @@
     padding: 10px;
     height: 540px;
     width: 260px;
+    background-color: rgb(255, 255, 255);
 }
 
 .meeting_list_content {
@@ -60,6 +63,7 @@
 
 .meeting_create_btn {
     margin-left: 90%;
+    filter: invert(100%);
 }
 
 .status_and_title h3 {

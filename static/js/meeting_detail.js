@@ -308,7 +308,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`).then(res => res.json()).then
         }
         $(`#comment_update_input${id}`).val(content)
         each_comment.reply.forEach((each_reply => {
-            console.log(each_reply)
+
             comment = each_reply['comment']
             id = each_reply['id']
             content = each_reply['content']

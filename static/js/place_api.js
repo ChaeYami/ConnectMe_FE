@@ -772,7 +772,7 @@ async function placeDetailView(place_id, page = 1) {
     meeting.slice(count_per_page * (page - 1), count_per_page * page).forEach((e) => {
         if (e.meeting_status == '모집중') {
             status_and_title =
-                `<span style="color:green;"><${e.meeting_status}></span>`
+                `<span style="color:rgb(0, 201, 0);"><${e.meeting_status}></span>`
         }
         else if (e.meeting_status == '자리없음') {
             status_and_title =

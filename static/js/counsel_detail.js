@@ -323,7 +323,7 @@ async function counselCommentCreate() {
     } else {
         is_anonymous = 'False';
     }
-    console.log(is_anonymous)
+
     if (logined_token) {
 
         const response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/`, {
@@ -341,7 +341,6 @@ async function counselCommentCreate() {
             alert("댓글 작성 완료.")
             location.reload();
         } else {
-            console.log(response.json)
             const errorData = await response.json();
             const errorArray = Object.entries(errorData);
             alert(errorArray[0][1]);

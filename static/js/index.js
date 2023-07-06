@@ -185,7 +185,7 @@ async function meetingList() {
 
                 if (meeting_status == '모집중') {
                     status =
-                        `<span style="color:green;"><${meeting_status}></span>`
+                        `<span style="color:rgb(0, 201, 0);"><${meeting_status}></span>`
                 }
                 else if (meeting_status == '자리없음') {
                     status =
