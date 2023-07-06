@@ -127,6 +127,9 @@ async function updateProfile() {
 
     if (file) {
         formData.append('profile_img', file);
+    }else{
+        formData.append('profile_img', '');
+
     }
 
 
@@ -144,23 +147,20 @@ async function updateProfile() {
     } else if (response.status == 403) {
         alert('권한이 없습니다!')
     } else {
-        alert('오류가 발생했습니다.')
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        if (errorArray[1][1].nickname){
+            alert(errorArray[1][1].nickname)
+        } else{
+            alert(errorArray[0][1].age)
+        }
     }
 }
 
-async function deleteProfileImage() {
+function deleteProfileImage() {
     $('#profile_img').val('');
     $('#profile_preview').attr('src', "/static/image/user.png")
-
-    const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
-        headers: {
-            "Authorization": "Bearer " + logined_token,
-        },
-        method: 'DELETE',
-    });
-
 }
-
 
 $('document').ready(function () {
     let area0 = ["시/도 선택", "서울특별시", "인천광역시", "대전광역시", "광주광역시", "대구광역시", "울산광역시", "부산광역시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도", "전국"];
