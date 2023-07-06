@@ -1,25 +1,6 @@
 let token = localStorage.getItem("access")
 
 window.onload = function () {
-    date = new Date();
-    year = date.getFullYear();
-    month = date.getMonth() + 1;
-    day = date.getDate();
-    let todayString = year + "-";
-    if (month < 10) {
-        todayString += "0";
-    }
-    todayString += month + "-";
-    if (day < 10) {
-        todayString += "0";
-    }
-    todayString += day;
-    let date_time_input_html = `
-<input id="meeting_date" type="date" min=${todayString}>
-`
-    $("#date_time_input").prepend(date_time_input_html)
-    $("#meeting_time").timepicker('setTime', new Date());
-    document.getElementById('meeting_date').valueAsDate = new Date();
     let dining_info = localStorage.getItem("dining")
     if (dining_info) {
         let dining = JSON.parse(dining_info)
@@ -104,9 +85,7 @@ async function createMeeting(place_id = -1) {
     let sido1 = document.getElementById("sido1").value
     let gugun1 = document.getElementById("gugun1").value
     let meeting_city = `${sido1} ${gugun1}`
-    let meeting_date = document.getElementById("meeting_date").value
-    let meeting_time = document.getElementById("meeting_time").value
-    let meeting_at = `${meeting_date} ${meeting_time}`
+    let meeting_at = document.getElementById("datetimeinput").value
     let num_person_meeting = document.getElementById("num_person_meeting").value
     let place_title = document.getElementById("place_title").value
     let place_address = document.getElementById("place_address").value
