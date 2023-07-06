@@ -544,7 +544,8 @@
     margin: auto;
     width: 1000px;
     max-width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .update_image_container_class {
@@ -585,3 +586,4 @@
 }
 
 /********* 이미지 미리보기 끝 **********/
+

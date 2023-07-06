@@ -1537,7 +1537,7 @@ async function placePreUpdateView(place_id) {
     if (image) {
         for (let i = 0; i < image.length; i++) {
             images += `
-            <div class="img_container">
+            <div class="img_container" id="img_container${image[i]['id']}">
                 <div class="image-wrapper">
                     <img id="image${image[i]['id']}" class="image_preview" src="${image[i]['url']}"></img>
                     <a>
@@ -1715,8 +1715,8 @@ async function imageDelete(place_id, place_image_id) {
         method: "DELETE",
 
     })
-
-    window.location.href = `place_view.html?id=${place_id}`;
+    $(`#img_container${place_image_id}`).hide()
+    // window.location.href = `place_view.html?id=${place_id}`;
 }
 
 // 댓글 작성하기

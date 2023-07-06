@@ -149,14 +149,16 @@ async function updateProfile() {
     } else {
         const errorData = await response.json();
         const errorArray = Object.entries(errorData);
+
         if (errorArray[1][1].nickname) {
-            alert(errorArray[1][1].nickname)
+            swal(`${errorArray[1][1].nickname}`,'','warning')
         } else if (errorArray[0][1].age) {
-            alert(errorArray[0][1].age)
+            swal("error",`${errorArray[0][1].age}`,'','warning')
         } else if (errorArray[0][1].non_field_errors) {
             alert(errorArray[0][1].non_field_errors)
             $('#profile_preview').attr('src', 'static/image/user.png');;
             $('#profile_img').val('');
+
         }
     }
 }
