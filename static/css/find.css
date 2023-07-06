@@ -10,6 +10,9 @@
     }
 }
 
+h2{
+    color: rgb(218, 240, 255);
+}
 .find-section {
     width: 500px;
     display: grid;
@@ -78,6 +81,7 @@ button{
     padding: 20px 0px 5px 0px;
     font-size: 14pt;
     width: 100%;
+    color: white;
 }
 
 input::placeholder {

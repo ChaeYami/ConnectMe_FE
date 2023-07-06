@@ -767,12 +767,11 @@ async function placeDetailView(place_id, page = 1) {
     <div>
         <h3>이 장소의 만남 리스트</h3>
     </div>
-    <hr>
     `
     meeting.slice(count_per_page * (page - 1), count_per_page * page).forEach((e) => {
         if (e.meeting_status == '모집중') {
             status_and_title =
-                `<span style="color:rgb(0, 201, 0);"><${e.meeting_status}></span>`
+                `<span style="color:green;"><${e.meeting_status}></span>`
         }
         else if (e.meeting_status == '자리없음') {
             status_and_title =
@@ -1014,15 +1013,15 @@ async function placeDetailView(place_id, page = 1) {
                     <div class="place-detail-category">
                         <div>${category}${detail_category}</div>
                     </div>
-                    <div id="place-container-count-comment${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
+                    <div id="place-container-count-comment${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; ">
                         <img src="static/image/chat.png">
                         ${comment_count}
                     </div>
-                    <div id="place-container-count-like${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
+                    <div id="place-container-count-like${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; ">
                         <img src="static/image/heart (2).png">
                         ${like_count}
                     </div>
-                    <div id="place-container-count-book${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; opacity: 0.8;">
+                    <div id="place-container-count-book${place_id}" class="place-container-count-img" style="margin-left:0px; margin-right:12px; ">
                         <img src="static/image/bookmark (2).png">
                         ${book_count}
                     </div>
@@ -1039,7 +1038,7 @@ async function placeDetailView(place_id, page = 1) {
             <hr>
             <div class="place-detail-content">
                 <div class="place-detail-content-grid">
-                    <div>
+                    <div class="place-detail-content-grid-1" >
                         <div class="place-detail-font-gray">주소</div>
                         <div class="place-detail-font-gray">카테고리</div>
                         <div class="place-detail-font-gray">가격대</div>
@@ -1047,7 +1046,7 @@ async function placeDetailView(place_id, page = 1) {
                         <div class="place-detail-font-gray">휴일</div>
                         <div class="place-detail-font-gray" style="margin-top: 20px;">내용</div>
                     </div>
-                    <div>
+                    <div class = "place-detail-content-grid-2">
                         <div style="margin-bottom:10px">${address}</div>
                         <div style="margin-bottom:10px">${category}${detail_category}</div>
                         <div style="margin-bottom:10px">${price}</div>
@@ -1060,6 +1059,7 @@ async function placeDetailView(place_id, page = 1) {
                 </div>
             </div>
             <hr>
+            <div class="place-comment-section">
             <div class="create_comment_box">
                 <div>
                     <textarea name="" id="comments" class="textareaCommentclass" placeholder="댓글을 입력해주세요" cols="110" rows="4"></textarea>
@@ -1070,6 +1070,7 @@ async function placeDetailView(place_id, page = 1) {
             <h4>댓글</h4>
             <hr>
             ${comment}
+            </div>
             </div>
         </div>
     

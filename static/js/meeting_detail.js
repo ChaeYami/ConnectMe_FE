@@ -74,7 +74,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         ` 
 <div>
     <p><small>${meeting_city} </p>
-    <h2  >${title}</h2>
+    <h1  >${title}</h1>
     <hr>
         <div style = "display:flex;">
             <div style="width:250px; border-right:solid 0.6px">

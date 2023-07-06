@@ -22,7 +22,7 @@
 body {
     /* width: 70vw; */
     margin: 120px auto 0px auto;
-    background-color: #173247;
+    background-color: #213949;
     /* max-width: 900px; */
 }
 
@@ -48,24 +48,51 @@ h2 {
     background-color: white;
     height: 80px;
 }
-.top-nav a{
+
+.top-nav a {
     color: black;
     font-weight: bold;
 }
-.top-nav a:hover { 
-    animation-duration: 3s; 
-    animation-name: rainbow; 
-    animation-iteration-count: infinite; } 
-  @keyframes rainbow {     
-   0% { color: #ff2a2a; }
-   15% { color: #ff7a2a; }
-   30% { color: #ffc52a; }
-   45% { color: #43ff2a; }
-   60% { color: #2a89ff; }
-   75% { color: #202082; }
-   90% { color: #6b2aff; } 
-   100% { color: #e82aff; }
-  }
+
+.top-nav a:hover {
+    animation-duration: 3s;
+    animation-name: rainbow;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rainbow {
+    0% {
+        color: #ff2a2a;
+    }
+
+    15% {
+        color: #ff7a2a;
+    }
+
+    30% {
+        color: #ffc52a;
+    }
+
+    45% {
+        color: #43ff2a;
+    }
+
+    60% {
+        color: #2a89ff;
+    }
+
+    75% {
+        color: #202082;
+    }
+
+    90% {
+        color: #6b2aff;
+    }
+
+    100% {
+        color: #e82aff;
+    }
+}
 
 .top-nav .items {
     max-width: 900px;
@@ -75,8 +102,15 @@ h2 {
     justify-items: center;
     align-items: center;
     margin: 10px auto;
+
+
 }
 
+@media screen and (max-width: 800px) {
+    .top-nav-small-line {
+        display: none;
+    }
+}
 
 .top-nav-line-bar {
     max-width: 1000px;
@@ -87,6 +121,10 @@ h2 {
     align-items: center;
     margin: auto;
     height: 5px;
+
+    @media screen and (max-width: 800px) {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 
 .top-nav-small-line {
@@ -117,7 +155,8 @@ h2 {
     background-color: #d3eafbb9;
     height: auto;
     border-radius: 10px;
-    transition: margin-bottom 0.3s ease; /* transition 속성 설정 */
+    transition: margin-bottom 0.3s ease;
+    /* transition 속성 설정 */
     font-weight: bold;
 }
 
@@ -135,6 +174,7 @@ h2 {
 
 .bot-nav a {
     padding: 10px;
+    color: black;
 }
 
 .bot-nav-content {

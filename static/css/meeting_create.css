@@ -14,8 +14,8 @@
 }
 
 .create_form {
-    width: 500px;
-    margin: 45px auto;
+    margin: 20px auto;
+    padding: 10px ;
 }
 
 
@@ -33,8 +33,9 @@
 }
 
 .group {
+    width: 80%;
     position: relative;
-    margin: 30px 0;
+    margin: 30px auto;
 }
 
 .group>textarea {
@@ -42,12 +43,12 @@
 }
 
 .create_input {
-    background: #b9b4b4;
-    color: #f1efef;
+    background: #ffffffaf;
+    color: #000000;
     font-size: 18px;
     padding: 10px 10px 10px 5px;
     display: block;
-    width: 500px;
+    width: 100%;
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #c6c6c6;
@@ -62,8 +63,9 @@
 }
 
 .file_input[type="file"] {
+    width: 70%;
     position: relative;
-    width: 1000px;
+    margin: 30px auto;
 }
 
 .file_input[type="file"]::file-selector-button {
@@ -143,7 +145,7 @@
 }
 
 .create_label {
-    color: #e9e9e9;
+    color: #464646;
     font-size: 16px;
     font-weight: normal;
     position: absolute;
