@@ -313,7 +313,6 @@ async function recommendHotPlace() {
     let response_json = await response.json();
 
     response_json['results'].slice(0, 2).forEach((e, i) => {
-        console.log(e)
         let place_id = e.id
         let name = e.title
         let address = e.address
