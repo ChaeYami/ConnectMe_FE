@@ -286,16 +286,17 @@ async function createPlace() {
 
 
     if (response.status == 200) {
-        alert("추천 장소가 등록되었습니다.");
+        swal("추천 장소가 등록되었습니다.", '', 'success');
         window.location.replace(`${FRONTEND_BASE_URL}/place_view.html`);
     } else if (response.status == 400) {
         for (let key in response_json) {
-            alert(`${response_json[key]}`);
-            if (response_json[key] == '이미지 크기는 1MB를 초과할 수 없습니다.') {
-                document.querySelector('#image_container').innerHTML = '';
-                document.querySelector('#images').value = '';
-            }
-            break
+            swal(`${response_json[key]}`, '', 'warning')
+                .then((value) => {
+                    if (response_json[key] == '이미지 크기는 1MB를 초과할 수 없습니다.') {
+                        document.querySelector('#image_container').innerHTML = '';
+                        document.querySelector('#images').value = '';
+                    }
+                });
         }
     }
 }
@@ -1459,10 +1460,10 @@ async function placeBook(place_id) {
 
     if (response_json["message"] == "북마크") {
         book['src'] = "static/image/bookmark (1).png"
-        alert("북마크가 추가되었습니다.");
+        swal("북마크가 추가되었습니다.",'');
     } else {
         book['src'] = "static/image/bookmark.png"
-        alert("북마크가 취소되었습니다.");
+        swal("북마크가 취소되었습니다.",'');
     }
 
     const bookCountElements = document.querySelector(`#place-container-count-book${place_id}`);
@@ -1486,10 +1487,11 @@ async function placeLike(place_id) {
 
     if (response_json["message"] == "좋아요") {
         like_id['src'] = "static/image/heart (1).png"
-        alert("좋아요.");
+        swal("좋아요 완료",'')
     } else {
         like_id['src'] = "static/image/heart.png"
-        alert("좋아요 취소!");
+        swal("좋아요 취소",'');
+
     }
 
     const likeCountElements = document.querySelector(`#place-container-count-like${place_id}`);

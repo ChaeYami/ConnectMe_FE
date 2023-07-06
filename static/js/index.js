@@ -30,11 +30,22 @@ $(document).ready(function () {
 
     const params = new URLSearchParams(window.location.search).get('showAPI');
     if (params) {
-        if (confirm("위치권한에 동의하시겠습니까?")) {
-            navigator.geolocation.getCurrentPosition(SuccessLocation, null);
-        } else {
-            navigator.geolocation.getCurrentPosition(null, onGeoError);
-        }
+
+        swal({
+            title: "위치권한에 동의하시겠습니까?",
+            text: "맞춤 추천에 활용됩니다.",
+            icon: "",
+            buttons: ["아니오","예"],
+            dangerMode: false,
+        })
+            .then((willConfirm) => {
+                if (willConfirm) {
+                    navigator.geolocation.getCurrentPosition(SuccessLocation, null);
+
+                } else {
+                    navigator.geolocation.getCurrentPosition(null, onGeoError);
+                }
+            });
     }
 });
 
@@ -56,8 +67,10 @@ function setLocalStorage(response) {
         localStorage.setItem("payload", jsonPayload);
         go_api()
     } else {
-        alert(response_json.error);
-        window.location.replace('login.html')
+        swal(`${response_json.error}`, '', 'warning')
+            .then((value) => {
+                window.location.replace('login.html')
+            });
     }
 }
 
@@ -152,7 +165,7 @@ async function recommend(filter) {
 
 
         }, error: function () {
-            alert(response.status);
+            swal(`${response.status}`, '');
         }
     })
 
@@ -236,7 +249,7 @@ async function meetingList() {
 
 
         }, error: function () {
-            alert(response.status);
+            swal(`${response.status}`, '');
         }
 
 
@@ -277,7 +290,7 @@ async function counselList() {
 
 
         }, error: function () {
-            alert(response.status);
+            swal(`${response.status}`, '');
         }
     })
 

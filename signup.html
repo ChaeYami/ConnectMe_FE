@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="static/image/ConnectME - icon.png">
+    <!-- swal CDN -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- CSS -->
     <link rel="stylesheet" href="static/css/base.css">
@@ -72,7 +74,7 @@
                     <label for="phone">'-'을 제외한 전화번호</label>
                 </div>
 
-                <button style="height: 50px; margin-left:20px;" onclick="certifyPhoneSignup()">인증번호 발송</button>
+                <button style="height: 50px; margin-left:20px;" onclick="certifyPhoneSignup();startCountdown()">인증번호 발송</button>
             </div>
 
 
@@ -81,7 +83,7 @@
                     <input type="text" name="auth-num" id="auth-num" placeholder="인증번호 입력">
                     <label for="auth-num">인증번호 (4자리)</label>
                 </div>
-
+                <div class="countdown" id="countdown">5:00</div>
                 <button style="height: 50px; margin-left:20px;" onclick="ConfirmPhoneSignup()">인증번호 확인</button>
             </div>
 

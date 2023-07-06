@@ -299,10 +299,10 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`).then(res => res.json()).then
                     <div class ="comment-text">
                     <p id="now_comment${id}" style="display:block;">[${user}] ${content} ${comment_edit}</p>
                     </div>
-                    <p id="p_comment_update_input${id}" style="display:none;"/><input class="reply-input" id="comment_update_input${id}" type="text"/> <button class="button-blue" onclick="commentUpdateConfrim(${id})">완료</button> <button class="button-white" onclick="comment_update_handle(${id})">취소하기</button></p>
+                    <p id="p_comment_update_input${id}" style="display:none;"><input class="reply-input" id="comment_update_input${id}" type="text"/> <button class="button-blue" onclick="commentUpdateConfrim(${id})">완료</button> <button class="button-white" onclick="comment_update_handle(${id})">취소하기</button></p>
                     <p> <small> ${updated_at}</small></p>
                     
-                    <p id="p_reply_create_input${id}" style="display:none;"/><input class="reply-input" id="reply_create_input${id}" type="text"/> <button class="button-blue" onclick="replyCreateConfrim(${id})">완료</button> <button class="button-white" onclick="reply_create_handle(${id})">취소하기</button></p>
+                    <p id="p_reply_create_input${id}" style="display:none;"><input class="reply-input" id="reply_create_input${id}" type="text"/> <button class="button-blue" onclick="replyCreateConfrim(${id})">완료</button> <button class="button-white" onclick="reply_create_handle(${id})">취소하기</button></p>
                     <div class=comment_btns>
                     <button id="reply_create_btn${id}" class="commentbtn" onclick="reply_create_handle(${id})">답글 작성하기</button>
                     </div>
@@ -336,7 +336,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`).then(res => res.json()).then
             <div style="margin-left: 50px;">
             <div class ="comment-text">
             <p id="now_reply_comment${id}" style="display:block;">[${user}] ${content} ${reply_edit}</p>
-            <p id="p_reply_update_input${id}" style="display:none;"/>
+            <p id="p_reply_update_input${id}" style="display:none;">
                 <input class="reply-input" id="reply_update_input${id}" value="${content}" type="text"/> 
                 <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${id})">수정하기</button>
                 <button type="button" class="button-white" onclick="replyCancel(${meeting_id}, ${id})">취소하기</button>
@@ -356,23 +356,35 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`).then(res => res.json()).then
 
 // ================================ 모임 게시글 삭제 API 시작 ================================
 async function meetingDelete() {
-    if (confirm("삭제하시겠습니까?")) {
-        let token = localStorage.getItem("access")
-        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        if (response.status == 204) {
-            swal("삭제 완료", '', 'success')
-            await location.replace(`${FRONTEND_BASE_URL}/meeting_list.html`)
-        }
-        else {
-            swal("권한이 없습니다.", '', 'error')
-        }
-    }
+    swal({
+        title: "삭제하시겠습니까?",
+        text: "삭제한 게시글은 되돌릴 수 없습니다.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then(async (willDelete) => {
+            if (willDelete) {
+                let token = localStorage.getItem("access")
+                let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                if (response.status == 204) {
+                    swal("삭제 완료", '', 'success')
+                        .then((value) => {
+                            go_meetingList()
+                        });
+                } else {
+                    swal("권한이 없습니다.", '', 'error')
+                }
+            }
+        });
 }
+
+
 // ================================ 모임 게시글 삭제 API 끝 ================================
 
 // ================================ 모임 게시글 상세보기 북마크 시작 ================================
@@ -424,32 +436,56 @@ async function meetingCommentCreate() {
                 });
         }
         else {
-            alert("입력 해주세요")
+            swal("입력 해주세요", '', 'warning')
         }
 
     } else {
-        alert("로그인 해주세요")
+        swal("로그인 해주세요", '', 'warning')
     }
 }
 // ================================ 모임 게시글 상세보기 댓글 작성 끝 ================================
 
 // ================================ 모임 게시글 상세보기 댓글 삭제 시작 ================================
+
+
+
+
+
+
 async function commentDelete(comment_id) {
-    if (confirm("삭제하시겠습니까?")) {
-        let token = localStorage.getItem("access")
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
-        if (token) {
-            let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/${comment_id}`, {
-                method: 'DELETE',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
-            else (alert("권한이 없습니다."))
-        } else { alert("로그인 해주세요") }
-    }
+
+    swal({
+        title: "삭제하시겠습니까?",
+        text: "삭제한 댓글은 되돌릴 수 없습니다.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then(async (willDelete) => {
+            if (willDelete) {
+                let token = localStorage.getItem("access")
+                let meeting_id = new URLSearchParams(window.location.search).get('id');
+                let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/${comment_id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                if (response.status == 204) {
+                    swal("삭제 완료", '', 'success')
+                        .then((value) => {
+                            window.location.reload()
+                        });
+                }
+                else {
+                    swal("권한이 없습니다.", '', 'error')
+                }
+            }
+        });
+
 }
+
+
 // ================================ 모임 게시글 상세보기 댓글 삭제 끝 ================================
 
 // ================================ 모임 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 시작 ================================
@@ -492,9 +528,18 @@ async function commentUpdateConfrim(id) {
             },
             body: formData
         })
-        if (response.status == 200) { alert("수정 완료"), window.location.reload() }
-        else if (response.status == 400) { alert("입력 해주세요") }
-        else (alert("권한이 없습니다."))
+        if (response.status == 200) {
+            swal("수정 완료", '', 'success')
+                .then((value) => {
+                    window.location.reload()
+                });
+        }
+        else if (response.status == 400) {
+            swal("입력 해주세요", '', 'warning')
+        }
+        else {
+            swal("권한이 없습니다.", '', 'error')
+        }
     } else { alert("로그인 해주세요") }
 }
 // ================================ 모임 게시글 상세보기 댓글 수정 끝 ================================
@@ -539,9 +584,18 @@ async function replyUpdateConfrim(reply_id) {
             },
             body: formData
         })
-        if (response.status == 200) { alert("수정 완료"), window.location.reload() }
-        else if (response.status == 400) { alert("입력해주세요") }
-        else { swal("권한이 없습니다.", '', 'error') }
+        if (response.status == 200) {
+            swal("수정 완료", '', 'success')
+                .then((value) => {
+                    window.location.reload()
+                });
+        }
+        else if (response.status == 400) {
+            swal("입력 해주세요", '', 'warning')
+        }
+        else {
+            swal("권한이 없습니다.", '', 'error')
+        }
 
     } else { alert("로그인 해주세요") }
 }
@@ -549,21 +603,38 @@ async function replyUpdateConfrim(reply_id) {
 
 // ================================ 모임 게시글 상세보기 대댓글 삭제 시작 ================================
 async function replyDelete(reply_id) {
-    if (confirm("삭제하시겠습니까?")) {
-        let token = localStorage.getItem("access")
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
-        if (token) {
-            let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/reply/${reply_id}`, {
-                method: 'DELETE',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
-            else { swal("권한이 없습니다.", '', 'error') }
 
-        } else { alert("로그인 해주세요") }
-    }
+    swal({
+        title: "삭제하시겠습니까?",
+        text: "삭제한 댓글은 되돌릴 수 없습니다.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then(async (willDelete) => {
+            if (willDelete) {
+                let token = localStorage.getItem("access")
+                let meeting_id = new URLSearchParams(window.location.search).get('id');
+                let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/reply/${reply_id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                if (response.status == 204) {
+                    swal("삭제 완료", '', 'success')
+                        .then((value) => {
+                            window.location.reload()
+                        });
+                }
+                else {
+                    swal("권한이 없습니다.", '', 'error')
+                }
+            }
+        });
+
+
+
 }
 // ================================ 모임 게시글 상세보기 대댓글 삭제 끝 ================================
 
@@ -584,12 +655,19 @@ async function replyCreateConfrim(reply_id) {
             },
             body: formData
         })
-        if (response.status == 400) { alert("입력해주세요") }
-        else {
-            alert("작성 완료")
-            window.location.reload()
+        if (response.status == 200) {
+            swal("댓글 작성 완료", '', 'success')
+                .then((value) => {
+                    window.location.reload()
+                });
         }
-    } else { "로그인 해주세요" }
+        else if (response.status == 400) {
+            swal("입력 해주세요", '', 'warning')
+        }
+
+    } else {
+        swal("로그인 해주세요", '', 'warning')
+    }
 }
 // ================================ 모임 게시글 상세보기 대댓글 작성 끝 ================================
 
@@ -616,7 +694,7 @@ async function handleJoinmeeting() {
     let token = localStorage.getItem("access")
     if (token) {
         if (meeting_status == "모집종료") {
-            alert("모집종료 된 모임입니다.")
+            swal("모집종료 된 모임입니다.", '')
         } else {
             let meeting_id = new URLSearchParams(window.location.search).get('id');
             let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/join_meeting/`, {
@@ -626,14 +704,20 @@ async function handleJoinmeeting() {
                 },
             })
             if (response.status === 200) {
-                alert("참가취소")
-                location.reload()
+                swal("참가 취소", '')
+                    .then((value) => {
+                        location.reload();
+                    });
             } else if (num_person_meeting == join_meeting_count) {
-                alert("자리가 없습니다.")
-                location.reload()
+                swal("자리가 없습니다.", '')
+                    .then((value) => {
+                        location.reload();
+                    });
             } else {
-                alert("참가하기")
-                location.reload()
+                swal("참가 약속 완료!", '')
+                    .then((value) => {
+                        location.reload();
+                    });
             }
         }
     }
@@ -864,49 +948,21 @@ async function updateMeeting() {
     })
         .then((response) => response.json())
         .then((data) => {
-            if (data['non_field_errors']) { alert(data['non_field_errors']) } else {
+            if (data['non_field_errors']) {
+                swal(`${data['non_field_errors']}`, '', 'warning')
+                    .then((value) => {
+                        document.querySelector('#image_container').innerHTML = ''
+                        const fileInput = document.getElementById('meeting_image');
+                        fileInput.value = '';
+                    });
+            } else {
+                swal('수정 되었습니다.','','success')
+                    .then((value) => {
+                        location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
+                    });
 
-                alert('수정 되었습니다.')
-                location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
             }
         });
-
-
-
-
-
-    let response_json = await response.json();
-
-    if (response.status == 200) {
-        alert('수정되었습니다.')
-        location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
-    } else {
-        if (response_json.meeting_city) {
-            alert("모임 지역을 선택해주세요")
-        }
-        else if (response_json.num_person_meeting) {
-            alert("모집 인원수를 본인 포함 두 명 이상으로 입력 해주세요.")
-        }
-        else if (response_json.place_title) {
-            alert("모임 장소 이름을 입력해주세요")
-        }
-        else if (response_json.place_address) {
-            alert("모임 주소를 입력해주세요")
-        }
-        else if (response_json.title) {
-            alert("제목을 입력해주세요")
-        }
-        else if (response_json.content) {
-            alert("내용을 입력해주세요")
-        }
-        else if (response_json.non_field_errors) {
-            alert(response_json.non_field_errors)
-            document.querySelector('#image_container').innerHTML = ''
-            const fileInput = document.getElementById('meeting_image');
-            fileInput.value = '';
-        }
-    }
-
 
 }
 //================================ 모임 게시글 수정 API 끝 ================================ 

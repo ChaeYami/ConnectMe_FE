@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" href="static/image/ConnectME - icon.png">
+    <!-- swal CDN -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
     <!-- css -->
@@ -67,12 +69,14 @@
                     <label for="phone">변경할 전화번호를 입력하세요</label>
                     <input type="text" id="phone" pattern="\d{10,11}" placeholder="01012345678">
                 </div>
-                <button onclick="certifyPhone()">인증번호 발송</button>
+                <button onclick="certifyPhone(); startCountdown()">인증번호 발송</button>
             </div>
             <div id="auth-num-box" style="display: none;">
+                
                 <div class="input-box">
                     <input type="text" name="auth-num" id="auth-num" placeholder="인증번호 입력">
                 </div>
+                <div class="countdown" id="countdown">5:00</div>
                 <button onclick="ConfirmPhone()">인증번호 확인</button>
             </div>
             <button id="submit-button" class="submit-button" onclick="editPhone()" style="display: none;">수정완료</button>

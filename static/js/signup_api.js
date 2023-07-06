@@ -3,6 +3,45 @@ if (localStorage.getItem("kakao") || localStorage.getItem("google") || localStor
     alert("로그인됨")
 }
 
+let timer;
+let isRunning = false;
+
+// 인증번호 발송하고 타이머 함수 실행
+function startCountdown(){
+    	// 남은 시간
+	let leftSec = 5* 60,
+	display = document.querySelector('#countdown');
+	// 이미 타이머가 작동중이면 중지
+	if (isRunning){
+	   clearInterval(timer);
+	} else {
+    	isRunning = true;
+    }
+     startTimer(leftSec, display);
+}
+
+function startTimer(count, display) {
+        let minutes, seconds;
+        timer = setInterval(function () {
+        minutes = parseInt(count / 60, 10);
+        seconds = parseInt(count % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        // 타이머 끝
+        if (--count < 0) {
+	     clearInterval(timer);
+	     display.textContent = "";
+	     isRunning = false;
+        }
+    }, 1000);
+}
+
+
+
 // 회원가입
 
 async function signup() {
@@ -52,8 +91,10 @@ async function signupButton() {
     const response = await signup();
 
     if (response.status == 201) {
-        alert("이메일 발송 완료. 이메일 인증 후 회원가입을 완료해주세요")
-        window.location.replace(`login.html`)
+        swal("이메일 발송 완료", "이메일 인증 후 회원가입을 완료해주세요")
+            .then((value) => {
+                window.location.replace(`login.html`)
+            })
     }
 }
 
@@ -85,11 +126,11 @@ async function certifyPhoneSignup() {
         },
 
         success: function (response) {
-            alert(response.message)
+            swal(`${response.message}`, '')
             $("#auth-num-box").attr("style", "display:flex;");
 
         }, error: function (response) {
-            alert(response.responseJSON.message)
+            swal(`${response.responseJSON.message}`, '', 'warning')
         }
     })
 }
@@ -109,12 +150,13 @@ async function ConfirmPhoneSignup() {
         },
 
         success: function (response) {
-            alert(response.message)
-            $("#phone-front").prop("disabled", true);
-            $("#phone").prop("disabled", true);
-
+            swal(`${response.message}`, '')
+                .then((value) => {
+                    $("#phone-front").prop("disabled", true);
+                    $("#phone").prop("disabled", true);
+                });
         }, error: function (response) {
-            alert(response.responseJSON.message)
+            swal(`${response.responseJSON.message}`, '')
         }
     })
 }

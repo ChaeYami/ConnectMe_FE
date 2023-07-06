@@ -45,25 +45,29 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px;
+    color :white;
 
 }
 
 #input-box {
     margin: 50px auto;
     width: 500px;
-
     @media screen and (max-width: 700px) {
         width: 400px;
 
     }
 }
-
+h2{
+    color: white;
+}
 .input-box>input {
     background: transparent;
     border: none;
     padding: 10px;
     font-size: 14pt;
     width: 90%;
+    color: white;
+
 }
 
 .input-box>label {
@@ -94,6 +98,7 @@
 
 .certify-phone {
     display: flex;
+    
 }
 
 .certify-phone button {
@@ -105,9 +110,15 @@
     font-weight: bold;
     cursor: pointer;
     margin: 20px;
+    width: 150px;
+    height: 50px
 
 }
-
+#auth-num-box{
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+}
 #auth-num-box button {
     background-color: #9bb7da;
     border: none;

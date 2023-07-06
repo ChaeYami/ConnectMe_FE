@@ -130,9 +130,9 @@ async function createMeeting(place_id = -1) {
                         .then((value) => {
                             location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
                         });
-                    
 
-                    
+
+
                 } else {
                     if (data.meeting_city) {
                         swal('모임 지역을 선택해주세요', '', 'warning')
@@ -153,10 +153,12 @@ async function createMeeting(place_id = -1) {
 
                         swal("내용을 입력해주세요", '', 'warning')
                     } else if (data.non_field_errors) {
-                        alert(data.non_field_errors)
-                        document.querySelector('#image_container').innerHTML = ''
-                        const fileInput = document.getElementById('meeting_image');
-                        fileInput.value = '';
+                        swal(`${data.non_field_errors}`, '', 'warning')
+                            .then((value) => {
+                                document.querySelector('#image_container').innerHTML = ''
+                                const fileInput = document.getElementById('meeting_image');
+                                fileInput.value = '';
+                            });
                     }
                 }
             }

@@ -10,7 +10,7 @@ async function CreateCounsel() {
     if (checked) {
         formdata.append("is_anonymous", 'True');
 
-    }else{
+    } else {
         formdata.append("is_anonymous", 'False');
 
     }
@@ -26,14 +26,16 @@ async function CreateCounsel() {
     const response_json = await response.json();
 
     if (response.status == 200) {
-        alert("고민 상담이 등록되었습니다.");
-        window.location.replace(`${FRONTEND_BASE_URL}/counsel_list.html`);
+        swal("고민 상담이 등록되었습니다.", '', 'success')
+            .then((value) => {
+                window.location.replace(`${FRONTEND_BASE_URL}/counsel_list.html`);
+            });
+        
     } else if (response.status == 400) {
 
         for (let key in response_json) {
 
-            alert(`${response_json[key]}`);
-            break
+            swal(`${response_json[key]}`,'','warning');
         }
     }
 }

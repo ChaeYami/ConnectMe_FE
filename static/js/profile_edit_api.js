@@ -127,7 +127,7 @@ async function updateProfile() {
 
     if (file) {
         formData.append('profile_img', file);
-    } else {
+    } else {alert
         formData.append('profile_img', '');
 
     }
@@ -142,23 +142,24 @@ async function updateProfile() {
     });
 
     if (response.status == 200) {
-        alert("수정 완료")
+        swal("수정 완료",'',"success")
         window.location.replace(`/profile.html?user_id=${user_id}`)
     } else if (response.status == 403) {
-        alert('권한이 없습니다!')
+        swal('권한이 없습니다!','',"error")
     } else {
         const errorData = await response.json();
         const errorArray = Object.entries(errorData);
 
         if (errorArray[1][1].nickname) {
-            swal(`${errorArray[1][1].nickname}`,'','warning')
+            swal(`${errorArray[1][1].nickname}`, '', 'warning')
         } else if (errorArray[0][1].age) {
-            swal("error",`${errorArray[0][1].age}`,'','warning')
+            swal(`${errorArray[0][1].age}`, '', 'warning')
         } else if (errorArray[0][1].non_field_errors) {
-            alert(errorArray[0][1].non_field_errors)
-            $('#profile_preview').attr('src', 'static/image/user.png');;
-            $('#profile_img').val('');
-
+            swal(`${errorArray[0][1].non_field_errors}`, '', 'warning')
+                .then((value) => {
+                    $('#profile_preview').attr('src', 'static/image/user.png');;
+                    $('#profile_img').val('');
+                });
         }
     }
 }
