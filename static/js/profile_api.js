@@ -168,10 +168,8 @@ function getChatRoom() {
             let chat_url = '/chat_room.html?room=' + room_name;
             window.open(chat_url);
         },
-        error: function (xhr) {
-            // const errorData = xhr.responseJSON;
-            // const errorArray = Object.entries(errorData);
-            // alert(errorArray[0][1]);
+        error: function () {
+            alert("채팅방 입장에 실패했습니다.")
         }
     });
 }
