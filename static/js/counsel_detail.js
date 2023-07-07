@@ -321,12 +321,12 @@ async function counselPreUpdate(counsel_id) {
 
     if (response_json['counsel'].is_anonymous) {
         anonymous = `
-        <div><input type="checkbox" id="counsel-edit-anonymous-checkbox" checked>
+        <div style="width: 70%; margin: 0 auto;"><input type="checkbox" id="counsel-edit-anonymous-checkbox" checked>
             <label for="anonymous-checkbox">익명</label>
         </div>`
     } else {
         anonymous = `
-        <div><input type="checkbox" id="counsel-edit-anonymous-checkbox">
+        <div style="width: 70%; margin: 0 auto;"><input type="checkbox" id="counsel-edit-anonymous-checkbox">
             <label for="anonymous-checkbox">익명</label>
         </div>`
     }
