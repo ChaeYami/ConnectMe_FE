@@ -9,11 +9,13 @@
     border-radius: 10px;
     color: white;
 }
-.comment_card_class hr{
-    background:rgb(172, 172, 172);
-    height:1px;
-    border:0;
+
+.comment_card_class hr {
+    background: rgb(172, 172, 172);
+    height: 1px;
+    border: 0;
 }
+
 .create_comment_box {
     width: 100%;
     margin: 20px auto 10px auto;
@@ -142,14 +144,16 @@
     font-size: 13pt;
     min-height: 100px;
 }
+
 .meeting_detail_card_class hr {
-    background:rgb(0, 0, 0);
-    height:1px;
-    border:0;
+    background: rgb(0, 0, 0);
+    height: 1px;
+    border: 0;
 }
+
 .meeting_detail_card_class {
     width: 100%;
-    margin: 70px auto auto;
+    margin: auto;
     /* border: 1px solid rgb(165, 165, 165); */
     padding: 10px;
     border-radius: 10px;
@@ -163,6 +167,23 @@
     margin: 150px auto;
 }
 
+.list-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.list-btn button {
+    background-color: #c9dbcf;
+    border: none;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    height: 30px;
+    font-size: 11pt;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 20px 0px;
+}
+
 .place-detail-content {
     background-color: rgba(237, 245, 255, 0.781);
     color: rgb(0, 0, 0);
@@ -172,9 +193,11 @@
     border-radius: 10px;
     width: 100%;
 }
-.place-detail-content a{
-    color : black
+
+.place-detail-content a {
+    color: black
 }
+
 .place-detail-content-grid {
     display: grid;
     grid-template-columns: 100px 1fr 250px;
@@ -316,7 +339,7 @@
 .create_form {
     width: 800px;
     margin: 20px auto;
-    padding: 10px ;
+    padding: 10px;
 }
 
 
@@ -586,4 +609,3 @@
 }
 
 /********* 이미지 미리보기 끝 **********/
-

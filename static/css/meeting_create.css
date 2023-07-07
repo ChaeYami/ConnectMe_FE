@@ -53,6 +53,7 @@
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #c6c6c6;
+    white-space: pre-line;
 }
 
 .file_class {
@@ -205,6 +206,7 @@
 .btn.btn-submit {
     background: #2196F3;
     color: #bce0fb;
+    cursor: pointer;
 }
 
 .btn.btn-submit:hover {
@@ -214,6 +216,8 @@
 
 .btn.btn-cancel {
     background: #eee;
+    cursor: pointer;
+
 }
 
 .btn.btn-cancel:hover {
