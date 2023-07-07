@@ -154,10 +154,10 @@ async function addFriend(user_id) {
     });
 
     if (response.status == 201) {
-        alert("친구신청을 보냈습니다.")
+        swal("친구신청을 보냈습니다.", '', 'success')
     } else {
         const errorData = await response.json();
         const errorArray = Object.entries(errorData);
-        alert(errorArray[0][1]);
+        swal(`${errorArray[0][1]}`, '', 'warning');
     }
 }

@@ -5,7 +5,6 @@ let page_data = 0;
 let func_selected = '';
 let urlParams = new URLSearchParams(window.location.search).get("id");
 
-
 window.onload = function () {
     if (urlParams) {
         func_selected = 'placeDetailView'
@@ -16,8 +15,10 @@ window.onload = function () {
     }
 };
 
-// 카테고리 함수
+// 장소추천 정렬, 카테고리
+
 $(document).ready(function () {
+    // 카테고리 함수 시작
     $('#category-box').mouseenter(function () {
         hoverCategory(true);
     });
@@ -32,7 +33,7 @@ $(document).ready(function () {
         $f.find('i').attr('class', icon);
         $('#category-select').css('z-index', '');
         $('#category-select').css('display', '');
-        placeView($f.find('label').text(text)[0].innerText)
+        placeView($f.find('label').text(text)[0].innerText);
     });
 
     $('.field').click(function (e) {
@@ -45,6 +46,78 @@ $(document).ready(function () {
         $('#category-select').css('z-index', '-1');
         $('#category-select').css('display', 'none');
     });
+    // 카테고리 함수 끝
+
+    // 정렬 함수 시작
+    $('#select-box1').on('click', function () {
+        var dropdownList = $(this).find('.select-box__list');
+        if (dropdownList.css('opacity') === '1') {
+            // 이미 열려있는 경우 닫기
+            dropdownList.css('opacity', '0');
+            dropdownList.css('animation-name', 'HideList');
+        } else {
+            // 닫혀있는 경우 열기
+            dropdownList.css('opacity', '1');
+            dropdownList.css('animation-name', 'none');
+        }
+    });
+
+    $('#select-box1').on('click', '.select-box__list li', function () {
+        var selectedValue = $(this).find('label').attr('for');
+        // 예시 함수 호출 - select-box 변경
+        placeSearchView(selectedValue);
+
+        // 리스트 닫기
+        $(this).closest('.select-box__list').css('opacity', '0');
+        $(this).closest('.select-box__list').css('animation-name', 'HideList');
+    });
+
+    // 드롭다운 표시 함수
+    function showDropdown() {
+        const dropdownList = this.querySelector('.select-box__list');
+        dropdownList.style.opacity = '1';
+        dropdownList.style.animationName = 'none';
+    }
+
+    // 드롭다운 숨김 함수
+    function hideDropdown() {
+        const dropdownList = this.querySelector('.select-box__list');
+        dropdownList.style.opacity = '0';
+        dropdownList.style.animationName = 'HideList';
+    }
+
+    const selectBox = document.getElementById('select-box1');
+    selectBox.addEventListener('mouseenter', showDropdown);
+    selectBox.addEventListener('mouseleave', hideDropdown);
+    // 정렬 함수 끝
+    // 검색 함수 시작
+    $('#select-box2').on('click', function () {
+        var dropdownList = $(this).find('.select-box__list');
+        if (dropdownList.css('opacity') === '1') {
+            // 이미 열려있는 경우 닫기
+            dropdownList.css('opacity', '0');
+            dropdownList.css('animation-name', 'HideList');
+        } else {
+            // 닫혀있는 경우 열기
+            dropdownList.css('opacity', '1');
+            dropdownList.css('animation-name', 'none');
+        }
+    });
+
+    $('#select-box2').on('click', '.select-box__list li', function () {
+        var selectedValue = $(this).find('label').attr('for');
+        // 예시 함수 호출 - select-box 
+
+        // 리스트 닫기
+        $(this).closest('.select-box__list').css('opacity', '0');
+        $(this).closest('.select-box__list').css('animation-name', 'HideList');
+    });
+
+    const selectBox2 = document.getElementById('select-box2');
+    selectBox2.addEventListener('mouseenter', showDropdown);
+    selectBox2.addEventListener('mouseleave', hideDropdown);
+    // 검색 함수 끝
+
 });
 
 function hoverCategory(input) {
@@ -213,12 +286,17 @@ async function createPlace() {
 
 
     if (response.status == 200) {
-        alert("추천 장소가 등록되었습니다.");
+        swal("추천 장소가 등록되었습니다.", '', 'success');
         window.location.replace(`${FRONTEND_BASE_URL}/place_view.html`);
     } else if (response.status == 400) {
         for (let key in response_json) {
-            alert(`${response_json[key]}`);
-            break
+            swal(`${response_json[key]}`, '', 'warning')
+                .then((value) => {
+                    if (response_json[key] == '이미지 크기는 1MB를 초과할 수 없습니다.') {
+                        document.querySelector('#image_container').innerHTML = '';
+                        document.querySelector('#images').value = '';
+                    }
+                });
         }
     }
 }
@@ -390,9 +468,29 @@ async function placeView(category_select = '카테고리', pages = 1) {
     setPaging(pages);
 }
 
-// 장소추천 검색하기
-async function placeSearchView(event) {
 
+// 장소추천 검색 구분
+function placeSearchView(sortValue) {
+
+    let searchValue = $('#select-box2 .select-box__current input:checked').val();
+
+    switch (parseInt(searchValue)) {
+        case 1:
+            placeTitleSearchView(sortValue)
+            break;
+
+        case 2:
+            placeTitleSearchView(sortValue)
+            break;
+
+        case 3:
+            placeRegionSearch(sortValue)
+            break;
+    }
+}
+
+// 장소추천 지역 검색하기
+async function placeRegionSearch(sortValue) {
     let container = document.querySelector('#place')
     let place_create = document.querySelector('#place_create')
     let foot = document.querySelector('#myFooter')
@@ -406,30 +504,51 @@ async function placeSearchView(event) {
 
 
     // Select box
-    let selectBox = document.querySelector('.select-box__current');
+    let selectBox = document.querySelector('#select-box1 .select-box__current');
     let selectedValue = selectBox.querySelector('.select-box__input:checked').value;
 
-    switch (parseInt(selectedValue)) {
-        case 1:
-            place_category_input = `?`
-            break;
+    if (sortValue != undefined) {
+        switch (parseInt(sortValue)) {
+            case 1:
+                place_category_input = `?`
+                break;
 
-        case 2:
-            place_category_input = `?`
-            break;
+            case 2:
+                place_category_input = `?ordering=-comment_count&`
+                break;
 
-        case 3:
-            place_category_input = `?ordering=-comment_count&`
-            break;
+            case 3:
+                place_category_input = `?ordering=-likes_count&`
+                break;
 
-        case 4:
-            place_category_input = `?ordering=-likes_count&`
-            break;
+            case 4:
+                place_category_input = `?ordering=-books_count&`
+                break;
+        }
+    } else {
+        switch (parseInt(selectedValue)) {
+            case 1:
+                place_category_input = `?`
+                break;
 
-        case 5:
-            place_category_input = `?ordering=-books_count&`
-            break;
+            case 2:
+                place_category_input = `?`
+                break;
+
+            case 3:
+                place_category_input = `?ordering=-comment_count&`
+                break;
+
+            case 4:
+                place_category_input = `?ordering=-likes_count&`
+                break;
+
+            case 5:
+                place_category_input = `?ordering=-books_count&`
+                break;
+        }
     }
+
 
 
     // 검색 input
@@ -447,7 +566,7 @@ async function placeSearchView(event) {
         place_category_input += `&category=${categoryValue}`
     }
 
-    const response = await fetch(`${BACKEND_BASE_URL}/place/search/${place_category_input}`, {
+    const response = await fetch(`${BACKEND_BASE_URL}/place/region/${place_category_input}`, {
         headers: {
             Authorization: "Bearer " + logined_token,
         },
@@ -486,21 +605,6 @@ async function placeSearchView(event) {
 
         let place = document.querySelector(`#place${place_id}`)
 
-        // 이미지 시작
-        if (image) {
-            place.innerHTML += `
-            <div>
-                <a href="place_view.html?id=${place_id}">
-                    <img class="place-container-img" src="${image['url']}" onclick="placePreUpdateView()">
-                </a>
-            </div>
-            `
-        } else {
-            place.innerHTML += `
-            <div style="width:230px; height:230px;">
-            </div>`
-        }
-        // 이미지 끝
         // 북마크 시작
         let place_book = ``
 
@@ -517,6 +621,33 @@ async function placeSearchView(event) {
             </a>`
         }
         // 북마크 끝
+        // 이미지 시작
+        if (image) {
+            place.innerHTML += `
+            <div class="hotplace-image-div">
+                <a href="place_view.html?id=${place_id}">
+                    <img class="place-container-img" src="${image['url']}" onclick="placePreUpdateView()">
+                </a>
+                ${place_book}
+            </div>
+            `
+        } else {
+            place.innerHTML += `
+            <div class="hotplace-image-div">
+                <a href="place_view.html?id=${place_id}">
+                    <img class="place-container-img" style="object-fit: contain;" src="static/image/ConnectME - 하늘고래.png">
+                </a>
+                ${place_book}
+            </div>`
+        }
+        // 이미지 끝
+        // 모임생성 시작
+        let place_meeting = `
+        <a title="이 장소로 모임 생성하기"> 
+            <img id="book${place_id}" src="static/image/people (1).png" style="margin-top:10px; width: 50px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
+        </a>
+        `
+        // 모임생성 끝
         // edit 버튼 시작
         let place_edit = ``
 
@@ -550,7 +681,230 @@ async function placeSearchView(event) {
                     </div>
                 </div>
                 <div class="place-container-book" id="place-container-book">
+                ${place_meeting}
+                </div>
+            </div>
+            <div class="place-container-address">${address}</div>
+            <div class="place-container-content">${content}</div>
+            <div class="place-container-count">
+                <div id="place-container-count-comment${place_id}" class="place-container-count-img">
+                    <img src="static/image/chat.png">
+                    ${comment_count}
+                </div>
+                <div id="place-container-count-like${place_id}" class="place-container-count-img">
+                    <img src="static/image/heart (2).png">
+                    ${like_count}
+                </div>
+                <div id="place-container-count-book${place_id}" class="place-container-count-img">
+                    <img src="static/image/bookmark (2).png">
+                    ${book_count}
+                </div>
+            </div>
+            <div id="map"></div>
+            
+        </div>
+        <div class="place-container-hr">
+            <hr>
+        </div>
+        `
+        // container html 끝
+    })
+}
+
+// 장소추천 제목 검색하기
+async function placeTitleSearchView(sortValue) {
+
+    let container = document.querySelector('#place')
+    let place_create = document.querySelector('#place_create')
+    let foot = document.querySelector('#myFooter')
+
+    foot.style.display = 'none';
+
+    container.innerHTML = ``
+    place_create.innerHTML = ``
+
+    let place_category_input = ``
+
+
+    // Select box
+    let selectBox = document.querySelector('#select-box1 .select-box__current');
+    let selectedValue = selectBox.querySelector('.select-box__input:checked').value;
+
+    if (sortValue != undefined) {
+        switch (parseInt(sortValue)) {
+            case 1:
+                place_category_input = `?`
+                break;
+
+            case 2:
+                place_category_input = `?ordering=-comment_count&`
+                break;
+
+            case 3:
+                place_category_input = `?ordering=-likes_count&`
+                break;
+
+            case 4:
+                place_category_input = `?ordering=-books_count&`
+                break;
+        }
+    } else {
+        switch (parseInt(selectedValue)) {
+            case 1:
+                place_category_input = `?`
+                break;
+
+            case 2:
+                place_category_input = `?`
+                break;
+
+            case 3:
+                place_category_input = `?ordering=-comment_count&`
+                break;
+
+            case 4:
+                place_category_input = `?ordering=-likes_count&`
+                break;
+
+            case 5:
+                place_category_input = `?ordering=-books_count&`
+                break;
+        }
+    }
+
+
+
+    // 검색 input
+    let searchInput = document.querySelector('#place-search-input');
+    let searchValue = searchInput.value;
+
+    place_category_input += `search=${searchValue}`
+
+
+    // 카테고리
+    let selectedCategory = document.querySelector('.seltext').textContent.trim();
+
+    if (selectedCategory === '식사' || selectedCategory === '주점' || selectedCategory === '카페') {
+        let categoryValue = encodeURIComponent(selectedCategory);
+        place_category_input += `&category=${categoryValue}`
+    }
+
+    const response = await fetch(`${BACKEND_BASE_URL}/place/title/${place_category_input}`, {
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
+        method: "GET",
+    });
+
+    let response_json = await response.json();
+
+    if (JSON.parse(payload)['is_staff']) {
+        place_create.innerHTML += `
+        <a href="place_create.html">
+            <img src="static/image/add.png" style="width:20px">
+        </a>
+        `
+    }
+
+    if (response_json['results'] == '') {
+        container.innerHTML += `<div style="margin-top: 100px; text-align:center;"><h2>일치하는 검색결과가 없습니다.</h2></div>`
+    }
+
+    response_json['results'].forEach((e, i) => {
+        let place_id = e.id
+        let name = e.title
+        let category = e.category
+        let content = e.content
+        let address = e.address
+        let image = e.image
+        let score = e.score
+        let bookmark = e.bookmark
+        let book_count = e.bookmark_count
+        let comment_count = e.comment_count
+        let like_count = e.like_count
+
+        container.innerHTML += `
+        <div id="place${place_id}" class="place-container"></div>`
+
+        let place = document.querySelector(`#place${place_id}`)
+
+        // 북마크 시작
+        let place_book = ``
+
+        if (bookmark.includes(logined_user_id)) {
+
+            place_book = `
+            <a title="북마크">
+                <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
+            </a>`
+        } else {
+            place_book = `
+            <a title="북마크">
+                <img id="book${place_id}" src="static/image/bookmark.png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
+            </a>`
+        }
+        // 북마크 끝
+        // 이미지 시작
+        if (image) {
+            place.innerHTML += `
+            <div class="hotplace-image-div">
+                <a href="place_view.html?id=${place_id}">
+                    <img class="place-container-img" src="${image['url']}" onclick="placePreUpdateView()">
+                </a>
                 ${place_book}
+            </div>
+            `
+        } else {
+            place.innerHTML += `
+            <div class="hotplace-image-div">
+                <a href="place_view.html?id=${place_id}">
+                    <img class="place-container-img" style="object-fit: contain;" src="static/image/ConnectME - 하늘고래.png">
+                </a>
+                ${place_book}
+            </div>`
+        }
+        // 이미지 끝
+        // 모임생성 시작
+        let place_meeting = `
+        <a title="이 장소로 모임 생성하기"> 
+            <img id="book${place_id}" src="static/image/people (1).png" style="margin-top:10px; width: 50px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
+        </a>
+        `
+        // 모임생성 끝
+        // edit 버튼 시작
+        let place_edit = ``
+
+        if (JSON.parse(payload)['is_staff']) {
+            place_edit = `
+            <a>
+                <img src="static/image/edit.png" style="margin-top:10px; width:20px;"
+                    onclick="placePreUpdateView(${place_id})">
+            </a>
+            `
+        }
+        // edit 버튼 끝
+        // container html 시작
+        place.innerHTML += `
+        <div class="place-container-text">
+            <div class="place-container-main">
+                <div class="place-container-title">
+                    <div class="place-container-title0">
+                        <h2>${i + 1}.</h2>
+                    </div>
+                    <div class="place-container-title1">
+                        <h2><a class="place-container-title-a" href="place_view.html?id=${place_id}">${name}</a></h2>
+                    </div>
+                    <div class="place-container-title2">
+                        <div class="place-container-score">
+                            <h2>${score}</h2>
+                        </div>
+                    </div>
+                    <div id="place_edit">
+                    ${place_edit}
+                    </div>
+                </div>
+                <div class="place-container-book" id="place-container-book">
+                ${place_meeting}
                 </div>
             </div>
             <div class="place-container-address">${address}</div>
@@ -587,7 +941,7 @@ let searchInput = document.querySelector('#place-search-input');
 searchInput.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
         event.preventDefault();
-        placeSearchView(event);
+        placeSearchView();
     }
 });
 
@@ -1106,10 +1460,10 @@ async function placeBook(place_id) {
 
     if (response_json["message"] == "북마크") {
         book['src'] = "static/image/bookmark (1).png"
-        alert("북마크가 추가되었습니다.");
+        swal("북마크가 추가되었습니다.",'');
     } else {
         book['src'] = "static/image/bookmark.png"
-        alert("북마크가 취소되었습니다.");
+        swal("북마크가 취소되었습니다.",'');
     }
 
     const bookCountElements = document.querySelector(`#place-container-count-book${place_id}`);
@@ -1133,16 +1487,18 @@ async function placeLike(place_id) {
 
     if (response_json["message"] == "좋아요") {
         like_id['src'] = "static/image/heart (1).png"
-        alert("좋아요.");
+        swal("좋아요 완료",'')
     } else {
         like_id['src'] = "static/image/heart.png"
-        alert("좋아요 취소!");
+        swal("좋아요 취소",'');
+
     }
 
     const likeCountElements = document.querySelector(`#place-container-count-like${place_id}`);
     const like_count = response_json["like_count"]
     likeCountElements.innerHTML = `<img src="static/image/heart (2).png">${like_count}`;
 }
+
 
 // 장소추천 수정전 html 띄워주기
 async function placePreUpdateView(place_id) {
@@ -1322,6 +1678,7 @@ async function placeDelete(place_id) {
 // 이미지 추가하기
 async function imageAdd(place_id, place_image_id) {
     let images = document.querySelector('#images')
+    let img_div = document.querySelector('#image_container')
 
     const formdata = new FormData();
 
@@ -1336,11 +1693,16 @@ async function imageAdd(place_id, place_image_id) {
         method: "POST",
         body: formdata,
     });
+
+    let response_json = await response.json();
+
     if (response.status == 200) {
         alert("이미지가 추가되었습니다.");
         window.location.href = `place_view.html?id=${place_id}`;
     } else {
-        alert(response_json["message"]);
+        alert(response_json["error"]);
+        img_div.innerHTML = ''
+        document.querySelector('#images').value = ''
     }
 }
 

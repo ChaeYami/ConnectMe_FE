@@ -114,10 +114,11 @@ input:not(:placeholder-shown) {
     outline: none;
 }
 
-
+.countdown{
+    color: white;
+}
 .alert-danger {
     color: #ff4a4a;
-    background-color: white;
     display: none;
 }
 

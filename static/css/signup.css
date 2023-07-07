@@ -90,11 +90,12 @@ input:not(:placeholder-shown) {
     margin-bottom: 10px;
 
 }
-
+.countdown{
+    color: white;
+}
 
 .alert-danger {
     color: #ff4a4a;
-    background-color: white;
     display: none;
     margin: 10px auto;
 }

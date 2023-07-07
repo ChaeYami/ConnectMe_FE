@@ -18,13 +18,16 @@ async function uploadPhoto() {
         body: formData
     });
 
-    if (response.status == 200) {
-        alert("사진 업로드 완료")
-        window.location.replace(`profile_album.html?user_id=${logined_user_id}`)
-    } else {
-        const errorData = await response.json();
-        alert(errorData.error)
+    let response_json = await response.json();
 
+    if (response.status == 200) {
+        swal("사진 업로드 완료", '', 'success')
+            .then((value) => {
+                window.location.replace(`profile_album.html?user_id=${logined_user_id}`)
+
+            })
+    } else {
+        swal(`${response_json['error']}`, '', 'warning')
     }
 }
 

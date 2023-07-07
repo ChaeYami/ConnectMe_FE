@@ -16,10 +16,10 @@ async function handleResetPassword() {
     const response_json = await response.json()
 
     if (response.status === 200) {
-        alert("비밀번호 재설정 이메일을 발송했습니다. 메일을 확인하고 재설정을 진행해주세요.");
+        swal("비밀번호 재설정 이메일을 발송했습니다. 메일을 확인하고 재설정을 진행해주세요.",'');
         location.reload();
     } else {
-        alert(response_json["email"]);
+        swal(`${response_json["email"]}`,'');
     }
 }
 
