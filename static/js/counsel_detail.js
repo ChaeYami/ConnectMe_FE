@@ -20,7 +20,8 @@ async function counselDetail(counsel_id) {
             let counsel_author = ''
             let author_html = ``
             let counsel_author_id = response.counsel['user']['pk']
-
+            let tags = response.counsel['tags']
+            let tag = String(tags).split(" ")
             if (is_anonymous) {
                 counsel_author = '익명'
                 author_html = `<span style = "color: rgb(158, 158, 158);">${counsel_author}</span>`
@@ -34,13 +35,16 @@ async function counselDetail(counsel_id) {
             let buttons = document.querySelector('#buttons')
             let like_button = document.querySelector('#like-button')
 
-
             $('#title').append(counsel_title)
             $('#author').append(author_html)
             $('#content').append(counsel_content)
             $('#likes_count').append(likes_count)
             $('#counsel-created').append(counsel_created_at)
-
+            for(let i = 0; i < tag.length; i++){
+                let tag_html = `<button class="tag_btn"><a class="tag_btn_a">${tag[i]}</a></button>`
+                $('#tags_container').append(tag_html)
+            }
+            
             if (JSON.parse(payload)['user_id'] == counsel_author_id) {
                 buttons.innerHTML += `
                 <a>
@@ -110,6 +114,7 @@ async function counselComments(counsel_id) {
         type: "GET",
         dataType: "json",
         success: function (response) {
+            console.log(response)
             const rows = response
             for (let i = 0; i < rows.length; i++) {
                 id = rows[i]['id']
@@ -243,7 +248,7 @@ async function counselComments(counsel_id) {
                         <div style="margin-left: 50px;">
                             <p id="now_reply_comment${reply_id}" style="display:block;">[${user}] ${content} ${reply_edit}</p>
                             <p id="p_reply_update_input${reply_id}" style="display:none;"/>
-                                <input class="reply-input" id="reply_update_input${reply_id}" style="width:450px" value="${content}" type="text"/> 
+                                <input class="reply-input" id="reply_update_input${reply_id}" value=${content} style="width:450px"  type="text"/> 
                                 ${anonymous_html}
                                 <label for="anonymous-checkbox">익명</label>
                                 <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${reply_id})">수정하기</button>
@@ -256,7 +261,7 @@ async function counselComments(counsel_id) {
                         <hr>
                         `
                     $(`#reply_card${comment}`).append(temp_html)
-                    $(`#reply_update_input${id}`).val(content)
+                    
                 }))
             }
         }
@@ -549,7 +554,6 @@ async function commentUpdateConfrim(id) {
             formData.append("is_anonymous", 'False');
 
         }
-        console.log(checked)
         let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${id}/`, {
             method: 'PUT',
             headers: {
@@ -567,7 +571,6 @@ async function commentUpdateConfrim(id) {
             swal("입력 해주세요", '', 'warning')
         }
         else {
-            console.log(response.status)
         }
     } else { alert("로그인 해주세요") }
 }
@@ -634,7 +637,6 @@ async function replyUpdateConfrim(reply_id) {
 
     if (token) {
         let formData = new FormData();
-        console.log(checked)
         formData.append("content", reply);
         if (checked) {
             formData.append("is_anonymous", 'True');
@@ -660,7 +662,6 @@ async function replyUpdateConfrim(reply_id) {
             swal("입력 해주세요", '', 'warning')
         }
         else {
-            console.log(response.status)
         }
     } else { alert("로그인 해주세요") }
 }

@@ -22,6 +22,7 @@ $(document).ready(function () {
             .then(res => res.json()).then(meetings => {
                 let payloadObj = JSON.parse(payload)
                 let user_id = payloadObj.user_id
+                let payload_nickname = payloadObj.nickname
                 let count = 0;
 
                 if (meetings['meeting'].length == 0) {
@@ -61,16 +62,18 @@ $(document).ready(function () {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if (bookmark.includes(user_id)) {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark (1).png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
-                        } else {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark.png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
+                        if(user == payload_nickname){meeting_book = ``}else{
+                            if (bookmark.includes(user_id)) {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            } else {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            }
                         }
 
                         if (meeting_image.includes('http')) {
@@ -111,6 +114,7 @@ $(document).ready(function () {
                     } else {
                         let payloadObj = JSON.parse(payload);
                         let user_id = payloadObj.user_id;
+                        let payload_nickname = payloadObj.nickname
                         let id = meeting['id'];
                         let title = meeting['title'];
                         let user = meeting['user'];
@@ -139,16 +143,18 @@ $(document).ready(function () {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if (bookmark.includes(user_id)) {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
-                        } else {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
+                        if(user == payload_nickname){meeting_book = ``}else{
+                            if (bookmark.includes(user_id)) {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            } else {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            }
                         }
 
                         let temp_html = `
