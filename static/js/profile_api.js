@@ -41,7 +41,7 @@ window.onload = () => {
         document.getElementById("my-buttons").style.display = "block"
         document.getElementById("requests").style.display = "block";
         document.getElementById("friends-list").style.display = "block";
-        
+
     } else {
         // 다른사람 프로필일때 채팅하기, 친구추가, 신고 보이기
         document.getElementById("addFriend").style.display = "block";
@@ -157,10 +157,8 @@ function getChatRoom() {
             let chat_url = '/chat_room.html?room=' + room_name;
             window.open(chat_url);
         },
-        error: function (xhr) {
-            // const errorData = xhr.responseJSON;
-            // const errorArray = Object.entries(errorData);
-            // alert(errorArray[0][1]);
+        error: function () {
+            alert("채팅방 입장에 실패했습니다.")
         }
     });
 }
