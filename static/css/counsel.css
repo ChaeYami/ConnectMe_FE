@@ -449,3 +449,6 @@ span.active {
 }
 
 /********* place 페이지네이션 시작 **********/
+.tag {
+    margin-left: 10px;
+}

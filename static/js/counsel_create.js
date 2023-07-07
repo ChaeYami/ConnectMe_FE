@@ -1,12 +1,18 @@
 const logined_token = localStorage.getItem("access")
 
 async function CreateCounsel() {
-    let title = document.querySelector('#title');
-    let content = document.querySelector('#content');
+    let title = document.querySelector('#title').value;
+    let content = document.querySelector('#content').value;
+    let tags = document.querySelector('#tags').value;
     let checked = $('#anonymous-checkbox').is(':checked');
+
+    let taglist = [tags]
+
     const formdata = new FormData();
-    formdata.append("title", title.value);
-    formdata.append("content", content.value);
+    formdata.append("title", title);
+    formdata.append("content", content);
+    formdata.append("tags", taglist);
+
     if (checked) {
         formdata.append("is_anonymous", 'True');
 
