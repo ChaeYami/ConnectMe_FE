@@ -56,6 +56,9 @@ window.onload = () => {
 async function Profile(user_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
         method: "GET",
+        headers: {
+            Authorization: `Bearer ${logined_token}`,
+        },
     })
     response_json = await response.json()
     const current_region = `${response_json.current_region1} ${response_json.current_region2}`

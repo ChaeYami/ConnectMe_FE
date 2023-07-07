@@ -6,77 +6,84 @@ let delete_btn = $("#delete_btn")
 if (payload) { delete_btn.show() }
 else { delete_btn.hide() }
 
+let token = localStorage.getItem("access")
+
 // ================================ 모임 게시글 상세보기 API 시작 ================================
 
-fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(data => {
-
-    let payloadObj = JSON.parse(payload)
-    let user_id = payloadObj.user_id
-    let payload_nickname = payloadObj.nickname
-    id = data['id']
-    user = data['user']['nickname']
-    title = data['title']
-    created_at = data['created_at']
-    updated_at = data['updated_at']
-    content = data['content']
-    bookmark = data['bookmark']
-    meeting_at = data['meeting_at']
-    meeting_city = data['meeting_city']
-    meeting_status = data['meeting_status']
-    num_person_meeting = data['num_person_meeting']
-    join_meeting = data['join_meeting']
-    join_meeting_count = data['join_meeting_count']
-    place_title = data['place_title']
-    place_address = data['place_address']
-    join_meeting_user = data['join_meeting_user']
-    join_meeting_user.forEach(join_user => {
-        let join_user_nickname = join_user.nickname
-        let meeting_join_user_list = `
+fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
+    headers: {
+        Authorization: `Bearer ${token}`,
+    },
+})
+    .then(res => res.json())
+    .then(data => {
+        let payloadObj = JSON.parse(payload)
+        let user_id = payloadObj.user_id
+        let payload_nickname = payloadObj.nickname
+        id = data['id']
+        user = data['user']['nickname']
+        title = data['title']
+        created_at = data['created_at']
+        updated_at = data['updated_at']
+        content = data['content']
+        bookmark = data['bookmark']
+        meeting_at = data['meeting_at']
+        meeting_city = data['meeting_city']
+        meeting_status = data['meeting_status']
+        num_person_meeting = data['num_person_meeting']
+        join_meeting = data['join_meeting']
+        join_meeting_count = data['join_meeting_count']
+        place_title = data['place_title']
+        place_address = data['place_address']
+        join_meeting_user = data['join_meeting_user']
+        join_meeting_user.forEach(join_user => {
+            let join_user_nickname = join_user.nickname
+            let meeting_join_user_list = `
                                 <ul>
                                     <li>${join_user_nickname}</li>
                                 </ul>
                                 `
-        $('#popup-user-list').append(meeting_join_user_list)
-    })
-    let meeting_book = ``
-    if(user == payload_nickname){meeting_book = ``}else{
-    if (bookmark.includes(user_id)) {
-        meeting_book = `
+            $('#popup-user-list').append(meeting_join_user_list)
+        })
+        let meeting_book = ``
+        if (user == payload_nickname) { meeting_book = `` } else {
+            if (bookmark.includes(user_id)) {
+                meeting_book = `
         <a>
             <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
         </a>`
-    } else {
-        meeting_book = `
+            } else {
+                meeting_book = `
         <a>
             <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
         </a>`
-    }
-}
-    let check_join_meeting = ``
-    if(user == payload_nickname){check_join_meeting = ``}else{
-    if (join_meeting.includes(user_id)) {
-        check_join_meeting = `
+            }
+        }
+        let check_join_meeting = ``
+        if (user == payload_nickname) { check_join_meeting = `` } else {
+            if (join_meeting.includes(user_id)) {
+                check_join_meeting = `
         <button onclick="handleJoinmeeting(${id})" style="margin-left:10px; border:none; cursor: pointer; display:flex;align-items: center; background-color:transparent;"><a>
                         <img id="join_meeting${id}" src="static/image/join (1).png" style="margin-top:5px; width: 30px;" alt="모임참가" >
                         </a><p style="margin-left:5px;">참가취소</p></button>
         `
-    } else {
-        check_join_meeting = `
+            } else {
+                check_join_meeting = `
         <button onclick="handleJoinmeeting(${id})" style="margin-left:10px; border:none; cursor: pointer; display:flex;align-items: center; background-color:transparent;"><a>
                         <img id="join_meeting${id}" src="static/image/join.png" style="margin-top:5px; width: 30px;" alt="모임참가" >
                         </a><p style="margin-left:5px;">참가하기</p></button>
         `
-    }
-}
-    let meeting_btn = ``
-    if (payload_nickname == user) {
-        meeting_btn = `
+            }
+        }
+        let meeting_btn = ``
+        if (payload_nickname == user) {
+            meeting_btn = `
         <a> <img src="static/image/edit.png" style="margin-top:10px; width: 30px;" onclick="meetingPreEdit(${meeting_id})"> </a>
         <a> <img src="static/image/delete.png" style="margin-top:10px; width: 30px;" onclick="meetingDelete()"> </a>
         `
-    }
-    let temp_html =
-        ` 
+        }
+        let temp_html =
+            ` 
 <div>
     <div style="position:relative;">
     <div style="position:absolute; left:56vw;"><a>${meeting_book}</a></div>
@@ -113,50 +120,49 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
                     <div id=image_box class=image_box_class>
                     </div>
                     `
-    $('#meeting_detail_card').append(temp_html)
+        $('#meeting_detail_card').append(temp_html)
 
-    data.meeting_image.forEach((each_image => {
-        image = each_image['image']
-        if (image.includes('http')) {
-            if (image.includes('www')) {
-                image = each_image['image'].slice(16);
-                let decodedURL = decodeURIComponent(image);
-                temp_html = `
+        data.meeting_image.forEach((each_image => {
+            image = each_image['image']
+            if (image.includes('http')) {
+                if (image.includes('www')) {
+                    image = each_image['image'].slice(16);
+                    let decodedURL = decodeURIComponent(image);
+                    temp_html = `
                 <img class="detail_image" src="http://${decodedURL}" alt="">`
-                $('#image_box').append(temp_html)
+                    $('#image_box').append(temp_html)
+                } else {
+                    image = each_image['image'].slice(15);
+                    let decodedURL = decodeURIComponent(image);
+                    temp_html = `
+                <img class="detail_image" src="http://${decodedURL}" alt="">`
+                    $('#image_box').append(temp_html)
+                }
             } else {
-                image = each_image['image'].slice(15);
-                let decodedURL = decodeURIComponent(image);
                 temp_html = `
-                <img class="detail_image" src="http://${decodedURL}" alt="">`
+            <img class="detail_image" src="${BACKEND_BASE_URL}${image}" alt="">`
                 $('#image_box').append(temp_html)
             }
-        } else {
-            temp_html = `
-            <img class="detail_image" src="${BACKEND_BASE_URL}${image}" alt="">`
-            $('#image_box').append(temp_html)
-        }
 
-    }))
+        }))
 
 
-    let token = localStorage.getItem("access")
-    fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
 
-        method: 'GET',
-        headers: {
-            Authorization: `Bearer ${token}`,
-        }
-    },).then(res => res.json()).then(data => {
-        let name = data['place_title']
-        let address = data['place_address']
-        let place_title = name
+        fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        },).then(res => res.json()).then(data => {
+            let name = data['place_title']
+            let address = data['place_address']
+            let place_title = name
 
-        if (data['place'] !== null) {
-            place_title = `<a onclick="go_placeDetailView(${data['place']})">${name}</a>`
-        }
+            if (data['place'] !== null) {
+                place_title = `<a onclick="go_placeDetailView(${data['place']})">${name}</a>`
+            }
 
-        hot_place_container.innerHTML += `<div class="place-detail-content">
+            hot_place_container.innerHTML += `<div class="place-detail-content">
     <div class="place-detail-content-grid">
         <div>
             <div class="place-detail-font-gray" style="margin-top:23px">이름</div>
@@ -170,11 +176,11 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         </div>
     </div>
 </div>`
-        placeShowMap(name, address)
-    }
-    )
+            placeShowMap(name, address)
+        }
+        )
 
-})
+    })
 
 // 지도 보여주기
 async function placeShowMap(name, address) {
@@ -218,12 +224,18 @@ async function placeShowMap(name, address) {
 
 // ================================ 모임 게시글 수정하기 페이지로 이동 시작 ================================
 function meetingUpdateMove() {
-    fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(data => {
-        let payloadObj = JSON.parse(payload)
-        let nickname = payloadObj.nickname
-        if (nickname == data.user.nickname) { location.replace(`${FRONTEND_BASE_URL}/meeting_update.html?id=` + meeting_id) }
-        else { swal("권한이 없습니다.", '', 'error') }
+    fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
     })
+        .then(res => res.json())
+        .then(data => {
+            let payloadObj = JSON.parse(payload)
+            let nickname = payloadObj.nickname
+            if (nickname == data.user.nickname) { location.replace(`${FRONTEND_BASE_URL}/meeting_update.html?id=` + meeting_id) }
+            else { swal("권한이 없습니다.", '', 'error') }
+        })
 }
 // ================================ 모임 게시글 수정하기 페이지로 이동 끝 ================================
 
@@ -270,37 +282,43 @@ function replyCancel(counsel_id, id) {
     input.style.display = 'none';
 }
 
-fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`).then(res => res.json()).then(data => {
-    $('#comment_card').empty()
-    data.comment.forEach((each_comment => {
-        id = each_comment['id']
-        content = each_comment['content']
-        updated_at = each_comment['updated_at']
-        user = each_comment['user']['nickname']
-        user_id = each_comment['user']['pk']
+fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`, {
+    headers: {
+        Authorization: `Bearer ${token}`,
+    }
+})
+    .then(res => res.json())
+    .then(data => {
+        $('#comment_card').empty()
+        data.comment.forEach((each_comment => {
+            id = each_comment['id']
+            content = each_comment['content']
+            updated_at = each_comment['updated_at']
+            user = each_comment['user']['nickname']
+            user_id = each_comment['user']['pk']
 
-        let comment_edit = ``
+            let comment_edit = ``
 
 
 
-        if (JSON.parse(payload)['user_id'] == user_id) {
-            comment_edit = `
+            if (JSON.parse(payload)['user_id'] == user_id) {
+                comment_edit = `
             <a> <img src="static/image/comment_edit.png" class="auth_btn" style="margin-left: 10px;" onclick="comment_update_handle(${id})"> </a>
             <a> <img id="delete-image${id}" src="static/image/comment_delete.png" class="auth_btn" onclick="commentDelete(${id})" onmouseover="changeDeleteImage(${id})" onmouseout="restoreDeleteImage(${id})"> </a>
             `
-        }
+            }
 
-        if (content == '삭제된 댓글 입니다.') {
-            let temp_html = `
+            if (content == '삭제된 댓글 입니다.') {
+                let temp_html = `
             <p id="now_comment${id}" style="display:block;">[사용자] ${content}</p>
             <div id="reply_card${id}">
             <hr>
             `
-            $('#comment_card').append(temp_html)
-        }
-        else {
-            let temp_html =
-                `   
+                $('#comment_card').append(temp_html)
+            }
+            else {
+                let temp_html =
+                    `   
                     <div class ="comment-text">
                     <p id="now_comment${id}" style="display:block;">[${user}] ${content} ${comment_edit}</p>
                     </div>
@@ -315,29 +333,29 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`).then(res => res.json()).then
                     <hr>
                     `
 
-            $('#comment_card').append(temp_html)
-        }
-        $(`#comment_update_input${id}`).val(content)
-        each_comment.reply.forEach((each_reply => {
+                $('#comment_card').append(temp_html)
+            }
+            $(`#comment_update_input${id}`).val(content)
+            each_comment.reply.forEach((each_reply => {
 
-            comment = each_reply['comment']
-            id = each_reply['id']
-            content = each_reply['content']
-            user = each_reply['user']['nickname']
-            reply_user_id = each_reply['user']['pk']
-            updated_at = each_reply['updated_at']
-            meeting_id = each_reply['meeting']
+                comment = each_reply['comment']
+                id = each_reply['id']
+                content = each_reply['content']
+                user = each_reply['user']['nickname']
+                reply_user_id = each_reply['user']['pk']
+                updated_at = each_reply['updated_at']
+                meeting_id = each_reply['meeting']
 
-            let reply_edit = ``
+                let reply_edit = ``
 
-            if (JSON.parse(payload)['user_id'] == reply_user_id) {
-                reply_edit = `
+                if (JSON.parse(payload)['user_id'] == reply_user_id) {
+                    reply_edit = `
                 <a> <img src="static/image/comment_edit.png" class="auth_btn" style="margin-left: 10px;" onclick="reply_update_handle(${id})"> </a>
                 <a> <img id="delete-reply-image${id}" src="static/image/comment_delete.png" class="auth_btn" onclick="replyDelete(${id})" onmouseover="changeReplyDeleteImage(${id})" onmouseout="restoreReplyDeleteImage(${id})"> </a>
                 `
-            }
+                }
 
-            let temp_html = `
+                let temp_html = `
             <div style="margin-left: 50px;">
             <div class ="comment-text">
             <p id="now_reply_comment${id}" style="display:block;">[${user}] ${content} ${reply_edit}</p>
@@ -352,11 +370,11 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`).then(res => res.json()).then
             </div>
             <hr>
             `
-            $(`#reply_card${comment}`).append(temp_html)
-            $(`#reply_update_input${id}`).val(content)
+                $(`#reply_card${comment}`).append(temp_html)
+                $(`#reply_update_input${id}`).val(content)
+            }))
         }))
-    }))
-})
+    })
 // ================================ 모임 게시글 댓글 목록 API 끝 ================================
 
 // ================================ 모임 게시글 삭제 API 시작 ================================
@@ -961,7 +979,7 @@ async function updateMeeting() {
                         fileInput.value = '';
                     });
             } else {
-                swal('수정 되었습니다.','','success')
+                swal('수정 되었습니다.', '', 'success')
                     .then((value) => {
                         location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
                     });

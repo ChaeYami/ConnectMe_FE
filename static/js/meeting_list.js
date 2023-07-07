@@ -1,7 +1,9 @@
+const logined_token = localStorage.getItem("access");
 const count_per_page = 12; // 페이지당 데이터 건수
 const show_page_cnt = 10; // 화면에 보일 페이지 번호 개수
 let page_data = 0;
 let foot = document.querySelector('#myFooter')
+
 
 
 $(document).ready(function () {
@@ -109,6 +111,9 @@ async function meetingShowList(pages = 1) {
         url: `${BACKEND_BASE_URL}/meeting/${counsel_page}`,
         method: 'GET',
         dataType: 'json',
+        headers: {
+            Authorization: `Bearer ${logined_token}`,
+        },
         success: function (response) {
             let payloadObj = JSON.parse(payload);
             let user_id = payloadObj.user_id;
@@ -148,7 +153,7 @@ async function meetingShowList(pages = 1) {
                             `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                     }
 
-                    if(user == payload_nickname){meeting_book = ``}else{
+                    if (user == payload_nickname) { meeting_book = `` } else {
                         if (bookmark.includes(user_id)) {
                             meeting_book = `
                             <a>
@@ -226,7 +231,7 @@ async function meetingShowList(pages = 1) {
                             `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                     }
 
-                    if(user == payload_nickname){meeting_book = ``}else{
+                    if (user == payload_nickname) { meeting_book = `` } else {
                         if (bookmark.includes(user_id)) {
                             meeting_book = `
                             <a>
@@ -280,68 +285,85 @@ function meetingSearch() {
     foot.style.display = 'none';
 
     $('#meeting_card').empty()
-    fetch(`${BACKEND_BASE_URL}/meeting/search_${search_field}/?search=${search_key}`).then(res => res.json()).then(meetings => {
-        meetings.forEach((meeting) => {
-            if (meeting.meeting_image[0]) {
-                let id = meeting['id']
-                let title = meeting['title']
-                let user = meeting['user']
-                let created_at = meeting['created_at']
-                let comment_count = meeting['comment_count']
-                let meeting_image = meeting['meeting_image'][0]['image']
-                let bookmark = meeting['bookmark']
-                let meeting_at = meeting['meeting_at']
-                let meeting_city = meeting['meeting_city']
-                let num_person_meeting = meeting['num_person_meeting']
-                let meeting_status = meeting['meeting_status']
-                let join_meeting_count = meeting['join_meeting_count']
-                let meeting_book = ``
-                let status_and_title = ``
-                if (meeting_status == '모집중') {
-                    status_and_title =
-                        `<h3><span style="color:rgb(0, 201, 0);"><${meeting_status}></span> ${title}</h3>`
-                }
-                else if (meeting_status == '자리없음') {
-                    status_and_title =
-                        `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
-                }
-                else if (meeting_status == '모집종료') {
-                    status_and_title =
-                        `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
-                }
-                if(user == payload_nickname){meeting_book = ``}else{
-                    if (bookmark.includes(user_id)) {
-                        meeting_book = `
+    fetch(`${BACKEND_BASE_URL}/meeting/search_${search_field}/?search=${search_key}`, {
+        headers: {
+            Authorization: `Bearer ${logined_token}`,
+        }
+    })
+        .then(res => res.json())
+        .then(meetings => {
+            meetings.forEach((meeting) => {
+                if (meeting.meeting_image[0]) {
+                    let id = meeting['id']
+                    let title = meeting['title']
+                    let user = meeting['user']
+                    let created_at = meeting['created_at']
+                    let comment_count = meeting['comment_count']
+                    let meeting_image = meeting['meeting_image'][0]['image']
+                    let bookmark = meeting['bookmark']
+                    let meeting_at = meeting['meeting_at']
+                    let meeting_city = meeting['meeting_city']
+                    let num_person_meeting = meeting['num_person_meeting']
+                    let meeting_status = meeting['meeting_status']
+                    let join_meeting_count = meeting['join_meeting_count']
+                    let meeting_book = ``
+                    let status_and_title = ``
+                    if (meeting_status == '모집중') {
+                        status_and_title =
+                            `<h3><span style="color:rgb(0, 201, 0);"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '자리없음') {
+                        status_and_title =
+                            `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '모집종료') {
+                        status_and_title =
+                            `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    if (user == payload_nickname) { meeting_book = `` } else {
+                        if (bookmark.includes(user_id)) {
+                            meeting_book = `
                         <a>
                             <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
                         </a>`
-                    } else {
-                        meeting_book = `
+                        } else {
+                            meeting_book = `
                         <a>
                             <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
                         </a>`
+                        }
                     }
-                }
 
-                if (meeting_image.includes('%3A')) {
-                    if (meeting_image.includes('www')) {
-                        
-                        image = meeting_image.slice(40);
-                        let decodedURL = decodeURIComponent(image);
-                        img_urls = `http://${decodedURL}`
-                    } else {
-                        
-                        image = meeting_image.slice(40);
-                        let decodedURL = decodeURIComponent(image);
-                        img_urls = `http://${decodedURL}`
-                    }
-                } else {
-                    img_urls = `${meeting_image}`
-                }
+                    if (meeting_image.includes('%3A')) {
+                        if (meeting_image.includes('www')) {
+
+                            image = meeting_image.slice(40);
+                            let decodedURL = decodeURIComponent(image);
+                            img_urls = `http://${decodedURL}`
+                        } else {
+
+                            image = meeting_image.slice(40);
+                            let decodedURL = decodeURIComponent(image);
+                            img_urls = `http://${decodedURL}`
+                        }
+
+                        if (meeting_image.includes('%3A')) {
+                            if (meeting_image.includes('www')) {
+                                let decodedURL = decodeURIComponent(image);
+                                image = meeting_image.slice(40);
+                                img_urls = `http://${decodedURL}`
+                            } else {
+                                let decodedURL = decodeURIComponent(image);
+                                image = meeting_image.slice(40);
+                                img_urls = `http://${decodedURL}`
+                            }
+                        } else {
+                            img_urls = `${meeting_image}`
+                        }
 
 
 
-                let temp_html = `
+                        let temp_html = `
                         <div id="meeting_card_${id}" class="meeting_card">
                             <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
                                 <p style="height:1px"><small>${meeting_city}</small></p>
@@ -359,48 +381,48 @@ function meetingSearch() {
                             </div>
                         </div>
                                     `
-                $('#meeting_card').append(temp_html)
-            } else {
-                let id = meeting['id']
-                let title = meeting['title']
-                let user = meeting['user']
-                let created_at = meeting['created_at']
-                let comment_count = meeting['comment_count']
-                let content = meeting['content']
-                let bookmark = meeting['bookmark']
-                let meeting_at = meeting['meeting_at']
-                let meeting_city = meeting['meeting_city']
-                let num_person_meeting = meeting['num_person_meeting']
-                let meeting_status = meeting['meeting_status']
-                let join_meeting_count = meeting['join_meeting_count']
-                let meeting_book = ``
-                let status_and_title = ``
-                if (meeting_status == '모집중') {
-                    status_and_title =
-                        `<h3><span style="color:rgb(0, 201, 0);"><${meeting_status}></span> ${title}</h3>`
-                }
-                else if (meeting_status == '자리없음') {
-                    status_and_title =
-                        `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
-                }
-                else if (meeting_status == '모집종료') {
-                    status_and_title =
-                        `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
-                }
-                if(user == payload_nickname){meeting_book = ``}else{
-                    if (bookmark.includes(user_id)) {
-                        meeting_book = `
+                        $('#meeting_card').append(temp_html)
+                    } else {
+                        let id = meeting['id']
+                        let title = meeting['title']
+                        let user = meeting['user']
+                        let created_at = meeting['created_at']
+                        let comment_count = meeting['comment_count']
+                        let content = meeting['content']
+                        let bookmark = meeting['bookmark']
+                        let meeting_at = meeting['meeting_at']
+                        let meeting_city = meeting['meeting_city']
+                        let num_person_meeting = meeting['num_person_meeting']
+                        let meeting_status = meeting['meeting_status']
+                        let join_meeting_count = meeting['join_meeting_count']
+                        let meeting_book = ``
+                        let status_and_title = ``
+                        if (meeting_status == '모집중') {
+                            status_and_title =
+                                `<h3><span style="color:rgb(0, 201, 0);"><${meeting_status}></span> ${title}</h3>`
+                        }
+                        else if (meeting_status == '자리없음') {
+                            status_and_title =
+                                `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
+                        }
+                        else if (meeting_status == '모집종료') {
+                            status_and_title =
+                                `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
+                        }
+                        if (user == payload_nickname) { meeting_book = `` } else {
+                            if (bookmark.includes(user_id)) {
+                                meeting_book = `
                         <a>
                             <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
                         </a>`
-                    } else {
-                        meeting_book = `
+                            } else {
+                                meeting_book = `
                         <a>
                             <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
                         </a>`
-                    }
-                }
-                let temp_html = `
+                            }
+                        }
+                        let temp_html = `
                 <div class="meeting_card">
                     <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
                         <p style="height:1px"><small>${meeting_city}</small></p>
@@ -418,10 +440,11 @@ function meetingSearch() {
                             </div>
                 </div>
                 `
-                $('#meeting_card').append(temp_html)
-            }
+                        $('#meeting_card').append(temp_html)
+                    }
+                }
+            })
         })
-    })
 }
 //================================ 모임 글 검색 API 끝 ================================ 
 document.addEventListener("DOMContentLoaded", function () {

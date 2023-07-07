@@ -111,6 +111,9 @@ async function getCounsels(pages = 1) {
         url: `${BACKEND_BASE_URL}/counsel/${consel_page}`,
         type: "GET",
         dataType: "json",
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
         success: function (response) {
             const rows = response["counsel"];
             page_data = response["total-page"];
@@ -123,7 +126,7 @@ async function getCounsels(pages = 1) {
                 let is_anonymous = rows[i]['is_anonymous']
                 let counsel_title = rows[i]['title']
                 let counsel_author = ''
-                
+
                 let counsel_created_at = rows[i]['created_at']
                 let likes_count = rows[i]['like'].length
                 let author_id = rows[i]['user']['pk']

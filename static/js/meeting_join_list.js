@@ -14,6 +14,9 @@ $(document).ready(function () {
 async function Profile(user_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
         method: "GET",
+        headers: {
+            Authorization: `Bearer ${logined_token}`,
+        },
     })
 
     response_json = await response.json()
@@ -158,7 +161,7 @@ async function MoreUserDetailMeeting(pages = 1) {
             },
         })
             .then(res => res.json()).then(meetings => {
-                if(meetings.meeting.length == 0){
+                if (meetings.meeting.length == 0) {
                     let temp_html = `<H2>참여하는 모임이 없습니다.</H2>`
                     $("#none_text_align").append(temp_html)
                 }

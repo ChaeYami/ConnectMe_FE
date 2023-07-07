@@ -141,10 +141,10 @@ async function placeBook(place_id) {
 
     if (response_json["message"] == "북마크") {
         book['src'] = "static/image/bookmark (1).png"
-        swal("북마크가 추가되었습니다.",'');
+        swal("북마크가 추가되었습니다.", '');
     } else {
         book['src'] = "static/image/bookmark.png"
-        swal("북마크가 취소되었습니다.",'');
+        swal("북마크가 취소되었습니다.", '');
     }
 }
 
@@ -690,6 +690,9 @@ async function MoreUserDetailMeeting(pages = 1) {
 async function Profile(user_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
         method: "GET",
+        headers: {
+            Authorization: `Bearer ${logined_token}`,
+        },
     })
 
     response_json = await response.json()

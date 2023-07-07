@@ -133,7 +133,7 @@ function getListChatRoom(user_id) {
         type: "POST",
         dataType: "json",
         headers: {
-            "Authorization": "Bearer " + localStorage.getItem("access")
+            "Authorization": "Bearer " + logined_token
         },
         success: function (response) {
             room_name = response['room_name'];
