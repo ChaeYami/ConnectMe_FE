@@ -9,6 +9,7 @@ else { delete_btn.hide() }
 // ================================ 모임 게시글 상세보기 API 시작 ================================
 
 fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(data => {
+
     let payloadObj = JSON.parse(payload)
     let user_id = payloadObj.user_id
     let payload_nickname = payloadObj.nickname
@@ -38,6 +39,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
         $('#popup-user-list').append(meeting_join_user_list)
     })
     let meeting_book = ``
+    if(user == payload_nickname){meeting_book = ``}else{
     if (bookmark.includes(user_id)) {
         meeting_book = `
         <a>
@@ -49,7 +51,9 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
             <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
         </a>`
     }
+}
     let check_join_meeting = ``
+    if(user == payload_nickname){check_join_meeting = ``}else{
     if (join_meeting.includes(user_id)) {
         check_join_meeting = `
         <button onclick="handleJoinmeeting(${id})" style="margin-left:10px; border:none; cursor: pointer; display:flex;align-items: center; background-color:transparent;"><a>
@@ -63,6 +67,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
                         </a><p style="margin-left:5px;">참가하기</p></button>
         `
     }
+}
     let meeting_btn = ``
     if (payload_nickname == user) {
         meeting_btn = `

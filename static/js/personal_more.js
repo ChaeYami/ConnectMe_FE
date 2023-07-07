@@ -304,6 +304,7 @@ async function bookMoreMeeting(pages = 1) {
             .then(res => res.json()).then(meetings => {
                 let payloadObj = JSON.parse(payload)
                 let user_id = payloadObj.user_id
+                let payload_nickname = payloadObj.nickname
                 page_data = meetings["total-page"];
 
                 foot.style.display = ''
@@ -337,18 +338,20 @@ async function bookMoreMeeting(pages = 1) {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if (bookmark.includes(user_id)) {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark (1).png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
-                        } else {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark.png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
+                        if(user == payload_nickname){meeting_book = ``}else{
+                            if (bookmark.includes(user_id)) {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            } else {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            }
                         }
-
+    
                         if (meeting_image.includes('http')) {
                             if (meeting_image.includes('www')) {
                                 image = meeting_image.slice(16);
@@ -385,6 +388,7 @@ async function bookMoreMeeting(pages = 1) {
                     } else {
                         let payloadObj = JSON.parse(payload);
                         let user_id = payloadObj.user_id;
+                        let payload_nickname = payloadObj.nickname
                         let id = meeting['id'];
                         let title = meeting['title'];
                         let user = meeting['user'];
@@ -412,17 +416,20 @@ async function bookMoreMeeting(pages = 1) {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if (bookmark.includes(user_id)) {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
-                        } else {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
+                        if(user == payload_nickname){meeting_book = ``}else{
+                            if (bookmark.includes(user_id)) {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            } else {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            }
                         }
+    
 
                         let temp_html = `
                             <div class="meeting_card">
@@ -527,6 +534,7 @@ async function MoreUserDetailMeeting(pages = 1) {
             .then(res => res.json()).then(meetings => {
                 let payloadObj = JSON.parse(payload)
                 let user_id = payloadObj.user_id
+                let payload_nickname = payloadObj.nickname
                 page_data = meetings["total-page"];
                 foot.style.display = '';
 
@@ -560,16 +568,18 @@ async function MoreUserDetailMeeting(pages = 1) {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if (bookmark.includes(user_id)) {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark (1).png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
-                        } else {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark.png" style="width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
+                        if(user == payload_nickname){meeting_book = ``}else{
+                            if (bookmark.includes(user_id)) {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            } else {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            }
                         }
 
                         if (meeting_image.includes('http')) {
@@ -609,6 +619,7 @@ async function MoreUserDetailMeeting(pages = 1) {
                     } else {
                         let payloadObj = JSON.parse(payload);
                         let user_id = payloadObj.user_id;
+                        let payload_nickname = payloadObj.nickname
                         let id = meeting['id'];
                         let title = meeting['title'];
                         let user = meeting['user'];
@@ -636,16 +647,18 @@ async function MoreUserDetailMeeting(pages = 1) {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if (bookmark.includes(user_id)) {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
-                        } else {
-                            meeting_book = `
-                    <a>
-                      <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="meetingBookmark(${id})">
-                    </a>`;
+                        if(user == payload_nickname){meeting_book = ``}else{
+                            if (bookmark.includes(user_id)) {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            } else {
+                                meeting_book = `
+                                <a>
+                                    <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
+                                </a>`
+                            }
                         }
 
                         let temp_html = `
