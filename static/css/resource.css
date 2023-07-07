@@ -1,3 +1,22 @@
+.list-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.list-btn button {
+    background-color: #c9dbcf;
+    border: none;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    height: 30px;
+    font-size: 11pt;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 20px 0px;
+}
+
+
+
 /********* select box 시작 **********/
 .select-box {
     position: relative;
