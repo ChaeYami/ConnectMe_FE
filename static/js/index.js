@@ -35,7 +35,7 @@ $(document).ready(function () {
             title: "위치권한에 동의하시겠습니까?",
             text: "맞춤 추천에 활용됩니다.",
             icon: "",
-            buttons: ["아니오","예"],
+            buttons: ["아니오", "예"],
             dangerMode: false,
         })
             .then((willConfirm) => {

@@ -12,6 +12,9 @@ async function counselDetail(counsel_id) {
         url: `${BACKEND_BASE_URL}/counsel/${counsel_id}`,
         type: "GET",
         dataType: "json",
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
         success: function (response) {
             let counsel_id = response.counsel['id']
             let is_anonymous = response.counsel['is_anonymous']
@@ -109,6 +112,9 @@ async function counselComments(counsel_id) {
         url: `${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/`,
         type: "GET",
         dataType: "json",
+        headers: {
+            Authorization: `Bearer ${logined_token}`,
+        },
         success: function (response) {
             const rows = response
             for (let i = 0; i < rows.length; i++) {

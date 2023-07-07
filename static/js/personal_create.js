@@ -14,7 +14,7 @@ $(document).ready(function () {
         fetch(`${BACKEND_BASE_URL}/meeting/my_create_meeting/`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${logined_token}`,
 
             },
         })
@@ -257,6 +257,9 @@ async function meetingBookmark(id) {
 async function Profile(user_id) {
     const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
         method: "GET",
+        headers: {
+            Authorization: `Bearer ${logined_token}`,
+        },
     })
 
     response_json = await response.json()
