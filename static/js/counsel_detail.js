@@ -247,12 +247,12 @@ async function counselComments(counsel_id) {
                     let temp_html = `
                         <div style="margin-left: 50px;">
                             <p id="now_reply_comment${reply_id}" style="display:block;">[${user}] ${content} ${reply_edit}</p>
-                            <p id="p_reply_update_input${reply_id}" style="display:none;"/>
-                                <input class="reply-input" id="reply_update_input${reply_id}" value=${content} style="width:450px"  type="text"/> 
+                            <p id="p_reply_update_input${reply_id}" style="display:none;">
+                                <input class="reply-input" id="reply_update_input${reply_id}" value="${content}" style="width:450px"  type="text"/> 
                                 ${anonymous_html}
                                 <label for="anonymous-checkbox">익명</label>
                                 <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${reply_id})">수정하기</button>
-                                <button type="button" class="button-white" onclick="replyCancel(${counsel_id}, ${reply_id})">취소하기</button>
+                                <button type="button" class="button-white" onclick="replyUpdateCancel(${counsel_id}, ${reply_id})">취소하기</button>
                             </p>
                             <div class=replybtns>
                                 <p> <small>${updated_at}${like_html}<p id="reply_count${reply_id}" style="margin: 0px 20px 0px 5px;">${reply_likes_count}</p></small></p>  
@@ -301,6 +301,15 @@ function commentCancel(counsel_id, id) {
 
 // 대댓글 취소
 function replyCancel(counsel_id, id) {
+    let comment = document.querySelector(`#now_reply_comment${id}`)
+    let input = document.querySelector(`#p_reply_create_input${id}`)
+
+    comment.style.display = '';
+    input.style.display = 'none';
+}
+
+// 대댓글 수정 취소
+function replyUpdateCancel(counsel_id, id) {
     let comment = document.querySelector(`#now_reply_comment${id}`)
     let input = document.querySelector(`#p_reply_update_input${id}`)
 
