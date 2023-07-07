@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" href="static/image/ConnectME - icon.png">
+    <!-- swal CDN -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
@@ -147,50 +149,37 @@
             <!-- category 끝 -->
             <div id="place_create" style="margin-top: 15px;"></div>
             <div class="place-search">
-                <div id="select-box">
+                <div id="select-box2" style="width:100px; height:100px; margin-left:20px;">
                     <!-- select box 시작 -->
                     <div class="select-box">
                         <div class="select-box__current" tabindex="1">
                             <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="0" value="1" name="Ben"
+                                <input class="select-box__input" type="radio" id="6" value="1" name="Ben2"
                                     checked="checked" />
-                                <p class="select-box__input-text">정렬순</p>
+                                <p class="select-box__input-text">제목</p>
                             </div>
                             <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="1" value="2" name="Ben" />
-                                <p class="select-box__input-text">최신순</p>
+                                <input class="select-box__input" type="radio" id="7" value="2" name="Ben2" />
+                                <p class="select-box__input-text">제목</p>
                             </div>
                             <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="2" value="3" name="Ben" />
-                                <p class="select-box__input-text">댓글순</p>
-                            </div>
-                            <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="3" value="4" name="Ben" />
-                                <p class="select-box__input-text">좋아요순</p>
-                            </div>
-                            <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="4" value="5" name="Ben" />
-                                <p class="select-box__input-text">북마크순</p>
+                                <input class="select-box__input" type="radio" id="8" value="3" name="Ben2" />
+                                <p class="select-box__input-text">지역</p>
                             </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg"
                                 alt="Arrow Icon" aria-hidden="true" />
                         </div>
                         <ul class="select-box__list">
                             <li>
-                                <label class="select-box__option" for="1" aria-hidden="aria-hidden">최신순</label>
+                                <label class="select-box__option" for="7" aria-hidden="aria-hidden">제목</label>
                             </li>
                             <li>
-                                <label class="select-box__option" for="2" aria-hidden="aria-hidden">댓글순</label>
-                            </li>
-                            <li>
-                                <label class="select-box__option" for="3" aria-hidden="aria-hidden">좋아요순</label>
-                            </li>
-                            <li>
-                                <label class="select-box__option" for="4" aria-hidden="aria-hidden">북마크순</label>
+                                <label class="select-box__option" for="8" aria-hidden="aria-hidden">지역</label>
                             </li>
                         </ul>
                     </div>
                     <!-- select box 끝 -->
                 </div>
+
                 <div id="search-div">
                     <!-- search 시작 -->
                     <div class="search-div">
@@ -211,6 +200,52 @@
                     </div>
                 </div>
                 <!-- search 끝 -->
+            </div>
+        </div>
+        <div class="place-sorted">
+            <div id="select-box1" style="width: 100px; height:100px;">
+                <!-- select box 시작 -->
+                <div class="select-box">
+                    <div class="select-box__current" tabindex="1">
+                        <div class="select-box__value">
+                            <input class="select-box__input" type="radio" id="0" value="1" name="Ben"
+                                checked="checked" />
+                            <p class="select-box__input-text">정렬순</p>
+                        </div>
+                        <div class="select-box__value">
+                            <input class="select-box__input" type="radio" id="1" value="2" name="Ben" />
+                            <p class="select-box__input-text">최신순</p>
+                        </div>
+                        <div class="select-box__value">
+                            <input class="select-box__input" type="radio" id="2" value="3" name="Ben" />
+                            <p class="select-box__input-text">댓글순</p>
+                        </div>
+                        <div class="select-box__value">
+                            <input class="select-box__input" type="radio" id="3" value="4" name="Ben" />
+                            <p class="select-box__input-text">좋아요순</p>
+                        </div>
+                        <div class="select-box__value">
+                            <input class="select-box__input" type="radio" id="4" value="5" name="Ben" />
+                            <p class="select-box__input-text">북마크순</p>
+                        </div><img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg"
+                            alt="Arrow Icon" aria-hidden="true" />
+                    </div>
+                    <ul class="select-box__list">
+                        <li>
+                            <label class="select-box__option" for="1" aria-hidden="aria-hidden">최신순</label>
+                        </li>
+                        <li>
+                            <label class="select-box__option" for="2" aria-hidden="aria-hidden">댓글순</label>
+                        </li>
+                        <li>
+                            <label class="select-box__option" for="3" aria-hidden="aria-hidden">좋아요순</label>
+                        </li>
+                        <li>
+                            <label class="select-box__option" for="4" aria-hidden="aria-hidden">북마크순</label>
+                        </li>
+                    </ul>
+                </div>
+                <!-- select box 끝 -->
             </div>
         </div>
         <div id="place"></div>

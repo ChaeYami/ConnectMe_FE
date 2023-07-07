@@ -18,11 +18,16 @@ async function uploadPhoto() {
         body: formData
     });
 
+    let response_json = await response.json();
+
     if (response.status == 200) {
-        alert("사진 업로드 완료")
-        window.location.replace(`profile_album.html?user_id=${logined_user_id}`)
+        swal("사진 업로드 완료", '', 'success')
+            .then((value) => {
+                window.location.replace(`profile_album.html?user_id=${logined_user_id}`)
+
+            })
     } else {
-        alert('으엥에ㅔ에에')
+        swal(`${response_json['error']}`, '', 'warning')
     }
 }
 

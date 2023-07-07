@@ -397,7 +397,7 @@
     position: relative;
     cursor: pointer;
     height: 20px;
-    width: 150px;
+    width: 140px;
     line-height: 20px;
     padding: 15px 0px;
     text-transform: uppercase;
@@ -406,7 +406,6 @@
     font-weight: normal;
     font-style: normal;
     font-size: 18px;
-    width: 150px;
     color: #c0b7b4;
     border-bottom: 1px solid #ddd8d7;
     text-align: left;
@@ -535,7 +534,6 @@
     display: grid;
     grid-template-columns: 160px 1fr 1fr;
     height: 60px;
-    margin-bottom: 20px;
 }
 
 .place-search {
@@ -548,6 +546,11 @@
 /********* place 카테고리 끝 **********/
 
 /********* select box 시작 **********/
+.place-sorted {
+    display: flex;
+    justify-content: end;
+}
+
 .select-box {
     position: relative;
     width: 100%;
@@ -630,6 +633,7 @@
     padding: 15px;
     height: 18px;
     background-color: #fff;
+    cursor: pointer;
 }
 
 .select-box__option:hover,
@@ -796,8 +800,15 @@ main {
     max-width: 900px;
 }
 
+#place {
+    background-color: rgba(236, 244, 255, 0.11);
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 0px rgba(236, 244, 255, 0.26);
+}
+
 
 .place-container {
+    padding: 20px 30px;
     display: grid;
     grid-template-columns: 230px 1fr;
 }
@@ -808,12 +819,12 @@ main {
 
 .hotplace-image-div {
     position: relative;
-    width: 250px;
+    width: 220px;
     margin: 10px 5px;
 }
 
 .place-container-img {
-    width: 230px;
+    width: 220px;
     height: 230px;
     object-fit: cover;
     object-position: center;
@@ -829,13 +840,15 @@ main {
 }
 
 .place-container-main {
+    width: 95%;
     display: grid;
-    grid-template-columns: 550px 1fr;
+    grid-template-columns: 1fr 100px;
 }
 
 .place-container-title {
     display: flex;
     align-items: center;
+    color: white;
 }
 
 .place-container-title0 {
@@ -852,11 +865,11 @@ main {
 
 .place-container-title-a {
     text-decoration: none;
-    color: black;
+    color: rgb(231, 231, 231);
 }
 
 .place-container-score {
-    color: rgb(155, 155, 155);
+    color: rgb(206, 206, 206);
 }
 
 .place-container-book {
@@ -864,25 +877,27 @@ main {
     align-items: center;
     justify-content: end;
     margin-right: 10px;
+    filter: invert(100%);
 }
 
 .place-container-address {
-    color: rgb(155, 155, 155);
+    color: rgb(224, 213, 195);
     font-weight: 600;
 }
 
 .place-container-content {
-    width: 580px;
     line-height: 1.2em;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     /* 원하는 줄 수로 변경 가능 */
     -webkit-box-orient: vertical;
-    margin: 20px 0px 10px 60px;
+    margin: 20px auto;
     text-indent: 1em;
     white-space: normal;
     text-overflow: ellipsis;
+    width: 90%;
+    color: rgb(214, 214, 214);
 }
 
 .place-container-bottom {
@@ -895,12 +910,16 @@ main {
     display: flex;
     justify-content: end;
     align-items: end;
+    width: 90%;
+    color: wheat;
+
 }
 
 .place-empathy {
     display: flex;
     justify-content: end;
     align-items: end;
+    filter: invert(100%);
 }
 
 .place-container-count-img {
@@ -918,7 +937,7 @@ main {
 
 .place-container-hr {
     grid-column: 1/-1;
-    margin: 20px 0px;
+    margin-top: 30px
 }
 
 /********* place-contariner 끝 **********/
@@ -1003,28 +1022,36 @@ main {
 
 /* 좌측 임시 시작 */
 .place-container-div {
-    width: 80vw;
+    width: 60vw;
     margin: 75px auto;
     /* max-width: 1550px; */
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 25px;
+
 }
 
 .place-meeting-list {
-    width: 300px;
+    background-color: rgba(255, 255, 255, 0.719);
+    width: 18%;
+    max-width: 230px;
     height: auto;
     margin: 20px auto 10px auto;
-    border: 1px solid rgb(165, 165, 165);
+    /* border: 1px solid rgb(165, 165, 165); */
     padding: 10px;
     border-radius: 10px;
+    position: fixed;
+    right: 20px;
+    bottom: 100px;
 }
 
 .meeting-data {
+    color: black;
+    padding: 10px 0px;
+    height: auto;
     display: flex;
     gap: 10px;
     margin: 20px 0px;
+    flex-direction: column;
     align-items: flex-start;
+    border-top: 1px solid rgb(180, 180, 180);
 }
 
 .meeting-status span {
@@ -1046,11 +1073,10 @@ main {
 }
 
 .meeting-info {
-    text-align: right;
-    margin-left: auto;
-    color: gray;
+    color: rgb(0, 0, 0);
     overflow: visible;
     white-space: nowrap;
+    font-size: small;
 }
 
 /* 좌측 임시 끝 */
@@ -1065,6 +1091,7 @@ main {
     grid-template-columns: 1fr 400px;
     height: 50px;
     margin-bottom: 10px;
+    color: white;
 }
 
 .place-detail-top {
@@ -1112,7 +1139,7 @@ main {
     height: 50px;
     margin-right: 35px;
     align-items: end;
-    color: rgb(155, 155, 155);
+    color: rgb(187, 187, 187);
     font-weight: 500;
 }
 
@@ -1121,10 +1148,12 @@ main {
     align-items: end;
     justify-content: end;
 }
-.place-detail-feed img{
+
+.place-detail-feed img {
     width: 30px;
 }
-.place-detail-feed a{
+
+.place-detail-feed a {
     display: flex;
     align-items: center;
     border: none;
@@ -1134,6 +1163,7 @@ main {
     margin-top: 30px;
     font-size: small;
     font-weight: bold;
+    color: black;
 }
 
 .place-detail-book {
@@ -1159,12 +1189,18 @@ main {
 
 .place-detail-content {
     margin: 30px 0px;
-    height: auto;
+    width: 100%;
 }
 
 .place-detail-content-grid {
+    width: 100%;
     display: grid;
-    grid-template-columns: 120px 1fr 1fr;
+    grid-template-columns: 80px 1fr 1fr;
+
+}
+
+.place-detail-content-grid-2 {
+    color: white;
 }
 
 .place-detail-font-gray {
@@ -1230,21 +1266,23 @@ main {
 /********* place-detail 끝 **********/
 /********* place-detail 댓글 시작 **********/
 
-
-.comment_card_class {
-    width: 800px;
-    margin: 20px auto 10px auto;
+.place-comment-section{
+    margin-top: 20px;
+    padding: 15px;
     border: 1px solid rgb(165, 165, 165);
-    padding: 10px;
     border-radius: 10px;
+
+}
+.comment_card_class {
+    margin: 20px auto 10px auto;
+    
+    padding: 10px;
+    color: white;
 }
 
 .create_comment_box {
-    width: 800px;
     margin: 20px auto 10px auto;
-    border: 1px solid rgb(165, 165, 165);
     padding: 10px;
-    border-radius: 10px;
 }
 
 .comment-text {
@@ -1256,22 +1294,23 @@ main {
 .textareaCommentclass {
     border-radius: 10px;
     padding: 10px;
+    width: 95%;
 }
 
 .commentbtn {
-    border: 1px solid rgb(114, 114, 114);
+    border: 1px solid rgba(102, 34, 34, 0);
     border-radius: 10px;
     padding: 10px;
-    background-color: transparent;
+    background-color: #E0EEFF;
     margin-top: 10px;
-    cursor: pointer;
+    font-weight: bold;
 }
 
 .commentbtn:hover {
     border: 1px solid rgb(114, 114, 114);
     border-radius: 10px;
     padding: 10px;
-    background-color: #b9b4b4;
+    background-color: #7e99b9a4;
     color: white;
     margin-top: 10px;
     cursor: pointer;

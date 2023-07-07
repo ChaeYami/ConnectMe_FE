@@ -116,17 +116,29 @@ function go_counselDetail(counsel_id) {
 
 //로그아웃
 function logoutButton() {
-    if (confirm("로그아웃하시겠습니까?")) {
-        handleLogout();
-    }
+
+    swal({
+        title: "로그아웃하시겠습니까?",
+        text: "",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willLogout) => {
+            if (willLogout) {
+                handleLogout();
+            }
+        });
 }
 
 async function handleLogout() {
-    localStorage.removeItem("access")
-    localStorage.removeItem("refresh")
-    localStorage.removeItem("payload")
-    location.replace('/index.html')
-    alert("로그아웃되었습니다.")
+    swal("로그아웃되었습니다.", '', 'success')
+        .then((value) => {
+            localStorage.removeItem("access")
+            localStorage.removeItem("refresh")
+            localStorage.removeItem("payload")
+            location.replace('/index.html')
+        });
 }
 
 function go_requestList(me) {

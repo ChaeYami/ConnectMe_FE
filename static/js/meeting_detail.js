@@ -27,8 +27,8 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     join_meeting_count = data['join_meeting_count']
     place_title = data['place_title']
     place_address = data['place_address']
-    join_meeting = data['join_meeting']
-    join_meeting.forEach(join_user => {
+    join_meeting_user = data['join_meeting_user']
+    join_meeting_user.forEach(join_user => {
         let join_user_nickname = join_user.nickname
         let meeting_join_user_list = `
                                 <ul>
@@ -52,15 +52,15 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     let check_join_meeting = ``
     if (join_meeting.includes(user_id)) {
         check_join_meeting = `
-        <a>
-        <img id="join_meeting${id}" src="static/image/join (1).png" style="margin-top:10px; width: 30px;" alt="모임참가" onclick="handleJoinmeeting(${id})">
-        </a>
+        <button onclick="handleJoinmeeting(${id})" style="margin-left:10px; border:none; cursor: pointer; display:flex;align-items: center; background-color:transparent;"><a>
+                        <img id="join_meeting${id}" src="static/image/join (1).png" style="margin-top:5px; width: 30px;" alt="모임참가" >
+                        </a><p style="margin-left:5px;">참가취소</p></button>
         `
     } else {
         check_join_meeting = `
-        <a>
-        <img id="join_meeting${id}" src="static/image/join.png" style="margin-top:10px; width: 30px;" alt="모임참가" onclick="handleJoinmeeting(${id})">
-        </a>
+        <button onclick="handleJoinmeeting(${id})" style="margin-left:10px; border:none; cursor: pointer; display:flex;align-items: center; background-color:transparent;"><a>
+                        <img id="join_meeting${id}" src="static/image/join.png" style="margin-top:5px; width: 30px;" alt="모임참가" >
+                        </a><p style="margin-left:5px;">참가하기</p></button>
         `
     }
     let meeting_btn = ``
@@ -73,8 +73,11 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
     let temp_html =
         ` 
 <div>
+    <div style="position:relative;">
+    <div style="position:absolute; left:56vw;"><a>${meeting_book}</a></div>
+    <div>
     <p><small>${meeting_city} </p>
-    <h2  >${title}</h2>
+    <h1  >${title}</h1>
     <hr>
         <div style = "display:flex;">
             <div style="width:250px; border-right:solid 0.6px">
@@ -90,12 +93,15 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`).then(res => res.json()).then(
                     </div>
                     <div>
                     <hr>
-                    ${meeting_btn}
-                    <a>${meeting_book}</a>
-                    <a>${check_join_meeting}</a>
-                    <a>
-        <img id="who_join_meeting${id}" src="static/image/who.png" style="margin-top:10px; width: 30px;" alt="참가유저목록" onclick="join_user_list()">
-        </a>
+                    <div style="display:flex; flex-direction: row;">
+                        <div>
+                        ${meeting_btn}
+                        </div>
+                        <div style="display:flex; margin-left: auto;">
+                        <button onclick="join_user_list()" style="display:flex;align-items: center; border:none; background-color:transparent; cursor: pointer;"><img id="who_join_meeting${id}" src="static/image/metting_join_list.png" style="width: 30px; margin-right:5px;" alt="참가유저목록"><p>참가 목록</p></button>
+                        ${check_join_meeting}
+                        </div>
+                    </div>
                     <hr>
                     <p class=meeting_detail_content>${content}</p>
                     </div>
@@ -211,7 +217,7 @@ function meetingUpdateMove() {
         let payloadObj = JSON.parse(payload)
         let nickname = payloadObj.nickname
         if (nickname == data.user.nickname) { location.replace(`${FRONTEND_BASE_URL}/meeting_update.html?id=` + meeting_id) }
-        else { alert("권한이 없습니다.") }
+        else { swal("권한이 없습니다.", '', 'error') }
     })
 }
 // ================================ 모임 게시글 수정하기 페이지로 이동 끝 ================================
@@ -293,10 +299,10 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`).then(res => res.json()).then
                     <div class ="comment-text">
                     <p id="now_comment${id}" style="display:block;">[${user}] ${content} ${comment_edit}</p>
                     </div>
-                    <p id="p_comment_update_input${id}" style="display:none;"/><input class="reply-input" id="comment_update_input${id}" type="text"/> <button class="button-blue" onclick="commentUpdateConfrim(${id})">완료</button> <button class="button-white" onclick="comment_update_handle(${id})">취소하기</button></p>
+                    <p id="p_comment_update_input${id}" style="display:none;"><input class="reply-input" id="comment_update_input${id}" type="text"/> <button class="button-blue" onclick="commentUpdateConfrim(${id})">완료</button> <button class="button-white" onclick="comment_update_handle(${id})">취소하기</button></p>
                     <p> <small> ${updated_at}</small></p>
                     
-                    <p id="p_reply_create_input${id}" style="display:none;"/><input class="reply-input" id="reply_create_input${id}" type="text"/> <button class="button-blue" onclick="replyCreateConfrim(${id})">완료</button> <button class="button-white" onclick="reply_create_handle(${id})">취소하기</button></p>
+                    <p id="p_reply_create_input${id}" style="display:none;"><input class="reply-input" id="reply_create_input${id}" type="text"/> <button class="button-blue" onclick="replyCreateConfrim(${id})">완료</button> <button class="button-white" onclick="reply_create_handle(${id})">취소하기</button></p>
                     <div class=comment_btns>
                     <button id="reply_create_btn${id}" class="commentbtn" onclick="reply_create_handle(${id})">답글 작성하기</button>
                     </div>
@@ -330,7 +336,7 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`).then(res => res.json()).then
             <div style="margin-left: 50px;">
             <div class ="comment-text">
             <p id="now_reply_comment${id}" style="display:block;">[${user}] ${content} ${reply_edit}</p>
-            <p id="p_reply_update_input${id}" style="display:none;"/>
+            <p id="p_reply_update_input${id}" style="display:none;">
                 <input class="reply-input" id="reply_update_input${id}" value="${content}" type="text"/> 
                 <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${id})">수정하기</button>
                 <button type="button" class="button-white" onclick="replyCancel(${meeting_id}, ${id})">취소하기</button>
@@ -350,21 +356,35 @@ fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`).then(res => res.json()).then
 
 // ================================ 모임 게시글 삭제 API 시작 ================================
 async function meetingDelete() {
-    if (confirm("삭제하시겠습니까?")) {
-        let token = localStorage.getItem("access")
-        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        if (response.status == 204) {
-            alert("삭제 완료")
-            await location.replace(`${FRONTEND_BASE_URL}/meeting_list.html`)
-        }
-        else { alert("권한이 없습니다.") }
-    }
+    swal({
+        title: "삭제하시겠습니까?",
+        text: "삭제한 게시글은 되돌릴 수 없습니다.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then(async (willDelete) => {
+            if (willDelete) {
+                let token = localStorage.getItem("access")
+                let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                if (response.status == 204) {
+                    swal("삭제 완료", '', 'success')
+                        .then((value) => {
+                            go_meetingList()
+                        });
+                } else {
+                    swal("권한이 없습니다.", '', 'error')
+                }
+            }
+        });
 }
+
+
 // ================================ 모임 게시글 삭제 API 끝 ================================
 
 // ================================ 모임 게시글 상세보기 북마크 시작 ================================
@@ -379,13 +399,17 @@ async function handleBookmark() {
             },
         })
         if (response.status === 200) {
-            alert("북마크 취소")
-            location.reload()
+            swal("북마크 취소", '')
+                .then((value) => {
+                    location.reload()
+                });
         } else {
-            alert("북마크")
-            location.reload()
+            swal("북마크", '')
+                .then((value) => {
+                    location.reload()
+                });
         }
-    } else { alert("로그인 해주세요") }
+    } else { swal("로그인 해주세요", "", "warning") }
 }
 // ================================ 모임 게시글 상세보기 북마크 끝 ================================
 
@@ -405,30 +429,63 @@ async function meetingCommentCreate() {
             },
             body: formData
         })
-        if (response.status == 200) { alert("작성 완료"), window.location.reload() }
-        else { alert("입력 해주세요") }
+        if (response.status == 200) {
+            swal("댓글 작성 완료", '', 'success')
+                .then((value) => {
+                    window.location.reload()
+                });
+        }
+        else {
+            swal("입력 해주세요", '', 'warning')
+        }
 
-    } else { alert("로그인 해주세요") }
+    } else {
+        swal("로그인 해주세요", '', 'warning')
+    }
 }
 // ================================ 모임 게시글 상세보기 댓글 작성 끝 ================================
 
 // ================================ 모임 게시글 상세보기 댓글 삭제 시작 ================================
+
+
+
+
+
+
 async function commentDelete(comment_id) {
-    if (confirm("삭제하시겠습니까?")) {
-        let token = localStorage.getItem("access")
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
-        if (token) {
-            let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/${comment_id}`, {
-                method: 'DELETE',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
-            else (alert("권한이 없습니다."))
-        } else { alert("로그인 해주세요") }
-    }
+
+    swal({
+        title: "삭제하시겠습니까?",
+        text: "삭제한 댓글은 되돌릴 수 없습니다.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then(async (willDelete) => {
+            if (willDelete) {
+                let token = localStorage.getItem("access")
+                let meeting_id = new URLSearchParams(window.location.search).get('id');
+                let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/${comment_id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                if (response.status == 204) {
+                    swal("삭제 완료", '', 'success')
+                        .then((value) => {
+                            window.location.reload()
+                        });
+                }
+                else {
+                    swal("권한이 없습니다.", '', 'error')
+                }
+            }
+        });
+
 }
+
+
 // ================================ 모임 게시글 상세보기 댓글 삭제 끝 ================================
 
 // ================================ 모임 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 시작 ================================
@@ -471,9 +528,18 @@ async function commentUpdateConfrim(id) {
             },
             body: formData
         })
-        if (response.status == 200) { alert("수정 완료"), window.location.reload() }
-        else if (response.status == 400) { alert("입력 해주세요") }
-        else (alert("권한이 없습니다."))
+        if (response.status == 200) {
+            swal("수정 완료", '', 'success')
+                .then((value) => {
+                    window.location.reload()
+                });
+        }
+        else if (response.status == 400) {
+            swal("입력 해주세요", '', 'warning')
+        }
+        else {
+            swal("권한이 없습니다.", '', 'error')
+        }
     } else { alert("로그인 해주세요") }
 }
 // ================================ 모임 게시글 상세보기 댓글 수정 끝 ================================
@@ -518,9 +584,18 @@ async function replyUpdateConfrim(reply_id) {
             },
             body: formData
         })
-        if (response.status == 200) { alert("수정 완료"), window.location.reload() }
-        else if (response.status == 400) { alert("입력해주세요") }
-        else { alert("권한이 없습니다.") }
+        if (response.status == 200) {
+            swal("수정 완료", '', 'success')
+                .then((value) => {
+                    window.location.reload()
+                });
+        }
+        else if (response.status == 400) {
+            swal("입력 해주세요", '', 'warning')
+        }
+        else {
+            swal("권한이 없습니다.", '', 'error')
+        }
 
     } else { alert("로그인 해주세요") }
 }
@@ -528,21 +603,38 @@ async function replyUpdateConfrim(reply_id) {
 
 // ================================ 모임 게시글 상세보기 대댓글 삭제 시작 ================================
 async function replyDelete(reply_id) {
-    if (confirm("삭제하시겠습니까?")) {
-        let token = localStorage.getItem("access")
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
-        if (token) {
-            let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/reply/${reply_id}`, {
-                method: 'DELETE',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            if (response.status == 204) { alert("삭제 완료"), window.location.reload() }
-            else { alert("권한이 없습니다.") }
 
-        } else { alert("로그인 해주세요") }
-    }
+    swal({
+        title: "삭제하시겠습니까?",
+        text: "삭제한 댓글은 되돌릴 수 없습니다.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then(async (willDelete) => {
+            if (willDelete) {
+                let token = localStorage.getItem("access")
+                let meeting_id = new URLSearchParams(window.location.search).get('id');
+                let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/reply/${reply_id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                if (response.status == 204) {
+                    swal("삭제 완료", '', 'success')
+                        .then((value) => {
+                            window.location.reload()
+                        });
+                }
+                else {
+                    swal("권한이 없습니다.", '', 'error')
+                }
+            }
+        });
+
+
+
 }
 // ================================ 모임 게시글 상세보기 대댓글 삭제 끝 ================================
 
@@ -563,12 +655,19 @@ async function replyCreateConfrim(reply_id) {
             },
             body: formData
         })
-        if (response.status == 400) { alert("입력해주세요") }
-        else {
-            alert("작성 완료")
-            window.location.reload()
+        if (response.status == 200) {
+            swal("댓글 작성 완료", '', 'success')
+                .then((value) => {
+                    window.location.reload()
+                });
         }
-    } else { "로그인 해주세요" }
+        else if (response.status == 400) {
+            swal("입력 해주세요", '', 'warning')
+        }
+
+    } else {
+        swal("로그인 해주세요", '', 'warning')
+    }
 }
 // ================================ 모임 게시글 상세보기 대댓글 작성 끝 ================================
 
@@ -595,7 +694,7 @@ async function handleJoinmeeting() {
     let token = localStorage.getItem("access")
     if (token) {
         if (meeting_status == "모집종료") {
-            alert("모집종료 된 모임입니다.")
+            swal("모집종료 된 모임입니다.", '')
         } else {
             let meeting_id = new URLSearchParams(window.location.search).get('id');
             let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/join_meeting/`, {
@@ -605,14 +704,20 @@ async function handleJoinmeeting() {
                 },
             })
             if (response.status === 200) {
-                alert("약속 취소")
-                location.reload()
+                swal("참가 취소", '')
+                    .then((value) => {
+                        location.reload();
+                    });
             } else if (num_person_meeting == join_meeting_count) {
-                alert("자리가 없습니다.")
-                location.reload()
+                swal("자리가 없습니다.", '')
+                    .then((value) => {
+                        location.reload();
+                    });
             } else {
-                alert("약속")
-                location.reload()
+                swal("참가 약속 완료!", '')
+                    .then((value) => {
+                        location.reload();
+                    });
             }
         }
     }
@@ -640,33 +745,13 @@ function join_user_list() {
 }
 
 function meetingEditBasic() {
-    date = new Date();
-    year = date.getFullYear();
-    month = date.getMonth() + 1;
-    day = date.getDate();
-    let todayString = year + "-";
-    if (month < 10) {
-        todayString += "0";
-    }
-    todayString += month + "-";
-    if (day < 10) {
-        todayString += "0";
-    }
-    todayString += day;
-    let date_time_input_html = `
-    <input id="meeting_date" type="date" min=${todayString}>
-    `
 
-    $("#date_time_input").prepend(date_time_input_html)
-    $("#meeting_time").timepicker('setTime', new Date());
-    document.getElementById('meeting_date').valueAsDate = new Date();
 }
 
 //================================ 모임 게시글 수정 할 데이터 불러오기 API 시작 ================================ 
 
 async function meetingPreEdit(meeting_id) {
     let token = localStorage.getItem("access");
-
     try {
         const response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}`, {
             method: 'GET',
@@ -678,18 +763,15 @@ async function meetingPreEdit(meeting_id) {
         const data = await response.json();
 
         $('#meeting-detail').hide();
-
         let title = data['title'];
         let content = data['content'];
-        let join_meeting = data['join_meeting'];
-        let meeting_date = data['meeting_at'].slice(0, 10);
-        let meeting_time = data['meeting_at'].slice(11);
         let sido = data['meeting_city'].split(" ")[0];
         let gugun = data['meeting_city'].split(" ")[1];
         let meeting_status = data['meeting_status'];
         let num_person_meeting = data['num_person_meeting'];
         let place_title = data['place_title'];
         let place_address = data['place_address'];
+        let meeting_at = data['meeting_at'];
 
 
         let img_html = '';
@@ -715,7 +797,7 @@ async function meetingPreEdit(meeting_id) {
             }
 
             img_html += `
-            <div class="update_image_box">
+            <div id="update_image_box${id}" class="update_image_box">
                 <img class="update_image" src="${img_urls}" alt="">
                 <a class="image_delete_btn">
                     <img id="delete-image${id}" src="static/image/comment_delete.png" style="width: 30px;" onmouseover="changeDeleteImage(${id})" onmouseout="restoreDeleteImage(${id})" onclick="deleteImage(${id})">
@@ -748,8 +830,8 @@ async function meetingPreEdit(meeting_id) {
                     </select>
                 </div>
                 <div class="group" id="date_time_input">
-                    <input id="meeting_time" type="text" value="${meeting_time}">
-                    <input id="num_person_meeting" type="number" placeholder="모집 인원수" min="1" value="${num_person_meeting}">
+                <input id="datetimeinput" name="date" type="text" placeholder="모임 날짜와 시간" value="${meeting_at}" readonly>
+                <input id="num_person_meeting" type="number" placeholder="모집 인원수" min="1" value="${num_person_meeting}">
                 </div>
                 <div class="group">
                     <input id="place_title" class="create_input" type="text" required="required" value="${place_title}"/><span
@@ -788,7 +870,17 @@ async function meetingPreEdit(meeting_id) {
         <div class="btn-box">
             <button class="btn btn-submit" type="button" onclick="updateMeeting()">submit</button>
             <button class="btn btn-cancel" type="button" onclick="go_meetingList()">cancel</button>
-        </div>`;
+        </div>
+        <script>
+        $('#datetimeinput').appendDtpicker({
+            "locale": "ko",
+            "futureOnly": true,
+            "minuteInterval": 10,
+            "dateFormat": "YYYY-MM-DD hh:mm",
+            "autodateOnStart": false
+        });   
+        </script>`
+            ;
         $('#meeting-edit-footer').html(foot_html);
         meetingEditBasic();
         meetingPreEditWrapper(sido, gugun);
@@ -800,16 +892,17 @@ async function meetingPreEdit(meeting_id) {
 
 
 //================================ 모임 게시글 수정 시 이미지 삭제 API 시작 ================================ 
-async function deleteImage(id) {
+function deleteImage(id) {
     let token = localStorage.getItem("access")
-    await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/meeting_image/${id}`, {
+    fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/meeting_image/${id}`, {
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${token}`,
         },
     })
-    window.location.reload()
+    $(`#update_image_box${id}`).hide()
 }
+
 //================================ 모임 게시글 수정 시 이미지 삭제 API 끝 ================================ 
 
 //================================ 모임 게시글 수정 API 시작 ================================ 
@@ -820,9 +913,7 @@ async function updateMeeting() {
     let gugun1 = document.getElementById("gugun1").value
     let meeting_city = `${sido1} ${gugun1}`
     let meeting_status = document.getElementById("meeting_status").value
-    let meeting_date = document.getElementById("meeting_date").value
-    let meeting_time = document.getElementById("meeting_time").value
-    let meeting_at = `${meeting_date} ${meeting_time}`
+    let meeting_at = document.getElementById("datetimeinput").value
     let num_person_meeting = document.getElementById("num_person_meeting").value
     let place_title = document.getElementById("place_title").value
     let place_address = document.getElementById("place_address").value
@@ -848,18 +939,37 @@ async function updateMeeting() {
         let image = meeting_image[i]
         formData.append("image", image);
     }
-    await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`, {
+    const response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/`, {
         method: 'PATCH',
         headers: {
             Authorization: `Bearer ${token}`,
         },
         body: formData
     })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data['non_field_errors']) {
+                swal(`${data['non_field_errors']}`, '', 'warning')
+                    .then((value) => {
+                        document.querySelector('#image_container').innerHTML = ''
+                        const fileInput = document.getElementById('meeting_image');
+                        fileInput.value = '';
+                    });
+            } else {
+                swal('수정 되었습니다.','','success')
+                    .then((value) => {
+                        location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
+                    });
 
-    location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
+            }
+        });
+
 }
 //================================ 모임 게시글 수정 API 끝 ================================ 
 function setThumbnail(event) {
+    var container = document.querySelector("#image_container");
+    container.innerHTML = '';
+
     for (var image of event.target.files) {
         var reader = new FileReader();
 

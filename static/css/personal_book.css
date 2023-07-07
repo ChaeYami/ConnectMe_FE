@@ -2,6 +2,7 @@ main {
     width: 70vw;
     margin: 75px auto 0px auto;
     max-width: 1200px !important;
+    color: white;
 }
 
 .none-text-align {

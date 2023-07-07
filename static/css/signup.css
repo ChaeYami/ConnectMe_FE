@@ -29,6 +29,7 @@
     padding: 20px 0px 5px 0px;
     font-size: 14pt;
     width: 100%;
+    color: white;
 }
 
 input::placeholder {
@@ -89,11 +90,12 @@ input:not(:placeholder-shown) {
     margin-bottom: 10px;
 
 }
-
+.countdown{
+    color: white;
+}
 
 .alert-danger {
     color: #ff4a4a;
-    background-color: white;
     display: none;
     margin: 10px auto;
 }

@@ -1,11 +1,11 @@
 .main {
     padding: 0 30px;
-    width: 70vw;
+    width: 80vw;
     margin: 100px auto;
-    max-width: 800px;
+    max-width: 1000px;
     
-    @media screen and (max-width: 800px) {
-        width: 80%;
+    @media screen and (max-width: 950px) {
+        width: 90%;
 
     }
 }
@@ -13,20 +13,20 @@ h1{
     color: white;
 }
 .meeting_card_class {
-    width: 70vw;
+    width: 80vw;
     max-width: 900px;
     margin: 0 auto;
     grid-template-columns: 1fr 1fr 1fr;
     display: grid;
     justify-items: center;
 
-    @media screen and (max-width: 1200px) {
+    @media screen and (max-width: 950px) {
         grid-template-columns: 1fr 1fr;
 
     }
 
     @media screen and (max-width: 900px) {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
 
     }
 }
@@ -45,14 +45,15 @@ h1{
 
 .meeting_card {
     margin: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.425);
+    border: 1px solid rgba(255, 253, 248, 0.233);
     border-radius: 10px;
     padding: 10px;
     height: 540px;
     width: 260px;
-    background-color: rgba(255, 255, 255, 0.158);
+    /* background-color: rgba(255, 255, 255, 0.158); */
     color: white;
 }
+
 
 .meeting_list_content {
     width: 270px;

@@ -1,7 +1,47 @@
 if (localStorage.getItem("payload")){
     window.location.replace("index.html")
-    alert("접근이 불가합니다.")
+    swal("접근이 불가합니다.",'','error')
 } else {}
+
+
+
+let timer;
+let isRunning = false;
+
+// 인증번호 발송하고 타이머 함수 실행
+function startCountdown(){
+    	// 남은 시간
+	let leftSec = 5* 60,
+	display = document.querySelector('#countdown');
+	// 이미 타이머가 작동중이면 중지
+	if (isRunning){
+	   clearInterval(timer);
+	} else {
+    	isRunning = true;
+    }
+     startTimer(leftSec, display);
+}
+
+function startTimer(count, display) {
+        let minutes, seconds;
+        timer = setInterval(function () {
+        minutes = parseInt(count / 60, 10);
+        seconds = parseInt(count % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        // 타이머 끝
+        if (--count < 0) {
+	     clearInterval(timer);
+	     display.textContent = "";
+	     isRunning = false;
+        }
+    }, 1000);
+}
+
 
 
 //휴대폰 인증번호 발송
@@ -21,7 +61,9 @@ async function phone_send() {
     const result = await response.json()
     
     if (response.status === 200) {
-        alert("인증번호가 발송되었습니다. 확인부탁드립니다.")
+        swal("인증번호가 발송되었습니다.",'문자메시지를 확인해주세요.')
+        $("#auth-num-box").attr("style", "display:flex;");
+        
 
     } else if (response.status === 400) {
         document.getElementById('alert-danger_1').style.display ="block"

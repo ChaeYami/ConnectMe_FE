@@ -141,10 +141,10 @@ async function placeBook(place_id) {
 
     if (response_json["message"] == "북마크") {
         book['src'] = "static/image/bookmark (1).png"
-        alert("북마크가 추가되었습니다.");
+        swal("북마크가 추가되었습니다.",'');
     } else {
         book['src'] = "static/image/bookmark.png"
-        alert("북마크가 취소되었습니다.");
+        swal("북마크가 취소되었습니다.",'');
     }
 }
 
@@ -164,6 +164,8 @@ async function bookMoreHotPlace(pages = 1) {
     let response_json = await response.json();
     page_data = response_json["total-page"];
 
+    div_more_content.innerHTML += `<div id="place"></div>`
+
     response_json['place'].forEach((e, i) => {
         let place_id = e.id
         let name = e.title
@@ -177,7 +179,8 @@ async function bookMoreHotPlace(pages = 1) {
         let comment_count = e.comment_count
         let like_count = e.like_count
 
-        div_more_content.innerHTML += `<div id="book_place${place_id}" class="place-container"></div>`
+        let place_div = document.querySelector('#place')
+        place_div.innerHTML += `<div id="book_place${place_id}" class="place-container"></div>`
 
         let place = document.querySelector(`#book_place${place_id}`)
 
@@ -189,7 +192,7 @@ async function bookMoreHotPlace(pages = 1) {
                     <img class="place-container-img" src="${image['url']}" onclick="placePreUpdateView()">
                 </a>
                 <a>
-                    <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
+                    <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; right:40px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
                 </a>
             </div>
             `
@@ -200,7 +203,7 @@ async function bookMoreHotPlace(pages = 1) {
                     <img class="place-container-img" src="static/image/ConnectME - 하늘고래.png" style="object-fit: contain;" onclick="placePreUpdateView()">
                 </a>
                 <a>
-                    <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
+                    <img id="book${place_id}" src="static/image/bookmark (1).png" style="margin-top:10px; right:40px; width: 40px;" alt="북마크" onclick="placeBook(${place_id})">
                 </a>
             </div>`
         }
@@ -208,7 +211,7 @@ async function bookMoreHotPlace(pages = 1) {
         // 모임생성 시작
         let place_meeting = `
             <a>
-                <img id="book${place_id}" src="static/image/workgroup.png" style="margin-top:10px; width: 50px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
+                <img id="book${place_id}" src="static/image/people (1).png" style="margin-top:10px; width: 50px;" alt="모임생성" onclick="go_createMeeting(${place_id})">
             </a>
             `
         // 모임생성 끝
@@ -466,20 +469,34 @@ async function MoreUserDetailCounsel(pages = 1) {
             rows.forEach((e, i) => {
                 let counsel_id = e.id
                 let counsel_title = e.title
-                let counsel_author = e.user.nickname
+                let is_anonymous = e.is_anonymous
+                let counsel_author = ''
                 let counsel_created_at = e.created_at
+
                 let likes_count = e.like.length
+                let author_id = e.user.pk
+                let counsel_comment_count = e.comment_count
+
+                let author_html = ``
+
+                if (is_anonymous) {
+                    counsel_author = '익명'
+                    author_html = `<a style = "color: #9fbabf; cursor : text;">${counsel_author}</a>`
+                } else {
+                    counsel_author = rows[i]['user']['nickname']
+                    author_html = `<a onclick = "go_profile(${author_id})">${counsel_author}</a>`
+                }
+
 
                 let temp_html = `
                 <a onclick="go_counselDetail(${counsel_id})">
                     <div class="list-box">
-                        <div id="counsel-title">${counsel_title}</div>
-                        <div id="counsel-author">${counsel_author}</div>
+                    <div id="counsel-title">${counsel_title}<div id="counsel-comment-count">[${counsel_comment_count}]</div></div>
+                        <div id="counsel-author">${author_html}</div>
                         <div id="counsel-created-at">${counsel_created_at}</div>
                         <div id="counsel-likes">${likes_count}</div>
                     </div>
                 </a>
-                <hr>
                 `
                 $('#more-content').append(temp_html)
             })

@@ -25,7 +25,7 @@ async function requestList(me) {
                 let filteredResults = response.filter(item => item.to_account === logined_account);
                 const rows = filteredResults;
 
-                
+
                 for (let i = 0; i < rows.length; i++) {
                     let user_nickname = rows[i]['from_nickname']
                     let user_account = rows[i]['from_account']
@@ -47,7 +47,7 @@ async function requestList(me) {
                     </div>
                 `
 
-                $('.list-section').append(temp_html)
+                    $('.list-section').append(temp_html)
 
                 }
 
@@ -71,7 +71,7 @@ async function requestList(me) {
                     
                 `
 
-                $('.list-section').append(temp_html)
+                    $('.list-section').append(temp_html)
 
                 }
             }
@@ -84,18 +84,21 @@ async function requestList(me) {
 function acceptRequest(request_id) {
 
     $.ajax({
-        url : `${BACKEND_BASE_URL}/user/friend/${request_id}/accept/`, 
-        type : "POST",
-        dataType:"json",
-        headers:{
+        url: `${BACKEND_BASE_URL}/user/friend/${request_id}/accept/`,
+        type: "POST",
+        dataType: "json",
+        headers: {
             "Authorization": "Bearer " + logined_token
         },
-        success: function(response){
-            alert(response['message'])
-            location.reload()
+        success: function (response) {
+            swal(`${response['message']}`, '', 'success')
+                .then((value) => {
+                    location.reload()
+
+                })
         },
-        error : function(response){
-            alert(response['responseJSON']['message'])
+        error: function (response) {
+            swal(`${response['responseJSON']['message']}`,'','warning')
         }
 
     })
@@ -107,18 +110,21 @@ function acceptRequest(request_id) {
 async function rejectRequest(request_id) {
 
     $.ajax({
-        url : `${BACKEND_BASE_URL}/user/friend/${request_id}/reject/`, 
-        type : "POST",
-        dataType:"json",
-        headers:{
+        url: `${BACKEND_BASE_URL}/user/friend/${request_id}/reject/`,
+        type: "POST",
+        dataType: "json",
+        headers: {
             "Authorization": "Bearer " + logined_token
         },
-        success: function(response){
-            alert(response['message'])
-            location.reload()
+        success: function (response) {
+            swal(`${response['message']}`, '', 'success')
+                .then((value) => {
+                    location.reload()
+
+                })
         },
-        error : function(response){
-            alert(response['responseJSON']['message'])
+        error: function (response) {
+            swal(`${response['responseJSON']['message']}`,'','warning')
         }
 
     })
