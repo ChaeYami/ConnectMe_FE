@@ -154,47 +154,55 @@ async function counselComments(counsel_id) {
 
                 if (JSON.parse(payload)['user_id'] == user_id) {
                     comment_edit = `
-                    <a> <img src="static/image/comment_edit.png" class="auth_btn" style="margin-left: 10px;" onclick="comment_update_handle(${id})"> </a>
+                    <span style="margin-top:10px;">
+                    <a> <img src="static/image/comment_edit.png" class="auth_btn"  onclick="comment_update_handle(${id})"> </a>
                     <a> <img id="delete-image${id}" src="static/image/comment_delete.png" class="auth_btn" onclick="commentDelete(${id})" onmouseover="changeDeleteImage(${id})" onmouseout="restoreDeleteImage(${id})"> </a>
+                    </span>
                     `
                 }
 
                 if (content == '삭제된 댓글 입니다.') {
                     let temp_html = `
                     <p id="now_comment${id}" style="display:block;">[사용자] ${content}</p>
-                    <div id="reply_card${id}">
+                    <div id="reply_card${id}"></div>
                     <hr>
                     `
                     $('#comment_card').append(temp_html)
                 }
                 else {
                     let temp_html =
-                        `
-                            <p id="now_comment${id}" style="display:block;">[${user}] ${content} ${comment_edit}</p>
-                            <p id="p_comment_update_input${id}" style="display:none;"/>
-                                
-                                <input class="reply-input" id="comment_update_input${id}" type="text"/> 
+                        `   
+                        <div class="comment">
+                            <div class="author"><img src="static/image/ConnectME - 회색고래 icon.png" alt="">${user}</div>
+                            <p id="now_comment${id}" class="now-comment" style="display:grid;">${content} ${comment_edit}</p>
+                            <p id="p_comment_update_input${id}" style="display:none;" >
+
+                                <input class="reply-input" id="comment_update_input${id}" type="text" />
                                 ${anonymous_html}
                                 <label for="anonymous-checkbox">익명</label>
                                 <button class="button-blue" onclick="commentUpdateConfrim(${id})">수정하기</button>
                                 <button type="button" class="button-white" onclick="commentCancel(${counsel_id},${id})">취소하기</button>
-                                
+
                             </p>
                             <p> <small>${updated_at}</small></p>
-                            
-                            <p id="p_reply_create_input${id}" style="margin-right:5px; display:none;"/>
-                                <input class="reply-input" id="reply_create_input${id}" type="text"/>
+
+                            <p id="p_reply_create_input${id}" style="margin-right:5px; display:none;">
+                                <input class="reply-input" id="reply_create_input${id}" type="text" />
                                 <input type="checkbox" id="anonymous-reply-checkbox${id}">
                                 <label for="anonymous-checkbox">익명</label>
                                 <button class="button-blue" style="margin-right:5px" onclick="replyCreateConfrim(${id})">완료</button>
                                 <button type="button" class="button-white" onclick="replyCancel(${counsel_id}, ${id})">취소하기</button>
                             </p>
                             <div class=comment_btns>
-                                <button class="commentbtn" onclick="reply_create_handle(${id})">답글 작성하기</button>
-                                ${like_html}<p id="comment_count${id}" style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p>
+                                <button class="commentbtn" onclick="reply_create_handle(${id})">답글작성</button>
+                                ${like_html}
+                                <p id="comment_count${id}" style="margin: 0px 20px 0px 5px;">${comment_likes_count}</p>
                             </div>
-                            <div id="reply_card${id}">
-                            <hr>
+                        </div>
+                        
+                            <div class ="reply-card" id="reply_card${id}"></div>
+                   
+                        <hr>
                             `
 
                     $('#comment_card').append(temp_html)
@@ -239,23 +247,31 @@ async function counselComments(counsel_id) {
 
                     if (JSON.parse(payload)['user_id'] == reply_user_id) {
                         reply_edit = `
-                        <a> <img src="static/image/comment_edit.png" class="auth_btn" style="margin-left: 10px;" onclick="reply_update_handle(${reply_id})"> </a>
+                        <span style="margin-top:10px;">
+                        <a> <img src="static/image/comment_edit.png" class="auth_btn" onclick="reply_update_handle(${reply_id})"> </a>
                         <a> <img id="delete-reply-image${reply_id}" src="static/image/comment_delete.png" class="auth_btn" onclick="replyDelete(${reply_id})" onmouseover="changeReplyDeleteImage(${reply_id})" onmouseout="restoreReplyDeleteImage(${reply_id})"> </a>
+                        <span>
                         `
                     }
 
                     let temp_html = `
-                        <div style="margin-left: 50px;">
-                            <p id="now_reply_comment${reply_id}" style="display:block;">[${user}] ${content} ${reply_edit}</p>
-                            <p id="p_reply_update_input${reply_id}" style="display:none;">
-                                <input class="reply-input" id="reply_update_input${reply_id}" value="${content}" style="width:450px"  type="text"/> 
-                                ${anonymous_html}
-                                <label for="anonymous-checkbox">익명</label>
-                                <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${reply_id})">수정하기</button>
-                                <button type="button" class="button-white" onclick="replyUpdateCancel(${counsel_id}, ${reply_id})">취소하기</button>
-                            </p>
-                            <div class=replybtns>
-                                <p> <small>${updated_at}${like_html}<p id="reply_count${reply_id}" style="margin: 0px 20px 0px 5px;">${reply_likes_count}</p></small></p>  
+                        <div class = "reply-content">
+                            <div class = "reply-head">┗</div>
+                            <div>
+                                <div class = "reply-author">
+                                <img src="static/image/ConnectME - 회색고래 icon.png" alt="" style = "width:25px; margin-right: 5px;">${user}
+                                </div>
+                                <p id="now_reply_comment${reply_id}" style="display:grid;"> ${content} ${reply_edit}</p>
+                                <p id="p_reply_update_input${reply_id}" style="display:none;">
+                                    <input class="reply-input" id="reply_update_input${reply_id}" value="${content}" style="width:450px"  type="text"/> 
+                                    ${anonymous_html}
+                                    <label for="anonymous-checkbox">익명</label>
+                                    <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${reply_id})">수정하기</button>
+                                    <button type="button" class="button-white" onclick="replyUpdateCancel(${counsel_id}, ${reply_id})">취소하기</button>
+                                </p>
+                                <div class=replybtns>
+                                    <p style="margin-top:0px;"> ${updated_at}${like_html}<p id="reply_count${reply_id}" style="margin: 0px 20px 0px 5px;">${reply_likes_count}</p></p>  
+                                </div>
                             </div>
                         </div>
                         <hr>
@@ -295,7 +311,7 @@ function commentCancel(counsel_id, id) {
     let comment = document.querySelector(`#now_comment${id}`)
     let input = document.querySelector(`#p_comment_update_input${id}`)
 
-    comment.style.display = '';
+    comment.style.display = 'grid';
     input.style.display = 'none';
 }
 
@@ -313,7 +329,7 @@ function replyUpdateCancel(counsel_id, id) {
     let comment = document.querySelector(`#now_reply_comment${id}`)
     let input = document.querySelector(`#p_reply_update_input${id}`)
 
-    comment.style.display = '';
+    comment.style.display = 'grid';
     input.style.display = 'none';
 }
 
@@ -541,7 +557,7 @@ async function comment_update_handle(id) {
             now_comment.style.display = 'none';
         } else {
             comment_update_input.style.display = 'none';
-            now_comment.style.display = 'block';
+            now_comment.style.display = 'grid';
         }
     } else { alert("로그인 해주세요") }
 }
@@ -632,7 +648,7 @@ async function reply_update_handle(id) {
             now_reply.style.display = 'none';
         } else {
             reply_update_input.style.display = 'none';
-            now_reply.style.display = 'block';
+            now_reply.style.display = 'grid';
         }
     } else { alert("로그인 해주세요") }
 }
@@ -719,7 +735,7 @@ async function replyDelete(reply_id) {
 
 async function clickCommentLike(comment_id) {
     const like = document.querySelector(`#comment-like-img${comment_id}`)
-    const best = document.querySelector(`#best-like-img${comment_id}`)
+    const best = document.querySelector(`#best-comment-like-img${comment_id}`)
 
     let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${comment_id}/like/`, {
         headers: {
@@ -742,8 +758,8 @@ async function clickCommentLike(comment_id) {
             swal("좋아요 완료", '')
         }
 
-        const likeCountElements = document.querySelector(`#best_comment_count${comment_id}`);
-        const like_count = response_json["comment_like"]
+        let likeCountElements = document.querySelector(`#best_comment_count${comment_id}`);
+        let like_count = response_json["comment_like"]
         likeCountElements.innerText = `${like_count}`;
     }
 
@@ -758,8 +774,8 @@ async function clickCommentLike(comment_id) {
         swal("좋아요 완료", '')
     }
 
-    const likeCountElements = document.querySelector(`#comment_count${comment_id}`);
-    const like_count = response_json["comment_like"]
+    let likeCountElements = document.querySelector(`#comment_count${comment_id}`);
+    let like_count = response_json["comment_like"]
     likeCountElements.innerText = `${like_count}`;
 }
 // ================================ 댓글 좋아요 끝 ================================
@@ -767,7 +783,7 @@ async function clickCommentLike(comment_id) {
 // ================================ 대댓글 좋아요 ================================
 async function clickReplyLike(reply_id) {
     const like = document.querySelector(`#reply-like-img${reply_id}`)
-    const best = document.querySelector(`#best-like-img${reply_id}`)
+    const best = document.querySelector(`#best-reply-like-img${reply_id}`)
 
 
 
@@ -792,8 +808,8 @@ async function clickReplyLike(reply_id) {
             swal("좋아요 완료", '')
         }
 
-        const likeCountElements = document.querySelector(`#best_reply_count${reply_id}`);
-        const like_count = response_json["reply_like"]
+        let likeCountElements = document.querySelector(`#best_reply_count${reply_id}`);
+        let like_count = response_json["reply_like"]
         likeCountElements.innerText = `${like_count}`;
     }
 
@@ -808,8 +824,8 @@ async function clickReplyLike(reply_id) {
         swal("좋아요 완료", '')
     }
 
-    const likeCountElements = document.querySelector(`#reply_count${reply_id}`);
-    const like_count = response_json["reply_like"]
+    let likeCountElements = document.querySelector(`#reply_count${reply_id}`);
+    let like_count = response_json["reply_like"]
     likeCountElements.innerText = `${like_count}`;
 }
 
@@ -854,27 +870,37 @@ async function bestComment() {
                     comment_or_reply_L = 'reply'
                 }
                 let like = rows[i]['like']
-
+                let create_at = rows[i]['created_at']
                 if (like.includes(logined_user_id)) {
                     like_html = `
                     <a>
-                        <img id="best-like-img${id}"src="static/image/heart (1).png" style="filter: invert(0%); margin-left:10px; width:15px;" alt="좋아요" onclick="click${comment_or_reply_U}Like(${id})">
+                        <img id="best-${comment_or_reply_L}-like-img${id}"src="static/image/heart (1).png" style="filter: invert(0%); margin-left:10px; width:15px;" alt="좋아요" onclick="click${comment_or_reply_U}Like(${id})">
                     </a>`
                 } else {
                     like_html = `
                     <a>
-                        <img id="comment-like-img${id}"src="static/image/heart.png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="click${comment_or_reply_U}Like(${id})">
+                        <img id="best-${comment_or_reply_L}-like-img${id}"src="static/image/heart.png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="click${comment_or_reply_U}Like(${id})">
                     </a>`
                 }
-                console.log(rows[i])
 
                 let temp_html = `
-
-                    <div class="rank">BEST ${rank}</div>
-                    <div class="comment">${comment}</div>
-                    <div class="comment-author">${comment_author}</div>
-                    
-                    <div class="like-button" >${like_html} <span id="best_${comment_or_reply_L}_count${id}">${like_count}</span></div>
+                    <div class = "comment-section">
+                        <div class="author">                        
+                            <img src="static/image/${rank}_medal.png" alt="${rank}_best_comment" style="width:30px">
+                            <div class="comment-author">${comment_author}</div>
+                        </div>
+                        <div class="comment">${comment}</div>
+                        
+                        <div class = "ect">
+                            <div class = "created_at">
+                                ${create_at}
+                            </div>
+                            <div class="like-button" >
+                            ${like_html} 
+                            </div>
+                            <div id="best_${comment_or_reply_L}_count${id}" style = "color:white;">${like_count}</div>
+                        </div>
+                    </div>
                 `
 
                 $('#best-comment').append(temp_html)

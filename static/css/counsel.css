@@ -106,6 +106,39 @@ hr {
 }
 
 /********* counsel detail 끝 **********/
+
+
+.best-comment{
+    border: 3px solid rgba(255, 247, 236, 0.226);
+    border-radius: 10px;
+}
+.comment-section{
+    margin: 0px 15px;
+    padding: 10px 0px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.329);
+}
+.comment-section div{
+    margin: 5px;
+}
+.best-comment .author{
+    display: flex;
+    align-items: center;
+    color: rgb(255, 242, 223);
+
+}
+.best-comment .comment{
+    padding: 5px;
+    font-weight: bold;
+}
+.best-comment .ect{
+    display: flex;
+    align-items: center;
+}
+.ect .created_at{
+    font-size: 10pt;
+    color: rgb(206, 206, 206);
+}
+
 /********* counsel-detail 댓글 시작 **********/
 
 #anonymous-checkbox {
@@ -144,18 +177,18 @@ hr {
 }
 
 .commentbtn {
-    border: 1px solid rgba(102, 34, 34, 0);
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #E0EEFF;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #e0eeff9d;
     font-weight: bold;
 }
 
 .commentbtn:hover {
-    border: 1px solid rgb(114, 114, 114);
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #7e99b9a4;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #536e91a4;
     color: white;
     cursor: pointer;
 }
@@ -172,7 +205,6 @@ hr {
 
 .replybtns {
     display: flex;
-    align-items: center;
 }
 
 .replybtns a img {
@@ -181,10 +213,43 @@ hr {
 
 .reply-input {
     border-radius: 10px;
-    width: 500px;
+    max-width: 500px;
+    width: 70%;
     height: 30px
 }
+#comment_card{
+    padding: 10px;
+}
 
+#comment_card .comment{
+    padding: 10px;
+}
+
+#comment_card .comment .author{
+    display: flex;
+    align-items: center;
+    color: rgb(255, 242, 219);
+}
+#comment_card .comment .author img{
+    margin-right: 5px;
+    width: 25px;
+}
+
+.reply-card{
+    padding: 10px;
+}
+.reply-content{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.reply-content .reply-head{
+    margin-right: 20px;
+    font-size: x-large;
+}
+.reply-author{
+    color:rgb(255, 242, 219);
+}
 .button-blue {
     margin: 5px 0px 5px 5px;
     background-color: #aac2df;
@@ -193,7 +258,7 @@ hr {
     border: none;
     border-radius: 5px;
     height: 30px;
-    padding: 5px 10px;
+    padding: 5px 8px;
     cursor: pointer;
 }
 
@@ -228,10 +293,12 @@ hr {
 }
 
 .auth_btn {
-    width: 20px;
+    width: 18px;
+    margin-right: 3px;
 }
 
 /********* counsel-detail 댓글 끝 **********/
+
 
 .list-box {
     display: grid;
