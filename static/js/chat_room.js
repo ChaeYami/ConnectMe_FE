@@ -35,7 +35,7 @@ function getMyNickname() {
             img_element.onerror = function () {
                 this.src = 'static/image/user.png';
             };
-            img_element.src = my_img;
+            img_element.src = `${BACKEND_BASE_URL}${my_img}`;
 
         },
         error: function () {
@@ -60,7 +60,7 @@ function getOtherNickname() {
             img_element.onerror = function () {
                 this.src = 'static/image/user.png';
             };
-            img_element.src = other_img;
+            img_element.src = `${BACKEND_BASE_URL}${other_img}`;
 
         },
         error: function () {
@@ -135,10 +135,10 @@ function chatConnect() {
 
         if (author === my_nickname) {
             msgListTag.className = 'sent';
-            imgTag.src = my_img;
+            imgTag.src = `${BACKEND_BASE_URL}${my_img}`;
         } else {
             msgListTag.className = 'replies';
-            imgTag.src = other_img;
+            imgTag.src = `${BACKEND_BASE_URL}${other_img}`;
         }
         msgListTag.appendChild(imgTag);
         msgListTag.appendChild(pTag);
