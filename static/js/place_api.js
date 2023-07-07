@@ -1357,7 +1357,7 @@ async function placeDetailView(place_id, page = 1) {
                         ${auth_html}
                     </div>
                 </div>
-                <div class="place-detail-feed">
+                <div class="place-detail-feed" onclick="go_createMeeting(${place_id})">
                     <a title="이 장소로 모임 생성하기">
                         <img id="in_place_create_meeting" src="static/image/people (1).png" class="place-detail-share" alt="모임생성하기"
                             onclick="go_createMeeting(${place_id})">모임생성
