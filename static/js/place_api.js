@@ -1048,6 +1048,8 @@ function copyButton() {
 
 // 장소추천 상세보기
 async function placeDetailView(place_id, page = 1) {
+    $('#select-box1').hide()
+
     count_per_page = 5;
     show_page_cnt = 5;
     func_selected = 'placeDetailView'
@@ -1296,7 +1298,7 @@ async function placeDetailView(place_id, page = 1) {
     if (bookmark.includes(logined_user_id)) {
         book_html = `
         <a title="북마크">
-            <img id="book${place_id}" src="static/image/bookmark (1).png" class="place-detail-book" alt="북마크" onclick="placeBook(${place_id},${book_count})">
+            <img id="book${place_id}" src="static/image/bookmark (1).png" class="place-detail-book" style="filter:invert(100%);" alt="북마크" onclick="placeBook(${place_id},${book_count})">
         </a>`
     } else {
         book_html = `
@@ -1308,7 +1310,7 @@ async function placeDetailView(place_id, page = 1) {
     if (like.includes(logined_user_id)) {
         like_html = `
         <a title="좋아요">
-            <img id="like${place_id}" src="static/image/heart (1).png" class="place-detail-like" alt="좋아요" onclick="placeLike(${place_id})">
+            <img id="like${place_id}" src="static/image/heart (1).png" class="place-detail-like" style="filter:invert(100%);" alt="좋아요" onclick="placeLike(${place_id})">
         </a>`
     } else {
         like_html = `
@@ -1460,10 +1462,12 @@ async function placeBook(place_id) {
 
     if (response_json["message"] == "북마크") {
         book['src'] = "static/image/bookmark (1).png"
-        swal("북마크가 추가되었습니다.",'');
+        book.style.filter = "invert(100%)";
+        swal("북마크가 추가되었습니다.", '');
     } else {
         book['src'] = "static/image/bookmark.png"
-        swal("북마크가 취소되었습니다.",'');
+        book.style.filter = "invert(0%)";
+        swal("북마크가 취소되었습니다.", '');
     }
 
     const bookCountElements = document.querySelector(`#place-container-count-book${place_id}`);
@@ -1487,10 +1491,12 @@ async function placeLike(place_id) {
 
     if (response_json["message"] == "좋아요") {
         like_id['src'] = "static/image/heart (1).png"
-        swal("좋아요 완료",'')
+        like_id.style.filter = "invert(100%)";
+        swal("좋아요 완료", '')
     } else {
         like_id['src'] = "static/image/heart.png"
-        swal("좋아요 취소",'');
+        like_id.style.filter = "invert(0%)";
+        swal("좋아요 취소", '');
 
     }
 

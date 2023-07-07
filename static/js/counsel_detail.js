@@ -55,12 +55,12 @@ async function counselDetail(counsel_id) {
             if (like.includes(logined_user_id)) {
                 like_button.innerHTML += `
                 <a>
-                    <img id="like${counsel_id}" src="static/image/heart (1).png" style="width: 20px;" alt="좋아요" onclick="CounselLike(${counsel_id})">
+                    <img id="like${counsel_id}" src="static/image/heart (1).png" style="filter:invert(100%); width: 20px;" alt="좋아요" onclick="CounselLike(${counsel_id})">
                 </a>`
             } else {
                 like_button.innerHTML += `
                 <a>
-                    <img id="like${counsel_id}" src="static/image/heart.png" style="width: 20px;" alt="좋아요" onclick="CounselLike(${counsel_id})">
+                    <img id="like${counsel_id}" src="static/image/heart.png" style="filter:invert(0%); width: 20px;" alt="좋아요" onclick="CounselLike(${counsel_id})">
                 </a>`
             }
         },
@@ -86,9 +86,11 @@ async function CounselLike(counsel_id) {
 
     if (response_json["message"] == "좋아요") {
         like['src'] = "static/image/heart (1).png"
+        like.style.filter = "invert(100%)";
         swal(`${response_json["message"]} 완료`, '');
     } else {
         like['src'] = "static/image/heart.png"
+        like.style.filter = "invert(0%)";
         swal(`${response_json["message"]}`, '');
     }
 
@@ -114,12 +116,16 @@ async function counselComments(counsel_id) {
 
                 content = rows[i]['content']
                 updated_at = rows[i]['updated_at']
+                anonymous_html = ``
 
                 is_anonymous = rows[i]['is_anonymous']
+
                 if (is_anonymous) {
                     user = '익명'
+                    anonymous_html = `<input type="checkbox" id="anonymous-checkbox${id}" checked>`
                 } else {
                     user = rows[i]['user']['nickname']
+                    anonymous_html = `<input type="checkbox" id="anonymous-checkbox${id}">`
                 }
 
                 comment_likes_count = rows[i]['comment_like_count']
@@ -132,7 +138,7 @@ async function counselComments(counsel_id) {
                 if (like.includes(logined_user_id)) {
                     like_html = `
                     <a>
-                        <img id="comment-like-img${id}"src="static/image/heart (1).png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
+                        <img id="comment-like-img${id}"src="static/image/heart (1).png" style="filter: invert(0%); margin-left:10px; width:15px;" alt="좋아요" onclick="clickCommentLike(${id})">
                     </a>`
                 } else {
                     like_html = `
@@ -163,8 +169,8 @@ async function counselComments(counsel_id) {
                             <p id="p_comment_update_input${id}" style="display:none;"/>
                                 
                                 <input class="reply-input" id="comment_update_input${id}" type="text"/> 
-                                <input type="checkbox" id="comment-edit-anonymous-checkbox">
-                                <label for="comment-edit-anonymous-checkbox">익명</label>
+                                ${anonymous_html}
+                                <label for="anonymous-checkbox">익명</label>
                                 <button class="button-blue" onclick="commentUpdateConfrim(${id})">수정하기</button>
                                 <button type="button" class="button-white" onclick="commentCancel(${counsel_id},${id})">취소하기</button>
                                 
@@ -172,7 +178,9 @@ async function counselComments(counsel_id) {
                             <p> <small>${updated_at}</small></p>
                             
                             <p id="p_reply_create_input${id}" style="margin-right:5px; display:none;"/>
-                                <input class="reply-input" id="reply_create_input${id}" type="text"/> 
+                                <input class="reply-input" id="reply_create_input${id}" type="text"/>
+                                <input type="checkbox" id="anonymous-reply-checkbox${id}">
+                                <label for="anonymous-checkbox">익명</label>
                                 <button class="button-blue" style="margin-right:5px" onclick="replyCreateConfrim(${id})">완료</button>
                                 <button type="button" class="button-white" onclick="replyCancel(${counsel_id}, ${id})">취소하기</button>
                             </p>
@@ -193,10 +201,15 @@ async function counselComments(counsel_id) {
                     reply_id = each_reply['id']
                     content = each_reply['content']
                     is_anonymous = each_reply['is_anonymous']
+
+                    anonymous_html = ``
+
                     if (is_anonymous) {
                         user = '익명'
+                        anonymous_html = `<input type="checkbox" id="anonymous-reply-checkbox${reply_id}" checked>`
                     } else {
                         user = rows[i]['user']['nickname']
+                        anonymous_html = `<input type="checkbox" id="anonymous-reply-checkbox${reply_id}">`
                     }
                     updated_at = each_reply['updated_at']
                     reply_likes_count = each_reply['reply_like_count']
@@ -209,7 +222,7 @@ async function counselComments(counsel_id) {
                     if (like.includes(logined_user_id)) {
                         like_html = `
                         <a>
-                            <img id="reply-like-img${reply_id}" src="static/image/heart (1).png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="clickReplyLike(${reply_id})">
+                            <img id="reply-like-img${reply_id}" src="static/image/heart (1).png" style="filter: invert(0%); margin-left:10px; width:15px;" alt="좋아요" onclick="clickReplyLike(${reply_id})">
                         </a>`
                     } else {
                         like_html = `
@@ -230,7 +243,9 @@ async function counselComments(counsel_id) {
                         <div style="margin-left: 50px;">
                             <p id="now_reply_comment${reply_id}" style="display:block;">[${user}] ${content} ${reply_edit}</p>
                             <p id="p_reply_update_input${reply_id}" style="display:none;"/>
-                                <input class="reply-input" id="reply_update_input${reply_id}" value="${content}" type="text"/> 
+                                <input class="reply-input" id="reply_update_input${reply_id}" style="width:450px" value="${content}" type="text"/> 
+                                ${anonymous_html}
+                                <label for="anonymous-checkbox">익명</label>
                                 <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${reply_id})">수정하기</button>
                                 <button type="button" class="button-white" onclick="replyCancel(${counsel_id}, ${reply_id})">취소하기</button>
                             </p>
@@ -332,13 +347,13 @@ async function counselPreUpdate(counsel_id) {
 
     if (response_json['counsel'].is_anonymous) {
         anonymous = `
-        <div style="width: 70%; margin: 0 auto;"><input type="checkbox" id="counsel-edit-anonymous-checkbox" checked>
-            <label for="anonymous-checkbox">익명</label>
+        <div><input type="checkbox" id="anonymous-checkbox" checked>
+            <label for="counsel-edit-anonymous-checkbox">익명</label>
         </div>`
     } else {
         anonymous = `
-        <div style="width: 70%; margin: 0 auto;"><input type="checkbox" id="counsel-edit-anonymous-checkbox">
-            <label for="anonymous-checkbox">익명</label>
+        <div><input type="checkbox" id="anonymous-checkbox">
+            <label for="counsel-edit-anonymous-checkbox">익명</label>
         </div>`
     }
 
@@ -376,9 +391,9 @@ async function counselPreUpdate(counsel_id) {
 }
 
 // 댓글작성
-async function counselCommentCreate() {
+async function counselCommentCreate(id) {
     let comment = document.getElementById("inputComment").value
-    let checked = $('#comment-anonymous-checkbox').is(':checked');
+    let checked = $(`#anonymous-checkbox`).is(':checked');
     if (checked) {
         is_anonymous = 'True';
 
@@ -471,9 +486,18 @@ function reply_create_handle(id) {
 async function replyCreateConfrim(reply_id) {
     let reply = document.getElementById(`reply_create_input${reply_id}`).value
     let token = localStorage.getItem("access")
+    let checked = $(`#anonymous-reply-checkbox${reply_id}`).is(':checked');
+
     if (token) {
         let formData = new FormData();
         formData.append("content", reply);
+        if (checked) {
+            formData.append("is_anonymous", 'True');
+
+        } else {
+            formData.append("is_anonymous", 'False');
+        }
+
         let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${reply_id}/reply/`, {
             method: 'POST',
             headers: {
@@ -512,7 +536,8 @@ async function comment_update_handle(id) {
 // ================================ 상담 게시글 상세보기 댓글 수정 시작 ================================
 async function commentUpdateConfrim(id) {
     let comment = document.getElementById(`comment_update_input${id}`).value
-    let checked = $('#comment-edit-anonymous-checkbox').is(':checked');
+    let checked = $(`#anonymous-checkbox${id}`).is(':checked');
+
     let token = localStorage.getItem("access")
     if (token) {
         let formData = new FormData();
@@ -605,9 +630,18 @@ async function reply_update_handle(id) {
 async function replyUpdateConfrim(reply_id) {
     let reply = document.getElementById(`reply_update_input${reply_id}`).value
     let token = localStorage.getItem("access")
+    let checked = $(`#anonymous-reply-checkbox${reply_id}`).is(':checked');
+
     if (token) {
         let formData = new FormData();
+        console.log(checked)
         formData.append("content", reply);
+        if (checked) {
+            formData.append("is_anonymous", 'True');
+
+        } else {
+            formData.append("is_anonymous", 'False');
+        }
         let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}/`, {
             method: 'PUT',
             headers: {
@@ -687,11 +721,13 @@ async function clickCommentLike(comment_id) {
 
     if (response.status == 200) {
         like['src'] = "static/image/heart.png"
-        swal("좋아요 취소",'');
+        like.style.filter = "invert(100%)";
+        swal("좋아요 취소", '');
     }
     else {
         like['src'] = "static/image/heart (1).png"
-        swal("좋아요 완료",'')
+        like.style.filter = "invert(0%)";
+        swal("좋아요 완료", '')
     }
 
     const likeCountElements = document.querySelector(`#comment_count${comment_id}`);
@@ -715,11 +751,13 @@ async function clickReplyLike(reply_id) {
 
     if (response.status == 200) {
         like['src'] = "static/image/heart.png"
-        swal("좋아요 취소",'');
+        like.style.filter = "invert(100%)";
+        swal("좋아요 취소", '');
     }
     else {
         like['src'] = "static/image/heart (1).png"
-        swal("좋아요 완료",'')
+        like.style.filter = "invert(0%)";
+        swal("좋아요 완료", '')
     }
 
 

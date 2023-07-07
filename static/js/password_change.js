@@ -37,6 +37,14 @@ async function password_change() {
 
 
     } else if (response.status === 400) {
-        swal(`${result['message']}`, '', 'warning')
+
+        if (result.confirm_password) {
+            swal(`${result.confirm_password}`, '', 'warning')
+        } else if (result.password) {
+            swal(`${result.password}`, '', 'warning')
+        } else if (result.repassword) {
+            swal(`${result.repassword}`, '', 'warning')
+        }
+
     }
 }
