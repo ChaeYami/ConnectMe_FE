@@ -4,19 +4,19 @@ const logined_user_id = payload_parse ? parseInt(payload_parse.user_id) : null;
 
 const logined_token = localStorage.getItem("access");
 
-const room_name = new URLSearchParams(window.location.search).get('room');
+let room_name = new URLSearchParams(window.location.search).get('room');
 const user_list = room_name.split("n");
 const the_other_id = parseInt(user_list.filter(function (element) {
-    return element !== logined_user_id.toString();
+    return element !== (logined_user_id ? logined_user_id.toString() : null);
 })[0]);
 
 
 $(document).ready(function () {
     getMyNickname()
     getOtherNickname()
+    getChatList()
     chatConnect()
 })
-// profile/<int:user_id>/
 
 function getMyNickname() {
     $.ajax({
@@ -66,6 +66,84 @@ function getOtherNickname() {
         error: function () {
         }
     })
+}
+
+
+function getChatList() {
+    $.ajax({
+        url: `${BACKEND_BASE_URL}/chat/0/`,
+        type: "GET",
+        dataType: "json",
+        headers: {
+            "Authorization": "Bearer " + logined_token
+        },
+        success: function (response) {
+            console.log(response)
+            for (let i = 0; i < response.length; i++) {
+                list_user_id = ''
+                list_nickname = ''
+                list_profile_img = ''
+                list_room_name = response[i]['room_name']
+                if (response[i]['participant1']['id'] === logined_user_id) {
+                    list_user_id = response[i]['participant2']['id']
+                    list_nickname = response[i]['participant2']['nickname']
+                    list_profile_img = response[i]['participant2_profile_img']
+                } else if (response[i]['participant2']['id'] === logined_user_id) {
+                    list_user_id = response[i]['participant1']['id']
+                    list_nickname = response[i]['participant1']['nickname']
+                    list_profile_img = response[i]['participant1_profile_img']
+                }
+
+                let temp_html = ``
+
+                if (room_name === list_room_name) {
+                    temp_html = `<li class="contact active" onclick="getListChatRoom(${list_user_id})">
+                                        <div class="wrap">
+                                            <img src="${BACKEND_BASE_URL}${list_profile_img}" alt="" 
+                                                onerror="this.src='static/image/user.png'"/>
+                                            <div class="meta">
+                                                <p class="name">${list_nickname}</p>
+                                            </div>
+                                        </div>
+                                    </li>`
+                } else {
+                    temp_html = `<li class="contact" onclick="getListChatRoom(${list_user_id})">
+                                        <div class="wrap">
+                                            <img src="${BACKEND_BASE_URL}${list_profile_img}" alt="" 
+                                                onerror="this.src='static/image/user.png'"/>
+                                            <div class="meta">
+                                                <p class="name">${list_nickname}</p>
+                                            </div>
+                                        </div>
+                                    </li>`
+                }
+                $('#chat_list').append(temp_html)
+            }
+        },
+        error: function () {
+            alert("채팅 리스트 불러오기 실패")
+        }
+    })
+}
+
+// 채팅방 이름 생성 요청 후 채팅방 입장
+function getListChatRoom(user_id) {
+    $.ajax({
+        url: `${BACKEND_BASE_URL}/chat/${user_id}/`,
+        type: "POST",
+        dataType: "json",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("access")
+        },
+        success: function (response) {
+            room_name = response['room_name'];
+            let chat_url = '/chat_room.html?room=' + room_name;
+            window.location.href = chat_url;
+        },
+        error: function () {
+            alert("채팅방 입장에 실패했습니다.")
+        }
+    });
 }
 
 
