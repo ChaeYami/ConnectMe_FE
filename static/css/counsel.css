@@ -1,5 +1,5 @@
 main {
-    width: 65vw;
+    width: 60vw;
     margin: 75px auto;
     max-width: 1000px;
 }
@@ -8,6 +8,7 @@ main {
 .list-btn {
     display: flex;
     justify-content: flex-end;
+    width: 100%;
 }
 
 .list-btn button {
@@ -47,10 +48,9 @@ hr {
 /********* counsel detail 시작 **********/
 #counsel-detail-main {
     background-color: rgba(255, 255, 255, 0.096);
-    padding: 0px 30px 30px 30px;
     border-radius: 10px;
     width: 60vw;
-    max-width: 800px;
+    max-width: 1000px;
 }
 
 .counsel-title {
@@ -58,6 +58,7 @@ hr {
     display: flex;
     color: rgb(223, 213, 190);
     align-items: center;
+    padding-left: 30px;
 
 }
 
@@ -77,7 +78,7 @@ hr {
 }
 
 .counsel-content {
-    margin: 30px 0px;
+    margin: 30px;
     color: white;
     min-height: 100px;
     white-space: pre-line;
@@ -85,6 +86,8 @@ hr {
 }
 
 .like {
+    margin: 30px;
+
     display: flex;
     flex-direction: row;
     gap: 10px;
