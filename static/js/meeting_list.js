@@ -318,12 +318,12 @@ function meetingSearch() {
 
                 if (meeting_image.includes('%3A')) {
                     if (meeting_image.includes('www')) {
-                        image = meeting_image.slice(37);
                         let decodedURL = decodeURIComponent(image);
+                        image = meeting_image.slice(40);
                         img_urls = `http://${decodedURL}`
                     } else {
-                        image = meeting_image.slice(36);
                         let decodedURL = decodeURIComponent(image);
+                        image = meeting_image.slice(40);
                         img_urls = `http://${decodedURL}`
                     }
                 } else {

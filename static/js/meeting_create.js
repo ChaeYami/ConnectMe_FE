@@ -21,7 +21,17 @@ async function createMeetingFromPlace(place_id) {
     let images_data = response_json['place'].image
     let title_data = response_json['place'].title
 
-    for (let i = 0; i < 3; i++) {
+    let img_count = 0
+
+    if (images_data.length) {
+        if (images_data.length < 3) {
+            img_count = images_data.length
+        } else {
+            img_count = 3
+        }
+    }
+
+    for (let i = 0; i < img_count; i++) {
         $('#image_container').append(`<img class="show_img" src=${images_data[i].url} style="filter: grayscale(80%)">`);
     }
 
