@@ -143,7 +143,10 @@ async function updateProfile() {
 
     if (response.status == 200) {
         swal("수정 완료",'',"success")
-        window.location.replace(`/profile.html?user_id=${user_id}`)
+        .then((value) => {
+            window.location.replace(`/profile.html?user_id=${user_id}`)
+
+        });
     } else if (response.status == 403) {
         swal('권한이 없습니다!','',"error")
     } else {
