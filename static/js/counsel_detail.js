@@ -13,6 +13,9 @@ async function counselDetail(counsel_id) {
         url: `${BACKEND_BASE_URL}/counsel/${counsel_id}`,
         type: "GET",
         dataType: "json",
+        headers: {
+            Authorization: "Bearer " + logined_token,
+        },
         success: function (response) {
             let counsel_id = response.counsel['id']
             let is_anonymous = response.counsel['is_anonymous']
@@ -22,7 +25,7 @@ async function counselDetail(counsel_id) {
             let author_html = ``
             let counsel_author_id = response.counsel['user']['pk']
             let tags = response.counsel['tags']
-            let tag = String(tags).split(" ")
+            let tag = String(tags).split(",")
             if (is_anonymous) {
                 counsel_author = '익명'
                 author_html = `<span style = "color: rgb(158, 158, 158);">${counsel_author}</span>`
@@ -41,8 +44,9 @@ async function counselDetail(counsel_id) {
             $('#content').append(counsel_content)
             $('#likes_count').append(likes_count)
             $('#counsel-created').append(counsel_created_at)
-            for (let i = 0; i < tag.length; i++) {
-                let tag_html = `<button class="tag_btn"><a class="tag_btn_a">${tag[i]}</a></button>`
+          
+            for(let i = 0; i < tag.length; i++){
+                let tag_html = `<a class="tag" href="counsel_list.html?tag=${tag[i]}"><${tag[i]}></a>`
                 $('#tags_container').append(tag_html)
             }
 
@@ -114,6 +118,9 @@ async function counselComments(counsel_id) {
         url: `${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/`,
         type: "GET",
         dataType: "json",
+        headers: {
+            Authorization: `Bearer ${logined_token}`,
+        },
         success: function (response) {
             const rows = response
             for (let i = 0; i < rows.length; i++) {
@@ -372,17 +379,15 @@ async function counselPreUpdate(counsel_id) {
         },
         method: "GET",
     })
-
     const response_json = await response.json();
-
     if (response_json['counsel'].is_anonymous) {
         anonymous = `
-        <div><input type="checkbox" id="anonymous-checkbox" checked>
+        <div style="width: 70%; margin: 0 auto;"><input type="checkbox" id="anonymous-checkbox" checked>
             <label for="counsel-edit-anonymous-checkbox">익명</label>
         </div>`
     } else {
         anonymous = `
-        <div><input type="checkbox" id="anonymous-checkbox">
+        <div style="width: 70%; margin: 0 auto;"><input type="checkbox" id="anonymous-checkbox">
             <label for="counsel-edit-anonymous-checkbox">익명</label>
         </div>`
     }
@@ -400,6 +405,11 @@ async function counselPreUpdate(counsel_id) {
                 <textarea id="counsel-edit-title" class="create_input" type="textarea" rows="1" required="required"
                     maxlength="50">${response_json['counsel'].title}</textarea><span class="highlight"></span><span class="bar"></span>
                 <label class="create_label">제목</label>
+            </div>
+            <div class="group">
+                <input id="tags" class="create_input" type="text" required="required" maxlength="50" value=${response_json['counsel'].tags}><span
+                    class="highlight"></span><span class="bar"></span>
+                <label class="create_label">태그. 쉼표(,)로 구분 해주세요.</label>
             </div>
             <div class="group">
                 <textarea id="counsel-edit-content" class="create_input" type="textarea" rows="10"
@@ -463,6 +473,7 @@ async function counselCommentCreate(id) {
 async function CounselEdit() {
     let title = document.querySelector('#counsel-edit-title').value
     let content = document.querySelector('#counsel-edit-content').value
+    let tags = document.querySelector('#tags').value;
     let checked = $('#counsel-edit-anonymous-checkbox').is(':checked');
     let is_anonymous = ''
     if (checked) {
@@ -481,7 +492,8 @@ async function CounselEdit() {
         body: JSON.stringify({
             title: title,
             content: content,
-            is_anonymous: is_anonymous
+            is_anonymous: is_anonymous,
+            tags: ([tags])
         })
     })
 

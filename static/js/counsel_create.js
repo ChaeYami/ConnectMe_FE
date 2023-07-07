@@ -5,14 +5,12 @@ async function CreateCounsel() {
     let content = document.querySelector('#content').value;
     let tags = document.querySelector('#tags').value;
     let checked = $('#anonymous-checkbox').is(':checked');
-
-    let taglist = [tags]
+    let tag = JSON.stringify ([tags])
 
     const formdata = new FormData();
     formdata.append("title", title);
     formdata.append("content", content);
-    formdata.append("tags", taglist);
-
+    formdata.append("tags", tag);
     if (checked) {
         formdata.append("is_anonymous", 'True');
 
