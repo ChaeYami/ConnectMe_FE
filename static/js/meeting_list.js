@@ -325,12 +325,14 @@ function meetingSearch() {
 
                 if (meeting_image.includes('%3A')) {
                     if (meeting_image.includes('www')) {
-                        let decodedURL = decodeURIComponent(image);
+                        
                         image = meeting_image.slice(40);
+                        let decodedURL = decodeURIComponent(image);
                         img_urls = `http://${decodedURL}`
                     } else {
-                        let decodedURL = decodeURIComponent(image);
+                        
                         image = meeting_image.slice(40);
+                        let decodedURL = decodeURIComponent(image);
                         img_urls = `http://${decodedURL}`
                     }
                 } else {

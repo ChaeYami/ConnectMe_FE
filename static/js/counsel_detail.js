@@ -4,6 +4,7 @@ const counsel_id = new URLSearchParams(window.location.search).get('counsel_id')
 window.onload = () => {
     counselDetail(counsel_id)
     counselComments(counsel_id)
+    bestComment()
 }
 
 // 글상세
@@ -40,11 +41,12 @@ async function counselDetail(counsel_id) {
             $('#content').append(counsel_content)
             $('#likes_count').append(likes_count)
             $('#counsel-created').append(counsel_created_at)
+          
             for(let i = 0; i < tag.length; i++){
                 let tag_html = `<a class="tag" href="counsel_list.html?tag=${tag[i]}"><${tag[i]}></a>`
                 $('#tags_container').append(tag_html)
             }
-            
+
             if (JSON.parse(payload)['user_id'] == counsel_author_id) {
                 buttons.innerHTML += `
                 <a>
@@ -114,7 +116,6 @@ async function counselComments(counsel_id) {
         type: "GET",
         dataType: "json",
         success: function (response) {
-            console.log(response)
             const rows = response
             for (let i = 0; i < rows.length; i++) {
                 id = rows[i]['id']
@@ -247,12 +248,12 @@ async function counselComments(counsel_id) {
                     let temp_html = `
                         <div style="margin-left: 50px;">
                             <p id="now_reply_comment${reply_id}" style="display:block;">[${user}] ${content} ${reply_edit}</p>
-                            <p id="p_reply_update_input${reply_id}" style="display:none;"/>
-                                <input class="reply-input" id="reply_update_input${reply_id}" value=${content} style="width:450px"  type="text"/> 
+                            <p id="p_reply_update_input${reply_id}" style="display:none;">
+                                <input class="reply-input" id="reply_update_input${reply_id}" value="${content}" style="width:450px"  type="text"/> 
                                 ${anonymous_html}
                                 <label for="anonymous-checkbox">익명</label>
                                 <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${reply_id})">수정하기</button>
-                                <button type="button" class="button-white" onclick="replyCancel(${counsel_id}, ${reply_id})">취소하기</button>
+                                <button type="button" class="button-white" onclick="replyUpdateCancel(${counsel_id}, ${reply_id})">취소하기</button>
                             </p>
                             <div class=replybtns>
                                 <p> <small>${updated_at}${like_html}<p id="reply_count${reply_id}" style="margin: 0px 20px 0px 5px;">${reply_likes_count}</p></small></p>  
@@ -261,7 +262,7 @@ async function counselComments(counsel_id) {
                         <hr>
                         `
                     $(`#reply_card${comment}`).append(temp_html)
-                    
+
                 }))
             }
         }
@@ -301,6 +302,15 @@ function commentCancel(counsel_id, id) {
 
 // 대댓글 취소
 function replyCancel(counsel_id, id) {
+    let comment = document.querySelector(`#now_reply_comment${id}`)
+    let input = document.querySelector(`#p_reply_create_input${id}`)
+
+    comment.style.display = '';
+    input.style.display = 'none';
+}
+
+// 대댓글 수정 취소
+function replyUpdateCancel(counsel_id, id) {
     let comment = document.querySelector(`#now_reply_comment${id}`)
     let input = document.querySelector(`#p_reply_update_input${id}`)
 
@@ -715,6 +725,7 @@ async function replyDelete(reply_id) {
 
 async function clickCommentLike(comment_id) {
     const like = document.querySelector(`#comment-like-img${comment_id}`)
+    const best = document.querySelector(`#best-like-img${comment_id}`)
 
     let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${comment_id}/like/`, {
         headers: {
@@ -724,6 +735,23 @@ async function clickCommentLike(comment_id) {
     });
 
     const response_json = await response.json();
+
+    if (best) {
+        if (response.status == 200) {
+            best['src'] = "static/image/heart.png"
+            best.style.filter = "invert(100%)";
+            swal("좋아요 취소", '');
+        }
+        else {
+            best['src'] = "static/image/heart (1).png"
+            best.style.filter = "invert(0%)";
+            swal("좋아요 완료", '')
+        }
+
+        const likeCountElements = document.querySelector(`#best_comment_count${comment_id}`);
+        const like_count = response_json["comment_like"]
+        likeCountElements.innerText = `${like_count}`;
+    }
 
     if (response.status == 200) {
         like['src'] = "static/image/heart.png"
@@ -745,6 +773,9 @@ async function clickCommentLike(comment_id) {
 // ================================ 대댓글 좋아요 ================================
 async function clickReplyLike(reply_id) {
     const like = document.querySelector(`#reply-like-img${reply_id}`)
+    const best = document.querySelector(`#best-like-img${reply_id}`)
+
+
 
     let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}/like/`, {
         headers: {
@@ -754,6 +785,23 @@ async function clickReplyLike(reply_id) {
     });
 
     const response_json = await response.json();
+
+    if (best) {
+        if (response.status == 200) {
+            best['src'] = "static/image/heart.png"
+            best.style.filter = "invert(100%)";
+            swal("좋아요 취소", '');
+        }
+        else {
+            best['src'] = "static/image/heart (1).png"
+            best.style.filter = "invert(0%)";
+            swal("좋아요 완료", '')
+        }
+
+        const likeCountElements = document.querySelector(`#best_reply_count${reply_id}`);
+        const like_count = response_json["reply_like"]
+        likeCountElements.innerText = `${like_count}`;
+    }
 
     if (response.status == 200) {
         like['src'] = "static/image/heart.png"
@@ -766,10 +814,78 @@ async function clickReplyLike(reply_id) {
         swal("좋아요 완료", '')
     }
 
-
     const likeCountElements = document.querySelector(`#reply_count${reply_id}`);
     const like_count = response_json["reply_like"]
     likeCountElements.innerText = `${like_count}`;
 }
 
 // ================================ 대댓글 좋아요 끝 ================================
+
+
+// 베스트댓글
+
+async function bestComment() {
+    $('#best-comment').empty()
+
+    $.ajax({
+        url: `${BACKEND_BASE_URL}/counsel/${counsel_id}/top-comments/`,
+        type: "GET",
+        dataType: "json",
+        headers: {
+            "Authorization": "Bearer " + logined_token
+        },
+        success: function (response) {
+            const rows = response.combined_data;
+            for (let i = 0; i < rows.length; i++) {
+                let id = rows[i]['id']
+                let rank = i+1
+                let comment = rows[i]['content']
+                let is_anonymous =rows[i]['is_anonymous']
+                let comment_author = ''
+                if (is_anonymous){
+                    comment_author = '익명'
+                }else{
+                    comment_author = rows[i]['user']['nickname']
+                }
+                let like_count = rows[i]['like'].length
+
+                let is_comment = rows[i].hasOwnProperty('reply')
+                let comment_or_reply_U=''
+                let comment_or_reply_L=''
+                if (is_comment){
+                    comment_or_reply_U = 'Comment'
+                    comment_or_reply_L = 'comment'
+                }else{
+                    comment_or_reply_U = 'Reply'
+                    comment_or_reply_L = 'reply'
+                }
+                let like = rows[i]['like']
+
+                if (like.includes(logined_user_id)) {
+                    like_html = `
+                    <a>
+                        <img id="best-like-img${id}"src="static/image/heart (1).png" style="filter: invert(0%); margin-left:10px; width:15px;" alt="좋아요" onclick="click${comment_or_reply_U}Like(${id})">
+                    </a>`
+                } else {
+                    like_html = `
+                    <a>
+                        <img id="comment-like-img${id}"src="static/image/heart.png" style="margin-left:10px; width:15px;" alt="좋아요" onclick="click${comment_or_reply_U}Like(${id})">
+                    </a>`
+                }
+                console.log(rows[i])
+
+                let temp_html = `
+
+                    <div class="rank">BEST ${rank}</div>
+                    <div class="comment">${comment}</div>
+                    <div class="comment-author">${comment_author}</div>
+                    
+                    <div class="like-button" >${like_html} <span id="best_${comment_or_reply_L}_count${id}">${like_count}</span></div>
+                `
+
+                $('#best-comment').append(temp_html)
+
+            }
+        }
+    })
+}
