@@ -4,17 +4,11 @@ const count_per_page = 15; // 페이지당 데이터 건수
 const show_page_cnt = 10; // 화면에 보일 페이지 번호 개수
 let page_data = 0;
 
-const urlParams = new URLSearchParams(window.location.search);
-const tag = urlParams.get('tag');
-if (tag) {
-    $(document).ready(function () {
-        tagshow()
-    })
-} else {
-    $(document).ready(function () {
-        getCounsels()
-    })
-}
+
+$(document).ready(function () {
+    getCounsels()
+})
+
 
 // 페이지네이션 시작
 $(function () {
@@ -131,10 +125,7 @@ async function getCounsels(pages = 1) {
                 let counsel_created_at = rows[i]['created_at']
                 let likes_count = rows[i]['like'].length
                 let author_id = rows[i]['user']['pk']
-                let counsel_comment_count = rows[i]['comment_count']
-                let tags = rows[i]['tags']
-                let tag = String(tags).split(",")
-                let tagsHtml = "";
+                let counsel_comment_count = rows[i]['comment_count']                
                 let author_html = ``
                 if (is_anonymous) {
                     counsel_author = '익명'
@@ -142,18 +133,14 @@ async function getCounsels(pages = 1) {
                 } else {
                     counsel_author = rows[i]['user']['nickname']
                     author_html = `<a onclick = "go_profile(${author_id})">${counsel_author}</a>`
-                }
-                for (let i = 0; i < tag.length; i++) {
-                    tagsHtml += `<a class="tag" onclick="same_tags('${tag[i]}')"><${tag[i]}></a>`;
-                }
+                }            
                 let temp_html = `
                 <a onclick="go_counselDetail(${counsel_id})">
                     <div class="list-box">
                         <div id="counsel-title">${counsel_title}<div id="counsel-comment-count">[${counsel_comment_count}]</div></div>
                         <div id="counsel-author">${author_html}</div>
                         <div id="counsel-created-at">${counsel_created_at}</div>
-                        <div id="counsel-likes">${likes_count}</div>
-                        <div id="tags_container" class="tags_container">${tagsHtml}</div>
+                        <div id="counsel-likes">${likes_count}</div>                        
                     </div>
                 </a>
                 <hr>
@@ -169,133 +156,3 @@ async function getCounsels(pages = 1) {
     })
 }
 
-function same_tags(tag_name) {
-    $('#list-section').empty()
-    $('#myFooter').empty()
-    $.ajax({
-        url: `${BACKEND_BASE_URL}/counsel/tag/`,
-        method: 'GET',
-        headers: {
-            Authorization: "Bearer " + logined_token,
-        },
-        data: { tag: tag_name },
-        success: function (response) {
-            const rows = response;
-            let foot = document.querySelector('#myFooter')
-
-            foot.style.display = ''
-
-            for (let i = 0; i < rows.length; i++) {
-                let counsel_id = rows[i]['id']
-                let is_anonymous = rows[i]['is_anonymous']
-                let counsel_title = rows[i]['title']
-                let counsel_author = ''
-
-                let counsel_created_at = rows[i]['created_at']
-                let likes_count = rows[i]['like'].length
-                let author_id = rows[i]['user']['pk']
-                let counsel_comment_count = rows[i]['comment_count']
-                let tags = rows[i]['tags']
-                let tag = String(tags).split(",")
-                let tagsHtml = "";
-                let author_html = ``
-                if (is_anonymous) {
-                    counsel_author = '익명'
-                    author_html = `<a style = "color: #9fbabf; cursor : text;">${counsel_author}</a>`
-                } else {
-                    counsel_author = rows[i]['user']['nickname']
-                    author_html = `<a onclick = "go_profile(${author_id})">${counsel_author}</a>`
-                }
-                for (let i = 0; i < tag.length; i++) {
-                    tagsHtml += `<a class="tag" onclick="same_tags('${tag[i]}')"><${tag[i]}></a>`;
-                }
-                let temp_html = `
-            <a onclick="go_counselDetail(${counsel_id})">
-                <div class="list-box">
-                    <div id="counsel-title">${counsel_title}<div id="counsel-comment-count">[${counsel_comment_count}]</div></div>
-                    <div id="counsel-author">${author_html}</div>
-                    <div id="counsel-created-at">${counsel_created_at}</div>
-                    <div id="counsel-likes">${likes_count}</div>
-                    <div id="tags_container" class="tags_container">${tagsHtml}</div>
-                </div>
-            </a>
-            <hr>
-            `
-                $('#list-section').append(temp_html)
-            }
-        },
-        error: function () {
-            alert(response.status);
-        }
-
-    })
-}
-
-
-// const urlParams = new URLSearchParams(window.location.search);
-// const tag = urlParams.get('tag');
-// if (tag) {
-function tagshow() {
-    $('#list-section').empty()
-    $('#myFooter').empty()
-    $.ajax({
-        url: `${BACKEND_BASE_URL}/counsel/tag/`,
-        method: 'GET',
-        headers: {
-            Authorization: "Bearer " + logined_token,
-        },
-        data: { tag: tag },
-        success: function (response) {
-
-            console.log(tag)
-            const rows = response;
-            let foot = document.querySelector('#myFooter')
-
-            foot.style.display = ''
-
-            for (let i = 0; i < rows.length; i++) {
-                let counsel_id = rows[i]['id']
-                let is_anonymous = rows[i]['is_anonymous']
-                let counsel_title = rows[i]['title']
-                let counsel_author = ''
-
-                let counsel_created_at = rows[i]['created_at']
-                let likes_count = rows[i]['like'].length
-                let author_id = rows[i]['user']['pk']
-                let counsel_comment_count = rows[i]['comment_count']
-                let tags = rows[i]['tags']
-                let tag = String(tags).split(",")
-                let tagsHtml = "";
-                let author_html = ``
-                if (is_anonymous) {
-                    counsel_author = '익명'
-                    author_html = `<a style = "color: #9fbabf; cursor : text;">${counsel_author}</a>`
-                } else {
-                    counsel_author = rows[i]['user']['nickname']
-                    author_html = `<a onclick = "go_profile(${author_id})">${counsel_author}</a>`
-                }
-                for (let i = 0; i < tag.length; i++) {
-                    tagsHtml += `<a class="tag" onclick="same_tags('${tag[i]}')"><${tag[i]}></a>`;
-                }
-                let temp_html = `
-            <a onclick="go_counselDetail(${counsel_id})">
-                <div class="list-box">
-                    <div id="counsel-title">${counsel_title}<div id="counsel-comment-count">[${counsel_comment_count}]</div></div>
-                    <div id="counsel-author">${author_html}</div>
-                    <div id="counsel-created-at">${counsel_created_at}</div>
-                    <div id="counsel-likes">${likes_count}</div>
-                    <div id="tags_container" class="tags_container">${tagsHtml}</div>
-                </div>
-            </a>
-            <hr>
-            `
-                $('#list-section').append(temp_html)
-            }
-        },
-        error: function () {
-            alert(response.status);
-        }
-
-    })
-
-}

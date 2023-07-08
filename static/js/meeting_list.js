@@ -457,23 +457,21 @@ document.addEventListener("DOMContentLoaded", function () {
 //================================ 모임 글 목록에서 북마크 하기 API 시작 ================================ 
 async function meetingBookmark(id) {
     const book = document.querySelector(`#book${id}`)
-    let token = localStorage.getItem("access")
     let response = await fetch(`${BACKEND_BASE_URL}/meeting/${id}/bookmark/`, {
         method: 'POST',
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${logined_token}`,
         },
     })
-    if (token) {
-        if (response.status == "200") {
-            book['src'] = "static/image/bookmark.png"
-        } else {
-            book['src'] = "static/image/bookmark (1).png"
-        }
+    if (response.status == "200") {
+        book['src'] = "static/image/bookmark.png"
+    } else if (response.status == "202") {
+        book['src'] = "static/image/bookmark (1).png"
     } else {
-        alert("로그인 해주세요")
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
     }
-
 }
 //================================ 모임 글 목록에서 북마크 하기 API 끝 ================================ 
 

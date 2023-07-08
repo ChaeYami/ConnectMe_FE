@@ -141,34 +141,17 @@ async function createMeeting(place_id = -1) {
                             location.replace(`${FRONTEND_BASE_URL}/meeting_detail.html?id=` + meeting_id)
                         });
 
-
-
                 } else {
-                    if (data.meeting_city) {
-                        swal('모임 지역을 선택해주세요', '', 'warning')
-                    }
-                    else if (data.num_person_meeting) {
-                        swal("모집 인원수를 본인 포함 두 명 이상으로 입력 해주세요.", '', 'warning')
-                    }
-                    else if (data.place_title) {
-                        swal("모임 장소 이름을 입력해주세요", '', 'warning')
-                    }
-                    else if (data.place_address) {
-                        swal("모임 주소를 입력해주세요", '', 'warning')
-                    }
-                    else if (data.title) {
-                        swal("제목을 입력해주세요", '', 'warning')
-                    }
-                    else if (data.content) {
-
-                        swal("내용을 입력해주세요", '', 'warning')
-                    } else if (data.non_field_errors) {
+                    if (data.non_field_errors) {
                         swal(`${data.non_field_errors}`, '', 'warning')
                             .then((value) => {
                                 document.querySelector('#image_container').innerHTML = ''
                                 const fileInput = document.getElementById('meeting_image');
                                 fileInput.value = '';
                             });
+                    } else {
+                        const errorlist = Object.values(data)
+                        swal(`${errorlist[0]}`, '', 'warning')
                     }
                 }
             }

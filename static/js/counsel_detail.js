@@ -24,8 +24,8 @@ async function counselDetail(counsel_id) {
             let counsel_author = ''
             let author_html = ``
             let counsel_author_id = response.counsel['user']['pk']
-            let tags = response.counsel['tags']
-            let tag = String(tags).split(",")
+            // let tags = response.counsel['tags']
+            // let tag = String(tags).split(",")
             if (is_anonymous) {
                 counsel_author = '익명'
                 author_html = `<span style = "color: rgb(158, 158, 158);">${counsel_author}</span>`
@@ -44,11 +44,11 @@ async function counselDetail(counsel_id) {
             $('#content').append(counsel_content)
             $('#likes_count').append(likes_count)
             $('#counsel-created').append(counsel_created_at)
-          
-            for(let i = 0; i < tag.length; i++){
-                let tag_html = `<a class="tag" href="counsel_list.html?tag=${tag[i]}"><${tag[i]}></a>`
-                $('#tags_container').append(tag_html)
-            }
+
+            // for(let i = 0; i < tag.length; i++){
+            //     let tag_html = `<a class="tag" href="counsel_list.html?tag=${tag[i]}"><${tag[i]}></a>`
+            //     $('#tags_container').append(tag_html)
+            // }
 
             if (JSON.parse(payload)['user_id'] == counsel_author_id) {
                 buttons.innerHTML += `
@@ -196,7 +196,7 @@ async function counselComments(counsel_id) {
                             <p id="p_reply_create_input${id}" style="margin-right:5px; display:none;">
                                 <input class="reply-input" id="reply_create_input${id}" type="text" />
                                 <input type="checkbox" id="anonymous-reply-checkbox${id}">
-                                <label for="anonymous-checkbox">익명</label>
+                                <label for="anonymous-reply-checkbox">익명</label>
                                 <button class="button-blue" style="margin-right:5px" onclick="replyCreateConfrim(${id})">완료</button>
                                 <button type="button" class="button-white" onclick="replyCancel(${counsel_id}, ${id})">취소하기</button>
                             </p>
@@ -226,10 +226,10 @@ async function counselComments(counsel_id) {
 
                     if (is_anonymous) {
                         user = '익명'
-                        anonymous_html = `<input type="checkbox" id="anonymous-reply-checkbox${reply_id}" checked>`
+                        anonymous_html = `<input type="checkbox" id="anonymous-checkbox-reply_id${reply_id}" checked><label for="anonymous-checkbox-reply_id">익명</label>`
                     } else {
                         user = rows[i]['user']['nickname']
-                        anonymous_html = `<input type="checkbox" id="anonymous-reply-checkbox${reply_id}">`
+                        anonymous_html = `<input type="checkbox" id="anonymous-checkbox-reply_id${reply_id}"><label for="anonymous-checkbox-reply_id">익명</label>`
                     }
                     updated_at = each_reply['updated_at']
                     reply_likes_count = each_reply['reply_like_count']
@@ -272,7 +272,6 @@ async function counselComments(counsel_id) {
                                 <p id="p_reply_update_input${reply_id}" style="display:none;">
                                     <input class="reply-input" id="reply_update_input${reply_id}" value="${content}" style="width:450px"  type="text"/> 
                                     ${anonymous_html}
-                                    <label for="anonymous-checkbox">익명</label>
                                     <button class="button-blue" style="margin-right:5px" onclick="replyUpdateConfrim(${reply_id})">수정하기</button>
                                     <button type="button" class="button-white" onclick="replyUpdateCancel(${counsel_id}, ${reply_id})">취소하기</button>
                                 </p>
@@ -382,12 +381,12 @@ async function counselPreUpdate(counsel_id) {
     const response_json = await response.json();
     if (response_json['counsel'].is_anonymous) {
         anonymous = `
-        <div style="width: 70%; margin: 0 auto;"><input type="checkbox" id="anonymous-checkbox" checked>
+        <div style="width: 70%; margin: 0 auto;"><input type="checkbox" id="counsel-edit-anonymous-checkbox" checked>
             <label for="counsel-edit-anonymous-checkbox">익명</label>
         </div>`
     } else {
         anonymous = `
-        <div style="width: 70%; margin: 0 auto;"><input type="checkbox" id="anonymous-checkbox">
+        <div style="width: 70%; margin: 0 auto;"><input type="checkbox" id="counsel-edit-anonymous-checkbox">
             <label for="counsel-edit-anonymous-checkbox">익명</label>
         </div>`
     }
@@ -406,11 +405,8 @@ async function counselPreUpdate(counsel_id) {
                     maxlength="50">${response_json['counsel'].title}</textarea><span class="highlight"></span><span class="bar"></span>
                 <label class="create_label">제목</label>
             </div>
-            <div class="group">
-                <input id="tags" class="create_input" type="text" required="required" maxlength="50" value=${response_json['counsel'].tags}><span
-                    class="highlight"></span><span class="bar"></span>
-                <label class="create_label">태그. 쉼표(,)로 구분 해주세요.</label>
-            </div>
+            
+            
             <div class="group">
                 <textarea id="counsel-edit-content" class="create_input" type="textarea" rows="10"
                     required="required">${response_json['counsel'].content}</textarea><span class="highlight"></span><span class="bar"></span>
@@ -434,38 +430,28 @@ async function counselPreUpdate(counsel_id) {
 async function counselCommentCreate(id) {
     let comment = document.getElementById("inputComment").value
     let checked = $(`#anonymous-checkbox`).is(':checked');
-    if (checked) {
-        is_anonymous = 'True';
 
-    } else {
-        is_anonymous = 'False';
-    }
 
-    if (logined_token) {
-
-        const response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/`, {
-            method: 'POST',
-            headers: {
-                "content-type": "application/json",
-                "Authorization": "Bearer " + logined_token,
-            },
-            body: JSON.stringify({
-                content: comment,
-                is_anonymous: is_anonymous
-            })
+    const response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/`, {
+        method: 'POST',
+        headers: {
+            "content-type": "application/json",
+            "Authorization": "Bearer " + logined_token,
+        },
+        body: JSON.stringify({
+            content: comment,
+            is_anonymous: checked
         })
-        if (response.status == 201) {
-            swal("댓글 작성 완료", '', 'success')
-                .then((value) => {
-                    window.location.reload()
-                });
-        } else {
-            const errorData = await response.json();
-            const errorArray = Object.entries(errorData);
-            swal(`${errorArray[0][1]}`, '', 'warning');
-        }
+    })
+    if (response.status == 201) {
+        swal("댓글 작성 완료", '', 'success')
+            .then((value) => {
+                window.location.reload()
+            });
     } else {
-        alert("로그인해주세요")
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
     }
 }
 
@@ -473,7 +459,6 @@ async function counselCommentCreate(id) {
 async function CounselEdit() {
     let title = document.querySelector('#counsel-edit-title').value
     let content = document.querySelector('#counsel-edit-content').value
-    let tags = document.querySelector('#tags').value;
     let checked = $('#counsel-edit-anonymous-checkbox').is(':checked');
     let is_anonymous = ''
     if (checked) {
@@ -493,7 +478,6 @@ async function CounselEdit() {
             title: title,
             content: content,
             is_anonymous: is_anonymous,
-            tags: ([tags])
         })
     })
 
@@ -503,75 +487,72 @@ async function CounselEdit() {
                 location.href = `counsel_detail.html?counsel_id=${counsel_id}`
             });
 
-    } else if (response.status == 400) {
-        for (let key in response_json) {
-            swal(`${response_json[key]}`, '', 'warning');
-            break
-        }
+    } else {
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
     }
 }
 
 // ================================ 상담 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 시작 ================================
 function reply_create_handle(id) {
-    let token = localStorage.getItem("access")
-    if (token) {
-        let p_reply_create_input = document.getElementById(`p_reply_create_input${id}`)
-        if (p_reply_create_input.style.display == 'none') {
-            p_reply_create_input.style.display = 'block'
-        } else {
-            p_reply_create_input.style.display = 'none';
-        }
-    } else { alert("로그인 해주세요") }
+    let p_reply_create_input = document.getElementById(`p_reply_create_input${id}`)
+    if (p_reply_create_input.style.display == 'none') {
+        p_reply_create_input.style.display = 'block'
+    } else {
+        p_reply_create_input.style.display = 'none';
+    }
 }
 // ================================ 상담 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 끝 ================================
 
 async function replyCreateConfrim(reply_id) {
     let reply = document.getElementById(`reply_create_input${reply_id}`).value
-    let token = localStorage.getItem("access")
     let checked = $(`#anonymous-reply-checkbox${reply_id}`).is(':checked');
 
-    if (token) {
-        let formData = new FormData();
-        formData.append("content", reply);
-        if (checked) {
-            formData.append("is_anonymous", 'True');
+    if (checked) {
+        is_anonymous = 'True';
 
-        } else {
-            formData.append("is_anonymous", 'False');
-        }
+    } else {
+        is_anonymous = 'False';
+    }
 
-        let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${reply_id}/reply/`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: formData
+
+    let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${reply_id}/reply/`, {
+        method: 'POST',
+        headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${logined_token}`,
+        },
+        body: JSON.stringify({
+            content: reply,
+            is_anonymous: is_anonymous
         })
-        if (response.status == 400) { swal("내용을 입력해주세요", '', 'warning') }
-        else {
-            swal("댓글 작성 완료", '', 'success')
-                .then((value) => {
-                    window.location.reload()
-                });
-        }
-    } else { "로그인 해주세요" }
+    })
+    if (response.status == 200) {
+        swal("댓글 작성 완료", '', 'success')
+            .then((value) => {
+                window.location.reload()
+            });
+    }
+    else {
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
+    }
 }
 
 // ================================ 상담 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 시작 ================================
 
 async function comment_update_handle(id) {
-    let token = localStorage.getItem("access")
-    if (token) {
-        let comment_update_input = document.getElementById(`p_comment_update_input${id}`)
-        let now_comment = document.getElementById(`now_comment${id}`);
-        if (comment_update_input.style.display == 'none') {
-            comment_update_input.style.display = 'block'
-            now_comment.style.display = 'none';
-        } else {
-            comment_update_input.style.display = 'none';
-            now_comment.style.display = 'grid';
-        }
-    } else { alert("로그인 해주세요") }
+    let comment_update_input = document.getElementById(`p_comment_update_input${id}`)
+    let now_comment = document.getElementById(`now_comment${id}`);
+    if (comment_update_input.style.display == 'none') {
+        comment_update_input.style.display = 'block'
+        now_comment.style.display = 'none';
+    } else {
+        comment_update_input.style.display = 'none';
+        now_comment.style.display = 'grid';
+    }
 }
 // ================================ 상담 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 끝 ================================
 
@@ -580,36 +561,35 @@ async function commentUpdateConfrim(id) {
     let comment = document.getElementById(`comment_update_input${id}`).value
     let checked = $(`#anonymous-checkbox${id}`).is(':checked');
 
-    let token = localStorage.getItem("access")
-    if (token) {
-        let formData = new FormData();
-        formData.append("content", comment);
-        if (checked) {
-            formData.append("is_anonymous", 'True');
+    let formData = new FormData();
+    formData.append("content", comment);
+    if (checked) {
+        formData.append("is_anonymous", 'True');
 
-        } else {
-            formData.append("is_anonymous", 'False');
+    } else {
+        formData.append("is_anonymous", 'False');
 
-        }
-        let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${id}/`, {
-            method: 'PUT',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: formData
-        })
-        if (response.status == 200) {
-            swal("수정 완료", '', 'success')
-                .then((value) => {
-                    window.location.reload()
-                });
-        }
-        else if (response.status == 400) {
-            swal("입력 해주세요", '', 'warning')
-        }
-        else {
-        }
-    } else { alert("로그인 해주세요") }
+    }
+    let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${id}/`, {
+        method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${logined_token}`,
+        },
+        body: formData
+    })
+    if (response.status == 200) {
+        swal("수정 완료", '', 'success')
+            .then((value) => {
+                window.location.reload()
+            });
+    }
+
+    else {
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
+    }
+
 }
 // ================================ 상담 게시글 상세보기 댓글 수정 끝 ================================
 
@@ -625,24 +605,22 @@ async function commentDelete(comment_id) {
     })
         .then(async (willDelete) => {
             if (willDelete) {
-                let token = localStorage.getItem("access")
-                if (token) {
-                    let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${comment_id}`, {
-                        method: 'DELETE',
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    })
-                    if (response.status == 204 || response.status == 200) {
-                        swal("삭제 완료", '', 'success')
-                            .then((value) => {
-                                window.location.reload()
-                            });
-                    }
-                    else {
-                        swal("권한이 없습니다.", '', 'error')
-                    }
+                let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/${comment_id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${logined_token}`,
+                    },
+                })
+                if (response.status == 204 || response.status == 200) {
+                    swal("삭제 완료", '', 'success')
+                        .then((value) => {
+                            window.location.reload()
+                        });
                 }
+                else {
+                    swal("권한이 없습니다.", '', 'error')
+                }
+
             }
         });
 
@@ -651,56 +629,51 @@ async function commentDelete(comment_id) {
 
 // ================================ 상담 게시글 상세보기 대댓글 수정 버튼 보이고 숨기기 시작 ================================
 async function reply_update_handle(id) {
-    let token = localStorage.getItem("access")
-    if (token) {
-        let reply_update_input = document.getElementById(`p_reply_update_input${id}`)
-        let now_reply = document.getElementById(`now_reply_comment${id}`);
-        if (reply_update_input.style.display == 'none') {
-            reply_update_input.style.display = 'block'
-            now_reply.style.display = 'none';
-        } else {
-            reply_update_input.style.display = 'none';
-            now_reply.style.display = 'grid';
-        }
-    } else { alert("로그인 해주세요") }
+    let reply_update_input = document.getElementById(`p_reply_update_input${id}`)
+    let now_reply = document.getElementById(`now_reply_comment${id}`);
+    if (reply_update_input.style.display == 'none') {
+        reply_update_input.style.display = 'block'
+        now_reply.style.display = 'none';
+    } else {
+        reply_update_input.style.display = 'none';
+        now_reply.style.display = 'grid';
+    }
 }
 // ================================ 상담 게시글 상세보기 대댓글 수정 버튼 보이고 숨기기 끝 ================================
 
 // ================================ 상담 게시글 상세보기 대댓글 수정 시작 ================================
 async function replyUpdateConfrim(reply_id) {
     let reply = document.getElementById(`reply_update_input${reply_id}`).value
-    let token = localStorage.getItem("access")
-    let checked = $(`#anonymous-reply-checkbox${reply_id}`).is(':checked');
+    let checked = $(`#anonymous-checkbox-reply_id${reply_id}`).is(':checked');
+    if (checked) {
+        is_anonymous = 'True';
 
-    if (token) {
-        let formData = new FormData();
-        formData.append("content", reply);
-        if (checked) {
-            formData.append("is_anonymous", 'True');
+    } else {
+        is_anonymous = 'False';
+    }
 
-        } else {
-            formData.append("is_anonymous", 'False');
-        }
-        let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}/`, {
-            method: 'PUT',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: formData
+    let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}/`, {
+        method: 'PUT',
+        headers: {
+            "content-type": "application/json",
+            "Authorization": `Bearer ${logined_token}`,
+        },
+        body: JSON.stringify({
+            content: reply,
+            is_anonymous: is_anonymous
         })
+    })
 
-        if (response.status == 200) {
-            swal("수정 완료", '', 'success')
-                .then((value) => {
-                    window.location.reload()
-                });
-        }
-        else if (response.status == 400) {
-            swal("입력 해주세요", '', 'warning')
-        }
-        else {
-        }
-    } else { alert("로그인 해주세요") }
+    if (response.status == 200) {
+        swal("수정 완료", '', 'success')
+            .then((value) => {
+                window.location.reload()
+            });
+    } else {
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
+    }
 }
 // ================================ 고민 게시글 상세보기 대댓글 수정 끝 ================================
 
@@ -717,23 +690,22 @@ async function replyDelete(reply_id) {
         .then(async (willDelete) => {
             if (willDelete) {
                 let token = localStorage.getItem("access")
-                if (token) {
-                    let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}`, {
-                        method: 'DELETE',
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    })
-                    if (response.status == 200) {
-                        swal("삭제 완료", '', 'success')
-                            .then((value) => {
-                                window.location.reload()
-                            });
-                    }
-                    else {
-                        swal("권한이 없습니다.", '', 'error')
-                    }
+                let response = await fetch(`${BACKEND_BASE_URL}/counsel/${counsel_id}/comment/reply/${reply_id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${logined_token}`,
+                    },
+                })
+                if (response.status == 200) {
+                    swal("삭제 완료", '', 'success')
+                        .then((value) => {
+                            window.location.reload()
+                        });
                 }
+                else {
+                    swal("권한이 없습니다.", '', 'error')
+                }
+
             }
         });
 
@@ -860,24 +832,24 @@ async function bestComment() {
             const rows = response.combined_data;
             for (let i = 0; i < rows.length; i++) {
                 let id = rows[i]['id']
-                let rank = i+1
+                let rank = i + 1
                 let comment = rows[i]['content']
-                let is_anonymous =rows[i]['is_anonymous']
+                let is_anonymous = rows[i]['is_anonymous']
                 let comment_author = ''
-                if (is_anonymous){
+                if (is_anonymous) {
                     comment_author = '익명'
-                }else{
+                } else {
                     comment_author = rows[i]['user']['nickname']
                 }
                 let like_count = rows[i]['like'].length
 
                 let is_comment = rows[i].hasOwnProperty('reply')
-                let comment_or_reply_U=''
-                let comment_or_reply_L=''
-                if (is_comment){
+                let comment_or_reply_U = ''
+                let comment_or_reply_L = ''
+                if (is_comment) {
                     comment_or_reply_U = 'Comment'
                     comment_or_reply_L = 'comment'
-                }else{
+                } else {
                     comment_or_reply_U = 'Reply'
                     comment_or_reply_L = 'reply'
                 }

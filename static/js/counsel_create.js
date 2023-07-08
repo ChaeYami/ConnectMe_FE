@@ -3,14 +3,14 @@ const logined_token = localStorage.getItem("access")
 async function CreateCounsel() {
     let title = document.querySelector('#title').value;
     let content = document.querySelector('#content').value;
-    let tags = document.querySelector('#tags').value;
+    // let tags = document.querySelector('#tags').value;
     let checked = $('#anonymous-checkbox').is(':checked');
-    let tag = JSON.stringify ([tags])
+    // let tag = JSON.stringify ([tags])
 
     const formdata = new FormData();
     formdata.append("title", title);
     formdata.append("content", content);
-    formdata.append("tags", tag);
+    // formdata.append("tags", tag);
     if (checked) {
         formdata.append("is_anonymous", 'True');
 
@@ -35,11 +35,9 @@ async function CreateCounsel() {
                 window.location.replace(`${FRONTEND_BASE_URL}/counsel_list.html`);
             });
         
-    } else if (response.status == 400) {
-
-        for (let key in response_json) {
-
-            swal(`${response_json[key]}`,'','warning');
-        }
+    } else{
+        const errorData = await response_json;
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
     }
 }

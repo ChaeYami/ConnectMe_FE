@@ -412,58 +412,55 @@ async function meetingDelete() {
 
 // ================================ 모임 게시글 상세보기 북마크 시작 ================================
 async function handleBookmark() {
-    let token = localStorage.getItem("access")
-    if (token) {
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
-        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/bookmark/`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        if (response.status === 200) {
-            swal("북마크 취소", '')
-                .then((value) => {
-                    location.reload()
-                });
-        } else {
-            swal("북마크", '')
-                .then((value) => {
-                    location.reload()
-                });
-        }
-    } else { swal("로그인 해주세요", "", "warning") }
+    let meeting_id = new URLSearchParams(window.location.search).get('id');
+    let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/bookmark/`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+    if (response.status === 200) {
+        swal("북마크 취소", '')
+            .then((value) => {
+                location.reload()
+            });
+    } else if (response.status == 202) {
+        swal("북마크", '')
+            .then((value) => {
+                location.reload()
+            });
+    } else {
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
+    }
 }
 // ================================ 모임 게시글 상세보기 북마크 끝 ================================
 
 // ================================ 모임 게시글 상세보기 댓글 작성 시작 ================================
 async function meetingCommentCreate() {
     let comment = document.getElementById("textareaComment").value
-    let token = localStorage.getItem("access")
-    if (token) {
-        let formData = new FormData();
-        formData.append("content", comment);
+    let formData = new FormData();
+    formData.append("content", comment);
 
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
-        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: formData
-        })
-        if (response.status == 200) {
-            swal("댓글 작성 완료", '', 'success')
-                .then((value) => {
-                    window.location.reload()
-                });
-        }
-        else {
-            swal("입력 해주세요", '', 'warning')
-        }
-
-    } else {
-        swal("로그인 해주세요", '', 'warning')
+    let meeting_id = new URLSearchParams(window.location.search).get('id');
+    let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: formData
+    })
+    if (response.status == 200) {
+        swal("댓글 작성 완료", '', 'success')
+            .then((value) => {
+                window.location.reload()
+            });
+    }
+    else {
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
     }
 }
 // ================================ 모임 게시글 상세보기 댓글 작성 끝 ================================
@@ -486,7 +483,6 @@ async function commentDelete(comment_id) {
     })
         .then(async (willDelete) => {
             if (willDelete) {
-                let token = localStorage.getItem("access")
                 let meeting_id = new URLSearchParams(window.location.search).get('id');
                 let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/${comment_id}`, {
                     method: 'DELETE',
@@ -514,113 +510,93 @@ async function commentDelete(comment_id) {
 // ================================ 모임 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 시작 ================================
 
 async function comment_update_handle(id) {
-    let token = localStorage.getItem("access")
-    if (token) {
-        let comment_update_input = document.getElementById(`p_comment_update_input${id}`)
-        let now_comment = document.getElementById(`now_comment${id}`);
-        let comment_edit_icon = document.getElementById(`comment_edit_icon${id}`);
-        let comment_delete_icon = document.getElementById(`comment_delete_icon${id}`);
-        if (comment_update_input.style.display == 'none') {
-            comment_update_input.style.display = 'block'
-            now_comment.style.display = 'none';
-            comment_edit_icon.style.display = 'none';
-            comment_delete_icon.style.display = 'none';
-        } else {
-            comment_update_input.style.display = 'none';
-            now_comment.style.display = 'block';
-            comment_edit_icon.style.display = 'block';
-            comment_delete_icon.style.display = 'block';
-        }
-    } else { alert("로그인 해주세요") }
+    let comment_update_input = document.getElementById(`p_comment_update_input${id}`)
+    let now_comment = document.getElementById(`now_comment${id}`);
+    let comment_edit_icon = document.getElementById(`comment_edit_icon${id}`);
+    let comment_delete_icon = document.getElementById(`comment_delete_icon${id}`);
+    if (comment_update_input.style.display == 'none') {
+        comment_update_input.style.display = 'block'
+        now_comment.style.display = 'none';
+        comment_edit_icon.style.display = 'none';
+        comment_delete_icon.style.display = 'none';
+    } else {
+        comment_update_input.style.display = 'none';
+        now_comment.style.display = 'block';
+        comment_edit_icon.style.display = 'block';
+        comment_delete_icon.style.display = 'block';
+    }
 }
 // ================================ 모임 게시글 상세보기 댓글 수정 버튼 보이고 숨기기 끝 ================================
 
 // ================================ 모임 게시글 상세보기 댓글 수정 시작 ================================
 async function commentUpdateConfrim(id) {
     let comment = document.getElementById(`comment_update_input${id}`).value
-    let token = localStorage.getItem("access")
-    if (token) {
-        let formData = new FormData();
-        formData.append("content", comment);
+    let formData = new FormData();
+    formData.append("content", comment);
 
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
-        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/${id}/`, {
-            method: 'PUT',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: formData
-        })
-        if (response.status == 200) {
-            swal("수정 완료", '', 'success')
-                .then((value) => {
-                    window.location.reload()
-                });
-        }
-        else if (response.status == 400) {
-            swal("입력 해주세요", '', 'warning')
-        }
-        else {
-            swal("권한이 없습니다.", '', 'error')
-        }
-    } else { alert("로그인 해주세요") }
+    let meeting_id = new URLSearchParams(window.location.search).get('id');
+    let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/${id}/`, {
+        method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: formData
+    })
+    if (response.status == 200) {
+        swal("수정 완료", '', 'success')
+            .then((value) => {
+                window.location.reload()
+            });
+    }
+    else {
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
+    }
 }
 // ================================ 모임 게시글 상세보기 댓글 수정 끝 ================================
 
 // ================================ 모임 게시글 상세보기 대댓글 수정 버튼 보이고 숨기기 시작 ================================
 async function reply_update_handle(id) {
-    let token = localStorage.getItem("access")
-    if (token) {
-        let reply_update_input = document.getElementById(`p_reply_update_input${id}`)
-        let now_reply = document.getElementById(`now_reply_comment${id}`);
-        // let reply_edit_icon = document.getElementById(`reply_edit_icon${id}`)
-        // let reply_delete_icon = document.getElementById(`reply_delete_icon${id}`)
+    let reply_update_input = document.getElementById(`p_reply_update_input${id}`)
+    let now_reply = document.getElementById(`now_reply_comment${id}`);
 
-        if (reply_update_input.style.display == 'none') {
-            reply_update_input.style.display = 'block'
-            now_reply.style.display = 'none';
-            // reply_edit_icon.style.display = 'none';
-            // reply_delete_icon.style.display = 'none';
-        } else {
-            reply_update_input.style.display = 'none';
-            now_reply.style.display = 'block';
-            // reply_edit_icon.style.display = 'block';
-            // reply_delete_icon.style.display = 'block';
-        }
-    } else { alert("로그인 해주세요") }
+    if (reply_update_input.style.display == 'none') {
+        reply_update_input.style.display = 'block'
+        now_reply.style.display = 'none';
+    } else {
+        reply_update_input.style.display = 'none';
+        now_reply.style.display = 'block';
+    }
 }
 // ================================ 모임 게시글 상세보기 대댓글 수정 버튼 보이고 숨기기 끝 ================================
 
 // ================================ 모임 게시글 상세보기 대댓글 수정 시작 ================================
 async function replyUpdateConfrim(reply_id) {
     let reply = document.getElementById(`reply_update_input${reply_id}`).value
-    let token = localStorage.getItem("access")
-    if (token) {
-        let formData = new FormData();
-        formData.append("content", reply);
 
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
-        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/reply/${reply_id}/`, {
-            method: 'PUT',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: formData
-        })
-        if (response.status == 200) {
-            swal("수정 완료", '', 'success')
-                .then((value) => {
-                    window.location.reload()
-                });
-        }
-        else if (response.status == 400) {
-            swal("입력 해주세요", '', 'warning')
-        }
-        else {
-            swal("권한이 없습니다.", '', 'error')
-        }
+    let formData = new FormData();
+    formData.append("content", reply);
 
-    } else { alert("로그인 해주세요") }
+    let meeting_id = new URLSearchParams(window.location.search).get('id');
+    let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/reply/${reply_id}/`, {
+        method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: formData
+    })
+    if (response.status == 200) {
+        swal("수정 완료", '', 'success')
+            .then((value) => {
+                window.location.reload()
+            });
+    }
+    else {
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
+    }
 }
 // ================================ 모임 게시글 상세보기 대댓글 수정 끝 ================================
 
@@ -665,31 +641,27 @@ async function replyDelete(reply_id) {
 
 async function replyCreateConfrim(reply_id) {
     let reply = document.getElementById(`reply_create_input${reply_id}`).value
-    let token = localStorage.getItem("access")
-    if (token) {
-        let formData = new FormData();
-        formData.append("content", reply);
+    let formData = new FormData();
+    formData.append("content", reply);
 
-        let meeting_id = new URLSearchParams(window.location.search).get('id');
-        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/${reply_id}/reply/`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: formData
-        })
-        if (response.status == 200) {
-            swal("댓글 작성 완료", '', 'success')
-                .then((value) => {
-                    window.location.reload()
-                });
-        }
-        else if (response.status == 400) {
-            swal("입력 해주세요", '', 'warning')
-        }
-
-    } else {
-        swal("로그인 해주세요", '', 'warning')
+    let meeting_id = new URLSearchParams(window.location.search).get('id');
+    let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/comment/${reply_id}/reply/`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: formData
+    })
+    if (response.status == 200) {
+        swal("댓글 작성 완료", '', 'success')
+            .then((value) => {
+                window.location.reload()
+            });
+    }
+    else {
+        const errorData = await response.json();
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
     }
 }
 // ================================ 모임 게시글 상세보기 대댓글 작성 끝 ================================
@@ -697,55 +669,50 @@ async function replyCreateConfrim(reply_id) {
 // ================================ 모임 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 시작 ================================
 async function reply_create_handle(id) {
     let token = localStorage.getItem("access")
-    if (token) {
-        let p_reply_create_input = document.getElementById(`p_reply_create_input${id}`)
-        let reply_create_btn = document.getElementById(`reply_create_btn${id}`)
-        if (p_reply_create_input.style.display == 'none') {
-            p_reply_create_input.style.display = 'block'
-            reply_create_btn.style.display = 'none'
+    let p_reply_create_input = document.getElementById(`p_reply_create_input${id}`)
+    let reply_create_btn = document.getElementById(`reply_create_btn${id}`)
+    if (p_reply_create_input.style.display == 'none') {
+        p_reply_create_input.style.display = 'block'
+        reply_create_btn.style.display = 'none'
 
-        } else {
-            p_reply_create_input.style.display = 'none';
-            reply_create_btn.style.display = 'block'
-        }
-    } else { alert("로그인 해주세요") }
+    } else {
+        p_reply_create_input.style.display = 'none';
+        reply_create_btn.style.display = 'block'
+    }
 }
 // ================================ 모임 게시글 상세보기 대댓글 작성 버튼 숨기고 보이기 끝 ================================
 
 // ================================ 모임 게시글 상세보기 모임참가 시작 ================================
 async function handleJoinmeeting() {
-    let token = localStorage.getItem("access")
-    if (token) {
-        if (meeting_status == "모집종료") {
-            swal("모집종료 된 모임입니다.", '')
+    if (meeting_status == "모집종료") {
+        swal("모집종료 된 모임입니다.", '')
+    } else {
+        let meeting_id = new URLSearchParams(window.location.search).get('id');
+        let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/join_meeting/`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (response.status === 200) {
+            swal("참가 취소", '')
+                .then((value) => {
+                    location.reload();
+                });
+        } else if (num_person_meeting == join_meeting_count) {
+            swal("자리가 없습니다.", '')
+                .then((value) => {
+                    location.reload();
+                });
         } else {
-            let meeting_id = new URLSearchParams(window.location.search).get('id');
-            let response = await fetch(`${BACKEND_BASE_URL}/meeting/${meeting_id}/join_meeting/`, {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            if (response.status === 200) {
-                swal("참가 취소", '')
-                    .then((value) => {
-                        location.reload();
-                    });
-            } else if (num_person_meeting == join_meeting_count) {
-                swal("자리가 없습니다.", '')
-                    .then((value) => {
-                        location.reload();
-                    });
-            } else {
-                swal("참가 약속 완료!", '')
-                    .then((value) => {
-                        location.reload();
-                    });
-            }
+            swal("참가 약속 완료!", '')
+                .then((value) => {
+                    location.reload();
+                });
         }
     }
-    else { alert("로그인 해주세요") }
 }
+
 // ================================ 모임 게시글 상세보기 모임참가 끝 ================================
 
 // 참가유저목록 열기

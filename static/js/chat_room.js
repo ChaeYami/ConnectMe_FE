@@ -78,7 +78,6 @@ function getChatList() {
             "Authorization": "Bearer " + logined_token
         },
         success: function (response) {
-            console.log(response)
             for (let i = 0; i < response.length; i++) {
                 list_user_id = ''
                 list_nickname = ''

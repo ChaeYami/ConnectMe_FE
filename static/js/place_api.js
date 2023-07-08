@@ -1748,13 +1748,12 @@ async function commentWrite(place_id) {
 
     if (response.status == 200) {
         alert("댓글이 등록되었습니다.");
-    } else if (response.status == 400) {
-        alert(response_json["message"]);
-    } else if (
-        comment == ""
-    ) {
-        alert("빈칸을 입력해 주세요.");
+    } else {
+        const errorData = await response_json;
+        const errorArray = Object.entries(errorData);
+        swal(`${errorArray[0][1]}`, '', 'warning');
     }
+    
 
     window.location.href = `place_view.html?id=${place_id}`;
 }
