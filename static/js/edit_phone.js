@@ -107,7 +107,7 @@ async function editPhone() {
         },
 
         success: function (response) {
-            swal(`${response}`, '')
+            swal(`${response.message}`, '')
                 .then((value) => {
                     location.replace("personal.html")
                 });
