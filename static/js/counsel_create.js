@@ -1,5 +1,3 @@
-const logined_token = localStorage.getItem("access")
-
 async function CreateCounsel() {
     let title = document.querySelector('#title').value;
     let content = document.querySelector('#content').value;
@@ -34,8 +32,8 @@ async function CreateCounsel() {
             .then((value) => {
                 window.location.replace(`${FRONTEND_BASE_URL}/counsel_list.html`);
             });
-        
-    } else{
+
+    } else {
         const errorData = await response_json;
         const errorArray = Object.entries(errorData);
         swal(`${errorArray[0][1]}`, '', 'warning');

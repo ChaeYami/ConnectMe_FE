@@ -1,5 +1,4 @@
 const user_id = parseInt(new URLSearchParams(window.location.search).get('user_id'));
-const logined_token = localStorage.getItem("access");
 const logined_account = payload_parse.account;
 
 async function isFriend() {

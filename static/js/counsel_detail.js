@@ -1,4 +1,3 @@
-const logined_token = localStorage.getItem("access");
 const counsel_id = new URLSearchParams(window.location.search).get('counsel_id');
 
 window.onload = () => {

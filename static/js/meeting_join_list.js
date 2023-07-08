@@ -1,4 +1,3 @@
-const logined_token = localStorage.getItem("access");
 let div_more_title = document.querySelector(`#more-title`);
 let div_more_content = document.querySelector('#more-content');
 let foot = document.querySelector('#myFooter');

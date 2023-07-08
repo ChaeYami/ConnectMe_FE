@@ -4,7 +4,6 @@ window.onload = () => {
     existingProfile(user_id)
 }
 
-const logined_token = localStorage.getItem("access");
 const logined_account = payload_parse.account;
 
 // 입력폼에 기존 값 넣기
@@ -127,7 +126,8 @@ async function updateProfile() {
 
     if (file) {
         formData.append('profile_img', file);
-    } else {alert
+    } else {
+        alert
         formData.append('profile_img', '');
 
     }
@@ -142,13 +142,13 @@ async function updateProfile() {
     });
 
     if (response.status == 200) {
-        swal("수정 완료",'',"success")
-        .then((value) => {
-            window.location.replace(`/profile.html?user_id=${user_id}`)
+        swal("수정 완료", '', "success")
+            .then((value) => {
+                window.location.replace(`/profile.html?user_id=${user_id}`)
 
-        });
+            });
     } else if (response.status == 403) {
-        swal('권한이 없습니다!','',"error")
+        swal('권한이 없습니다!', '', "error")
     } else {
         const errorData = await response.json();
         const errorArray = Object.entries(errorData);
