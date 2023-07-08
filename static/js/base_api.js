@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <a onclick="go_signup()">회원가입</a>
         `;
     }
+    tokenValidate()
 })
 
 
@@ -195,16 +196,21 @@ function go_meeting_join_list() {
 function tokenValidate() {
     $.ajax({
         url: `${BACKEND_BASE_URL}/user/token/validate/`,
-        type: "POST",
+        type: "GET",
         dataType: "json",
         headers: {
-            "Authorization": "Bearer " + logined_token
+            "Authorization": "Bearer srthgprtjhpaketro;phgakop;rthkposrth"
+            // + logined_token
         },
-        success: function (response) {
-
-        },
-        error: function () {
-
+        statusCode: {
+            200: function (response) {
+            },
+            401: function () {
+                localStorage.removeItem("access")
+                localStorage.removeItem("refresh")
+                localStorage.removeItem("payload")
+                location.replace('/login.html')
+            }
         }
     })
 }
