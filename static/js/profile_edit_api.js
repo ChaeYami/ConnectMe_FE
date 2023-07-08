@@ -125,13 +125,12 @@ async function updateProfile() {
     formData.append('mbti', mbti);
     formData.append('prefer_region', prefer_region)
 
+
     if (file) {
         formData.append('profile_img', file);
-    } else {alert
-        formData.append('profile_img', '');
+    } else {
 
     }
-
 
     const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
         headers: {
@@ -142,13 +141,16 @@ async function updateProfile() {
     });
 
     if (response.status == 200) {
-        swal("수정 완료",'',"success")
-        .then((value) => {
-            window.location.replace(`/profile.html?user_id=${user_id}`)
+        swal("수정 완료", '', "success")
+            .then((value) => {
+                if ($('#profile_preview')[0].src == `${FRONTEND_BASE_URL}/static/image/user.png`){
+                    delProfileImg()
+                }
+                window.location.replace(`/profile.html?user_id=${user_id}`)
 
-        });
+            });
     } else if (response.status == 403) {
-        swal('권한이 없습니다!','',"error")
+        swal('권한이 없습니다!', '', "error")
     } else {
         const errorData = await response.json();
         const errorArray = Object.entries(errorData);
@@ -160,11 +162,23 @@ async function updateProfile() {
         } else if (errorArray[0][1].non_field_errors) {
             swal(`${errorArray[0][1].non_field_errors}`, '', 'warning')
                 .then((value) => {
-                    $('#profile_preview').attr('src', 'static/image/user.png');;
+                    $('#profile_preview').attr('src', 'static/image/user.png');
                     $('#profile_img').val('');
                 });
         }
     }
+}
+
+async function delProfileImg() {
+
+
+    const response = await fetch(`${BACKEND_BASE_URL}/user/profile/${user_id}/`, {
+        headers: {
+            "Authorization": "Bearer " + logined_token,
+        },
+        method: 'DELETE',
+    });
+
 }
 
 function deleteProfileImage() {
