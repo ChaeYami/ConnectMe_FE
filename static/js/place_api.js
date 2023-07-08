@@ -1747,15 +1747,18 @@ async function commentWrite(place_id) {
     const response_json = await response.json();
 
     if (response.status == 200) {
-        alert("댓글이 등록되었습니다.");
-    } else {
-        const errorData = await response_json;
-        const errorArray = Object.entries(errorData);
-        swal(`${errorArray[0][1]}`, '', 'warning');
-    }
-    
+        swal("댓글이 등록되었습니다", '', 'success')
+            .then((value) => {
+                window.location.href = `place_view.html?id=${place_id}`;
+            });
 
-    window.location.href = `place_view.html?id=${place_id}`;
+    } else {
+        // const errorData = await response_json;
+        // const errorArray = Object.entries(errorData);
+        swal(`${'댓글을 입력해주세요'}`, '', 'warning');
+    }
+
+
 }
 
 // 대댓글 작성하기
@@ -1774,7 +1777,17 @@ async function replyWrite(place_id, place_comment_id) {
         body: formdata,
     });
 
-    window.location.href = `place_view.html?id=${place_id}`;
+    if (response.status == 200) {
+        swal("댓글이 등록되었습니다", '', 'success')
+            .then((value) => {
+                window.location.href = `place_view.html?id=${place_id}`;
+            });
+
+    } else {
+        // const errorData = await response_json;
+        // const errorArray = Object.entries(errorData);
+        swal(`${'댓글을 입력해주세요'}`, '', 'warning');
+    }
 }
 
 // 대댓글 작성 폼 띄우기
@@ -1851,7 +1864,17 @@ async function commentUpdate(place_id, place_comment_id) {
             content: comment_update.value,
         })
     });
-    window.location.href = `place_view.html?id=${place_id}`;
+    if (response.status == 200) {
+        swal("댓글이 수정되었습니다", '', 'success')
+            .then((value) => {
+                window.location.href = `place_view.html?id=${place_id}`;
+            });
+
+    } else {
+        // const errorData = await response_json;
+        // const errorArray = Object.entries(errorData);
+        swal(`${'댓글을 입력해주세요'}`, '', 'warning');
+    }
 
 }
 
