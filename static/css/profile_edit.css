@@ -26,6 +26,7 @@ input{
 
 .profile{
     display: grid;
+    color: rgb(255, 243, 220);
 
 }
 #nickname {
@@ -48,6 +49,7 @@ input{
 #intro {
     width: 80%;
     margin-top: 150px;
+    color: rgb(255, 243, 220);
 }
 
 #intro textarea{
@@ -59,7 +61,18 @@ input{
     min-height: 50px;
     width: 100%;
 }
-
+textarea{
+    color: white;
+}
+textarea::placeholder{
+    color: rgb(199, 199, 199)
+}
+input{
+    color: white;
+}
+input::placeholder{
+    color:rgb(199, 199, 199)
+}
 
 .update-button {
     display: flex;
