@@ -4,7 +4,6 @@ window.onload = () => {
     existingProfile(user_id)
 }
 
-const logined_token = localStorage.getItem("access");
 const logined_account = payload_parse.account;
 
 // 입력폼에 기존 값 넣기
@@ -143,7 +142,7 @@ async function updateProfile() {
     if (response.status == 200) {
         swal("수정 완료", '', "success")
             .then((value) => {
-                if ($('#profile_preview')[0].src == `${FRONTEND_BASE_URL}/static/image/user.png`){
+                if ($('#profile_preview')[0].src == `${FRONTEND_BASE_URL}/static/image/user.png`) {
                     delProfileImg()
                 }
                 window.location.replace(`/profile.html?user_id=${user_id}`)

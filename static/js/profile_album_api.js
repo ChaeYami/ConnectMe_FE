@@ -1,4 +1,3 @@
-const logined_token = localStorage.getItem("access");
 const user_id = parseInt(new URLSearchParams(window.location.search).get('user_id'));
 
 

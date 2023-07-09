@@ -1,4 +1,3 @@
-const logined_token = localStorage.getItem("access");
 window.onload = () => {
     friendsList()
 }

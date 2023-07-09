@@ -1,4 +1,3 @@
-const logined_token = localStorage.getItem("access");
 const count_per_page = 12; // 페이지당 데이터 건수
 const show_page_cnt = 10; // 화면에 보일 페이지 번호 개수
 let page_data = 0;
