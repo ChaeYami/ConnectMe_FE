@@ -78,13 +78,20 @@ async function signup() {
     }
 
 }
-
+// 엔터키 처리
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("nickname").addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
             signup();
         }
     });
+
+    document.getElementById("phone").addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            certifyPhoneSignup();startCountdown();
+        }
+    });
+
 });
 
 async function signupButton() {
@@ -126,7 +133,7 @@ async function certifyPhoneSignup() {
         },
 
         success: function (response) {
-            swal(`${response.message}`, '')
+            swal("인증번호가 발송되었습니다.",'문자메시지를 확인해주세요.')
             $("#auth-num-box").attr("style", "display:flex;");
 
         }, error: function (response) {
