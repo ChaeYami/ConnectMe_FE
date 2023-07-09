@@ -210,15 +210,21 @@ function chatConnect() {
         let pTag = document.createElement('p');
         pTag.textContent = data.content;
 
+
         if (author === my_nickname) {
             msgListTag.className = 'sent';
             imgTag.src = `${BACKEND_BASE_URL}${my_img}`;
+            msgListTag.appendChild(imgTag);
+            msgListTag.appendChild(pTag);
+        } else if (author === 'system') {
+            msgListTag.className = 'system';
+            msgListTag.appendChild(pTag);
         } else {
             msgListTag.className = 'replies';
             imgTag.src = `${BACKEND_BASE_URL}${other_img}`;
+            msgListTag.appendChild(imgTag);
+            msgListTag.appendChild(pTag);
         }
-        msgListTag.appendChild(imgTag);
-        msgListTag.appendChild(pTag);
         document.querySelector('#chat-log').appendChild(msgListTag);
     }
 
