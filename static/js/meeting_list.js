@@ -336,34 +336,20 @@ function meetingSearch() {
 
                     if (meeting_image.includes('%3A')) {
                         if (meeting_image.includes('www')) {
-
                             image = meeting_image.slice(40);
                             let decodedURL = decodeURIComponent(image);
                             img_urls = `http://${decodedURL}`
                         } else {
-
                             image = meeting_image.slice(40);
                             let decodedURL = decodeURIComponent(image);
                             img_urls = `http://${decodedURL}`
                         }
+                    }
+                    else {
+                        img_urls = `${meeting_image}`
+                    }
 
-                        if (meeting_image.includes('%3A')) {
-                            if (meeting_image.includes('www')) {
-                                let decodedURL = decodeURIComponent(image);
-                                image = meeting_image.slice(40);
-                                img_urls = `http://${decodedURL}`
-                            } else {
-                                let decodedURL = decodeURIComponent(image);
-                                image = meeting_image.slice(40);
-                                img_urls = `http://${decodedURL}`
-                            }
-                        } else {
-                            img_urls = `${meeting_image}`
-                        }
-
-
-
-                        let temp_html = `
+                    let temp_html = `
                         <div id="meeting_card_${id}" class="meeting_card">
                             <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
                                 <p style="height:1px"><small>${meeting_city}</small></p>
@@ -381,48 +367,48 @@ function meetingSearch() {
                             </div>
                         </div>
                                     `
-                        $('#meeting_card').append(temp_html)
-                    } else {
-                        let id = meeting['id']
-                        let title = meeting['title']
-                        let user = meeting['user']
-                        let created_at = meeting['created_at']
-                        let comment_count = meeting['comment_count']
-                        let content = meeting['content']
-                        let bookmark = meeting['bookmark']
-                        let meeting_at = meeting['meeting_at']
-                        let meeting_city = meeting['meeting_city']
-                        let num_person_meeting = meeting['num_person_meeting']
-                        let meeting_status = meeting['meeting_status']
-                        let join_meeting_count = meeting['join_meeting_count']
-                        let meeting_book = ``
-                        let status_and_title = ``
-                        if (meeting_status == '모집중') {
-                            status_and_title =
-                                `<h3><span style="color:rgb(0, 201, 0);"><${meeting_status}></span> ${title}</h3>`
-                        }
-                        else if (meeting_status == '자리없음') {
-                            status_and_title =
-                                `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
-                        }
-                        else if (meeting_status == '모집종료') {
-                            status_and_title =
-                                `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
-                        }
-                        if (user == payload_nickname) { meeting_book = `` } else {
-                            if (bookmark.includes(user_id)) {
-                                meeting_book = `
+                    $('#meeting_card').append(temp_html)
+                } else {
+                    let id = meeting['id']
+                    let title = meeting['title']
+                    let user = meeting['user']
+                    let created_at = meeting['created_at']
+                    let comment_count = meeting['comment_count']
+                    let content = meeting['content']
+                    let bookmark = meeting['bookmark']
+                    let meeting_at = meeting['meeting_at']
+                    let meeting_city = meeting['meeting_city']
+                    let num_person_meeting = meeting['num_person_meeting']
+                    let meeting_status = meeting['meeting_status']
+                    let join_meeting_count = meeting['join_meeting_count']
+                    let meeting_book = ``
+                    let status_and_title = ``
+                    if (meeting_status == '모집중') {
+                        status_and_title =
+                            `<h3><span style="color:rgb(0, 201, 0);"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '자리없음') {
+                        status_and_title =
+                            `<h3><span style="color:orange;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    else if (meeting_status == '모집종료') {
+                        status_and_title =
+                            `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
+                    }
+                    if (user == payload_nickname) { meeting_book = `` } else {
+                        if (bookmark.includes(user_id)) {
+                            meeting_book = `
                         <a>
                             <img id="book${id}" src="static/image/bookmark (1).png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
                         </a>`
-                            } else {
-                                meeting_book = `
+                        } else {
+                            meeting_book = `
                         <a>
                             <img id="book${id}" src="static/image/bookmark.png" style="margin-top:10px; width: 30px;" alt="북마크" onclick="handleBookmark(${id})">
                         </a>`
-                            }
                         }
-                        let temp_html = `
+                    }
+                    let temp_html = `
                 <div class="meeting_card">
                     <div onclick="location.href ='${FRONTEND_BASE_URL}/meeting_detail.html?id='+${id}" style="cursor:pointer;" >
                         <p style="height:1px"><small>${meeting_city}</small></p>
@@ -440,8 +426,7 @@ function meetingSearch() {
                             </div>
                 </div>
                 `
-                        $('#meeting_card').append(temp_html)
-                    }
+                    $('#meeting_card').append(temp_html)
                 }
             })
         })
