@@ -199,8 +199,7 @@ function tokenValidate() {
         type: "GET",
         dataType: "json",
         headers: {
-            "Authorization": "Bearer srthgprtjhpaketro;phgakop;rthkposrth"
-            // + logined_token
+            "Authorization": "Bearer " + logined_token
         },
         statusCode: {
             200: function (response) {
