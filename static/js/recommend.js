@@ -117,6 +117,7 @@ async function recommend(filter_) {
                         <a onclick="go_profile(${user_pk})">${user_nickname}</a>
                         
                             <button id="addFriend" onclick="addFriend(${user_pk})" style="display:${display}"> 친구신청 </button>
+                            <button id="goChatRoom" onclick="goChatRoom(${user_pk})" style="display:inline"> 채팅하기 </button>
                         </div>
                         <div class="ect">
                             지역 : ${user_region} | 
@@ -158,4 +159,25 @@ async function addFriend(user_id) {
         const errorArray = Object.entries(errorData);
         swal(`${errorArray[0][1]}`, '', 'warning');
     }
+}
+
+
+// 채팅방 이름 생성 요청 후 채팅방 입장
+function goChatRoom(user_id) {
+    $.ajax({
+        url: `${BACKEND_BASE_URL}/chat/${user_id}/`,
+        type: "POST",
+        dataType: "json",
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("access")
+        },
+        success: function (response) {
+            room_name = response['room_name'];
+            let chat_url = '/chat_room.html?room=' + room_name;
+            window.open(chat_url);
+        },
+        error: function () {
+            alert("채팅방 입장에 실패했습니다.")
+        }
+    });
 }
