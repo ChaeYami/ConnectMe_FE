@@ -360,7 +360,7 @@ async function counselDelete() {
                 if (response.status == 200) {
                     swal("삭제 완료", '', 'success')
                         .then((value) => {
-                            go_meetingList()
+                            go_counsel()
                         });
                 } else {
                     swal("권한이 없습니다.", '', 'error')
