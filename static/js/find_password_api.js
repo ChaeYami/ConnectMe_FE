@@ -16,10 +16,17 @@ async function handleResetPassword() {
     const response_json = await response.json()
 
     if (response.status === 200) {
-        swal("비밀번호 재설정 이메일을 발송했습니다. 메일을 확인하고 재설정을 진행해주세요.",'');
-        location.reload();
+        swal("비밀번호 재설정 이메일을 발송했습니다.", '메일을 확인하고 재설정을 진행해주세요.')
+            .then((value) => {
+                location.reload();
+            });
     } else {
-        swal(`${response_json["email"]}`,'');
+        if (response_json['email']) {
+            swal(`${response_json['email']}`, '');
+
+        } else {
+            swal(`${response_json['message']}`, '');
+        }
     }
 }
 
@@ -53,3 +60,12 @@ async function Set_Password() {
         makeAlert(key, result[key][0]);
     }
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("reset_password").addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            handleResetPassword();
+        }
+    });
+});

@@ -46,32 +46,35 @@ function startTimer(count, display) {
 
 //휴대폰 인증번호 발송
 async function phone_send() {
-    const phone_send_data = {
-        phone: document.getElementById("phone").value,
-    }
-
-    const response = await fetch(`${BACKEND_BASE_URL}/user/phone/send/account`,{
-        headers:{
-            'Content-type':'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify(phone_send_data)
-    })
-
-    const result = await response.json()
+    if(document.getElementById("phone").value){
+        const phone_send_data = {
+            phone: document.getElementById("phone").value,
+        }
     
-    if (response.status === 200) {
-        swal("인증번호가 발송되었습니다.",'문자메시지를 확인해주세요.')
-        $("#auth-num-box").attr("style", "display:flex;");
+        const response = await fetch(`${BACKEND_BASE_URL}/user/phone/send/account`,{
+            headers:{
+                'Content-type':'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify(phone_send_data)
+        })
+    
+        const result = await response.json()
         
-
-    } else if (response.status === 400) {
-        document.getElementById('alert-danger_1').style.display ="block"
-        const alert_danger_1 = document.getElementById('alert-danger_1')
-        alert_danger_1.innerText = `${result['message']}`
-
-        
+        if (response.status === 200) {
+            swal("인증번호가 발송되었습니다.",'문자메시지를 확인해주세요.')
+            $("#auth-num-box").attr("style", "display:flex;");
+            
+    
+        } else if (response.status === 400) {
+            document.getElementById('alert-danger_1').style.display ="block"
+            const alert_danger_1 = document.getElementById('alert-danger_1')
+            alert_danger_1.innerText = `${result['message']}`
+        }
+    }else{
+        swal("휴대폰 번호를 입력해주세요",'',"warning")
     }
+    
 }
 
 
@@ -103,3 +106,13 @@ async function auth_number_confirm() {
         alert_danger_2.innerText = `${result['message']}`
     }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.getElementById("phone").addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            phone_send();startCountdown();
+        }
+    });
+
+});
