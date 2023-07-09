@@ -1,4 +1,3 @@
-const logined_token = localStorage.getItem("access");
 const more_title = new URLSearchParams(window.location.search).get('id');
 let account = JSON.parse(payload)["nickname"]
 let div_more_title = document.querySelector(`#more-title`);
@@ -338,7 +337,7 @@ async function bookMoreMeeting(pages = 1) {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if(user == payload_nickname){meeting_book = ``}else{
+                        if (user == payload_nickname) { meeting_book = `` } else {
                             if (bookmark.includes(user_id)) {
                                 meeting_book = `
                                 <a>
@@ -351,7 +350,7 @@ async function bookMoreMeeting(pages = 1) {
                                 </a>`
                             }
                         }
-    
+
                         if (meeting_image.includes('http')) {
                             if (meeting_image.includes('www')) {
                                 image = meeting_image.slice(16);
@@ -416,7 +415,7 @@ async function bookMoreMeeting(pages = 1) {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if(user == payload_nickname){meeting_book = ``}else{
+                        if (user == payload_nickname) { meeting_book = `` } else {
                             if (bookmark.includes(user_id)) {
                                 meeting_book = `
                                 <a>
@@ -429,7 +428,7 @@ async function bookMoreMeeting(pages = 1) {
                                 </a>`
                             }
                         }
-    
+
 
                         let temp_html = `
                             <div class="meeting_card">
@@ -568,7 +567,7 @@ async function MoreUserDetailMeeting(pages = 1) {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if(user == payload_nickname){meeting_book = ``}else{
+                        if (user == payload_nickname) { meeting_book = `` } else {
                             if (bookmark.includes(user_id)) {
                                 meeting_book = `
                                 <a>
@@ -647,7 +646,7 @@ async function MoreUserDetailMeeting(pages = 1) {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if(user == payload_nickname){meeting_book = ``}else{
+                        if (user == payload_nickname) { meeting_book = `` } else {
                             if (bookmark.includes(user_id)) {
                                 meeting_book = `
                                 <a>

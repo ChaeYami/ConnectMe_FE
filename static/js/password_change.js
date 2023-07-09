@@ -6,7 +6,6 @@ if (localStorage.getItem("access")) {
         });
 
 }
-const logined_token = localStorage.getItem("access");
 
 
 //비밀번호 변경

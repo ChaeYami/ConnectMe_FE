@@ -1,4 +1,3 @@
-const logined_token = localStorage.getItem("access");
 let user_id = JSON.parse(payload)['user_id']
 
 $(document).ready(function () {

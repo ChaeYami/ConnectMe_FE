@@ -1,5 +1,3 @@
-
-const logined_token = localStorage.getItem("access");
 const count_per_page = 15; // 페이지당 데이터 건수
 const show_page_cnt = 10; // 화면에 보일 페이지 번호 개수
 let page_data = 0;
@@ -125,7 +123,7 @@ async function getCounsels(pages = 1) {
                 let counsel_created_at = rows[i]['created_at']
                 let likes_count = rows[i]['like'].length
                 let author_id = rows[i]['user']['pk']
-                let counsel_comment_count = rows[i]['comment_count']                
+                let counsel_comment_count = rows[i]['comment_count']
                 let author_html = ``
                 if (is_anonymous) {
                     counsel_author = '익명'
@@ -133,7 +131,7 @@ async function getCounsels(pages = 1) {
                 } else {
                     counsel_author = rows[i]['user']['nickname']
                     author_html = `<a onclick = "go_profile(${author_id})">${counsel_author}</a>`
-                }            
+                }
                 let temp_html = `
                 <a onclick="go_counselDetail(${counsel_id})">
                     <div class="list-box">
