@@ -336,7 +336,7 @@ function meetingSearch() {
 
                     if (meeting_image.includes('%3A')) {
                         if (meeting_image.includes('www')) {
-                            image = meeting_image.slice(40);
+                            image = meeting_image.slice(41);
                             let decodedURL = decodeURIComponent(image);
                             img_urls = `http://${decodedURL}`
                         } else {
