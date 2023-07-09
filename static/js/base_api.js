@@ -1,6 +1,7 @@
 const KAKAO_API = '3611a3327df6a2e923777b26800f369d'
 const KAKAO_JAVASCRIPT_API = '61771f77ccf8e5fb8aed8a7b26e8cfb1'
 
+const logined_token = localStorage.getItem("access")
 const payload = localStorage.getItem("payload");
 const payload_parse = payload ? JSON.parse(payload) : null;
 const logined_user_id = payload_parse ? parseInt(payload_parse.user_id) : null;
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <a onclick="go_signup()">회원가입</a>
         `;
     }
+    tokenValidate()
 })
 
 
@@ -189,4 +191,26 @@ function onGeoError() {
 
 function go_meeting_join_list() {
     location.href = "meeting_join_list.html"
+}
+
+function tokenValidate() {
+    $.ajax({
+        url: `${BACKEND_BASE_URL}/user/token/validate/`,
+        type: "GET",
+        dataType: "json",
+        headers: {
+            "Authorization": "Bearer srthgprtjhpaketro;phgakop;rthkposrth"
+            // + logined_token
+        },
+        statusCode: {
+            200: function (response) {
+            },
+            401: function () {
+                localStorage.removeItem("access")
+                localStorage.removeItem("refresh")
+                localStorage.removeItem("payload")
+                location.replace('/login.html')
+            }
+        }
+    })
 }

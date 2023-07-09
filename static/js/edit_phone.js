@@ -1,26 +1,25 @@
-const logined_token = localStorage.getItem("access");
 
 
 let timer;
 let isRunning = false;
 
 // 인증번호 발송하고 타이머 함수 실행
-function startCountdown(){
-    	// 남은 시간
-	let leftSec = 5* 60,
-	display = document.querySelector('#countdown');
-	// 이미 타이머가 작동중이면 중지
-	if (isRunning){
-	   clearInterval(timer);
-	} else {
-    	isRunning = true;
+function startCountdown() {
+    // 남은 시간
+    let leftSec = 5 * 60,
+        display = document.querySelector('#countdown');
+    // 이미 타이머가 작동중이면 중지
+    if (isRunning) {
+        clearInterval(timer);
+    } else {
+        isRunning = true;
     }
-     startTimer(leftSec, display);
+    startTimer(leftSec, display);
 }
 
 function startTimer(count, display) {
-        let minutes, seconds;
-        timer = setInterval(function () {
+    let minutes, seconds;
+    timer = setInterval(function () {
         minutes = parseInt(count / 60, 10);
         seconds = parseInt(count % 60, 10);
 
@@ -31,9 +30,9 @@ function startTimer(count, display) {
 
         // 타이머 끝
         if (--count < 0) {
-	     clearInterval(timer);
-	     display.textContent = "";
-	     isRunning = false;
+            clearInterval(timer);
+            display.textContent = "";
+            isRunning = false;
         }
     }, 1000);
 }

@@ -1,5 +1,3 @@
-const logined_token = localStorage.getItem("access");
-
 $(document).ready(function () {
     isFriend()
     recommend('all')
@@ -103,9 +101,9 @@ async function recommend(filter_) {
                     }
 
                     display = ''
-                    if (friend_id_list.includes(user_pk)){
+                    if (friend_id_list.includes(user_pk)) {
                         display = 'none'
-                    } else{
+                    } else {
                         display = 'inline'
                     }
 

@@ -1,5 +1,4 @@
 const me = new URLSearchParams(window.location.search).get('me');
-const logined_token = localStorage.getItem("access");
 const logined_account = payload_parse.account
 window.onload = () => {
     requestList(me)
@@ -98,7 +97,7 @@ function acceptRequest(request_id) {
                 })
         },
         error: function (response) {
-            swal(`${response['responseJSON']['message']}`,'','warning')
+            swal(`${response['responseJSON']['message']}`, '', 'warning')
         }
 
     })
@@ -124,7 +123,7 @@ async function rejectRequest(request_id) {
                 })
         },
         error: function (response) {
-            swal(`${response['responseJSON']['message']}`,'','warning')
+            swal(`${response['responseJSON']['message']}`, '', 'warning')
         }
 
     })

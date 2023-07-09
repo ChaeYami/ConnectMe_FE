@@ -1,4 +1,3 @@
-const logined_token = localStorage.getItem("access");
 const user_id = JSON.parse(payload)['user_id']
 
 window.onload = () => {
@@ -170,7 +169,7 @@ async function placeBook(place_id) {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if(user == payload_nickname){meeting_book = ``}else{
+                        if (user == payload_nickname) { meeting_book = `` } else {
                             if (bookmark.includes(user_id)) {
                                 meeting_book = `
                                 <a>
@@ -250,7 +249,7 @@ async function placeBook(place_id) {
                                 `<h3><span style="color:red;"><${meeting_status}></span> ${title}</h3>`
                         }
 
-                        if(user == payload_nickname){meeting_book = ``}else{
+                        if (user == payload_nickname) { meeting_book = `` } else {
                             if (bookmark.includes(user_id)) {
                                 meeting_book = `
                                 <a>

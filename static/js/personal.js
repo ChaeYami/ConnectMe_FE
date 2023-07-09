@@ -1,5 +1,3 @@
-
-const logined_token = localStorage.getItem("access");
 $(document).ready(function () {
     personal()
 });

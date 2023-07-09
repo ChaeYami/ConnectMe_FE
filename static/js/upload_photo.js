@@ -1,5 +1,3 @@
-const logined_token = localStorage.getItem("access");
-
 async function uploadPhoto() {
 
     const fileInput = document.getElementById('album_image');

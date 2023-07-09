@@ -19,8 +19,6 @@ if (localStorage.getItem("payload")) {
     go_login()
 }
 
-const logined_token = localStorage.getItem("access");
-
 $(document).ready(function () {
     recommend('all');
     counselList();
