@@ -16,13 +16,8 @@ async function existingProfile(user_id) {
         method: 'GET',
     })
     response_json = await response.json()
-    let nickname = response_json.nickname
 
-    if (nickname.includes(' ')) {
-        nickname = nickname.split(" ")[1]
-    }
-
-    document.getElementById('nickname').value = nickname
+    document.getElementById('nickname').value = response_json.nickname
     document.getElementById('introduce').value = response_json.introduce
     document.getElementById('age').value = response_json.age
     document.getElementById('mbti').value = response_json.mbti
