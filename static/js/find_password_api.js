@@ -48,11 +48,14 @@ async function Set_Password() {
     })
     const result = await response.json()
     if (response.status === 200) {
-        alert(result["message"])
-        location.replace('login.html')
+        swal(`${result["message"]}`, '')
+            .then((value) => {
+                location.replace('login.html')
+
+            })
 
     } else if (response.status == 401) {
-        alert("링크가 유효하지 않습니다.")
+        swal("링크가 유효하지 않습니다.", '', 'warning')
 
     } else {
         document.getElementById('alert-danger').style.display = "block"
@@ -60,12 +63,3 @@ async function Set_Password() {
         makeAlert(key, result[key][0]);
     }
 }
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("reset_password").addEventListener("keyup", function (event) {
-        if (event.key === "Enter") {
-            handleResetPassword();
-        }
-    });
-});
