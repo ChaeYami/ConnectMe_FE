@@ -215,6 +215,7 @@ async function counselComments(counsel_id) {
                 }
 
                 $(`#comment_update_input${id}`).val(content)
+
                 rows[i].reply.forEach((each_reply => {
                     comment = each_reply['comment']
                     reply_id = each_reply['id']
@@ -227,7 +228,7 @@ async function counselComments(counsel_id) {
                         user = '익명'
                         anonymous_html = `<input type="checkbox" id="anonymous-checkbox-reply_id${reply_id}" checked><label for="anonymous-checkbox-reply_id">익명</label>`
                     } else {
-                        user = rows[i]['user']['nickname']
+                        user = each_reply['user']['nickname']
                         anonymous_html = `<input type="checkbox" id="anonymous-checkbox-reply_id${reply_id}"><label for="anonymous-checkbox-reply_id">익명</label>`
                     }
                     updated_at = each_reply['updated_at']
@@ -360,7 +361,7 @@ async function counselDelete() {
                 if (response.status == 200) {
                     swal("삭제 완료", '', 'success')
                         .then((value) => {
-                            go_meetingList()
+                            go_counsel()
                         });
                 } else {
                     swal("권한이 없습니다.", '', 'error')
@@ -520,7 +521,7 @@ async function replyCreateConfrim(reply_id) {
         method: 'POST',
         headers: {
             "content-type": "application/json",
-            Authorization: `Bearer ${logined_token}`,
+            Authorization: "Bearer " + logined_token,
         },
         body: JSON.stringify({
             content: reply,
