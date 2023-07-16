@@ -121,7 +121,9 @@ input:not(:placeholder-shown) {
     color: #ff4a4a;
     display: none;
 }
-
+.alert-info{
+    color: white;
+}
 #info_message{
     margin-top: 20px;
     padding: 30px;
